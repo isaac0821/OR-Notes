@@ -1,0 +1,20 @@
+\contentsline {part}{I\hspace {1em}Preliminary Topics}{5}{part.1}
+\contentsline {chapter}{\numberline {1}Review of Linear Algebra}{7}{chapter.1}
+\contentsline {chapter}{\numberline {2}Polyhedron Analysis}{9}{chapter.2}
+\contentsline {part}{II\hspace {1em}Linear Programming}{11}{part.2}
+\contentsline {chapter}{\numberline {3}The Simplex Method}{13}{chapter.3}
+\contentsline {chapter}{\numberline {4}Duality Theory and Sensitivity Analysis}{15}{chapter.4}
+\contentsline {chapter}{\numberline {5}Other Algorithms for Linear Programming}{17}{chapter.5}
+\contentsline {part}{III\hspace {1em}Network Optimization}{19}{part.3}
+\contentsline {part}{IV\hspace {1em}Integer Programming}{21}{part.4}
+\contentsline {part}{V\hspace {1em}Dynamic Programming}{23}{part.5}
+\contentsline {part}{VI\hspace {1em}Convex Optimization}{25}{part.6}
+\contentsline {part}{VII\hspace {1em}Nonlinear Programming}{27}{part.7}
+\contentsline {part}{VIII\hspace {1em}Heuristics ans Metaheuristics}{29}{part.8}
+\contentsline {part}{IX\hspace {1em}Game Theory}{31}{part.9}
+\contentsline {part}{X\hspace {1em}Decision Analysis}{33}{part.10}
+\contentsline {part}{XI\hspace {1em}Markov Chains}{35}{part.11}
+\contentsline {part}{XII\hspace {1em}Queueing Theory}{37}{part.12}
+\contentsline {part}{XIII\hspace {1em}Inventory Theory}{39}{part.13}
+\contentsline {part}{XIV\hspace {1em}Reliability Theory}{41}{part.14}
+\contentsline {part}{XV\hspace {1em}Simulation}{43}{part.15}
