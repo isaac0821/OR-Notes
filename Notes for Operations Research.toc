@@ -67,8 +67,31 @@
 \contentsline {part}{VI\hspace {1em}Algorithms and Computational Complexity}{73}{part.6}
 \contentsline {chapter}{\numberline {28}Computational Complexity}{75}{chapter.28}
 \contentsline {chapter}{\numberline {29}Sorting}{77}{chapter.29}
+\contentsline {section}{\numberline {29.1}Elementary Sorting Algorithms}{77}{section.29.1}
+\contentsline {section}{\numberline {29.2}Heap-sort}{77}{section.29.2}
+\contentsline {section}{\numberline {29.3}Quick-sort}{77}{section.29.3}
+\contentsline {section}{\numberline {29.4}Sorting in Linear Time}{77}{section.29.4}
+\contentsline {section}{\numberline {29.5}Medians and Order Statistics}{77}{section.29.5}
 \contentsline {chapter}{\numberline {30}Data Structures}{79}{chapter.30}
-\contentsline {chapter}{\numberline {31}}{81}{chapter.31}
+\contentsline {section}{\numberline {30.1}Elementary Data Structures}{79}{section.30.1}
+\contentsline {section}{\numberline {30.2}Hash Tables}{79}{section.30.2}
+\contentsline {section}{\numberline {30.3}Binary Search Trees}{79}{section.30.3}
+\contentsline {section}{\numberline {30.4}Red-Black Trees}{79}{section.30.4}
+\contentsline {section}{\numberline {30.5}B-Trees}{79}{section.30.5}
+\contentsline {section}{\numberline {30.6}Fibonacci Heaps}{79}{section.30.6}
+\contentsline {section}{\numberline {30.7}van Emde Boas Trees}{79}{section.30.7}
+\contentsline {chapter}{\numberline {31}Design and Analysis Techniques}{81}{chapter.31}
+\contentsline {section}{\numberline {31.1}Dynamic Programming}{81}{section.31.1}
+\contentsline {section}{\numberline {31.2}Greedy Algorithms}{81}{section.31.2}
+\contentsline {section}{\numberline {31.3}Amortized Analysis}{81}{section.31.3}
+\contentsline {section}{\numberline {31.4}Multi-threaded Algorithms}{81}{section.31.4}
+\contentsline {section}{\numberline {31.5}Matrix Operations}{81}{section.31.5}
+\contentsline {section}{\numberline {31.6}Polynomials and the FFT}{81}{section.31.6}
+\contentsline {section}{\numberline {31.7}Number-Theoretic Algorithms}{81}{section.31.7}
+\contentsline {section}{\numberline {31.8}String Matching}{81}{section.31.8}
+\contentsline {section}{\numberline {31.9}Computational Geometry}{81}{section.31.9}
+\contentsline {section}{\numberline {31.10}NP-Completeness}{81}{section.31.10}
+\contentsline {section}{\numberline {31.11}Approximation Algorithms}{81}{section.31.11}
 \contentsline {part}{VII\hspace {1em}Heuristics ans Meta-heuristics}{83}{part.7}
 \contentsline {part}{VIII\hspace {1em}Game Theory}{85}{part.8}
 \contentsline {chapter}{\numberline {32}Games with Ordinal Payoffs}{87}{chapter.32}
@@ -92,21 +115,20 @@
 \contentsline {section}{\numberline {36.2}Dynamic Games}{95}{section.36.2}
 \contentsline {section}{\numberline {36.3}The Type-Space Approach}{95}{section.36.3}
 \contentsline {part}{IX\hspace {1em}Decision Analysis}{97}{part.9}
-\contentsline {part}{X\hspace {1em}Probability and Stochastic Processes}{99}{part.10}
-\contentsline {part}{XI\hspace {1em}Markov Chains}{101}{part.11}
-\contentsline {chapter}{\numberline {37}Discrete-Time Markov Chains}{103}{chapter.37}
-\contentsline {chapter}{\numberline {38}Continuous-Time Markov Chains}{105}{chapter.38}
-\contentsline {part}{XII\hspace {1em}Queuing Theory}{107}{part.12}
-\contentsline {chapter}{\numberline {39}Queuing Model}{109}{chapter.39}
-\contentsline {chapter}{\numberline {40}Birth-and-Death Queuing Models}{111}{chapter.40}
-\contentsline {chapter}{\numberline {41}Multidimensional Birth-and-Death Queuing Models}{113}{chapter.41}
-\contentsline {chapter}{\numberline {42}Phase-Type Queue}{115}{chapter.42}
-\contentsline {chapter}{\numberline {43}Bulk Queue}{117}{chapter.43}
-\contentsline {chapter}{\numberline {44}Imbedded-Markov-Chain Queuing Models}{119}{chapter.44}
-\contentsline {chapter}{\numberline {45}Queuing Network}{121}{chapter.45}
-\contentsline {part}{XIII\hspace {1em}Inventory Theory}{123}{part.13}
-\contentsline {part}{XIV\hspace {1em}Reliability Theory}{125}{part.14}
-\contentsline {part}{XV\hspace {1em}Maintenance Policy}{127}{part.15}
-\contentsline {part}{XVI\hspace {1em}Bayesian Statistic}{129}{part.16}
-\contentsline {part}{XVII\hspace {1em}Classical Statistic}{131}{part.17}
-\contentsline {part}{XVIII\hspace {1em}Simulation}{133}{part.18}
+\contentsline {part}{X\hspace {1em}Probability, Stochastic Processes and Markov Chains}{99}{part.10}
+\contentsline {chapter}{\numberline {37}Discrete-Time Markov Chains}{101}{chapter.37}
+\contentsline {chapter}{\numberline {38}Continuous-Time Markov Chains}{103}{chapter.38}
+\contentsline {part}{XI\hspace {1em}Queuing Theory}{105}{part.11}
+\contentsline {chapter}{\numberline {39}Queuing Model}{107}{chapter.39}
+\contentsline {chapter}{\numberline {40}Birth-and-Death Queuing Models}{109}{chapter.40}
+\contentsline {chapter}{\numberline {41}Multidimensional Birth-and-Death Queuing Models}{111}{chapter.41}
+\contentsline {chapter}{\numberline {42}Phase-Type Queue}{113}{chapter.42}
+\contentsline {chapter}{\numberline {43}Bulk Queue}{115}{chapter.43}
+\contentsline {chapter}{\numberline {44}Imbedded-Markov-Chain Queuing Models}{117}{chapter.44}
+\contentsline {chapter}{\numberline {45}Queuing Network}{119}{chapter.45}
+\contentsline {part}{XII\hspace {1em}Inventory Theory}{121}{part.12}
+\contentsline {part}{XIII\hspace {1em}Reliability Theory}{123}{part.13}
+\contentsline {section}{\numberline {45.1}Maintenance Optimization}{125}{section.45.1}
+\contentsline {part}{XIV\hspace {1em}Bayesian Statistic}{127}{part.14}
+\contentsline {part}{XV\hspace {1em}Classical Statistic}{129}{part.15}
+\contentsline {part}{XVI\hspace {1em}Simulation}{131}{part.16}

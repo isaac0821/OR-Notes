@@ -64,46 +64,68 @@
 \BOOKMARK [-1][-]{part.6}{VI Algorithms and Computational Complexity}{}% 64
 \BOOKMARK [0][-]{chapter.28}{Computational Complexity}{part.6}% 65
 \BOOKMARK [0][-]{chapter.29}{Sorting}{part.6}% 66
-\BOOKMARK [0][-]{chapter.30}{Data Structures}{part.6}% 67
-\BOOKMARK [0][-]{chapter.31}{}{part.6}% 68
-\BOOKMARK [-1][-]{part.7}{VII Heuristics ans Meta-heuristics}{}% 69
-\BOOKMARK [-1][-]{part.8}{VIII Game Theory}{}% 70
-\BOOKMARK [0][-]{chapter.32}{Games with Ordinal Payoffs}{part.8}% 71
-\BOOKMARK [1][-]{section.32.1}{Ordinal Games in Strategic Form}{chapter.32}% 72
-\BOOKMARK [1][-]{section.32.2}{Perfect-information Games}{chapter.32}% 73
-\BOOKMARK [1][-]{section.32.3}{General Dynamic Games}{chapter.32}% 74
-\BOOKMARK [0][-]{chapter.33}{Games with Cardinal Payoffs}{part.8}% 75
-\BOOKMARK [1][-]{section.33.1}{Expected Utility Theory}{chapter.33}% 76
-\BOOKMARK [1][-]{section.33.2}{Strategic-form Games}{chapter.33}% 77
-\BOOKMARK [1][-]{section.33.3}{Extensive-form Games}{chapter.33}% 78
-\BOOKMARK [0][-]{chapter.34}{Knowledge, Common Knowledge, Beliefs}{part.8}% 79
-\BOOKMARK [1][-]{section.34.1}{Common Knowledge}{chapter.34}% 80
-\BOOKMARK [1][-]{section.34.2}{Adding Beliefs to Knowledge}{chapter.34}% 81
-\BOOKMARK [1][-]{section.34.3}{Rationality}{chapter.34}% 82
-\BOOKMARK [0][-]{chapter.35}{Refinements of Subgame-perfect Equilibrium}{part.8}% 83
-\BOOKMARK [1][-]{section.35.1}{Weak Sequential Equilibrium}{chapter.35}% 84
-\BOOKMARK [1][-]{section.35.2}{Sequential Equilibrium}{chapter.35}% 85
-\BOOKMARK [1][-]{section.35.3}{Perfect Bayesian Equilibrium}{chapter.35}% 86
-\BOOKMARK [0][-]{chapter.36}{Incomplete Information}{part.8}% 87
-\BOOKMARK [1][-]{section.36.1}{Static Games}{chapter.36}% 88
-\BOOKMARK [1][-]{section.36.2}{Dynamic Games}{chapter.36}% 89
-\BOOKMARK [1][-]{section.36.3}{The Type-Space Approach}{chapter.36}% 90
-\BOOKMARK [-1][-]{part.9}{IX Decision Analysis}{}% 91
-\BOOKMARK [-1][-]{part.10}{X Probability and Stochastic Processes}{}% 92
-\BOOKMARK [-1][-]{part.11}{XI Markov Chains}{}% 93
-\BOOKMARK [0][-]{chapter.37}{Discrete-Time Markov Chains}{part.11}% 94
-\BOOKMARK [0][-]{chapter.38}{Continuous-Time Markov Chains}{part.11}% 95
-\BOOKMARK [-1][-]{part.12}{XII Queuing Theory}{}% 96
-\BOOKMARK [0][-]{chapter.39}{Queuing Model}{part.12}% 97
-\BOOKMARK [0][-]{chapter.40}{Birth-and-Death Queuing Models}{part.12}% 98
-\BOOKMARK [0][-]{chapter.41}{Multidimensional Birth-and-Death Queuing Models}{part.12}% 99
-\BOOKMARK [0][-]{chapter.42}{Phase-Type Queue}{part.12}% 100
-\BOOKMARK [0][-]{chapter.43}{Bulk Queue}{part.12}% 101
-\BOOKMARK [0][-]{chapter.44}{Imbedded-Markov-Chain Queuing Models}{part.12}% 102
-\BOOKMARK [0][-]{chapter.45}{Queuing Network}{part.12}% 103
-\BOOKMARK [-1][-]{part.13}{XIII Inventory Theory}{}% 104
-\BOOKMARK [-1][-]{part.14}{XIV Reliability Theory}{}% 105
-\BOOKMARK [-1][-]{part.15}{XV Maintenance Policy}{}% 106
-\BOOKMARK [-1][-]{part.16}{XVI Bayesian Statistic}{}% 107
-\BOOKMARK [-1][-]{part.17}{XVII Classical Statistic}{}% 108
-\BOOKMARK [-1][-]{part.18}{XVIII Simulation}{}% 109
+\BOOKMARK [1][-]{section.29.1}{Elementary Sorting Algorithms}{chapter.29}% 67
+\BOOKMARK [1][-]{section.29.2}{Heap-sort}{chapter.29}% 68
+\BOOKMARK [1][-]{section.29.3}{Quick-sort}{chapter.29}% 69
+\BOOKMARK [1][-]{section.29.4}{Sorting in Linear Time}{chapter.29}% 70
+\BOOKMARK [1][-]{section.29.5}{Medians and Order Statistics}{chapter.29}% 71
+\BOOKMARK [0][-]{chapter.30}{Data Structures}{part.6}% 72
+\BOOKMARK [1][-]{section.30.1}{Elementary Data Structures}{chapter.30}% 73
+\BOOKMARK [1][-]{section.30.2}{Hash Tables}{chapter.30}% 74
+\BOOKMARK [1][-]{section.30.3}{Binary Search Trees}{chapter.30}% 75
+\BOOKMARK [1][-]{section.30.4}{Red-Black Trees}{chapter.30}% 76
+\BOOKMARK [1][-]{section.30.5}{B-Trees}{chapter.30}% 77
+\BOOKMARK [1][-]{section.30.6}{Fibonacci Heaps}{chapter.30}% 78
+\BOOKMARK [1][-]{section.30.7}{van Emde Boas Trees}{chapter.30}% 79
+\BOOKMARK [0][-]{chapter.31}{Design and Analysis Techniques}{part.6}% 80
+\BOOKMARK [1][-]{section.31.1}{Dynamic Programming}{chapter.31}% 81
+\BOOKMARK [1][-]{section.31.2}{Greedy Algorithms}{chapter.31}% 82
+\BOOKMARK [1][-]{section.31.3}{Amortized Analysis}{chapter.31}% 83
+\BOOKMARK [1][-]{section.31.4}{Multi-threaded Algorithms}{chapter.31}% 84
+\BOOKMARK [1][-]{section.31.5}{Matrix Operations}{chapter.31}% 85
+\BOOKMARK [1][-]{section.31.6}{Polynomials and the FFT}{chapter.31}% 86
+\BOOKMARK [1][-]{section.31.7}{Number-Theoretic Algorithms}{chapter.31}% 87
+\BOOKMARK [1][-]{section.31.8}{String Matching}{chapter.31}% 88
+\BOOKMARK [1][-]{section.31.9}{Computational Geometry}{chapter.31}% 89
+\BOOKMARK [1][-]{section.31.10}{NP-Completeness}{chapter.31}% 90
+\BOOKMARK [1][-]{section.31.11}{Approximation Algorithms}{chapter.31}% 91
+\BOOKMARK [-1][-]{part.7}{VII Heuristics ans Meta-heuristics}{}% 92
+\BOOKMARK [-1][-]{part.8}{VIII Game Theory}{}% 93
+\BOOKMARK [0][-]{chapter.32}{Games with Ordinal Payoffs}{part.8}% 94
+\BOOKMARK [1][-]{section.32.1}{Ordinal Games in Strategic Form}{chapter.32}% 95
+\BOOKMARK [1][-]{section.32.2}{Perfect-information Games}{chapter.32}% 96
+\BOOKMARK [1][-]{section.32.3}{General Dynamic Games}{chapter.32}% 97
+\BOOKMARK [0][-]{chapter.33}{Games with Cardinal Payoffs}{part.8}% 98
+\BOOKMARK [1][-]{section.33.1}{Expected Utility Theory}{chapter.33}% 99
+\BOOKMARK [1][-]{section.33.2}{Strategic-form Games}{chapter.33}% 100
+\BOOKMARK [1][-]{section.33.3}{Extensive-form Games}{chapter.33}% 101
+\BOOKMARK [0][-]{chapter.34}{Knowledge, Common Knowledge, Beliefs}{part.8}% 102
+\BOOKMARK [1][-]{section.34.1}{Common Knowledge}{chapter.34}% 103
+\BOOKMARK [1][-]{section.34.2}{Adding Beliefs to Knowledge}{chapter.34}% 104
+\BOOKMARK [1][-]{section.34.3}{Rationality}{chapter.34}% 105
+\BOOKMARK [0][-]{chapter.35}{Refinements of Subgame-perfect Equilibrium}{part.8}% 106
+\BOOKMARK [1][-]{section.35.1}{Weak Sequential Equilibrium}{chapter.35}% 107
+\BOOKMARK [1][-]{section.35.2}{Sequential Equilibrium}{chapter.35}% 108
+\BOOKMARK [1][-]{section.35.3}{Perfect Bayesian Equilibrium}{chapter.35}% 109
+\BOOKMARK [0][-]{chapter.36}{Incomplete Information}{part.8}% 110
+\BOOKMARK [1][-]{section.36.1}{Static Games}{chapter.36}% 111
+\BOOKMARK [1][-]{section.36.2}{Dynamic Games}{chapter.36}% 112
+\BOOKMARK [1][-]{section.36.3}{The Type-Space Approach}{chapter.36}% 113
+\BOOKMARK [-1][-]{part.9}{IX Decision Analysis}{}% 114
+\BOOKMARK [-1][-]{part.10}{X Probability, Stochastic Processes and Markov Chains}{}% 115
+\BOOKMARK [0][-]{chapter.37}{Discrete-Time Markov Chains}{part.10}% 116
+\BOOKMARK [0][-]{chapter.38}{Continuous-Time Markov Chains}{part.10}% 117
+\BOOKMARK [-1][-]{part.11}{XI Queuing Theory}{}% 118
+\BOOKMARK [0][-]{chapter.39}{Queuing Model}{part.11}% 119
+\BOOKMARK [0][-]{chapter.40}{Birth-and-Death Queuing Models}{part.11}% 120
+\BOOKMARK [0][-]{chapter.41}{Multidimensional Birth-and-Death Queuing Models}{part.11}% 121
+\BOOKMARK [0][-]{chapter.42}{Phase-Type Queue}{part.11}% 122
+\BOOKMARK [0][-]{chapter.43}{Bulk Queue}{part.11}% 123
+\BOOKMARK [0][-]{chapter.44}{Imbedded-Markov-Chain Queuing Models}{part.11}% 124
+\BOOKMARK [0][-]{chapter.45}{Queuing Network}{part.11}% 125
+\BOOKMARK [-1][-]{part.12}{XII Inventory Theory}{}% 126
+\BOOKMARK [-1][-]{part.13}{XIII Reliability Theory}{}% 127
+\BOOKMARK [0][-]{section.45.1}{Maintenance Optimization}{part.13}% 128
+\BOOKMARK [-1][-]{part.14}{XIV Bayesian Statistic}{}% 129
+\BOOKMARK [-1][-]{part.15}{XV Classical Statistic}{}% 130
+\BOOKMARK [-1][-]{part.16}{XVI Simulation}{}% 131
