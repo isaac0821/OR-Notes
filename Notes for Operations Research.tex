@@ -1,6 +1,6 @@
 \documentclass[10pt]{book}
 \author{Lan Peng, PhD Student\\ \\Department of Industrial and Systems Engineering\\University at Buffalo, SUNY\\lanpeng@buffalo.edu}
-\title{Notes for Operations Research}
+\title{Notes for Operations Research \& More}
 
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{color, soul}
@@ -22,153 +22,428 @@
 
 
 \begin{document}
-\maketitle
-\tableofcontents
+	\maketitle
+	\tableofcontents
 
-\part{Preliminary Topics}
-	\chapter{Review of Linear Algebra}
+	\part{Preliminary Topics}
+		\chapter{Review of Linear Algebra}
 
-	\chapter{Polyhedron Analysis}
-	
-\part{Linear Programming}
-	\chapter{Introduction}
+		\chapter{Convex Sets}
 
-	\chapter{Formulation Skills}
+		\chapter{Convex Functions and Generalizations}
 
-	\chapter{The Simplex Method}
+	\part{Linear Programming}
+		\chapter{Formulation}
+			\section{Typical Problems}
 
-	\chapter{Artificial Variable}
+			\section{Formulation Skills}
+				\subsection{Absolute Value}
+					\framebox{\textbf{Description:}}
+					Consider the following model statement:
+					\begin{align}
+						\min \quad & \sum_{j\in J}c_j|x_j|, \quad c_j > 0 \nonumber\\
+						\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+						                  & x_j \quad \text{unrestricted}, \quad \forall j\in J \nonumber
+					\end{align}
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						\min \quad & \sum_{j\in J}c_j(x_j^+ + x_j^-), \quad c_j > 0 \nonumber\\
+						\text{s.t.} \quad & \sum_{j\in J}a_{ij}(x_j^+ - x_j^-) \gtreqless b_i, \quad \forall i\in I \nonumber\\
+						                  & x_j^+, x_j^- \ge 0, \quad \forall j\in J \nonumber
+					\end{align}
 
-	\chapter{Duality Theory}
+				\subsection{A Minimax Objective}
+					\framebox{\textbf{Description:}}
+					Consider the following model statement:
+					\begin{align}
+						\min \quad & \max_{k\in K}\sum_{j\in J}c_{kj}x_j \nonumber\\
+						\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+						                  & x_j \ge 0, \quad \forall j\in J \nonumber
+					\end{align}
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						\min \quad & z \nonumber\\
+						\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+										  & \sum_{j\in J}c_{kj}x_j \le z, \quad \forall k\in K \nonumber\\
+						                  & x_j \ge 0, \quad \forall j\in J \nonumber
+					\end{align}
+				\subsection{A fractional Objective}
+					\framebox{\textbf{Description:}}
+					Consider the following model statement:
+					\begin{align}
+						\min \quad & \frac{\sum_{j\in J}c_{j}x_j + \alpha}{\sum_{j\in J}d_{j}x_j + \beta} \nonumber\\
+						\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+						                  & x_j \ge 0, \quad \forall j\in J \nonumber
+					\end{align}
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						\min \quad & \sum_{j\in J}c_{j}x_jt + \alpha t \nonumber\\
+						\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+										  & \sum_{j\in J}d_jx_jt + \beta t = 1\nonumber\\
+										  & t > 0 \nonumber\\
+						                  & x_j \ge 0, \quad \forall j\in J \nonumber\\
+						                  & (t = \frac1{\sum_{j\in J}d_jx_j + \beta}) \nonumber
+					\end{align}
+				\subsection{A range Constraint}
+					\framebox{\textbf{Description:}}
+					Consider the following model statement:
+					\begin{align}
+						\min \quad & \sum_{j\in J}c_jx_j \nonumber\\
+						\text{s.t.} \quad & d_i\le \sum_{j\in J}a_{ij}x_j \le e_i, \quad \forall i\in I \nonumber\\
+						                  & x_j \ge 0, \quad \forall j\in J \nonumber
+					\end{align}
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						\min \quad & \sum_{j\in J}c_jx_j, \quad c_j > 0 \nonumber\\
+						\text{s.t.} \quad & u_i + \sum_{j\in J}a_{ij}x_j = e_i, \quad \forall i\in I \nonumber\\
+						                  & x_j \ge 0, \quad \forall j\in J \nonumber\\
+						                  & 0\le u_i \le e_i-d_i, \quad \forall i\in I \nonumber
+					\end{align}
 
-	\chapter{Sensitivity Analysis}
+		\chapter{Simplex Method}
+			\section{Basic Feasible Solutions and Extreme Points}
 
-	\chapter{Ellipsoid Algorithm}
+			\section{Simplex Method}
 
-	\chapter{Projective Algorithm}
+				\subsection{Simplex Method Algorithm}
 
-	\chapter{Interior-Point Algorithm}
+				\subsection{Simplex Method Tableau}
 
-	\chapter{Exercises}
+				\subsection{Simplex Method as a Search Algorithm}
 
-\part{Graph and Network Theory}
-	\chapter{Introduction}
+			\section{Revised Simplex Method}
 
-	\chapter{Paths, Trees, and Cycles}
+			\section{Simplex Method with Bounded Variables}
 
-	\chapter{Shortest-Path Problem}
+			\section{Artificial Variable}
+				\subsection{Two-Phase Method}
 
-	\chapter{Minimum Spanning Tree Problem}
+				\subsection{Big-M Method}
 
-	\chapter{Maximum Flow Problem}
+				\subsection{Single Artificial Variable Technique}
 
-	\chapter{Minimum Cost Flow Problem}
+			\section{Degeneracy and Cycling}
+				\subsection{Degeneracy}
 
-	\chapter{Assignment and Matching Problem}
+				\subsection{Cycling}
 
-	\chapter{Exercises}
+				\subsection{Cycling Prevention Rules}
+					\subsubsection{Lexicographic Rule}
 
-\part{Integer and Combinatorial Programming}
-	\chapter{Introduction}
+					\subsubsection{Bland's Rule}
 
-	\chapter{Formulation Skills}
+					\subsubsection{Successive Ratio Rule}
 
-	\chapter{Branch and Bound}
+		\chapter{Duality Theory and Sensitivity Analysis}
 
-	\chapter{Branch and Cut}
+		\chapter{Decomposition Principle}
 
-	\chapter{Packing and Matching}
+		\chapter{Ellipsoid Algorithm}
 
-	\chapter{Traveling Salesman Problem}
+		\chapter{Projective Algorithm}
 
-	\chapter{Knapsack Problem}
+		\chapter{Interior-Point Algorithm}
 
-	\chapter{Exercises}
+	\part{Graph and Network Theory}
+		\chapter{Paths, Trees, and Cycles}
 
-\part{Dynamic Programming}
-	\chapter{Introduction}
+		\chapter{Shortest-Path Problem}
 
-	\chapter{Exercises}
+		\chapter{Minimum Spanning Tree Problem}
 
-\part{Nonlinear Programming}
-	\chapter{Introduction}
+		\chapter{Maximum Flow Problem}
 
-	\chapter{Exercises}
+		\chapter{Minimum Cost Flow Problem}
 
-\part{Heuristics ans Meta-heuristics}
-	\chapter{Introduction}
+		\chapter{Assignment and Matching Problem}
 
-	\chapter{Exercises}
+		\chapter{Graph Algorithms}
 
-\part{Computational Complexity}
-	\chapter{Introduction}
+	\part{Integer and Combinatorial Programming}
+		\chapter{Formulation}
+			\section{Typical Problems}
 
-	\chapter{Exercises}
+			\section{Integer Programming Formulation Skills}
+				\subsection{A Variable Taking Discontinuous Values}
+					\framebox{\textbf{Description:}} In algebraic notation: 
+					\begin{equation}
+						x = 0,\quad \text{or} \quad l\le x \le u \nonumber
+					\end{equation}
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						& x \le uy\nonumber \\
+						& x \ge ly \nonumber \\
+						& y \in \{0, 1\} \nonumber
+					\end{align}
+					where
+					\begin{equation}y=\begin{cases}0, & \text{if }x=0 \\ 1, & \text{if } l\le x \le u\end{cases}\nonumber \end{equation}
+						
+				\subsection{Fixed Costs}
+					\framebox{\textbf{Description:}} In algebraic notation: 
+					\begin{equation}
+						C(x) = \begin{cases} 0 & \text{for } x=0 \\ k + cx & \text{for } x > 0 \end{cases} \nonumber
+					\end{equation}
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						& C^*(x, y) = ky+cx\nonumber\\
+						& x \le My \nonumber \\
+						& x \ge 0 \nonumber\\
+						& y \in \{0, 1\} \nonumber
+					\end{align}
+					where
+					\begin{equation}y=\begin{cases}0, & \text{if }x=0 \\ 1, & \text{if }x\ge 0\end{cases}\nonumber \end{equation}
+				
+				\subsection{Either-or Constraints}
+					\framebox{\textbf{Description:}} In algebraic notation: 
+					\begin{equation}
+						\sum_{j\in J} a_{1j} x_j \le b_1 \text{ or } \sum_{j\in J} a_{2j} x_j \le b_2 \nonumber
+					\end{equation}
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						& \sum_{j\in J} a_{1j} x_j \le b_1 + M_1y \nonumber \\
+						& \sum_{j\in J} a_{2j} x_j \le b_2 + M_1(1-y) \nonumber \\
+						& y \in \{0, 1\} \nonumber
+					\end{align}
+					where
+					\begin{equation}y=\begin{cases}0, & \text{if }\sum_{j\in J} a_{1j} x_j \le b_1 \\ 1, & \text{if } \sum_{j\in J} a_{2j} x_j \le b_2\end{cases}\nonumber \end{equation}
+					Notice that the sign before $M$ is determined by the inequality $\ge$ or $\le$, if it is \lq\lq{}$\ge$\rq\rq{}, use \lq\lq{}$-$\rq\rq{}, if it \lq\lq{}$\le$\rq\rq{}, use \lq\lq{}+\rq\rq{}.
+				
+				\subsection{Conditional Constraints}
+					\framebox{\textbf{Description:}} If constraint A is satisfied, then constraint B must also be satisfied
+					\begin{equation}
+						\text{If} \quad \sum_{j\in J} a_{1j} x_j \le b_1 \text{ then } \sum_{j\in J} a_{2j} x_j \le b_2 \nonumber
+					\end{equation}
+					The key part is to find the opposite of the first condition. We are using $A\Rightarrow B \Leftrightarrow \neg B \Rightarrow \neg A$\\
+					Therefore it is equivalent to
+					\begin{equation}
+						\sum_{j\in J} a_{1j} x_j > b_1 \text{ or } \sum_{j\in J} a_{2j} x_j \le b_2 \nonumber
+					\end{equation}
+					Furthermore, it is equivalent to
+					\begin{equation}
+						\sum_{j\in J} a_{1j} x_j \ge b_1 + \epsilon \text{ or } \sum_{j\in J} a_{2j} x_j \le b_2 \nonumber
+					\end{equation}
+					Where $\epsilon$ is a very small positive number.\\
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						& \sum_{j\in J} a_{1j} x_j \ge b_1 + \epsilon -  M_2y \nonumber \\
+						& \sum_{j\in J} a_{2j} x_j \le b_2 + M_2(1-y) \nonumber \\
+						& y \in \{0, 1\} \nonumber
+					\end{align}	
+				
+				\subsection{Special Ordered Sets}
+					\framebox{\textbf{SOS1 Description}} Out of a set of yes-no decisions, at most one decision variable can be yes. \
+					\begin{align}
+						x_1=1,x_2=x_3&=\dots=x_n=0 \nonumber \\
+						&\text{or} \nonumber \\
+						x_2=1, x_1=x_3&=\dots=x_n=0 \nonumber \\
+						&\text{or ...} \nonumber
+					\end{align} 
+					\framebox{\textbf{Modeling:}}
+					\begin{equation} \sum_{i} x_i = 1, \quad i \in N\nonumber \end{equation}
+					\framebox{\textbf{SOS2 Description 1}} Out of a set of binary variables, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list.\\
+					\framebox{\textbf{Modeling:}}
+					If $x_1, x_2, ... , x_n$ is a SOS2, then
+					\begin{align}
+						& \sum_{i=1}^{n} x_i \le 2 \nonumber \\
+						& x_i + x_j \le 1, \forall i \in \{1, 2,..., n\}, j \in \{i+2, i+3, ..., n\} \nonumber \\
+						&x_i \in \{0, 1\}\nonumber
+					\end{align}
+					\framebox{\textbf{SOS2 Description 2}} There is another type of definition, that is out of a set of nonnegative variables \textbf{not binary here}, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list. All variables summing to 1.\\
+					This definition of SOS2 is used in the following section \textit{Piecewise Linear Formulations}\\
+									
+				\subsection{Piecewise Linear Formulations}
+					\framebox{\textbf{Description:}} The objective function is a sequence of line segments, e.g. $y=f(x), $ consists $k-1$ linear segments going through $k$ given points $(x_1, y_1), (x_2, y_2), ... ,(x_k, y_k)$.\\
+					Denote 
+					\begin{equation}d_i=\begin{cases}1, & x\in (x_i, x_{i+1})\\0, & \text{otherwise} \end{cases}\nonumber\end{equation}
+					Then the objective function is
+					\begin{equation}\sum_{i \in \{1, 2, ..., k-1\}} y = d_if_i(x)\nonumber \end{equation} 
+					\framebox{\textbf{Modeling:}} Given that objective function as a piecewise linear formulation, we can have these constraints\\
+					\begin{align}
+						&\sum_{i \in \{1, 2, ..., k-1\}} d_i =1 \nonumber \\
+						&d_i \in \{0, 1\}, i \in \{1, 2, ..., k-1\} \nonumber \\
+						& x = \sum_{i \in \{1, 2, ..., k\}} w_i x_i \nonumber \\
+						& y = \sum_{i \in \{1, 2, ..., k\}} w_i y_i \nonumber \\
+						& w_1 \le d_1 \nonumber \\
+						& w_i \le d_{i-1} + d{i}, i \in \{2, 3, ..., k-1\} \nonumber \\
+						& w_k \le d_{k-1} \nonumber
+					\end{align}
+					In this case, $ w_i \in SOS2$ (second definition)		
+										
+				\subsection{Conditional Binary Variables}
+					\framebox{\textbf{Description:}} Choose at most $n$ binary variable to be 1 out of  $x_1, x_2, ... x_m, m\ge n$. If $n=1$ then it is SOS1.\\
+					\framebox{\textbf{Modeling:}}
+					\begin{equation}
+						\sum_{k\in \{1,2,...,m\}} x_k \le n\nonumber
+					\end{equation}
+					\framebox{\textbf{Description:}} Choose exactly $n$ binary variable to be 1 out of  $x_1, x_2, ... x_m, m\ge n$\\
+					\framebox{\textbf{Modeling:}}
+					\begin{equation}
+						\sum_{k\in \{1,2,...,m\}} x_k = n\nonumber
+					\end{equation}
+					\framebox{\textbf{Description:}} Choose $x_j$ only if $x_k = 1$\\
+					\framebox{\textbf{Modeling:}}
+					\begin{equation}x_j = x_k \nonumber \end{equation}
+					\framebox{\textbf{Description:}} \lq\lq{}and\rq\rq{} condition, iff $x_1, x_2, ... , x_m =1$ then $y=1$\\
+					\framebox{\textbf{Modeling:}}
+					\begin{align}
+						& y \le x_i, i\in \{1, 2, ..., m\} \nonumber \\
+						& y \ge \sum_{i \in \{1, 2, ..., m\}} x_i - (m - 1) \nonumber
+					\end{align}
 
-\part{Game Theory}
-	\chapter{Introduction}
+				\subsection{Elimination of Products of Variables}
+					\framebox{\textbf{Description:}} For variables $x_1$ and $x_2$,
+					\begin{equation}y = x_1 x_2\nonumber\end{equation}
+					\framebox{\textbf{Modeling:}} If $x_1, x_2$ are binary, it is the same as \lq\lq{}and\rq\rq{} condition of binary variables.\\
+					If $x_1$ is binary, while $x_2$ is continuous and $0 \le x_2 \le u$, then
+					\begin{align}
+						y &\le ux_1 \nonumber \\
+						y &\le x_2 \nonumber \\
+						y &\ge x_2 - u(1- x_1) \nonumber \\
+						y &\ge 0 \nonumber
+					\end{align}
+					If both $x_1$ and $x_2$ are continuous, it is non-linear, we can use Piecewise linear formulation to simulate.
 
-	\chapter{Exercises}
+		\chapter{Branch and Bound}
 
-\part{Decision Analysis}
-	\chapter{Introduction}
+		\chapter{Branch and Cut}
 
-	\chapter{Exercises}
+		\chapter{Packing and Matching}
 
-\part{Probability and Stochastic Processes}
-	\chapter{Introduction}
+		\chapter{Traveling Salesman Problem}
 
-	\chapter{Exercises}
+		\chapter{Knapsack Problem}
 
-\part{Markov Chains}
-	\chapter{Introduction}
+	\part{Nonlinear Programming}
+		\chapter{KKT Optimality Conditions}
 
-	\chapter{Discrete-Time Markov Chains}
+		\chapter{Lagrangian Duality}
 
-	\chapter{Continuous-Time Markov Chains}
+		\chapter{Unconstrained Optimization}
 
-	\chapter{Exercises}
+		\chapter{Penalty and Barrier Functions}
 
-\part{Queuing Theory}
-	\chapter{Introduction}
+	\part{Algorithms and Computational Complexity}
+		\chapter{Computational Complexity}
 
-	\chapter{Queuing Model}
+		\chapter{Sorting}
+			\section{Elementary Sorting Algorithms}
 
-	\chapter{Birth-Death Process and M/M/C/K}
+			\section{Heap-sort}
 
-	\chapter{Phase-Type Queue}
+			\section{Quick-sort}
 
-	\chapter{Bulk Queue}
+			\section{Sorting in Linear Time}
 
-	\chapter{M/G/1 and G/M/1}
+			\section{Medians and Order Statistics}
 
-	\chapter{Queuing Network}
+		\chapter{Data Structures}
+			\section{Elementary Data Structures}
 
-	\chapter{Exercises}
+			\section{Hash Tables}
 
-\part{Inventory Theory}
-	\chapter{Introduction}
+			\section{Binary Search Trees}
 
-	\chapter{Exercises}
+			\section{Red-Black Trees}
 
-\part{Reliability Theory}
-	\chapter{Introduction}
+			\section{B-Trees}
 
-	\chapter{Exercises}
+			\section{Fibonacci Heaps}
 
-\part{Bayesian Statistic}
-	\chapter{Introduction}
+			\section{van Emde Boas Trees}
 
-	\chapter{Exercises}
+		\chapter{Design and Analysis Techniques}
+			\section{Dynamic Programming}
 
-\part{Classical Statistic}
-	\chapter{Introduction}
+			\section{Greedy Algorithms}
 
-	\chapter{Exercises}
+			\section{Amortized Analysis}
 
-\part{Simulation}
-	\chapter{Introduction}
+			\section{Multi-threaded Algorithms}
 
-	\chapter{Exercises}
+			\section{Matrix Operations}
+
+			\section{Polynomials and the FFT}
+
+			\section{Number-Theoretic Algorithms}
+
+			\section{String Matching}
+
+			\section{Computational Geometry}
+
+			\section{NP-Completeness}
+
+			\section{Approximation Algorithms}
+
+	\part{Heuristics ans Meta-heuristics}
+
+	\part{Game Theory}
+		\chapter{Games with Ordinal Payoffs}
+			\section{Ordinal Games in Strategic Form}
+
+			\section{Perfect-information Games}
+
+			\section{General Dynamic Games}
+
+		\chapter{Games with Cardinal Payoffs}
+			\section{Expected Utility Theory}
+
+			\section{Strategic-form Games}
+
+			\section{Extensive-form Games}
+
+		\chapter{Knowledge, Common Knowledge, Beliefs}
+			\section{Common Knowledge}
+
+			\section{Adding Beliefs to Knowledge}
+
+			\section{Rationality}
+
+		\chapter{Refinements of Subgame-perfect Equilibrium}
+			\section{Weak Sequential Equilibrium}
+
+			\section{Sequential Equilibrium}
+
+			\section{Perfect Bayesian Equilibrium}
+
+		\chapter{Incomplete Information}
+			\section{Static Games}
+
+			\section{Dynamic Games}
+
+			\section{The Type-Space Approach}
+
+	\part{Decision Analysis}
+
+	\part{Probability, Stochastic Processes and Markov Chains}
+		\chapter{Discrete-Time Markov Chains}
+
+		\chapter{Continuous-Time Markov Chains}
+
+	\part{Queuing Theory}
+		\chapter{Queuing Model}
+
+		\chapter{Birth-and-Death Queuing Models}
+
+		\chapter{Multidimensional Birth-and-Death Queuing Models}
+
+		\chapter{Phase-Type Queue}
+
+		\chapter{Bulk Queue}
+
+		\chapter{Imbedded-Markov-Chain Queuing Models}
+
+		\chapter{Queuing Network}
+
+	\part{Inventory Theory}
+
+	\part{Reliability Theory}
+
+		\section{Maintenance Optimization}
+
+	\part{Bayesian Statistic}
+
+	\part{Classical Statistic}
+
+	\part{Simulation}
 
 \end{document}
