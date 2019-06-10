@@ -1,0 +1,141 @@
+\contentsline {part}{I\hspace {1em}Preliminary Topics}{7}{part.1}
+\contentsline {chapter}{\numberline {1}Review of Linear Algebra}{9}{chapter.1}
+\contentsline {chapter}{\numberline {2}Convex Sets}{11}{chapter.2}
+\contentsline {chapter}{\numberline {3}Convex Functions and Generalizations}{13}{chapter.3}
+\contentsline {part}{II\hspace {1em}Linear Programming}{15}{part.2}
+\contentsline {chapter}{\numberline {4}Formulation}{17}{chapter.4}
+\contentsline {section}{\numberline {4.1}Typical Problems}{17}{section.4.1}
+\contentsline {section}{\numberline {4.2}Formulation Skills}{17}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Absolute Value}{17}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}A Minimax Objective}{17}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}A fractional Objective}{18}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}A range Constraint}{18}{subsection.4.2.4}
+\contentsline {chapter}{\numberline {5}Simplex Method}{19}{chapter.5}
+\contentsline {section}{\numberline {5.1}Basic Feasible Solutions and Extreme Points}{19}{section.5.1}
+\contentsline {section}{\numberline {5.2}Simplex Method}{19}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Simplex Method Algorithm}{19}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Simplex Method Tableau}{19}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Simplex Method as a Search Algorithm}{19}{subsection.5.2.3}
+\contentsline {section}{\numberline {5.3}Revised Simplex Method}{19}{section.5.3}
+\contentsline {section}{\numberline {5.4}Simplex Method with Bounded Variables}{19}{section.5.4}
+\contentsline {section}{\numberline {5.5}Artificial Variable}{19}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}Two-Phase Method}{19}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}Big-M Method}{19}{subsection.5.5.2}
+\contentsline {subsection}{\numberline {5.5.3}Single Artificial Variable Technique}{19}{subsection.5.5.3}
+\contentsline {section}{\numberline {5.6}Degeneracy and Cycling}{19}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}Degeneracy}{19}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}Cycling}{19}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}Cycling Prevention Rules}{19}{subsection.5.6.3}
+\contentsline {subsubsection}{Lexicographic Rule}{19}{section*.2}
+\contentsline {subsubsection}{Bland's Rule}{19}{section*.3}
+\contentsline {subsubsection}{Successive Ratio Rule}{19}{section*.4}
+\contentsline {chapter}{\numberline {6}Duality Theory and Sensitivity Analysis}{21}{chapter.6}
+\contentsline {chapter}{\numberline {7}Decomposition Principle}{23}{chapter.7}
+\contentsline {chapter}{\numberline {8}Ellipsoid Algorithm}{25}{chapter.8}
+\contentsline {chapter}{\numberline {9}Projective Algorithm}{27}{chapter.9}
+\contentsline {chapter}{\numberline {10}Interior-Point Algorithm}{29}{chapter.10}
+\contentsline {part}{III\hspace {1em}Graph and Network Theory}{31}{part.3}
+\contentsline {chapter}{\numberline {11}Paths, Trees, and Cycles}{33}{chapter.11}
+\contentsline {chapter}{\numberline {12}Shortest-Path Problem}{35}{chapter.12}
+\contentsline {chapter}{\numberline {13}Minimum Spanning Tree Problem}{37}{chapter.13}
+\contentsline {chapter}{\numberline {14}Maximum Flow Problem}{39}{chapter.14}
+\contentsline {chapter}{\numberline {15}Minimum Cost Flow Problem}{41}{chapter.15}
+\contentsline {chapter}{\numberline {16}Assignment and Matching Problem}{43}{chapter.16}
+\contentsline {chapter}{\numberline {17}Graph Algorithms}{45}{chapter.17}
+\contentsline {part}{IV\hspace {1em}Integer and Combinatorial Programming}{47}{part.4}
+\contentsline {chapter}{\numberline {18}Formulation}{49}{chapter.18}
+\contentsline {section}{\numberline {18.1}Typical Problems}{49}{section.18.1}
+\contentsline {section}{\numberline {18.2}Integer Programming Formulation Skills}{49}{section.18.2}
+\contentsline {subsection}{\numberline {18.2.1}A Variable Taking Discontinuous Values}{49}{subsection.18.2.1}
+\contentsline {subsection}{\numberline {18.2.2}Fixed Costs}{49}{subsection.18.2.2}
+\contentsline {subsection}{\numberline {18.2.3}Either-or Constraints}{49}{subsection.18.2.3}
+\contentsline {subsection}{\numberline {18.2.4}Conditional Constraints}{50}{subsection.18.2.4}
+\contentsline {subsection}{\numberline {18.2.5}Special Ordered Sets}{50}{subsection.18.2.5}
+\contentsline {subsection}{\numberline {18.2.6}Piecewise Linear Formulations}{51}{subsection.18.2.6}
+\contentsline {subsection}{\numberline {18.2.7}Conditional Binary Variables}{51}{subsection.18.2.7}
+\contentsline {subsection}{\numberline {18.2.8}Elimination of Products of Variables}{52}{subsection.18.2.8}
+\contentsline {chapter}{\numberline {19}Branch and Bound}{53}{chapter.19}
+\contentsline {chapter}{\numberline {20}Branch and Cut}{55}{chapter.20}
+\contentsline {chapter}{\numberline {21}Packing and Matching}{57}{chapter.21}
+\contentsline {chapter}{\numberline {22}Traveling Salesman Problem}{59}{chapter.22}
+\contentsline {chapter}{\numberline {23}Knapsack Problem}{61}{chapter.23}
+\contentsline {part}{V\hspace {1em}Nonlinear Programming}{63}{part.5}
+\contentsline {chapter}{\numberline {24}KKT Optimality Conditions}{65}{chapter.24}
+\contentsline {chapter}{\numberline {25}Lagrangian Duality}{67}{chapter.25}
+\contentsline {chapter}{\numberline {26}Unconstrained Optimization}{69}{chapter.26}
+\contentsline {chapter}{\numberline {27}Penalty and Barrier Functions}{71}{chapter.27}
+\contentsline {part}{VI\hspace {1em}Algorithms and Computational Complexity}{73}{part.6}
+\contentsline {chapter}{\numberline {28}Computational Complexity}{75}{chapter.28}
+\contentsline {chapter}{\numberline {29}Sorting}{77}{chapter.29}
+\contentsline {section}{\numberline {29.1}Elementary Sorting Algorithms}{77}{section.29.1}
+\contentsline {section}{\numberline {29.2}Heap-sort}{77}{section.29.2}
+\contentsline {section}{\numberline {29.3}Quick-sort}{77}{section.29.3}
+\contentsline {section}{\numberline {29.4}Sorting in Linear Time}{77}{section.29.4}
+\contentsline {section}{\numberline {29.5}Medians and Order Statistics}{77}{section.29.5}
+\contentsline {chapter}{\numberline {30}Data Structures}{79}{chapter.30}
+\contentsline {section}{\numberline {30.1}Elementary Data Structures}{79}{section.30.1}
+\contentsline {section}{\numberline {30.2}Hash Tables}{79}{section.30.2}
+\contentsline {section}{\numberline {30.3}Binary Search Trees}{79}{section.30.3}
+\contentsline {section}{\numberline {30.4}Red-Black Trees}{79}{section.30.4}
+\contentsline {section}{\numberline {30.5}B-Trees}{79}{section.30.5}
+\contentsline {section}{\numberline {30.6}Fibonacci Heaps}{79}{section.30.6}
+\contentsline {section}{\numberline {30.7}van Emde Boas Trees}{79}{section.30.7}
+\contentsline {chapter}{\numberline {31}Design and Analysis Techniques}{81}{chapter.31}
+\contentsline {section}{\numberline {31.1}Dynamic Programming}{81}{section.31.1}
+\contentsline {section}{\numberline {31.2}Greedy Algorithms}{81}{section.31.2}
+\contentsline {section}{\numberline {31.3}Amortized Analysis}{81}{section.31.3}
+\contentsline {section}{\numberline {31.4}Multi-threaded Algorithms}{81}{section.31.4}
+\contentsline {section}{\numberline {31.5}Matrix Operations}{81}{section.31.5}
+\contentsline {section}{\numberline {31.6}Polynomials and the FFT}{81}{section.31.6}
+\contentsline {section}{\numberline {31.7}Number-Theoretic Algorithms}{81}{section.31.7}
+\contentsline {section}{\numberline {31.8}String Matching}{81}{section.31.8}
+\contentsline {section}{\numberline {31.9}Computational Geometry}{81}{section.31.9}
+\contentsline {section}{\numberline {31.10}NP-Completeness}{81}{section.31.10}
+\contentsline {section}{\numberline {31.11}Approximation Algorithms}{81}{section.31.11}
+\contentsline {part}{VII\hspace {1em}Heuristics ans Meta-heuristics}{83}{part.7}
+\contentsline {part}{VIII\hspace {1em}Game Theory}{85}{part.8}
+\contentsline {chapter}{\numberline {32}Games with Ordinal Payoffs}{87}{chapter.32}
+\contentsline {section}{\numberline {32.1}Ordinal Games in Strategic Form}{87}{section.32.1}
+\contentsline {section}{\numberline {32.2}Perfect-information Games}{87}{section.32.2}
+\contentsline {section}{\numberline {32.3}General Dynamic Games}{87}{section.32.3}
+\contentsline {chapter}{\numberline {33}Games with Cardinal Payoffs}{89}{chapter.33}
+\contentsline {section}{\numberline {33.1}Expected Utility Theory}{89}{section.33.1}
+\contentsline {section}{\numberline {33.2}Strategic-form Games}{89}{section.33.2}
+\contentsline {section}{\numberline {33.3}Extensive-form Games}{89}{section.33.3}
+\contentsline {chapter}{\numberline {34}Knowledge, Common Knowledge, Beliefs}{91}{chapter.34}
+\contentsline {section}{\numberline {34.1}Common Knowledge}{91}{section.34.1}
+\contentsline {section}{\numberline {34.2}Adding Beliefs to Knowledge}{91}{section.34.2}
+\contentsline {section}{\numberline {34.3}Rationality}{91}{section.34.3}
+\contentsline {chapter}{\numberline {35}Refinements of Subgame-perfect Equilibrium}{93}{chapter.35}
+\contentsline {section}{\numberline {35.1}Weak Sequential Equilibrium}{93}{section.35.1}
+\contentsline {section}{\numberline {35.2}Sequential Equilibrium}{93}{section.35.2}
+\contentsline {section}{\numberline {35.3}Perfect Bayesian Equilibrium}{93}{section.35.3}
+\contentsline {chapter}{\numberline {36}Incomplete Information}{95}{chapter.36}
+\contentsline {section}{\numberline {36.1}Static Games}{95}{section.36.1}
+\contentsline {section}{\numberline {36.2}Dynamic Games}{95}{section.36.2}
+\contentsline {section}{\numberline {36.3}The Type-Space Approach}{95}{section.36.3}
+\contentsline {part}{IX\hspace {1em}Decision Analysis}{97}{part.9}
+\contentsline {part}{X\hspace {1em}Probability, Stochastic Processes and Markov Chains}{99}{part.10}
+\contentsline {chapter}{\numberline {37}Probability}{101}{chapter.37}
+\contentsline {chapter}{\numberline {38}Random Variables}{103}{chapter.38}
+\contentsline {section}{\numberline {38.1}Relationship between Some Random Variables}{103}{section.38.1}
+\contentsline {section}{\numberline {38.2}Discrete Random Variables}{104}{section.38.2}
+\contentsline {section}{\numberline {38.3}Continuous Random Variables}{104}{section.38.3}
+\contentsline {chapter}{\numberline {39}Limit Theorems}{105}{chapter.39}
+\contentsline {chapter}{\numberline {40}The Bernoulli and Poisson Process}{107}{chapter.40}
+\contentsline {chapter}{\numberline {41}Discrete-Time Markov Chains}{109}{chapter.41}
+\contentsline {chapter}{\numberline {42}Continuous-Time Markov Chains}{111}{chapter.42}
+\contentsline {part}{XI\hspace {1em}Queuing Theory}{113}{part.11}
+\contentsline {chapter}{\numberline {43}Queuing Model}{115}{chapter.43}
+\contentsline {chapter}{\numberline {44}Birth-and-Death Queuing Models}{117}{chapter.44}
+\contentsline {chapter}{\numberline {45}Multidimensional Birth-and-Death Queuing Models}{119}{chapter.45}
+\contentsline {chapter}{\numberline {46}Phase-Type Queue}{121}{chapter.46}
+\contentsline {chapter}{\numberline {47}Bulk Queue}{123}{chapter.47}
+\contentsline {chapter}{\numberline {48}Imbedded-Markov-Chain Queuing Models}{125}{chapter.48}
+\contentsline {chapter}{\numberline {49}Queuing Network}{127}{chapter.49}
+\contentsline {part}{XII\hspace {1em}Inventory Theory}{129}{part.12}
+\contentsline {part}{XIII\hspace {1em}Reliability Theory}{131}{part.13}
+\contentsline {chapter}{\numberline {50}Maintenance Optimization}{133}{chapter.50}
+\contentsline {part}{XIV\hspace {1em}Bayesian Statistic}{135}{part.14}
+\contentsline {part}{XV\hspace {1em}Classical Statistic}{137}{part.15}
+\contentsline {part}{XVI\hspace {1em}Simulation}{139}{part.16}
