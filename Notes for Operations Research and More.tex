@@ -160,6 +160,25 @@
 		\chapter{Assignment and Matching Problem}
 
 		\chapter{Graph Algorithms}
+		
+		\chapter{Polygon Triangulation}
+			\section{Types of Polygons}
+				\framebox{\textbf{Def:}} A \textbf{simple polygon} is a closed polygonal curve without self-intersection.
+				\begin{figure}[h!]
+					\centering
+					\begin{tikzpicture}
+						\draw (0, 0) -- (3, -1) -- (4, 3) -- (2, 4) -- (0, 0);
+						\draw (6, 3) -- (8, -1) -- (9, 2) -- (5.5, 0) -- (6, 3);
+						\node at (2, -1.5) [below] {Simple Polygon};
+						\node at (7.5, -1.5) [below] {Non-simple Polygon};
+					\end{tikzpicture}
+				\end{figure}
+				Polygons are basic building blocks in most geometric applications. It can model arbitrarily complex shapes, and apply simple algorithms and algebraic representation/manipulation.
+			\section{Triangulation}
+				\framebox{\textbf{Def:}} \textbf{Triangulation} is to partition polygon $P$ into non-overlapping triangles using diagonals only. It reduces complex shapes to collection of simpler shapes. Every simple $n$-gon admits a triangulation which has $n-2$ triangles.
+				
+			\section{Art Gallery Theorem}
+				\framebox{\textbf{Scenario}}: The floor plan of an art gallery modeled as a simple polygon with $n$ vertices, there are guards which is stationed at fixed positions with 360 degree vision but cannot see through the walls. How many guards does the art gallery need for the security? (Fun fact: This problem was posted to Vasek Chvatal by Victor Klee in 1973)				
 
 	\part{Integer and Combinatorial Programming}
 		\chapter{Formulation}
