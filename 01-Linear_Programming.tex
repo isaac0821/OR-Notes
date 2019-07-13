@@ -1,0 +1,111 @@
+\part{Linear Programming}
+	\chapter{Formulation}
+		\section{Typical Problems}
+
+		\section{Formulation Skills}
+			\subsection{Absolute Value}
+				\framebox{\textbf{Description:}}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_j|x_j|, \quad c_j > 0 \nonumber\\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+					                  & x_j \quad \text{unrestricted}, \quad \forall j\in J \nonumber
+				\end{align}
+				\framebox{\textbf{Modeling:}}
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_j(x_j^+ + x_j^-), \quad c_j > 0 \nonumber\\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}(x_j^+ - x_j^-) \gtreqless b_i, \quad \forall i\in I \nonumber\\
+					                  & x_j^+, x_j^- \ge 0, \quad \forall j\in J \nonumber
+				\end{align}
+
+			\subsection{A Minimax Objective}
+				\framebox{\textbf{Description:}}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \max_{k\in K}\sum_{j\in J}c_{kj}x_j \nonumber\\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+					                  & x_j \ge 0, \quad \forall j\in J \nonumber
+				\end{align}
+				\framebox{\textbf{Modeling:}}
+				\begin{align}
+					\min \quad & z \nonumber\\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+									  & \sum_{j\in J}c_{kj}x_j \le z, \quad \forall k\in K \nonumber\\
+					                  & x_j \ge 0, \quad \forall j\in J \nonumber
+				\end{align}
+			\subsection{A fractional Objective}
+				\framebox{\textbf{Description:}}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \frac{\sum_{j\in J}c_{j}x_j + \alpha}{\sum_{j\in J}d_{j}x_j + \beta} \nonumber\\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+					                  & x_j \ge 0, \quad \forall j\in J \nonumber
+				\end{align}
+				\framebox{\textbf{Modeling:}}
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_{j}x_jt + \alpha t \nonumber\\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \nonumber\\
+									  & \sum_{j\in J}d_jx_jt + \beta t = 1\nonumber\\
+									  & t > 0 \nonumber\\
+					                  & x_j \ge 0, \quad \forall j\in J \nonumber\\
+					                  & (t = \frac1{\sum_{j\in J}d_jx_j + \beta}) \nonumber
+				\end{align}
+			\subsection{A range Constraint}
+				\framebox{\textbf{Description:}}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_jx_j \nonumber\\
+					\text{s.t.} \quad & d_i\le \sum_{j\in J}a_{ij}x_j \le e_i, \quad \forall i\in I \nonumber\\
+					                  & x_j \ge 0, \quad \forall j\in J \nonumber
+				\end{align}
+				\framebox{\textbf{Modeling:}}
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_jx_j, \quad c_j > 0 \nonumber\\
+					\text{s.t.} \quad & u_i + \sum_{j\in J}a_{ij}x_j = e_i, \quad \forall i\in I \nonumber\\
+					                  & x_j \ge 0, \quad \forall j\in J \nonumber\\
+					                  & 0\le u_i \le e_i-d_i, \quad \forall i\in I \nonumber
+				\end{align}
+
+	\chapter{Simplex Method}
+		\section{Basic Feasible Solutions and Extreme Points}
+
+		\section{Simplex Method}
+
+			\subsection{Simplex Method Algorithm}
+
+			\subsection{Simplex Method Tableau}
+
+			\subsection{Simplex Method as a Search Algorithm}
+
+		\section{Revised Simplex Method}
+
+		\section{Simplex Method with Bounded Variables}
+
+		\section{Artificial Variable}
+			\subsection{Two-Phase Method}
+
+			\subsection{Big-M Method}
+
+			\subsection{Single Artificial Variable Technique}
+
+		\section{Degeneracy and Cycling}
+			\subsection{Degeneracy}
+
+			\subsection{Cycling}
+
+			\subsection{Cycling Prevention Rules}
+				\subsubsection{Lexicographic Rule}
+
+				\subsubsection{Bland's Rule}
+
+				\subsubsection{Successive Ratio Rule}
+
+	\chapter{Duality Theory and Sensitivity Analysis}
+
+	\chapter{Decomposition Principle}
+
+	\chapter{Ellipsoid Algorithm}
+
+	\chapter{Projective Algorithm}
+
+	\chapter{Interior-Point Algorithm}
