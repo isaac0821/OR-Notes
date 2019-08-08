@@ -26,6 +26,7 @@
 				\end{tikzpicture}
 			\end{figure}\\
 			Polygons are basic building blocks in most geometric applications. It can model arbitrarily complex shapes, and apply simple algorithms and algebraic representation/manipulation.
+			
 		\section{Triangulation}
 			\framebox{\textbf{Def:}} \textbf{Triangulation} is to partition polygon $P$ into non-overlapping triangles using diagonals only. It reduces complex shapes to collection of simpler shapes. Every simple $n$-gon admits a triangulation which has $n-2$ triangles.\\
 			\begin{figure}[h!]
@@ -43,7 +44,7 @@
 			\end{figure}\\
 			\framebox{\textbf{Theorem:}} Every polygon has a triangulation\\  
 			\framebox{\textbf{Lemma:}} Every polygon with more than three vertices has a diagonal.\\
-			\framebox{\textbf{Proof:}}(by Meisters, 1975) Let $P$ be a polygon with more than three vertices. Every vertex of a $P$ is either \textit{convex} or \textit{concave}. W.L.O.G.(any polygon must has convex vertex) Assume $p$ is a convex vertex. Denote the neighbors of $p$ as $q$ and $r$. If $\bar{qr}$ is a diagonal, done, and we call $\triangle{pqr}$ is an \textit{ear}. If $\triangle{pqr}$ is not an ear, it means at least one vertex is inside $\triangle{pqr}$, assume among those vertexes inside $\triangle{pqr}$, $s$ is a vertex closest to $p$, then $\bar{ps}$ is a diagonal. 
+			\framebox{\textbf{Proof:}}(by Meisters, 1975) Let $P$ be a polygon with more than three vertices. Every vertex of a $P$ is either \textit{convex} or \textit{concave}. W.L.O.G.(any polygon must has convex corner) Assume $p$ is a convex vertex. Denote the neighbors of $p$ as $q$ and $r$. If $\bar{qr}$ is a diagonal, done, and we call $\triangle{pqr}$ is an \textit{ear}. If $\triangle{pqr}$ is not an ear, it means at least one vertex is inside $\triangle{pqr}$, assume among those vertexes inside $\triangle{pqr}$, $s$ is a vertex closest to $p$, then $\bar{ps}$ is a diagonal. 
 			
 		\section{Art Gallery Theorem}
 			\framebox{\textbf{Problem:}} The floor plan of an art gallery modeled as a simple polygon with $n$ vertices, there are guards which is stationed at fixed positions with 360 degree vision but cannot see through the walls. How many guards does the art gallery need for the security? (Fun fact: This problem was posted to Vasek Chvatal by Victor Klee in 1973)\\
@@ -58,5 +59,7 @@
 			\indent - Put ear back, coloring new vertex with the label not used by the boundary diagonal.
 
 		\section{Triangulation Algorithms}
+
+		\section{Shortest Path}
 
 
