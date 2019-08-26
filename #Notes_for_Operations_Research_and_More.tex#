@@ -35,7 +35,6 @@
 	\tikzstyle{process} = [rectangle, minimum width=2cm, minimum height=1cm, text centered, draw=black, inner sep=0.1cm]
 	\tikzstyle{decision} = [diamond, minimum width=2cm, minimum height=0cm, text centered, draw=black, inner sep=0cm]
 	\tikzstyle{arrow} = [thick,->,>=stealth]
-	\tikzstyle{link} = [thick, -]
 	\tikzstyle{circleNode} = [circle, minimum size = 1cm, text centered, draw=black, inner sep=0.1cm]
 
 \newcommand{\todo}[1]{

@@ -1,4 +1,71 @@
 \part{Graph and Network Theory}
+	\chapter{Graph Theory}
+		\section{Basic concepts}
+		A \textbf{Graph} G consists of a finite set $V(G)$ on vertices, a finite set $E(G)$ on edgesand an \textbf{incident relation} than associates with any edge $e\in E(G)$ an unordered pair of vertices not necessarily distinct called \textbf{ends}.
+
+		\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[node distance = 2cm]
+				\node (v_2) [circleNode] {$v_2$};
+				\node (v_3) [circleNode, right of = v_2] {$v_3$};
+				\node (v_1) [circleNode, below of = v_2] {$v_1$};
+				\node (v_4) [circleNode, below of = v_3] {$v_4$};
+				\node (v_5) [circleNode, right of = v_3] {$v_5$};
+				\node (v_6) [circleNode, below of = v_5] {$v_6$};
+				\draw [link] (v_2) -- node [left] {$e_1$} (v_1);
+				\draw [link] (v_2) -- node [below] {$e_2$} (v_4);
+				\draw [link] (v_1) to [out = 180, in = 270, looseness = 5] node [right] {$e_3$} (v_1);
+				\draw [link] (v_2) to [out = 45, in = 135] node [above] {$e_4$} (v_3);
+				\draw [link] (v_2) to [out = 315, in = 225] node [above] {$e_5$} (v_3);
+				\draw [link] (v_3) -- node [right] {$e_6$} (v_4);
+				\draw [link] (v_5) -- node [right] {$e_7$} (v_6);
+			\end{tikzpicture}			
+		\end{figure}
+
+		It can be represented as
+		\begin{align}
+			V = V(G) = \{v_1, v_2, v_3, v_4, v_5, v_6\} \\
+			E = E(G) = \{e_1, e_2, e_3, e_4, e_5, e_6, e_7\}\\
+			e_1 = v_1v_2, e_2 = v_2v_4, ...
+		\end{align}
+
+		Serveral concepts: \\
+		\indent - An edge with identical ends is called a \textbf{loop}\\
+		\indent - Two edges having the same ends are said to be \textbf{parallel}\\
+		\indent - A graph without loops or parallel edges is called \textbf{simple graph}\\
+		\indent - two edges of a graph are \textbf{adjancent} if they have a common end\\
+		\indent - two vertices are \textbf{adjancent} if they are jointed by an edge\\
+		
+
+	\section{Subgraph}
+		Given two graphs \textbf{G} and \textbf{H}, \textbf{H} is a \textbf{subgraph} of \textbf{G} if $V(H)\subseteq V(G)$, $E(H)\subseteqe E(G)$ and an edge has the smae ends in \textbf{H} as it does in \textbf{G}, if $E(H)\neq E(G)$ then \textbf{H} is a proper subgraph.
+
+		A subgraph \textbf{H} on \textbf{G} is \textbf{spanning} if $V(H) = V(G)$
+
+		For a subset $V^{'}\subseteq V(G)$ we define an \textbf{vertex-induced} subgraph $G[V^{'}]$ to be the subgraph with vertices $V^{'}$ and those edges of \textbf{G} having both ends in $V^{'}$
+
+		The \textbf{edge-induced} subgraph $G[E^{'}]$ has edges $E^{'}$ and those vertices of \textbf{G} that are ends to edges in \textbf{$E^{'}$}
+
+		If we combine node-indeced or edge-induced subgraphs $G(V^{'})$ and $G(V - V^{'})$, we cannot get the entire graph.
+
+		Let $v\in V(G)$, then the \textbf{degree} of $v\in V(G)$ denote by $d_G(v)$ is defines to be the number of edges incident of $v$. Loops counted twice.
+
+		\framebox{\textbf{Theorem:}} For any graph \textbf{G=(V, E)}
+		\begin{equation}
+			\sum_{v\in V}d(v) = 2|E|
+		\end{equation}
+
+		\framebox{\textbf{Proof:}}\\
+		$\forall$ edge $e=\mu v$ with $\mu \neq v$, $e$ is  and counted once for $\mu$ and once for $v$, a total of ture altogether. If $e=\mu \mu$, a loop, then if is counted twice for $\mu$
+
+		\framebox{\textbf{Corollary:}} Every graph has an even number of odd degree vertices.
+
+		\framebox{\textbf{Proof:}}\\
+		\begin{equation}
+			V = V_E\cup V_O \Rightarrow 
+			\sum_{v\in V}d(v) = \sum_{v\in V_E} d(v) + \sum_{v\in V_O}d(v) = 2|E|
+		\end{equation}
+
 	\chapter{Paths, Trees, and Cycles}
 
 	\chapter{Shortest-Path Problem}
