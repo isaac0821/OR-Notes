@@ -38,7 +38,7 @@
 		
 
 	\section{Subgraph}
-		Given two graphs \textbf{G} and \textbf{H}, \textbf{H} is a \textbf{subgraph} of \textbf{G} if $V(H)\subseteq V(G)$, $E(H)\subseteqe E(G)$ and an edge has the smae ends in \textbf{H} as it does in \textbf{G}, if $E(H)\neq E(G)$ then \textbf{H} is a proper subgraph.
+		Given two graphs \textbf{G} and \textbf{H}, \textbf{H} is a \textbf{subgraph} of \textbf{G} if $V(H)\subseteq V(G)$, $E(H)\subseteq E(G)$ and an edge has the smae ends in \textbf{H} as it does in \textbf{G}, if $E(H)\neq E(G)$ then \textbf{H} is a proper subgraph.
 
 		A subgraph \textbf{H} on \textbf{G} is \textbf{spanning} if $V(H) = V(G)$
 
@@ -50,21 +50,28 @@
 
 		Let $v\in V(G)$, then the \textbf{degree} of $v\in V(G)$ denote by $d_G(v)$ is defines to be the number of edges incident of $v$. Loops counted twice.
 
-		\framebox{\textbf{Theorem:}} For any graph \textbf{G=(V, E)}
-		\begin{equation}
-			\sum_{v\in V}d(v) = 2|E|
-		\end{equation}
+		\begin{theorem}
+			For any graph \textbf{G=(V, E)}
+			\begin{equation}
+				\sum_{v\in V}d(v) = 2|E|
+			\end{equation}			
+		\end{theorem}
 
-		\framebox{\textbf{Proof:}}\\
-		$\forall$ edge $e=\mu v$ with $\mu \neq v$, $e$ is  and counted once for $\mu$ and once for $v$, a total of ture altogether. If $e=\mu \mu$, a loop, then if is counted twice for $\mu$
+		\begin{proof}
+			$\forall$ edge $e=\mu v$ with $\mu \neq v$, $e$ is  and counted once for $\mu$ and once for $v$, a total of two altogether. If $e=\mu \mu$, a loop, then it is counted twice for $\mu$			
+		\end{proof}
 
-		\framebox{\textbf{Corollary:}} Every graph has an even number of odd degree vertices.
+		\begin{corollary}
+			Every graph has an even number of odd degree vertices.
+		\end{corollary}
 
-		\framebox{\textbf{Proof:}}\\
-		\begin{equation}
-			V = V_E\cup V_O \Rightarrow 
-			\sum_{v\in V}d(v) = \sum_{v\in V_E} d(v) + \sum_{v\in V_O}d(v) = 2|E|
-		\end{equation}
+		\begin{proof}
+			\begin{equation}
+				V = V_E\cup V_O \Rightarrow 
+				\sum_{v\in V}d(v) = \sum_{v\in V_E} d(v) + \sum_{v\in V_O}d(v) = 2|E|
+			\end{equation}			
+		\end{proof}
+
 
 	\chapter{Paths, Trees, and Cycles}
 

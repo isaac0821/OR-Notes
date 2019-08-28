@@ -38,6 +38,12 @@
 	\tikzstyle{link} = [thick, -]
 	\tikzstyle{circleNode} = [circle, minimum size = 1cm, text centered, draw=black, inner sep=0.1cm]
 
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{remark}{Remark}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
 \newcommand{\todo}[1]{
 	\vspace{5 mm}
 	\par
@@ -55,19 +61,18 @@
 	\par
 }
 
-\newcommand{\definition}[1]{
-	\vspace{5 mm}
-	\par
-	\noindent
-	\marginpar{\textsc{Definition}}
-	\framebox{
-		\begin{minipage}[l]
-		\bf
-		\end{minipage}
-	}
-	\vspace{5 mm}
-	\par
-}
+% \newcommand{\definition}[1]{
+% 	\vspace{5 mm}
+% 	\par
+% 	\noindent
+% 	\colorbox{cyan!10}{
+% 		\begin{minipage}[c]{0.95 \textwidth}
+% 			\textbf{\color{blue}Definition:}~#1
+% 		\end{minipage}
+% 	}
+% 	\vspace{5 mm}
+% 	\par
+% }
 
 \newcommand{\alert}[1]{
 	{\color{red}#1}
