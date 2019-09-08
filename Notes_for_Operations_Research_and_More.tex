@@ -62,28 +62,38 @@
 	\par
 }
 
-% \newcommand{\definition}[1]{
-% 	\vspace{5 mm}
-% 	\par
-% 	\noindent
-% 	\colorbox{cyan!10}{
-% 		\begin{minipage}[c]{0.95 \textwidth}
-% 			\textbf{\color{blue}Definition:}~#1
-% 		\end{minipage}
-% 	}
-% 	\vspace{5 mm}
-% 	\par
-% }
+\newcommand{\notice}[1]{
+	\vspace{5 mm}
+	\par
+	\noindent
+	\colorbox{gray!15}{
+		\begin{minipage}[c]{0.95 \textwidth}
+			\textbf{Notice:}~#1
+		\end{minipage}
+	}
+	\vspace{5 mm}
+	\par
+}
 
 \newcommand{\alert}[1]{
 	{\color{red}#1}
 }
 
-\newcommand{\edited}[1]{{\color{blue}#1}}
+\newcommand{\edited}[1]{
+	{\color{blue}#1}
+}
 
-\newcommand{\fixme}[1]{{\color{red}#1}\marginpar{\textsc{\color{red}fixme}}}
+\newcommand{\fixme}[1]{
+	{\color{red}#1}
+	\marginpar{
+		\textsc{
+			\color{red}
+			fixme
+		}
+	}
+}
 
-\newcommand{\note}[2][]{{\color{blue}#1	[\textsc{note}:~#2]}}
+% \newcommand{\note}[2][]{{\color{blue}#1	[\textsc{note}:~#2]}}
 
 \begin{document}
 	\maketitle

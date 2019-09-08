@@ -1,9 +1,11 @@
 \part{Graph and Network Theory}
-	\chapter{Graph Theory}
-		\section{Basic concepts}
-		
-		A \textbf{Graph} G consists of a finite set $V(G)$ on vertices, a finite set $E(G)$ on edgesand an \textbf{incident relation} than associates with any edge $e\in E(G)$ an unordered pair of vertices not necessarily distinct called \textbf{ends}.
+	\chapter{Basic concepts}
+		\section{Graph}
+		\begin{definition}[Graph]
+			A \textbf{graph} G consists of a finite set $V(G)$ on vertices, a finite set $E(G)$ on edges and an \textbf{incident relation} than associates with any edge $e\in E(G)$ an unordered pair of vertices not necessarily distinct called \textbf{ends}.
+		\end{definition}
 
+		For example, the following graph\\
 		\begin{figure}[h!]
 			\centering
 			\begin{tikzpicture}[node distance = 2cm]
@@ -17,79 +19,81 @@
 				\draw [link] (v_2) -- node [below] {$e_5$} (v_4);
 				\draw [link] (v_1) to [out = 180, in = 270, looseness = 5] node [right] {$e_1$} (v_1);
 				\draw [link] (v_2) to [out = 45, in = 135] node [above] {$e_3$} (v_3);
-				\draw [link] (v_2) to [out = 315, in = 225] node [above] {$e_4$} (v_3);
+				\draw [link] (v_2) -- node [above] {$e_4$} (v_3);
 				\draw [link] (v_3) -- node [right] {$e_6$} (v_1);
 				\draw [link] (v_5) -- node [right] {$e_7$} (v_6);
 			\end{tikzpicture}			
-		\end{figure}
-
-		It can be represented as
+		\end{figure}\\
+		can be represented as\\
 		\begin{align}
 			V = V(G) = \{v_1, v_2, v_3, v_4, v_5, v_6\} \\
 			E = E(G) = \{e_1, e_2, e_3, e_4, e_5, e_6, e_7\}\\
 			e_1 = v_1v_2, e_2 = v_2v_4, ...
 		\end{align}
 
-		Serveral concepts: \\
-		\indent - An edge with identical ends is called a \textbf{loop}\\
-		\indent - Two edges having the same ends are said to be \textbf{parallel}\\
-		\indent - A graph without loops or parallel edges is called \textbf{simple graph}\\
-		\indent - two edges of a graph are \textbf{adjancent} if they have a common end\\
-		\indent - two vertices are \textbf{adjancent} if they are jointed by an edge\\
-		
+		\begin{definition}[loop, parallel, simple graph]
+			An edge with identical ends is called a \textbf{loop}, Two edges having the same ends are said to be \textbf{parallel}, A graph without loops or parallel edges is called \textbf{simple graph}
+		\end{definition}
 
-	\section{Subgraph}
+		\begin{definition}[adjacent]
+			Two edges of a graph are \textbf{adjacent} if they have a common end, two vertices are \textbf{adjacent} if they are jointed by an edge.
+		\end{definition}
 
-		Given two graphs \textbf{G} and \textbf{H}, \textbf{H} is a \textbf{subgraph} of \textbf{G} if $V(H)\subseteq V(G)$, $E(H)\subseteq E(G)$ and an edge has the smae ends in \textbf{H} as it does in \textbf{G}, if $E(H)\neq E(G)$ then \textbf{H} is a proper subgraph.
+		\section{Subgraph}
+			\begin{definition}[subgraph]
+				Given two graphs $G$ and $H$, $H$ is a \textbf{subgraph} of $G$ if $V(H)\subseteq V(G)$, $E(H)\subseteq E(G)$ and an edge has the same ends in $H$ as it does in $G$. Furthermore, if $E(H)\neq E(G)$ then $H$ is a proper subgraph.
+ 			\end{definition}
+			
+			\begin{definition}[spanning]
+				A subgraph $H$ on $G$ is \textbf{spanning} if $V(H) = V(G)$
+			\end{definition}			
 
-		A subgraph \textbf{H} on \textbf{G} is \textbf{spanning} if $V(H) = V(G)$
+			For a subset $V^{'}\subseteq V(G)$ we define an \textbf{vertex-induced} subgraph $G[V^{'}]$ to be the subgraph with vertices $V^{'}$ and those edges of $G$ having both ends in $V^{'}$
 
-		For a subset $V^{'}\subseteq V(G)$ we define an \textbf{vertex-induced} subgraph $G[V^{'}]$ to be the subgraph with vertices $V^{'}$ and those edges of \textbf{G} having both ends in $V^{'}$
+			The \textbf{edge-induced} subgraph $G[E^{'}]$ has edges $E^{'}$ and those vertices of $G$ that are ends to edges in $E^{'}$
 
-		The \textbf{edge-induced} subgraph $G[E^{'}]$ has edges $E^{'}$ and those vertices of \textbf{G} that are ends to edges in \textbf{$E^{'}$}
+			If we combine node-induced or edge-induced subgraphs $G(V^{'})$ and $G(V - V^{'})$, we cannot always get the entire graph.
 
-		If we combine node-indeced or edge-induced subgraphs $G(V^{'})$ and $G(V - V^{'})$, we cannot get the entire graph.
+			Let $v\in V(G)$, then the \textbf{degree} of $v\in V(G)$ denote by $d_G(v)$ is defines to be the number of edges incident of $v$. Loops counted twice.
 
-		Let $v\in V(G)$, then the \textbf{degree} of $v\in V(G)$ denote by $d_G(v)$ is defines to be the number of edges incident of $v$. Loops counted twice.
+			\begin{theorem}
+				For any graph $G=(V, E)$
+				\begin{equation}
+					\sum_{v\in V}d(v) = 2|E|
+				\end{equation}			
+			\end{theorem}
 
-		\begin{theorem}
-			For any graph \textbf{G=(V, E)}
-			\begin{equation}
-				\sum_{v\in V}d(v) = 2|E|
-			\end{equation}			
-		\end{theorem}
+			\begin{proof}
+				$\forall$ edge $e=\mu v$ with $\mu \neq v$, $e$ is  and counted once for $\mu$ and once for $v$, a total of two altogether. If $e=\mu \mu$, a loop, then it is counted twice for $\mu$			
+			\end{proof}
 
-		\begin{proof}
-			$\forall$ edge $e=\mu v$ with $\mu \neq v$, $e$ is  and counted once for $\mu$ and once for $v$, a total of two altogether. If $e=\mu \mu$, a loop, then it is counted twice for $\mu$			
-		\end{proof}
+			\begin{corollary}
+				Every graph has an even number of odd degree vertices.
+			\end{corollary}
 
-		\begin{corollary}
-			Every graph has an even number of odd degree vertices.
-		\end{corollary}
-
-		\begin{proof}
-			\begin{equation}
-				V = V_E\cup V_O \Rightarrow 
-				\sum_{v\in V}d(v) = \sum_{v\in V_E} d(v) + \sum_{v\in V_O}d(v) = 2|E|
-			\end {equation}			
-		\end{proof}
-
+			\begin{proof}
+				\begin{equation}
+					V = V_E\cup V_O \Rightarrow 
+					\sum_{v\in V}d(v) = \sum_{v\in V_E} d(v) + \sum_{v\in V_O}d(v) = 2|E|
+				\end {equation}			
+			\end{proof}
 
 	\chapter{Paths, Trees, and Cycles}
 		\section{Walk}
-
-			A \textbf{walk} in a graph \textbf{G} is a finite sequence $w=v_0e_1v_1e_2...e_kv_k$, where for each $e_i=v_{i-1}v_i$ the edge and its ends exists in \textbf{G}. We say that walk $v_0$ to $v_k$ on $(v_0, v_k)$-walk.
+			\begin{definition}[walk]
+				A \textbf{walk} in a graph $G$ is a finite sequence $w=v_0e_1v_1e_2...e_kv_k$, where for each $e_i=v_{i-1}v_i$ the edge and its ends exists in $G$. We say that walk $v_0$ to $v_k$ on $(v_0, v_k)$-walk.
+			\end{definition}
+			For example,
 			\begin{equation}
 				w = v_2e_4v_3e_4v_2e_5v_3
 			\end{equation}
 			is a walk, or $(v_2, v_3)$-walk\\
-			The vertice $v_0$ and $v_k$ are called the \textbf{origin} and the \textbf{terminal} of the walk w.
 
-			$v_1..v_{k-1}$ are called \textbf{interal} vertices
-
-	 		The integer $k$ is the \textbf{length} of the walk. Length of $w$ equals to the number of edges.
-
-	 		We can create a reverse walk $w^{-1}$ by reversing $w$.
+			\begin{definition}[origin, terminal, internal, length]
+				For $(v_0, v_k)$-walk, The vertices $v_0$ and $v_k$ are called the \textbf{origin} and the \textbf{terminal} of the walk w, $v_1..v_{k-1}$ are called \textbf{internal} vertices. The integer $k$ is the \textbf{length} of the walk. Length of $w$ equals to the number of edges.
+			\end{definition}
+			
+			We can create a reverse walk $w^{-1}$ by reversing $w$.
 	 		\begin{equation}
 	 			w^{-1} = v_ke_kv_{k-1}e_{k-1}...e_2v_1
 	 		\end{equation}
@@ -98,35 +102,43 @@
 	 		Given two walks $w$ and $w'$ we can create a third walk denoted by $ww'$ by concating $w$ and $w'$. The new walk's origin is the same as terminal.
 
 	 	\section{Path and Cycle}
-
-	 		A \textbf{trail} is a walk with \textbf{NO} repeating edges. e.g., $v_3e_4v_2e_5v_3$
-
-	 		A \textbf{path} is a trail with \textbf{NO} repeating vertices. e.g., $v_3e_4v_2$
-
+	 		\begin{definition}[trail]
+	 			A \textbf{trail} is a walk with no repeating edges. e.g., $v_3e_4v_2e_5v_3$
+	 		\end{definition}
+	 		
+	 		\begin{definition}[path]
+	 			A \textbf{path} is a trail with no repeating vertices. e.g., $v_3e_4v_2$
+	 		\end{definition}
+	 		
 	 		Paths $\subseteq$ Trails $\subseteq$ Walks
 
-	 		A path is \textbf{closed} if it has possitive length and its origin and terminal are the same. e.g., $v_1e_2v_2e_4v_3e_3v_1$
-
-	 		A closed trail where origin and internal vertices are distincted is called a \textbf{cycle} (The only time a vertice is repeated is the origin and terminal)
-
-	 		A cycle is \textbf{even} if it has a even number of edges otherwise it is \textbf{odd}.
-
-	 		Two vertices $u$ and $v$ in a graph are said to be \textbf{connected} if there is a path between $u$ and $v$.
-
-	 		Clearly connectivity between vertices is an equvalance relation on $V(G)$, if $V_1, ... V_k$ are the corresponding equivalent classes then $G[V_1]...G[V_k]$ are \textbf{components} of G.\\
+	 		\begin{definition}[closed, cycle]
+	 			A path is \textbf{closed} if it has positive length and its origin and terminal are the same. e.g., $v_1e_2v_2e_4v_3e_3v_1$. A closed trail where origin and internal vertices are distinct is called a \textbf{cycle} (The only time a vertex is repeated is the origin and terminal)
+	 		\end{definition}
+	 		
+	 		\begin{definition}[even/odd cycle]
+	 			A cycle is \textbf{even} if it has a even number of edges otherwise it is \textbf{odd}.
+	 		\end{definition}
+	 		
+	 		\begin{definition}[connected vertices]
+	 			Two vertices $u$ and $v$ in a graph are said to be \textbf{connected} if there is a path between $u$ and $v$.
+	 		\end{definition}
+	 		
+	 		\begin{definition}[component]
+	 			Clearly connectivity between vertices is an equivalence relation on $V(G)$, if $V_1, ... V_k$ are the corresponding equivalent classes then $G[V_1]...G[V_k]$ are \textbf{components} of G.
+	 		\end{definition}
 	 		e.g., In the example, $G[V_1]$ and $G[V_2]$  are two component of V where $V_1={v_1, v_2, v_3, v_4}$ and $V_2={v_5, v_6}$
 
 	 		if graph has only one component, then we say the graph is connected. A graph is connected iff every pair of vertices in G are connected, i.e., there exists a path between every pair of vertices.
 
 	 	\section{Tree and forest}
-
-			A graph is called \textbf{acyclic} if it has no cycles
-
-	 		A acyclic graph is called a \textbf{forest}
-
-	 		A connected forest is called a \textbf{tree}
-
-	 		A subgraph T of G is a \textbf{spanning tree} if it is spanning ($V(T)=V(G)$) and it is a tree.
+	 		\begin{definition}[acyclic graph]
+	 			A graph is called \textbf{acyclic} if it has no cycles
+	 		\end{definition}
+			
+	 		\begin{definition}[forest, tree, spanning tree]
+	 			A acyclic graph is called a \textbf{forest}. A connected forest is called a \textbf{tree}. A subgraph T of G is a \textbf{spanning tree} if it is spanning ($V(T)=V(G)$) and it is a tree.
+	 		\end{definition}
 
 	 		For example in the following graph\\
 	 		\begin{figure}[!h]
@@ -162,32 +174,27 @@
 				\end{tikzpicture}			
 			\end{figure}\\
 
-			Every connected graph has a spanning tree.
+			Every connected graph has a spanning tree. We are going to use the following algorithm as proof.
 
-			\begin{proof}
-				We are going to use a algorithm proof.				
-			\end{proof}
+			\begin{algorithm}[!ht]
+				\caption{Find a spanning tree for connected graph}
+				\begin{algorithmic}[1]
+					\REQUIRE a connected graph G and an enumeration $e_1,...e_m$ of the edges of G
+					\ENSURE a spanning tree T of G
+					\STATE Let T be the spanning subgraph of $G$ with $V(T)=V(G)$ and $E(T)=\emptyset$
+					\STATE $i \gets 1$
+					\WHILE {$i \le |E|$}
+						\IF {$T + e_i$ is acyclic}
+							\STATE $T \gets T + e_i$
+							\STATE $i \gets i + 1$
+						\ENDIF
+					\ENDWHILE
+				\end{algorithmic}
+			\end{algorithm}
 
-			Here is the algorithm:\\
-			\begin{itemize}
-				\item INPUT: a connected graph G and an enumeration $e_1,...e_m$ of the edges of G
-				\item OUTPUT: a spanning tree T of G
-			\end{itemize}
+			\notice{This algorithm can be optimized, one idea is to make summation of edges in spanning subgraph less or equation to $|V| - 1$}
 
-			\begin{algorithmic}[!ht]
-				\STATE Let T be the spanning subgraph of $G$ with $V(T)=V(G)$ and $E(T)=\emptyset$
-				\STATE $i \gets 1$
-				\WHILE {$i \le |E|$}
-					\IF {$T + e_i$ is acyclic}
-						\STATE $T \gets T + e_i$
-						\STATE $i \gets i + 1$
-					\ENDIF
-				\ENDWHILE
-			\end{algorithmic}
-
-			This algorithm can be optimized, one idea is to make summation of edges in spanning subgraph less or equation to $|V| - 1$
-
-			To prove algorithm we need to show the output is a spaning tree, which means three properties must hold:
+			To prove algorithm we need to show the output is a spanning tree, which means three properties must hold:
 			\begin{itemize}
 				\item spanning (Step I)
 				\item acyclic (We never add an edge that create a cycle)
@@ -195,7 +202,7 @@
 			\end{itemize}
 			So it is sufficient to show that the output will be connected.
 			\begin{proof}
-				(Proof by Contradiction) Supposet the output graph $T$ of the algorithm is NOT connected. Let $T_1$ be a component of $T$, let $x\in T_1$ and $y \notin T_1$. But $G$ is a connected graph (given from the beginning), so there must be a path in $G$ that connects $x$ and $y$. Let such a path in $G$ be $p=xe_1v_1e_2,..v_{k-1}e_ky$. Clearly, $p\notin T_1$. So there must be a first vertex in $P$ that not in $T_1$. So $e_i \notin E(T)$, the only way this can happen when applying the algorithm is if $T + e_i$ creates a cycle $C$, i.e., $e_i \in C$, so $C - e_i$ is a path connecting $v_{i-1}$ and $v_i$. So $c - e_i \in T$, so $v_{i-1}$ is connected to $v_i \in T$. Contradiction. 
+				(Proof by Contradiction) Suppose the output graph $T$ of the algorithm is NOT connected. Let $T_1$ be a component of $T$, let $x\in T_1$ and $y \notin T_1$. But $G$ is a connected graph (given from the beginning), so there must be a path in $G$ that connects $x$ and $y$. Let such a path in $G$ be $p=xe_1v_1e_2,..v_{k-1}e_ky$. Clearly, $p\notin T_1$. So there must be a first vertex in $P$ that not in $T_1$. So $e_i \notin E(T)$, the only way this can happen when applying the algorithm is if $T + e_i$ creates a cycle $C$, i.e., $e_i \in C$, so $C - e_i$ is a path connecting $v_{i-1}$ and $v_i$. So $c - e_i \in T$, so $v_{i-1}$ is connected to $v_i \in T$. Contradiction. 
 			\end{proof}
 
 		\section{Special Graphs}
@@ -259,34 +266,36 @@
 			\end{figure}
 
 		\section{Complexity}
-			How do we measure the efficiency of an algorithm?
+			\fixme{This part is going to be moved to Algorithm notes, (or I will just delete this part because of duplication)}
+			
+			We want to know guaranteed performances - "worse case" scenarios -  for any algorithm working on any problem instance.
 
-			We mostly measure on "worse case" scenarios.
-
-			We want to know guarenteed perpormances for any algorithm working on any problem instance.
-
-			Example: Add two $m \times n$ matrices $A$, $B$ to get matrix $C$
-			\begin{algorithmic}[!h]
-				\FOR {$i=1, 2, ..., m$}
-					\FOR {$j=1, 2, ..., n$}
-						\STATE $C_{ij} = A_{ij} + B_{ij}$
+			Example: \\
+			\begin{algorithm}[!ht]
+				\caption{Add two $m \times n$ matrices $A$, $B$ to get matrix $C$}
+				\begin{algorithmic}
+					\FOR {$i=1, 2, ..., m$}
+						\FOR {$j=1, 2, ..., n$}
+							\STATE $C_{ij} = A_{ij} + B_{ij}$
+						\ENDFOR
 					\ENDFOR
-				\ENDFOR
-			\end{algorithmic}
+				\end{algorithmic}				
+			\end{algorithm}\\
+
 			The "running time" of an algorithm is measured by the number of basic operational steps.
 
 			For so called "basic" steps, it includes
 			\begin{itemize}
 				\item $+$, $-$, $\times$, $\div$
 				\item assignments and storage of a variable
-				\item comparisions
+				\item comparisons
 			\end{itemize}
 
 			For the example above
 			\begin{itemize}
 				\item $c_1 m n$ for addition $C_{ij} = A_{ij} + B_{ij}$
 				\item $c_2 m n$ for saving $C_{ij}$
-				\item $c_3 m n$ for comparision and assignment for $i$ and $j$
+				\item $c_3 m n$ for comparison and assignment for $i$ and $j$
 			\end{itemize}
 			$c_1, c_2, c_3$ does not matter, the number of steps are $m \times n$, we say the algorithm runs $O(mn)$ (big O notation, the worse case)
 
