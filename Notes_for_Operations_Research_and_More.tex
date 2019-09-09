@@ -24,20 +24,89 @@
 	bottom=2cm]{geometry}
 
 \usepackage{tikz}
-	\usetikzlibrary{shapes.geometric, arrows}
-	\usetikzlibrary{arrows,shapes,matrix}
+	\usetikzlibrary{chains, arrows,shapes,matrix}
 	\usetikzlibrary{decorations.pathmorphing} 
 	\usepgflibrary{plotmarks}
 	\usetikzlibrary{patterns}  
 	\usetikzlibrary{positioning} 
-	\tikzstyle{roundedRectangle} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black]
-	\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black]
-	\tikzstyle{process} = [rectangle, minimum width=2cm, minimum height=1cm, text centered, draw=black, inner sep=0.1cm]
-	\tikzstyle{decision} = [diamond, minimum width=2cm, minimum height=0cm, text centered, draw=black, inner sep=0cm]
-	\tikzstyle{arrow} = [thick,->,>=stealth]
-	\tikzstyle{link} = [thick, -]
-	\tikzstyle{circleNode} = [circle, minimum size = 0.7cm, text centered, draw=black, inner sep=0.1cm]
-	\tikzstyle{solidNode} = [circle, minimum size = 0.1cm, fill=black]
+	\tikzstyle{roundedRectangle} = [
+		rectangle, 
+		rounded corners, 
+		minimum width=3cm, 
+		minimum height=1cm, 
+		text centered, 
+		draw=black
+	]
+	\tikzstyle{io} = [
+		trapezium, 
+		trapezium left angle=70, 
+		trapezium right angle=110, 
+		minimum width=3cm, 
+		minimum height=1cm, 
+		text centered, 
+		draw=black
+	]
+	\tikzstyle{process} = [
+		rectangle, 
+		minimum width=2cm, 
+		minimum height=1cm, 
+		text centered, 
+		draw=black, 
+		inner sep=0.1cm
+	]
+	\tikzstyle{decision} = [
+		diamond, 
+		minimum width=2cm, 
+		minimum height=0cm, 
+		text centered, 
+		draw=black, 
+		inner sep=0cm
+	]
+	\tikzstyle{arrow} = [
+		thick,
+		->,
+		>=stealth
+	]
+	\tikzstyle{link} = [
+		thick, 
+		-
+	]
+	\tikzstyle{circleNode} = [
+		circle, 
+		minimum size = 0.7cm, 
+		text centered, 
+		draw=black, 
+		inner sep=0.1cm
+	]
+	\tikzstyle{solidNode} = [
+		circle, 
+		minimum size = 0.1cm, 
+		fill=black
+	]
+	\tikzstyle{rectangleCell} = [
+		rectangle, 
+		minimum width=0.8cm, 
+		text centered, 
+		draw=black
+	]
+	\tikzstyle{rowArray} = [
+		matrix of nodes, 
+		nodes = {draw}, 
+		row 1/.style = {
+			nodes = {
+				draw = none
+			}
+		}
+	]
+	\tikzstyle{colArray} = [
+		matrix of nodes, 
+		nodes = {draw}, 
+		column 2/.style = {
+			nodes = {
+				draw = none
+			}
+		}
+	]
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
