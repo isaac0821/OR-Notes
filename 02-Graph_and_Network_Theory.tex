@@ -180,11 +180,11 @@
 			\end{definition}
 
 			\begin{problem}
-				Prove that if $C_1$ and $C_2$ are cycles of a graph, then there exists cycles $K_1, K_2, ..., K_m$ such that $E(C_1)\Delta E(C_2) = E(K_1)\cup E(K_2) \cup...\cup E(K_m)$ and $E(K_i)\cap E(K_j)=\emptyset$. (For set $X$ and $Y$, $X\Delta Y = (X-Y)\cup(Y-X)$, and is called the symmetric difference of $X$ and $Y$)
+				Prove that if $C_1$ and $C_2$ are cycles of a graph, then there exists cycles $K_1, K_2, ..., K_m$ such that $E(C_1)\Delta E(C_2) = E(K_1)\cup E(K_2) \cup...\cup E(K_m)$ and $E(K_i)\cap E(K_j)=\emptyset, \forall i \neq j$. (For set $X$ and $Y$, $X\Delta Y = (X-Y)\cup(Y-X)$, and is called the symmetric difference of $X$ and $Y$)
 			\end{problem}
 
 			\begin{proof}
-				
+				Proof by constructing $K_1, K_2, ... K_m$
 			\end{proof}
 			
 			\begin{definition}[connected vertices]
@@ -233,11 +233,13 @@
 								\REQUIRE $d(u)=1$
 								\ENSURE A tree $T$ has at least two vertices
 								\STATE Let $u$ and $v$ be any distinct vertex in a tree $T$
+								\STATE Let $p$ be the path between $u$ and $v$
 								\WHILE {$d(u) \neq 1$}
 									\IF {$d(u) > 1$}
 										\STATE Let $n(u)$ be the set of neighboring vertices of $u$
-										\STATE In $n(u)$, find a $u^\prime$ that has longer distance to $v$ than $u$
+										\STATE In $n(u)$, find a $u^\prime$ that the edge between $u$ and $u^\prime$, denoted by $e$, $e \notin p$
 										\STATE $u \gets u^\prime$
+										\STATE $p \gets p \cup e$
 									\ENDIF
 								\ENDWHILE
 							\end{algorithmic}
