@@ -184,7 +184,35 @@
 			\end{problem}
 
 			\begin{proof}
-				Proof by constructing $K_1, K_2, ... K_m$
+				Proof by constructing $K_1, K_2, ... K_m$. Denote 
+				\begin{align}
+					C_1 & = v_{11}e_{11}v_{12}e_{12}v_{13}e_{13}...v_{1n}e_{1n}v_{11}\\
+					C_2 & = v_{21}e_{21}v_{22}e_{22}v_{23}e_{23}...v_{2k}e_{2k}v_{21}
+				\end{align}
+				Assume both cycle start at the same vertice, $v_{11} = v_{12}$. (If there is no intersected vertex for $C_1$ and $C_2$, just simply set $K_1 = C_1$ and $K_2 = C_2$)\\
+				The following algorithm can give us all $K_j, j=1, 2, ... , m$ by constructing $E(C_1)\Delta E(C_2)$.  Also, the complexity is $O(mn)$, which makes the proof doable.\\
+				\begin{algorithm}[!ht]
+					\caption{Find $K_1, K_2, ... K_m$ by constructing $E(C_1)\Delta E(C_2)$}
+					\begin{algorithmic}[1]
+						\REQUIRE Graph $G$, cycle $C_1$ and $C_2$
+						\ENSURE $K_1, K_2, ... K_m$
+						\STATE Initial, $K \gets \emptyset$, $j = 1$
+						\STATE Set temporary storage units, $v_o \gets v_{11}$, $v_t \gets \emptyset$
+						\FOR {$i = 1, 2, ..., n$}
+							\IF {$e_{1i} \in C_2$}
+								\IF {$v_o \ne v_{1i}$}
+									\STATE $v_t \gets v_{1i}$
+									\STATE concate $(v_o, v_t)$-path $\subset C_1$ and $(v_o, v_t)$-path $\subset C_2$ to create a new $K_j$
+									\STATE Append $K$ with $K_j$, $K \gets K \cup K_j$
+									\STATE Reset temporary storage unit. $v_o \gets v_{1(i+1)}$ (or $v_{11}$ if $i = n$), $v_t \gets \emptyset$
+								\ELSE
+									\STATE $v_o \gets v_{1(i+1)}$ (or $v_{11}$ if $i = n$)
+								\ENDIF
+							\ENDIF
+						\ENDFOR
+					\end{algorithmic}
+				\end{algorithm}\\
+				Now we prove that $K_i\cap K_j = \emptyset, \forall i \ne j$. For each $K_j$, it is defined by two $(v_o, v_t)$-paths in the algorithm. From the algorithm we know that all the edges in $(v_o, v_t)$-path in $C_1$ are not intersecting with $C_2$, because if the edge in $C_1$ is intersected with $C_2$, either we closed the cycle $K_j$ before the edge, or we updated $v_o$ after the edge (start a new $K_j$ after that edge). By definition of cycle, all the $(v_o, v_t)$-path that are subset of $C_1$ are not intersecting with each other, as well as all the $(v_o, v_t)$-path that are subset of $C_2$. Therefore, $K_i\cap K_j = \emptyset, \forall i \ne j$.
 			\end{proof}
 			
 			\begin{definition}[connected vertices]
@@ -220,9 +248,9 @@
 				A acyclic graph is called a \textbf{forest}. A connected forest is called a \textbf{tree}. 
 			\end{definition}
 
-			\begin{problem}
-				Prove that if $T$ is a tree, then $T$ has exactly one more vertex than it has edges.
-			\end{problem}
+			\begin{theorem}
+				Prove that $T$ is a tree, if $T$ has exactly one more vertex than it has edges.
+			\end{theorem}
 
 			\begin{proof}
 				\begin{enumerate}
@@ -231,7 +259,7 @@
 							\caption{Find one leaf in a tree}
 							\begin{algorithmic}[1]
 								\REQUIRE $d(u)=1$
-								\ENSURE A tree $T$ has at least two vertices
+								\ENSURE A tree $T$ has at least one vertex
 								\STATE Let $u$ and $v$ be any distinct vertex in a tree $T$
 								\STATE Let $p$ be the path between $u$ and $v$
 								\WHILE {$d(u) \neq 1$}
@@ -248,7 +276,7 @@
 					\item Then, if we remove one leaf in the tree, i.e., we remove an edge and a vertex, where that vertex only connects to the edge we removed. One of the following situations will happen:
 					\begin{enumerate}
 						\item Situation 1: The remaining of $T$ is one vertex. In this case, $T$ has two vertices an one edge. (Exactly one more vertex than it has edges)
-						\item Situation 2: The remaining of $T$ is another tree $T^{'}$ (removal of edges will not change acyclic), where $|V(T)| = |V(T^{'})| + 1$ and $|E(T)| = |E(V^{'}| + 1$. (one edge and one vertex has been removed)
+						\item Situation 2: The remaining of $T$ is another tree $T^{'}$ (removal of edges will not change acyclic and connectivity), where $|V(T)| = |V(T^{'})| + 1$ and $|E(T)| = |E(V^{'}| + 1$. (one edge and one vertex has been removed)
 					\end{enumerate}
 					\item Do the leaf removal process recursively to $T^{'}$ if Situation 2 happens until Situation 1 happens. 
 				\end{enumerate}
@@ -300,7 +328,31 @@
 			\end{problem}
 
 			\begin{proof}
-				
+				One of the following situation has to happen:
+				\begin{enumerate}
+					\item If for given $e \in E(T_1)$, $\exists f = e \in E(T_2)$, then $T_1 - e + f = T_1$, $T_2 + e - f = T_2$ are both spanning trees of $G$
+					\item If for given $e \in E(T_1)$, $e \notin E(T_2)$, the following will find an edge $f$ that $T_1 - e + f$ and $T_2 + e - f$ are both spanning trees of $G$.
+					\begin{enumerate}
+						\item $T_1$ is a spanning tree, removal of $e \in E(T_1)$ will disconnect the spanning tree into two components (by definition of spanning tree), denoted by $G_1 \subset G$ and $G_2 \subset G$, by definition, $V(G_1)$ and $V(G_2)$ is a partition of $V(G)$.
+						\item Add $e$ into $T_2$. We can proof that by adding an edge into a tree will create exactly one cycle, denoted by $C$, $e \in E(C)$.
+						\item For $C$, since it is a cycle and one end of $e$ is in $V(G_1)$, the other end of $e$ is in $V(G_2)$, there has to be at least two edges (can be more) that has one end in $V(G_1)$ and the other end in $V(G_2)$, denote the set of those edges as $E \subset E(C)$, one of those edges is $e \in E$
+						\item Choose any $f \in E$ and $f \neq e$, for that $f$, $T_1 - e + f$ and $T_2 + e - f$ are both spanning trees of $G$.
+						\item Prove that $T_1 - e + f$ is a spanning tree
+						\begin{enumerate}
+							\item $T_1 - e + f$ have the same set of vertices as $T_1$, therefore it is spanning.
+							\item It is connected both within $G_1$ and $G_2$, for $f$, one end is in $V(G_1)$, the other end is in $V(G_2)$ therefore $T_1 - e + f$ is connected.
+							\item $T_1 - e + f$ have the same number of edges as $T_1$, which is $|T_1| - 1$, therefore $T_1 - e + f$ is a tree. (We have proven the connectivity in the previous step.)
+							\item $T_1 - e + f$ is spanning, connected, a tree, therefore it is a spanning tree.
+						\end{enumerate}
+						\item Prove that $T_2 + e - f$ is a spanning tree
+						\begin{enumerate}
+							\item $T_2 + e - f$ have the same set of vertices as $T_2$, therefore it is spanning.
+							\item $T_2$ is connected, adding an edge will not break connectivity, therefore $T_2 + e$ is connected, removing an edge in a cycle will not break connectivity, therefore $T_2 + e - f$ is connected.
+							\item $T_2 - e + f$ have the same number of edges as $T_2$, which is $|T_2| - 1$, therefore $T_2 + e - f$ is a tree. (We have proven the connectivity in the previous step.)
+							\item $T_2 - e + f$ is spanning, connected, a tree, therefore it is a spanning tree.
+						\end{enumerate}
+					\end{enumerate}
+				\end{enumerate}
 			\end{proof}
 
 			\begin{theorem}
@@ -431,8 +483,12 @@
 			\begin{proof}
 				Hereby we prove the $\Rightarrow$ and $\Leftarrow$
 				\begin{itemize}
-					\item ($\Rightarrow$) If the graph $G$ is bipartite, by definition, the vertices of graph can be partition into two groups, that within the group there is no connection between vertices. Therefore, for each cycle, the odd index of vertices and even index of vertices has to be choose alternative from each groups.
-					\item ($\Leftarrow$) 
+					\item ($\Rightarrow$) If the graph $G$ is bipartite, by definition, the vertices of graph can be partition into two groups, that within the group there is no connection between vertices. Therefore, for each cycle, the odd index of vertices and even index of vertices has to be choose alternatively from each groups. Therefore the cycle has to be even.
+					\item ($\Leftarrow$) Prove by contradiction. A graph can be connected or not connected.
+					\begin{itemize}
+						\item If $G$ is connected and has at least two vertices, for an arbitrary vertex $v\in V(G)$, we can calculate the minimum number of edges between the other vertices $v^\prime$ and $v$ (i.e., length, denoted by $l(v^\prime, v)$), for all the vertices that has odd length to $v$, assign them to set $V_1$, for the rest of vertices (and $v$), assign to set $V_2$. Assume that $G$ is not bipartite, which means there are at least one edge between distinct vertices in set $V_1$ or set $V_2$, without lost of generality, assume that edge is $uw$, $u, w\in V_1$. For all vertices in $V_1$ there is an odd length of path between the vertex and $v$, therefore, there exists an odd $l(u,v)$, and an odd $l(w-v)$. The length of cycle $l(u, w, v) = 1 + l(u, v) + l(w, v)$, which is an odd number, it contradict with the prerequisite that all cycles are even, which means the assumption that $G$ is not bipartite is incorrect, $G$ should be bipartite.
+						\item If $G$ is not connected. Then $G$ can be partition into a set of disjointed subgraphs which are connected with at least two vertices or contains only one vertex. For the subgraph that has more that one vertices, we already proved that it has to be bipartite. For the subgraph $G_i \subset G, i = 1, 2, ..., n$, the vertices can be partition into $V_{i1} \in V(G_i)$ and $V_{i2} \in V(G_i)$, where $V_{i1} \cap V_{i2} = \emptyset$, the union of those subgraphs are bipartite too because $V_1 = \cup_{i=1}^n V_{i1} \in V(G)$ and $V_2 = \cup_{i=1}^n V_{i2} \in V(G)$ satisfied the condition of bipartite. For the subgraph that has one one vertices, those vertices can be assigned into either $V_1$ or $V_2$.
+					\end{itemize}
 				\end{itemize}
 			\end{proof}
 
