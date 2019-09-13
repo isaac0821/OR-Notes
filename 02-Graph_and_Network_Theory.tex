@@ -362,7 +362,7 @@
 			\begin{proof}
 				Prove by constructing algorithm:
 				\begin{algorithm}[!ht]
-					\caption{Find a spanning tree for connected graph}
+					\caption{Find a spanning tree for connected graph (Prim's Algorithm in unweighted graph)}
 					\begin{algorithmic}[1]
 						\REQUIRE a connected graph G and an enumeration $e_1,...e_m$ of the edges of G
 						\ENSURE a spanning tree T of G
@@ -382,12 +382,27 @@
 
 			For the complexity of spanning tree algorithm:
 			\begin{enumerate}
+				\item Space complexity, $2|E|$, which is $O(|E|)$
+				\item Time complexity
+				\begin{enumerate}
+					\item How to check for acyclic?
+					\begin{enumerate}
+						\item At every stage $T$ has certain components $V_1, ... V_t$, (every time we add an edge, the number of components minus 1)
+						\item So at the beginning $t = |V|$ with $|V_i| = 1 \forall i$ and at the end, $t = 1$.
+					\end{enumerate}
+					\item Count the amount of work for the algorithm.
+					\begin{enumerate}
+						\item Need to check for acyclic for each edge, which costs $O(|E|)$
+						\item Need to flip the pointer for each vertex, for each vertex, at most will be flipped $\log|V|$ times, altogether $|V|\log|V|$ times.
+						\item The time complexity is $O(|E| + |V|\log|V|)$
+					\end{enumerate}
+				\end{enumerate}
+
+
 				\item First we need to input the data, create an array such that the first and the second entries are the ends of $e_1$, third and fourth are the ends of $e_2$, and so on.
 				\item The amount of storage needs in $2|E|$, which is $O(|E|)$
 				\item The main work involved in the algorithm is for each edges $e_i$ and the current $T$, to determine if $T+e_i$ creates a cycle.
-				\item At every stage $T$ has certain components $V_1, ... V_t$, (every time we add an edge, the number of components minus 1)
-				\item So at the beginning $t = |V|$ with $|V_i| = 1 \forall i$
-				\item At the end, $t = 1$
+				
 				\item suppose we keep each component $V_i$ by keeping for each vertex a pointer from the vertex to the name of the component containing it. Thus if $\mu \in V_3$, there will be a pointer from $\mu$ to integer 3.
 				\item Then when edge $e_i = \mu v$ is encountered in Step 2, we see that $T+e_i$ contains a cycle if and only if $\mu$ and $v$ point to same integer which means they are in the same component
 				\item If they are not in the same component, we want to add the edge which means then I have to update the pointers.
