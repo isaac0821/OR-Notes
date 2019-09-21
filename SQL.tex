@@ -1,0 +1,75 @@
+\part{SQL}
+	\chapter{Commands}
+		\section{SELECT}
+			\begin{itemize}
+				\item Select * from TABLE;
+				\item Select distinct a, b from TABLE;
+				\item Select A from TABLE where Condition='COND';
+			\end{itemize}
+
+			\begin{itemize}
+				\item =
+				\item $<>, !=$
+				\item $<, >, <=, >=$
+				\item BETWEEN
+				\item LIKE
+				\item IN
+			\end{itemize}
+
+			\begin{itemize}
+				\item AND
+				\item OR
+				\item NOT
+			\end{itemize}
+
+		\section{ORDER BY}
+			\begin{itemize}
+				\item Select * from TABLE order by colName;
+				\item Select * from TABLE order by colName1, colName2;
+				\item Select * from TABLE order by colName DESC; 
+				\item Select * from TABLE order by colName1 DESC, colName2 ASC;
+			\end{itemize}
+
+		\section{INSERT INTO}
+			\begin{itemize}
+				\item insert into TABLE (col1, col2, ..., colN) values (val1, val2, ..., valN)
+				\item insert into TABLE (col1, col3) values (val1, val3) \% The rest column(s) will be NULL;
+				\item insert into TABLE values (val1, val2, ..., valN) \% Need to provide all columns in order.
+			\end{itemize}
+
+		\section{UPDATE}
+			Update TABLE set col='NEWVAL' where COND;
+
+		\section{DELETE}
+
+		\section{LIMIT}
+			select * from TABLE limit 3;
+
+		\section{MIN() and MAX()}
+			select MIN(colName) from TABLE;
+
+		\section{COUNT()}
+			select COUNT(colName) from TABLE; \% NULL value in the column will not be counted
+
+		\section{LIKE}
+			select * from TABLE where col like 'a\_\%'
+
+			\begin{itemize}
+				\item "\%" serves as ?
+				\item "\_" serves as *
+			\end{itemize}
+
+		\section{IN}
+			select * from TABLE where col in (col1, col2, ..., colN)
+
+		\section{BETWEEN}
+			select * from TABLE where col between 'abc' to 'def'
+
+		\section{JOIN}
+			A JOIN clause is used to combine rows from \textbf{two or more tables}, based on a related column between them.
+			\begin{itemize}
+				\item INNER JOIN - select * from TABLE1 join TABLE 
+				\item RIGHT JOIN
+				\item LEFT JOIN
+				\item FULL JOIN
+			\end{itemize}
