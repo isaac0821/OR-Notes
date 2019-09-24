@@ -966,6 +966,70 @@
 			\end{align}
 
 			While $y$ is not a feasible potential find incorrect arc $(v, w)$ and correct it.
+
+			This algorithm is not perfect. If there is a cycle with minus total weight, it will never stop.
+
+			Here is another example that could take $O(2^n)$ to solve.
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}
+					\node (0) [circleNode] {$v_0$};
+					\node (1) [circleNode, right of = 0] {$v_1$};
+					\node (2) [circleNode, right of = 1] {$v_2$};
+					\node (3) [circleNode, right of = 2] {$v_3$};
+					\node (4) [circleNode, right of = 3] {$v_4$};
+					\node (5) [circleNode, right of = 4] {$v_5$};
+					\node (6) [circleNode, right of = 5] {$v_6$};
+					\draw [arrow] (0) -- node [below] {4} (1);
+					\draw [arrow] (1) -- node [below] {4} (2);
+					\draw [arrow] (2) -- node [below] {2} (3);
+					\draw [arrow] (3) -- node [below] {2} (4);
+					\draw [arrow] (4) -- node [below] {1} (5);
+					\draw [arrow] (5) -- node [below] {1} (6);
+					\draw [arrow] (0) to [out = 30, in = 150] node [above] {4} (2);
+					\draw [arrow] (2) to [out = 30, in = 150] node [above] {2} (4);
+					\draw [arrow] (4) to [out = 30, in = 150] node [above] {1} (6);
+				\end{tikzpicture}
+			\end{figure}
+		\section{Ford-Bellman Algorithm}
+			Initialize $y$ and $P$\\
+			Set i = 0\\
+			While i < n and y is not a feasible potential
+				replace i by i+1
+					For each e \in E
+					 if e is incorrect, correct e
+
+			(Only correct the node that comes from a node that has been corrected.)
+
+			\begin{algorithm}
+				\caption{Ford-Bellman Algorithm}
+			\end{algorithm}
+
+			A usual representation of a diagraph is to store all the arcs having tail $v$ in a list $L_v$ to \textbf{scan} $v$ means the following:
+			\begin{itemize}
+				\item For $(v, w) \in L_v$, if $(v, w)$ is incorrect, then correct $(v, w)$
+			\end{itemize}
+
+			For Bellman, will either terminate with shortest path from $r$ to all $v\in V\setminus r$ or it will terminate stating that there is a negative cycle. In $O(mn)$
+
+			In the alogrithm if $i = n$ and there exists a feasible potential, the problem has a negative cycle.
+
+			(Finding a negative cycle in graph is NP hard???)
+
+		\section{Acyclic Graphs}
+			Suppose that the nodes of $G$ can be ordered from left to right so that all arcs go from left to right. That is suppose there is an ordering $v_1, v_2, ..., v_n \in V$ so that $(v_i, v_j) \in V$ implies $i < j$. We call such an ordering \textbf{topological} sort.
+
+			If we order $E$ in the sequence that $v_iv_j$ precedes $v_kv_i$ if $i<k$ based on topological order then ford algorithm will terminate in one pass.
+
+		\section{Dijkstra algorithm}
+			Initialize y, P
+			set S=V
+			while S\ne \Phi
+				choose v\in S with minimun y_v
+				Delete v from S
+				Scan v
+
+
 	\chapter{Maximum Flow Problem}
 
 	\chapter{Minimum Cost Flow Problem}
