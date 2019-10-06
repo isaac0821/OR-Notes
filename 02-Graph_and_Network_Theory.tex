@@ -972,7 +972,7 @@
 			Here is another example that could take $O(2^n)$ to solve.
 			\begin{figure}
 				\centering
-				\begin{tikzpicture}
+				\begin{tikzpicture}[node distance = 1cm]
 					\node (0) [circleNode] {$v_0$};
 					\node (1) [circleNode, right of = 0] {$v_1$};
 					\node (2) [circleNode, right of = 1] {$v_2$};
@@ -991,19 +991,25 @@
 					\draw [arrow] (4) to [out = 30, in = 150] node [above] {1} (6);
 				\end{tikzpicture}
 			\end{figure}
-		\section{Ford-Bellman Algorithm}
-			Initialize $y$ and $P$\\
-			Set i = 0\\
-			While i < n and y is not a feasible potential
-				replace i by i+1
-					For each e \in E
-					 if e is incorrect, correct e
-
-			(Only correct the node that comes from a node that has been corrected.)
-
+		\section{Ford-Bellman Algorithm}			
 			\begin{algorithm}
 				\caption{Ford-Bellman Algorithm}
+				\begin{algorithmic}
+					\ENSURE Minimum spanning tree
+					\REQUIRE Connected tree
+					\STATE Initialize $y$ and $P$
+					\STATE $i \gets 0$
+					\WHILE {$i < n$ and $y$ is not a feasible potential}
+						\STATE $i++$
+						\FOR {$e\in E$}
+							\IF {$e$ is incorrect}
+								\STATE correct $e$
+							\ENDIF
+						\ENDFOR
+					\ENDWHILE
+				\end{algorithmic}
 			\end{algorithm}
+			(Only correct the node that comes from a node that has been corrected.)
 
 			A usual representation of a diagraph is to store all the arcs having tail $v$ in a list $L_v$ to \textbf{scan} $v$ means the following:
 			\begin{itemize}
@@ -1021,16 +1027,277 @@
 
 			If we order $E$ in the sequence that $v_iv_j$ precedes $v_kv_i$ if $i<k$ based on topological order then ford algorithm will terminate in one pass.
 
-		\section{Dijkstra algorithm}
-			Initialize y, P
-			set S=V
-			while S\ne \Phi
-				choose v\in S with minimun y_v
-				Delete v from S
-				Scan v
+		\section{Dijkstra Algorithm}
+			\begin{algorithm}
+				\caption{Dijkstra Algorithm}
+				\begin{algorithmic}
+					\ENSURE Minimum spanning tree
+					\REQUIRE Connected tree
+					\STATE Initialize $y$ and $P$
+					\STATE $S \gets V$
+					\WHILE {$S \ne \Phi$}
+						\STATE Choose $v \in S$ with minimum $y_v$
+						\STATE $S \gets S\setminus v$
+						\STATE Scan $v$
+					\ENDWHILE
+				\end{algorithmic}
+			\end{algorithm}
 
+		\section{All pairs shortest path problem}
+			If all weights/distances in the graph are nonnegative then we could use dijstra withn starting nodes being eac one of the vertices of the graph. This method will take $O(n^3)$
+
+			If weight/distances are arbitary and we would like to find shortest path beteen all pairs of vertices or detect a negative ccle we could use Bellman-Ford Algorithm with $O(n^4)$
+
+			We would like an algorithm to find shortest path between any two pairs in a graph for arbitary weights (determined, negative, cycles) in $O(n^3)$
+
+			Let $d_{ij}^k$ denote the length of the shortest path from $i$ to $j$ such that all intermidiate vertices are contained in the set $\{1, ..., k\}$
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (2) [circleNode] {2};
+					\node (1) [circleNode, below of=2, xshift = -1cm] {1};
+					\node (3) [circleNode, below of=2] {3};
+					\node (4) [circleNode, below of=2, xshift = 1cm] {1};
+					\node (5) [circleNode, below of=3] {5};
+					\draw (1) -- node [above] {1} (2);
+					\draw (1) -- node [above] {2} (3);
+					\draw (1) -- node [above] {4} (5);
+					\draw (2) -- node [left] {2} (3);
+					\draw (3) -- node [left] {-3} (5);
+					\draw (2) -- node [above] {5} (4);
+					\draw (3) -- node [above] {3} (4);
+					\draw (5) -- node [above] {1} (4);
+				\end{tikzpicture}
+			\end{figure}
+
+			In this case $d_{14}^5 = 5$
+
+			If the vertex $k$ is not an intermidiate vertex on $p$, then $d_{ij}^k = d_{ij}^{k-1}$, notice that $d_{15}^4 = -1$, node 4 is not intermidiate, so $d_{15}^3 = -1$
+
+			If the vertex $k$ is an intermidiate on $p$, then $d_{ij}^k = d_{ik}^{k-1} + d_{kj}^{k-1}$, $d_{14}^5 = 0$ ($p=1\rightarrow3\rightarrow5\rightarrow4$), i.e., $d_{14}^5 = d_{15}^4 + d_{54}^4 = 0$
+
+			Therefore $d_{ij}^k = \min\{d_{ij}^{k-1}, d_{ik}^{k-1} + d_{kj}^{k-1}\}$
+
+		\section{Floyd-Warshall Algorithm}
+			Input: graph $G=(V, E)$ with weight on edges
+			Output: Shortest path between all pairs of vertices on existance of a negative cycle
+			Step1: Initializie
+			\begin{align}
+				d_{ij}^0 = 
+				\begin{cases}
+					c_{ij} \quad \text{distance from } i \text{ to } j \text{ if } (i, j) \in E \\
+					0 \quad \text{if } i = j \\
+					\infty \quad \text{if } (i, j) \notin E
+				\end{cases}
+			\end{align}
+			Step2:
+			For k = 1 to n
+				For i = 1 to n
+					For j = 1 to n
+						$d_{ij}^k = \min\{d_{ij}^{k-1}, d_{ik}^{k-1} + d_{kj}^{k-1}\}$
+					Next j
+				Next i
+			Next k
+			Between optimal matrix $D^n$
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (2) [circleNode] {2};
+					\node (1) [circleNode, below of=2, xshift = -1cm] {1};
+					\node (3) [circleNode, below of=2, xshift = 1cm] {3};
+					\node (4) [circleNode, below of=3, xshift = -0.3cm] {1};
+					\node (5) [circleNode, below of=1, xshift = 0.3cm] {5};
+					\draw [arrow] (1) -- node [above] {-4} (5);
+					\draw [arrow] (1) -- node [above] {3} (2);
+					\draw [arrow] (1) -- node [above] {8} (3);
+					\draw [arrow] (4) -- node [above] {2} (1);
+					\draw [arrow] (2) -- node [left] {1} (4);
+					\draw [arrow] (2) -- node [left] {7} (5);
+					\draw [arrow] (3) -- node [left] {4} (2);
+					\draw [arrow] (4) -- node [left] {-5} (3);
+					\draw [arrow] (5) -- node [left] {6} (4);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{equation}
+				D^0 = \begin{bmatrix}
+					0 & 3 & 8 &\infty & -4 \\
+					\infty & 0  &\infty & 1 & 7 \\
+					\infty & 4 & 0 &\infty &\infty\\
+					2 &\infty & -5 & 0 &\infty\\
+					\infty & \infty & \infty & 6 & 0
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				\Pi^0 = \begin{bmatrix}
+					& 1 & 1 & & 1 \\
+					& & & 2 & 2\\
+					& 3 & & & \\
+					4 & & 4 & & \\
+					& & & 5 & \\
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				D^1 = \begin{bmatrix}
+					0 & 3 & 8 &\infty & -4 \\
+					\infty & 0  &\infty & 1 & 7 \\
+					\infty & 4 & 0 &\infty &\infty\\
+					2 & \mathbf{5} & -5 & 0 &\mathbf{-2}\\
+					\infty & \infty & \infty & 6 & 0
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				\Pi^1 = \begin{bmatrix}
+					& 1 & 1 & & 1 \\
+					& & & 2 & 2\\
+					& 3 & & & \\
+					4 & \mathbf{1} & 4 & & \mathbf{1}\\
+					& & & 5 & \\
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				D^2 = \begin{bmatrix}
+					0 & 3 & 8 &\mathbf{4} & -4 \\
+					\infty & 0  &\infty & 1 & 7 \\
+					\infty & 4 & 0 &\mathbf{5} &\mathbf{11}\\
+					2 & 5 & -5 & 0 &-2\\
+					\infty & \infty & \infty & 6 & 0
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				\Pi^2 = \begin{bmatrix}
+					& 1 & 1 & \mathbf{2} & 1 \\
+					& & & 2 & 2\\
+					& 3 & & \mathbf{2} & \mathbf{2} \\
+					4 & 1 & 4 & & 1\\
+					& & & 5 & \\
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				D^3 = \begin{bmatrix}
+					0 & 3 & 8 & 4 & -4 \\
+					\infty & 0  &\infty & 1 & 7 \\
+					\infty & 4 & 0 & 5 & 11\\
+					2 & \mathbf{-1} & -5 & 0 &-2\\
+					\infty & \infty & \infty & 6 & 0
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				\Pi^3 = \begin{bmatrix}
+					& 1 & 1 & 2 & 1 \\
+					& & & 2 & 2\\
+					& 3 & & 2 & 2 \\
+					4 & \mathbf{3} & 4 & & 1\\
+					& & & 5 & \\
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				D^4 = \begin{bmatrix}
+					0 & 3 & \mathbf{-1} & 4 & -4 \\
+					\mathbf{3} & 0  &\mathbf{-4} & 1 & \mathbf{-1} \\
+					\mathbf{7} & 4 & 0 & 5 & \mathbf{3}\\
+					2 & -1 & -5 & 0 &-2\\
+					\mathbf{8} & \mathbf{5} & \mathbf{1} & 6 & 0
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				\Pi^4 = \begin{bmatrix}
+					& 1 & \mathbf{4} & 2 & 1 \\
+					\mathbf{4} & & \mathbf{4} & 2 & \mathbf{1}\\
+					\mathbf{4} & 3 & & 2 & \mathbf{1} \\
+					4 & 3 & 4 & & 1\\
+					\mathbf{4} & \mathbf{3} & \mathbf{4} & 5 & \\
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				D^5 = \begin{bmatrix}
+					0 & \mathbf{1} & \mathbf{-3} & \mathbf{2} & -4 \\
+					3 & 0  & -4 & 1 & -1 \\
+					7 & 4 & 0 & 5 & 3\\
+					2 & -1 & -5 & 0 &-2\\
+					8 & 5 & 1 & 6 & 0
+				\end{bmatrix}
+			\end{equation}
+
+			\begin{equation}
+				\Pi^5 = \begin{bmatrix}
+					& \mathbf{3} & 4 & \mathbf{5} & 1 \\
+					4 & & 4 & 2 & 1\\
+					4 & 3 & & 2 & 1 \\
+					4 & 3 & 4 & & 1\\
+					4 & 3 & 4 & 5 & \\
+				\end{bmatrix}
+			\end{equation}
+
+			Time complexity $O(n^3)$
+
+			If during the previous processes, there exist an element of negative value in the diagonal, it means there exists negative cycle.
 
 	\chapter{Maximum Flow Problem}
+		\section{Maxiumn Flow}
+			Let $D=(V, A)$ be a strict diagraph with distinguished vertices $s$ and $t$. We call $s$ the source and $t$ the sink, let $\mu=\{\mu_e: e\in A\}$ be a nonnegative integer-valued capacity function defined on the arcs of $D$. The maximum flow problem on $(D, s, t, \mu)$ is the following Linear program.
+			\begin{align}
+				\max \quad & v\\
+				\text{s.t.} \quad & \sum_{h(e)=i}x_e - \sum_{t(e) = i} x_e = \begin{cases}
+					-v, \quad \text{if } i = s\\
+					v, \quad \text{if } i = t \\
+					0, \quad \text{otherwise}
+				\end{cases}\\
+				& 0\le x_e \le \mu_e, \quad \forall e\in A
+			\end{align}
+			We think of $x_e$ as being the flow on arc $e$. Constraint says that for $i \neq s, t$ the flow into a vertex has to be equal to the flow out of vertex. That is, flow is conceded at vertex $i$ for $i=s$ and for $i=t$ the net flow in the entire digraph must be equal to $v$.
+			An $x$ that satisfied the above constraints is an $(s,t)$-flow of value $v$. If in addition it satisfies the bounding constraints, then it is a feasible $(s,t)$-flow.
+			A feasible $(s,t)$-flow that has maximum $v$ is optimal on maximum.
+
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (1) [circleNode] {2};
+					\node (3) [circleNode, right of=1] {3};
+					\node (s) [circleNode, below of=1, xshift = -1cm] {s};
+					\node (2) [circleNode, below of=s, xshift = 1cm] {2};
+					\node (t) [circleNode, below of=3, xshift = 1cm] {t};
+					\node (4) [circleNode, below of=t, xshift = -1cm] {4};
+					\draw [arrow] (s) -- node [above] {6} (1);
+					\draw [arrow] (s) -- node [above] {3} (2);
+					\draw [arrow] (1) -- node [above] {2} (2);
+					\draw [arrow] (1) -- node [above] {5} (3);
+					\draw [arrow] (2) -- node [above] {4} (4);
+					\draw [arrow] (4) -- node [above] {4} (3);
+					\draw [arrow] (3) -- node [above] {3} (t);
+					\draw [arrow] (4) -- node [above] {1} (t);
+				\end{tikzpicture}
+			\end{figure}
+		\section{The main theorem}
+			\begin{theorem}
+				For $S \subseteq V$ we define $(S, \bar{S})$ to be a $(s, t)$-cut if $s\in S$ and $t\in \bar{S}=V-S$, the capacity of the cut, denoted $\mu(S, \bar{S})$ is $\sum (\mu_e: e\in \delta^-(S))$ where $\delta^-(S) = \{e\in A: t(e) \in S \text{ and } h(e) \in \bar{S}\}$
+			\end{theorem}
+
+			\begin{example}
+				$S = \{1, 2, 3, s\}$, $\bar{S} = \{4, t\}$\\
+				$\delta^-(S) = \{(2, 4), (3, t)\} \Rightarrow \mu(S, \bar{S}) = 7$
+			\end{example}
+
+			\begin{definition}
+				If $(S, \bar{S})$ has minimum capacity of all $(s,t)$-cuts, then it is called \textbf{minimum cut}.
+			\end{definition}
+			
+			\begin{definition}
+				Let $\delta^+(S) = \delta^-(V-S)$
+			\end{definition}
 
 	\chapter{Minimum Cost Flow Problem}
 
