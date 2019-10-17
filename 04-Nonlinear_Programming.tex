@@ -38,34 +38,9 @@
 				                  & x_2(1 - x_2) = 0
 			\end{align}		
 
-			\section{Example - Braess Paradox}
+		\section{Traffic Assignment}
 
-			- Situation 1, minimizing total time
-			\begin{align}
-				\min \quad & \frac{x_1t_1 + x_2t_2 + x_3t_3}{x_1 + x_2 + x_3}\\
-				\text{s.t.} \quad & x_1 + x_2 + x_3 = 1000\\
-				                  & t_1 = 1 + (x_1 + x_2) / 1000 + 2\\
-				                  & t_2 = 1 + (x_1 + x_2) / 1000 + 0.25 + (x_2 + x_3)/1000 + 1\\
-				                  & t_3 = 2 + (x_2 + x_3) / 1000 + 1
-			\end{align}
-
-			- Situation 2, selfish for driver
-			\begin{align}
-				\text{s.t.} \quad & x_1 + x_2 + x_3 = 1000\\
-				                  & t_1 = 1 + (x_1 + x_2) / 1000 + 2\\
-				                  & t_2 = 1 + (x_1 + x_2) / 1000 + 0.25 + (x_2 + x_3)/1000 + 1\\
-				                  & t_3 = 2 + (x_2 + x_3) / 1000 + 1\\
-				                  & x_1 t_1 \le x_1 t_2 \\
-				                  & x_1 t_1 \le x_1 t_3 \\
-				                  & x_2 t_2 \le x_2 t_1 \\
-				                  & x_2 t_2 \le x_2 t_3 \\
-				                  & x_3 t_3 \le x_3 t_1 \\
-				                  & x_3 t_3 \le x_3 t_2
-			\end{align}
-
-			- Situation 3, remove one of the arc, remove $x_2$ and all related constraints
-
-		\section{Newsvendor problem}
+		\section{Newsvendor Problem}
 			Parameter
 			\begin{itemize}
 				\item for each newspaper, cost is \$c
@@ -95,7 +70,7 @@
 				\max \quad \sum_{i \in N} \pi_i (ps_i + vr_i) - cq
 			\end{equation}
 
-		\section{Portfolio optimization}
+		\section{Portfolio Optimization}
 			Parameters
 			\begin{itemize}
 				\item A, set of assets
@@ -121,41 +96,19 @@
 				\min \quad \sum_{i \in A}\sum_{j \in A} \sigma_{ij}^2 x_i x_j
 			\end{equation}
 
-		\section{curve fitting}
+		\section{Curve Fitting}
 			
 	\chapter{Background}
-		\section{Operations}
-			A vector addition $\oplus$ has such feature
-			\begin{itemize}
-				\item $\oplus$ is closed
-				\item $\oplus$ is commutative
-				\item $\oplus$ is associative
-				\item $\oplus$ has an identity element
-				\item $\oplus$ has an inverse
-			\end{itemize}
+		\section{Real Vector Spaces}
 
-			A scalar multiplication $\otimes$ has the following features
-			\begin{itemize}
-				\item $\otimes$ is closed
-				\item $\otimes$ is distributive wrt $\oplus$
-				\item $\otimes$ is distributive wrt scalar addition, i.e. $(\lambda + \mu) \otimes v = (\lambda \otimes v) \oplus (\mu \otimes v$
-				\item $\otimes$ is distributive with multiplication
-			\end{itemize}
+		\section{Linear Subspaces}
 
-			\begin{equation}
-				u \oplus v = \left[\begin{align}u_1 \\ u_1\end{align}\right] \oplus \left[\begin{align}v_1 \\ v_1\end{align}\right]
-			\end{equation}
+		\section{Inner Products}
 
-			For $W_1 = \{w \in R^3 | 3w_1 + 2w_2 + w_3 = 0\}$
-			Check if this is closed to $\oplus$
+		\section{Norms}
 
-			\begin{align}
-				a, b &\in W_1 \\
-				3a_1 + 2a_2 + a_3 & = 0\\
-				3b_1 + 2b_2 + b_3 & = 0\\
-				c & = a + b
-				c & = 3 (a_1 + b_1) + ... = 0
-			\end{align}
+	\chapter{Convex Analysis}
+		\section{}
 
 	\chapter{KKT Optimality Conditions}
 

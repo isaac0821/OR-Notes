@@ -1375,7 +1375,181 @@
 			\begin{definition}
 				Let $P$ be a path, (not necessarily a dipath), $P$ is called \textbf{unsaturated} if every \textbf{forward} arc is unsaturated ($x_e < u_e$) and ever \textbf{reverse} arc has positive flow ($x_e > 0$). If in addition $P$ is an $(s, t)$-path, then $P$ is called an \textbf{x-augmenting path}
 			\end{definition}
+
+			\begin{theorem}
+				A feasible flow $x$ in a digraph $D$ is maximum iff $D$ has augmenting paths.
+			\end{theorem}
 			
+			\begin{proof}
+				(Prove by contradiction) 
+
+				($\Rightarrow$) Let $x$ be a maximum flow of value $v$ and suppose $D$ has an augmenting path. Define in $P$ (augmenting path):
+				\begin{align}
+					& D_1 = \min \{u_e-x_e: e \text{ forward in } P\} \\
+					& D_2 = \min \{x_e: e \text{ backward in } P\}\\
+					& D = \min \{D_1, D_2\}
+				\end{align}
+				Since $P$ is augmenting, then $D > 0$, let
+				\begin{align}
+					\hat{x_e} = \begin{cases}
+						x_e + D \quad \text{If $e$ is forward in $P$}\\
+						x_e - D \quad \text{If $e$ is backward in $P$}\\
+						x_e \quad otherwise
+					\end{cases}
+				\end{align}
+				It is easy to see that $\hat{x}$ is feasible flow and that the value is $V+D$, a contradiction.
+
+				($\Leftarrow$) Suppose $D$ admits no x-augmenting path, Let $S$ be the set of vertices reachable from $s$ by x-unsaturated path clearly $s\in S$ and $t\notin S$ (because otherwise there would be an augmenting path). Thus, $(S, \bar{S})$ is a $(s, t)$-cut.
+
+				Let $e\in \delta^-{S}$ then $e$ must be saturated. For otherwise we could add the $h(e)$ to $S$
+
+				Let $e\in \delta^+{S}$ then $e$ must be flow less. For otherwise we could add the $t(e)$ to $S$.
+
+				According to previous corollary, that $x$ is maximum.
+			\end{proof}
+
+			\begin{theorem}(Max-flow = Minimum-cut)
+				For any digraph, the value of a maximum $(s, t)$-flow is equal to the capacity of a minimum $(s, t)$-cut
+			\end{theorem}
+
+		\section{Maximum flow algorithm}
+			Finding augmenting paths is the key of max-flow algorithm, we need to describe two functions, labeling and scanning a vertex.
+
+			A vertex is first labeled if we can find x-unsaturated path from $s$, i.e., $(s, v)$-unsaturated path.
+
+			The vertex $v$ is scanned after we attempted to extend the x-unsaturated path.
+
+			\fixme{This algorithm is incomplete/incorrect, needs to be fixed}
+			\begin{algorithm}
+				\caption{Labeling algorithm}
+				\begin{algorithmic}
+					\ENSURE Max-flow $x$ with value $v$
+					\REQUIRE Digraph with source $s$ and sink $t$, a capacity function $u$ and a feasible flow (could be $x_e = 0$)
+					\STATE Initialize, $v \gets x$
+					\STATE Designate all vertices as unlabeled and unscanned
+					\STATE Label $s$
+					\WHILE {There exists vertex unlabeled or unscanned}
+						\STATE Let $i$ be such a vertex, for each arc $e$ with $t(e) = i, x_e < u_e$ and $h(e)$ unlabeled, label $h(e)$
+						\STATE For each arc $e$ with $h(e) = i, x_e > 0$ and $t(e)$ unlabeled, label $t(e)$, designate $i$ as scanned.
+						\STATE If $t$ is not label
+					\ENDWHILE
+					\STATE $x$ is the maximum.
+				\end{algorithmic}
+			\end{algorithm}
+
+			Labeling algorithm can be exponential, the following is an example
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (1) [circleNode] {1};
+					\node (s) [circleNode, below of=1, xshift = -1cm] {s};
+					\node (2) [circleNode, below of=s, xshift = 1cm] {2};
+					\node (t) [circleNode, below of=1, xshift = 1cm] {t};
+					\draw [arrow] (s) -- node [left] {M} (1);
+					\draw [arrow] (s) -- node [left] {M} (2);
+					\draw [arrow] (1) -- node [left] {1} (2);
+					\draw [arrow] (1) -- node [left] {M} (t);
+					\draw [arrow] (2) -- node [left] {M} (t);
+				\end{tikzpicture}
+			\end{figure}
+
+		\section{Polynomial Algorithm for max flow}
+			Let $(D,s,t,u)$ be a max flow problem and let $x$ be a feasible flow for $D$, the \textbf{x-layers} of $D$ are define be the following algorithm
+
+			Layer algorithm DINIC 1977
+			Input: A network $(D, s, t, u)$ and a feasible flow $x$
+			Output: The \textbf{x-layers} $V_0, V_1, ..., V_l$ where $V_i \cap V_j = \emptyset \forall i \neq j$
+
+			Step 1: Set $V_0 = \{s\}, i \gets 0 and l(x) = 0$
+			Step 2: Let $R$ be the set of vertices $w$ such that there is an arc $e$ withn either:
+				\begin{itemize}
+					\item $t(e) \in V_i, h(e) = w, x_e < u_e$ or
+					\item $h(e) \in V_j, t(e) = w, x_e > 0$ 
+				\end{itemize}
+			Step 3: If $t \in R$, set $V_{i+1} = \{t\}$, $l(t) = i + 1$ and stop. Set $V_{i+1} \gets R\setminus \cup_{0 \le j \le i} V_j$, $l \ges i+1, l(x) = i$, goto Step 2.
+			If $V_{i+1} = \emptyset$, set $l(x) = i$ and Stop.
+
+			\begin{example}
+				For the following graph
+				\begin{figure}
+					\centering
+					\begin{tikzpicture}[node distance = 2cm]
+						\node (1) [circleNode] {1};
+						\node (3) [circleNode, right of=1] {3};
+						\node (5) [circleNode, right of=3] {5};
+						\node (s) [circleNode, below of=1, xshift = -1cm] {s};
+						\node (2) [circleNode, below of=s, xshift = 1cm] {2};
+						\node (t) [circleNode, below of=1, xshift = 1cm] {t};
+						\draw [arrow] (s) -- node [left] {M} (1);
+						\draw [arrow] (s) -- node [left] {M} (2);
+						\draw [arrow] (1) -- node [left] {1} (2);
+						\draw [arrow] (1) -- node [left] {M} (t);
+						\draw [arrow] (2) -- node [left] {M} (t);
+					\end{tikzpicture}
+				\end{figure}
+				\begin{align}
+					\text{Second iteration}\\
+					V_0 = \{s\}, i = 0, l(x) = 0 \\
+					R=\{1,2\}\\
+					V_1 \gets \{1, 2\}, i = 1, l(x) = 1\\
+					R=\{3, 4, 5\}\\
+					V_2 \gets \{3, 4\}, i = 2, l(x) = 2\\
+					R=\{1, 5, 6, 3\}\\
+					V_3 \gets \{5, 6\}, i = 3, l(x) = 3\\
+					R=\{4, t\}\\
+					V_4 = \{t\}\\
+					A_1=\{(s, 1), (s, 2)\}\\
+					A_2=\{(1, 3), (2, 4)\}\\
+					A_3=\{(3, 5), (4, 6)\}\\
+					A_4=\{(5, t), (6, t)\}
+				\end{align}
+			\end{example}
+
+			The layer network $D_x$ is defined by $V(D_x) = V_0 \cup V_1 \cup V_2 \dots \cup V_{l(x)}$
+
+			Suppose we have computed the layers of $D$ and $t \in V_l(x)$, the last layer (last layer I am goint to $V_e$)
+
+			For each $i, 1 \le i \le l$, define a set of arcs $A_i$ and a function $\hat{u}$ on $A_i$ as following. For each $e\in A(D)$
+			\begin{itemize}
+				\item If $t(e) \in V_{i-1}, h(e) \in V_i$ and $x_e < u_e$ then add arc $e$ to $A_i$ and define $\hat{u}_e = u_e - x_e$
+				\item If $h(e) \gets V_{i-1}, t(e) \in V_i$ and $x_e > 0$ then add arc $e^\prime = (h(e), t(e))$ to $A_i$ with $\hat{u}_e - x_e$
+			\end{itemize}
+
+			Let $\hat{u}$ be the capacity function on $D_x$ and let the source and sink of $D_x$ be $s$ and $t$
+
+			We can think of $D_x$ as being make of arc shortest (in terms of numbers of arcs) x-augmenting paths.
+
+			A feasible flow in a network is said to be maximal (does not means maximum) if every $(s, t)$-directed path containts at least one saturated arc.
+
+		\section{Layered Network}
+			For layered algorithm $V_0, V_1, ..., V_L$
+
+			Arcs:
+			\begin{itemize}
+				\item If $t(e)\in V_{i-1}$, $h(e) \in V_i$ and $x_e < u_e$, then add $e$ to $A_i$ with $\hat{u_e} = u_e - x_e$
+				\item If $h(e) \in V_{i-1}$, $t(e)\in V_i$ and $x_e > 0$, then add arc $e^\prime = (h(e), t(e))$ to $A_i$ and define $\hat{u_e} = x_e$
+			\end{itemize}
+
+			Maximal Flow: If every directed $(s, t)$-path has at least one saturated arc.
+
+			Computing maximal flow is easier than computing maximum flow, since we never need to consider cancelling flows on reverse arcs,
+
+			Let $\hat{x}$ be a maximal flow on the layered network $D_x$, we can define new flows in $D(x^\prime)$ by
+			\begin{align}
+				x_e^\prime = x_e + \hat{x_e}, \quad \text{If } t(e) \in V_{i-1}, h(e)\in V_i\\
+				x_e^\prime = x_e - \hat{x_e}, \quad \text{If } h(e) \in V_{i-1}, t(e)\in V_i
+			\end{align}
+
+		\section{Maximal Flow Algorithm}
+			Input: A layered network $(D_x, s, t, \hat{u})$ and a feasible flow x
+			Output: A maximal flow $\hat{x}$ from $D_x$
+
+			Step 1: Set $H\gets D_x$ and $i\gets S$
+			Step 2: If there is no arc $e$ with $t(e) = i$, goto Step 4, otherwise let $e$ be such an arc
+			Step 3: Set $T(h(e))\gets i$ and $i \gets h(e)$, if $i= t$ goto Step 5, otherwise goto Step 2.
+			Step 4: If $i = s$, Stop, Otherwise delete $i$ and all incident arcs with $H$, set $i \gets T(i)$ and goto Step 2
+			Step 5: Construct the directed path, $s = i_0e_1i_1e_2...e_ki_k=t$ where $i_{j-1} = T(i_j), 1\le j \le k$. Set $D=\min\{\hat{u_{e_j}}-\hat{x_{e_j}}:i\le j \le k\}$, set $\hat{x_{e_j}} \gets \hat{x_{e_j}} + D, i \le j \le k$. Delete from $H$ all saturated arcs on this path, set $i \gets 1$ and goto Step 2.
+
 	\chapter{Minimum Cost Flow Problem}
 
 	\chapter{Assignment and Matching Problem}
