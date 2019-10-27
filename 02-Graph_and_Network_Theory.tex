@@ -1,35 +1,38 @@
 \part{Graph and Network Theory}
-	\chapter{Basic concepts}
+	\chapter{Graphs and Subgraphs}
 		\section{Graph}
 			\begin{definition}[Graph]
 				A \textbf{graph} G consists of a finite set $V(G)$ on vertices, a finite set $E(G)$ on edges and an \textbf{incident relation} than associates with any edge $e\in E(G)$ an unordered pair of vertices not necessarily distinct called \textbf{ends}.
 			\end{definition}
 
-			For example, the following graph\\
-			\begin{figure}[!ht]
-				\centering
-				\begin{tikzpicture}[node distance = 1.7cm]
-					\node (v_2) [circleNode] {$v_2$};
-					\node (v_3) [circleNode, right of = v_2] {$v_3$};
-					\node (v_1) [circleNode, below of = v_2] {$v_1$};
-					\node (v_4) [circleNode, below of = v_3] {$v_4$};
-					\node (v_5) [circleNode, right of = v_3] {$v_5$};
-					\node (v_6) [circleNode, below of = v_5] {$v_6$};
-					\draw [link] (v_2) -- node [left] {$e_2$} (v_1);
-					\draw [link] (v_2) -- node [below] {$e_5$} (v_4);
-					\draw [link] (v_1) to [out = 180, in = 270, looseness = 5] node [right] {$e_1$} (v_1);
-					\draw [link] (v_2) to [out = 45, in = 135] node [above] {$e_3$} (v_3);
-					\draw [link] (v_2) -- node [above] {$e_4$} (v_3);
-					\draw [link] (v_3) -- node [right] {$e_6$} (v_1);
-					\draw [link] (v_5) -- node [right] {$e_7$} (v_6);
-				\end{tikzpicture}			
-			\end{figure}\\
-			can be represented as\\
-			\begin{align}
-				V = V(G) = \{v_1, v_2, v_3, v_4, v_5, v_6\} \\
-				E = E(G) = \{e_1, e_2, e_3, e_4, e_5, e_6, e_7\}\\
-				e_1 = v_1v_2, e_2 = v_2v_4, ...
-			\end{align}
+			\begin{example}
+				The following graph\\
+				\begin{figure}[!h]
+					\centering
+					\caption{An example of graph}
+					\begin{tikzpicture}[node distance = 1.7cm]
+						\node (v_2) [circleNode] {$v_2$};
+						\node (v_3) [circleNode, right of = v_2] {$v_3$};
+						\node (v_1) [circleNode, below of = v_2] {$v_1$};
+						\node (v_4) [circleNode, below of = v_3] {$v_4$};
+						\node (v_5) [circleNode, right of = v_3] {$v_5$};
+						\node (v_6) [circleNode, below of = v_5] {$v_6$};
+						\draw [link] (v_2) -- node [left] {$e_2$} (v_1);
+						\draw [link] (v_2) -- node [below] {$e_5$} (v_4);
+						\draw [link] (v_1) to [out = 180, in = 270, looseness = 5] node [right] {$e_1$} (v_1);
+						\draw [link] (v_2) to [out = 45, in = 135] node [above] {$e_3$} (v_3);
+						\draw [link] (v_2) -- node [above] {$e_4$} (v_3);
+						\draw [link] (v_3) -- node [right] {$e_6$} (v_1);
+						\draw [link] (v_5) -- node [right] {$e_7$} (v_6);
+					\end{tikzpicture}			
+				\end{figure}\\
+				can be represented as\\
+				\begin{align}
+					V = V(G) = \{v_1, v_2, v_3, v_4, v_5, v_6\} \\
+					E = E(G) = \{e_1, e_2, e_3, e_4, e_5, e_6, e_7\}\\
+					e_1 = v_1v_2, e_2 = v_2v_4, ...
+				\end{align}				
+			\end{example}
 
 			\begin{definition}[loop, parallel, simple graph]
 				An edge with identical ends is called a \textbf{loop}, Two edges having the same ends are said to be \textbf{parallel}, A graph without loops or parallel edges is called \textbf{simple graph}
@@ -38,6 +41,10 @@
 			\begin{definition}[adjacent]
 				Two edges of a graph are \textbf{adjacent} if they have a common end, two vertices are \textbf{adjacent} if they are jointed by an edge.
 			\end{definition}
+
+		\section{Graph Isomorphism}
+
+		\section{The Adjacency and Incidence Matrices}
 
 		\section{Subgraph}
 			\begin{definition}[subgraph]
@@ -54,6 +61,7 @@
 
 			\notice{If we combine node-induced or edge-induced subgraphs $G(V^{'})$ and $G(V - V^{'})$, we cannot always get the entire graph.}
 
+		\section{Degree}
 			\begin{definition}[degree]
 				Let $v\in V(G)$, then the \textbf{degree} of $v\in V(G)$ denote by $d_G(v)$ is defines to be the number of edges incident of $v$. Loops counted twice.
 			\end{definition}			
@@ -134,6 +142,258 @@
 					\sum_{v\in V}d(v) = \sum_{v\in V_E} d(v) + \sum_{v\in V_O}d(v) = 2|E|
 				\end {equation}			
 			\end{proof}
+
+		\section{Special Graphs}
+			\begin{definition}[Complete Graph]
+				A \textbf{complete} graph $K_n (n \ge 1)$ is a simple graph with $n$ vertices and with exactly one edge between each pair of distinct vertices.
+			\end{definition}
+
+			\begin{definition}[Cycle]
+				A \textbf{cycle} graph $C_n (n \ge 3)$ consists of $n$ vertices $v_1, ... v_n$ and $n$ edges $\{v_1, v_2\}, \{v_2, v_3\}, ... \{v_{n-1}, v_n\}$
+			\end{definition}
+
+			\begin{definition}[Wheel]
+				A \textbf{wheel} graph $W_n (n \ge 3)$ is a simple graph obtains by adding one vertex to the cycle graph $C_n$, and connecting this new vertex to all vertices of $C_n$ 
+			\end{definition}
+
+			\begin{definition}[Bipartite Graph]
+				A simple graph is said to be \textbf{bipartite} if the vertex set can be expressed as the union of two disjoint non-empty subsets $V_1$ and $V_2$ such that every edges has one end in $V_1$ and another end in $V_2$
+			\end{definition}
+
+			\begin{figure}[!h]
+				\centering
+				\begin{tikzpicture}[node distance = 1.2cm]
+					\node (A) [circleNode] {A};
+					\node (B) [circleNode, right of = A] {B};
+					\node (C) [circleNode, below of = A] {C};
+					\node (D) [circleNode, right of = C] {D};
+					\node (E) [circleNode, below of = C] {E};
+					\node (F) [circleNode, right of = E] {F};
+					\draw [link] (A) -- (B);
+					\draw [link] (A) -- (D);
+					\draw [link] (C) -- (B);
+					\draw [link] (C) -- (F);
+					\draw [link] (E) -- (D);
+					\draw [link] (E) -- (F);
+					\draw [link] (A) -- (F);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{definition}[complete bipartite]
+				The \textbf{complete bipartite} graph $K_{mn}$ is the bipartite graph $V_1$ containing $m$ vertices and $V_2$ containing $n$ vertices such that each vertiex in $V_1$ is adjacent to every vertex in $V_2$
+			\end{definition}
+
+			\begin{example}
+				Here is an example for $K_{53}$
+				\begin{figure}[!h]
+					\centering
+					\begin{tikzpicture}[node distance = 1.2cm]
+						\node (A) [circleNode] {A};
+						\node (B) [circleNode, below of = A] {B};
+						\node (C) [circleNode, below of = B] {C};
+						\node (D) [circleNode, below of = C] {D};
+						\node (E) [circleNode, below of = D] {E};
+						\node (F) [circleNode, right of = B] {F};
+						\node (G) [circleNode, right of = C] {G};
+						\node (H) [circleNode, right of = D] {H};
+						\draw [link] (A) -- (F);
+						\draw [link] (A) -- (G);
+						\draw [link] (A) -- (H);
+						\draw [link] (B) -- (F);
+						\draw [link] (B) -- (G);
+						\draw [link] (B) -- (H);
+						\draw [link] (C) -- (F);
+						\draw [link] (C) -- (G);
+						\draw [link] (C) -- (H);
+						\draw [link] (D) -- (F);
+						\draw [link] (D) -- (G);
+						\draw [link] (D) -- (H);
+						\draw [link] (E) -- (F);
+						\draw [link] (E) -- (G);
+						\draw [link] (E) -- (H);
+					\end{tikzpicture}
+				\end{figure}
+			\end{example}
+
+			\begin{theorem}(K\"onig Theorem)
+				A graph $G$ is bipartite iff every cycle is even.
+			\end{theorem}
+
+			\begin{proof}
+				Hereby we prove the $\Rightarrow$ and $\Leftarrow$
+				\begin{itemize}
+					\item ($\Rightarrow$) If the graph $G$ is bipartite, by definition, the vertices of graph can be partition into two groups, that within the group there is no connection between vertices. Therefore, for each cycle, the odd index of vertices and even index of vertices has to be choose alternatively from each groups. Therefore the cycle has to be even.
+					\item ($\Leftarrow$) Prove by contradiction. A graph can be connected or not connected.
+					\begin{itemize}
+						\item If $G$ is connected and has at least two vertices, for an arbitrary vertex $v\in V(G)$, we can calculate the minimum number of edges between the other vertices $v^\prime$ and $v$ (i.e., length, denoted by $l(v^\prime, v)$), for all the vertices that has odd length to $v$, assign them to set $V_1$, for the rest of vertices (and $v$), assign to set $V_2$. Assume that $G$ is not bipartite, which means there are at least one edge between distinct vertices in set $V_1$ or set $V_2$, without lost of generality, assume that edge is $uw$, $u, w\in V_1$. For all vertices in $V_1$ there is an odd length of path between the vertex and $v$, therefore, there exists an odd $l(u,v)$, and an odd $l(w-v)$. The length of cycle $l(u, w, v) = 1 + l(u, v) + l(w, v)$, which is an odd number, it contradict with the prerequisite that all cycles are even, which means the assumption that $G$ is not bipartite is incorrect, $G$ should be bipartite.
+						\item If $G$ is not connected. Then $G$ can be partition into a set of disjointed subgraphs which are connected with at least two vertices or contains only one vertex. For the subgraph that has more that one vertices, we already proved that it has to be bipartite. For the subgraph $G_i \subset G, i = 1, 2, ..., n$, the vertices can be partition into $V_{i1} \in V(G_i)$ and $V_{i2} \in V(G_i)$, where $V_{i1} \cap V_{i2} = \emptyset$, the union of those subgraphs are bipartite too because $V_1 = \cup_{i=1}^n V_{i1} \in V(G)$ and $V_2 = \cup_{i=1}^n V_{i2} \in V(G)$ satisfied the condition of bipartite. For the subgraph that has one one vertices, those vertices can be assigned into either $V_1$ or $V_2$.
+					\end{itemize}
+				\end{itemize}
+			\end{proof}
+
+			\begin{example}
+				The following graph is bipartite, it only contains even cycles.\\
+				\begin{figure}[!ht]
+					\centering
+					\begin{tikzpicture}
+						\node (a) [solidNode, label=above:{a}] {};
+						\node (b) [solidNode, label=above:{b}, right of = a] {};
+						\node (c) [solidNode, label=above:{c}, right of = b] {};
+						\node (d) [solidNode, label=above:{d}, right of = c] {};
+						\node (e) [solidNode, label=below:{e}, below of = a] {};
+						\node (f) [solidNode, label=below:{f}, below of = b] {};
+						\node (g) [solidNode, label=below:{g}, below of = c] {};
+						\node (h) [solidNode, label=below:{h}, below of = d] {};
+						\draw [link] (a) -- (b);
+						\draw [link] (b) -- (c);
+						\draw [link] (c) -- (d);
+						\draw [link] (a) -- (e);
+						\draw [link] (b) -- (f);
+						\draw [link] (c) -- (g);
+						\draw [link] (d) -- (h);
+						\draw [link] (e) -- (f);
+						\draw [link] (f) -- (g);
+						\draw [link] (g) -- (h);
+						\draw [link] (a) to [out = 60, in = 120, looseness = 1] (d);
+						\draw [link] (e) to [out = 300, in = 240, looseness = 1] (h);
+					\end{tikzpicture}
+				\end{figure}\\
+				We can rearrange the graph to be more clear as following\\
+				\begin{figure}[!ht]
+					\centering
+					\begin{tikzpicture}
+						\node (a) [solidNode, label=right:{a}] {};
+						\node (b) [solidNode, label=left:{b}, left of=a] {};
+						\node (c) [solidNode, label=right:{c}, below of=a] {};
+						\node (d) [solidNode, label=left:{d}, below of=b] {};
+						\node (e) [solidNode, label=left:{e}, below of=d] {};
+						\node (f) [solidNode, label=right:{f}, below of=c] {};
+						\node (g) [solidNode, label=left:{g}, below of=e] {};
+						\node (h) [solidNode, label=right:{h}, below of=f] {};
+						\draw [link] (a) -- (b);
+						\draw [link] (b) -- (c);
+						\draw [link] (c) -- (d);
+						\draw [link] (a) -- (e);
+						\draw [link] (b) -- (f);
+						\draw [link] (c) -- (g);
+						\draw [link] (d) -- (h);
+						\draw [link] (e) -- (f);
+						\draw [link] (f) -- (g);
+						\draw [link] (g) -- (h);
+						\draw [link] (a) -- (d);
+						\draw [link] (e) -- (h);
+					\end{tikzpicture}
+				\end{figure}\\
+				The vertices of graph $G$ can be partition into two sets, $\{a, c, f, h\}$ and $\{b, d, e, g\}$
+			\end{example}
+
+			\begin{example}
+				The following graph is not bipartite\\
+				\begin{figure}[!ht]
+					\centering
+					\begin{tikzpicture}[node distance=1cm]
+						\node (11) [solidNode, label=left:{11}] {};
+						\node (4) [solidNode, label=below:{4}, below of=11, yshift=-0.41cm] {};
+						\node (3) [solidNode, label=below:{3}, below of=4, xshift=-1cm] {};
+						\node (5) [solidNode, label=below:{5}, below of=4, xshift=1cm] {};
+						\node (1) [solidNode, label=below:{1}, below of=3, xshift=-2.41cm] {};
+						\node (2) [solidNode, label=below:{2}, below of=3, xshift=-1cm] {};
+						\node (6) [solidNode, label=below:{6}, below of=3, xshift=1cm] {};
+						\node (10) [solidNode, label=below:{10}, below of=5, xshift=1cm] {};
+						\node (12) [solidNode, label=below:{12}, below of=5, xshift=2.41cm] {};
+						\node (7) [solidNode, label=below:{7}, below of=2, xshift=1cm] {};
+						\node (8) [solidNode, label=left:{8}, below of=7, xshift=1cm] {};
+						\node (9) [solidNode, label=below:{9}, below of=6, xshift=1cm] {};
+						\node (13) [solidNode, label=below:{13}, below of=8, yshift=-0.41cm] {};
+						\draw [link] (11) -- (1);
+						\draw [link] (11) -- (12);
+						\draw [link] (11) -- (4);
+						\draw [link] (4) -- (3);
+						\draw [link] (4) -- (5);
+						\draw [link] (3) -- (2);
+						\draw [link] (3) -- (6);
+						\draw [link] (5) -- (6);
+						\draw [link] (5) -- (10);
+						\draw [link] (1) -- (2);
+						\draw [link] (10) -- (12);
+						\draw [link] (2) -- (7);
+						\draw [link] (6) -- (7);
+						\draw [link] (6) -- (9);
+						\draw [link] (10) -- (9);
+						\draw [link] (7) -- (8);
+						\draw [link] (9) -- (8);
+						\draw [link] (8) -- (13);
+						\draw [link] (1) -- (13);
+						\draw [link] (12) -- (13);
+					\end{tikzpicture}
+				\end{figure}\\
+				The cycle $c=v_1v_11v_4v_3v_2$ have odd number of vertices.
+			\end{example}
+
+		\section{Directed Graph}
+			\begin{definition}
+				A graph $G=(V, E)$ is called directed if for each edge $e\in E$, there is a \textbf{head} $h(e)\in V$ and a \textbf{tail} $t(e)\in V$ and the edges of $e$ are precisely $h(e)$ and $t(e)$, denoted $e = (t(e), h(e))$
+			\end{definition}
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (1) [circleNode] {u};
+					\node (2) [circleNode, right of = 1] {w};
+					\node (3) [circleNode, below of = 1] {v};
+					\node (4) [circleNode, right of = 3] {z};
+					\draw [arrow] (1) -- (3);
+					\draw [arrow] (1) -- (4);
+					\draw [arrow] (3) -- (4);
+					\draw [arrow] (1) to [out = 30, in = 150] (2);
+					\draw [arrow] (2) -- (1);
+					\draw [arrow] (4) to [looseness = 3] (4);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{definition}
+				We call directed graphs \textbf{digraphs}, we call edges in a digraph are called \textbf{arcs}, and vertices in a digraph \textbf{nodes}
+			\end{definition}
+
+			\begin{definition}
+				Similar as in the undirected case we have walks, traces, paths and cycles in digraphs.
+			\end{definition}
+
+			\begin{definition}
+				A vertex $v\in V$ is \textbf{reachable} from a vertex $u \in V$ if there is a $(u,v)$-dipath. If at the same time $u$ is reachable from $v$, they are \textbf{strongly connected}
+			\end{definition}
+
+			\begin{definition}
+				A digraph is strongly connected if every pair of vertices are strongly connected.
+			\end{definition}
+
+			\begin{definition}
+				A digraph is \textbf{strict} if it has no loops and whenever $e$ and $f$ are parallel, $h(e) = t(f)$
+			\end{definition}
+
+			\begin{definition}
+				For a vertex $v$ in a digraph $D$, the \textbf{indegree} of $v$ in $D$, denoted by $d^+(v)$ is the number of arcs of $D$ having head $V$. The \textbf{outdegree} of $v$ is denoted by $d^-(v)$ is the number of arcs of $D$ having tail $v$.
+			\end{definition}
+
+			Let $D=(V, A)$ be a digraph with no loops a vertex-arc \textbf{incident matrix} for $D$ is a $(0, 1, -1)$ matrix $N$ with rows indexed by $V = \{v_1, ..., v_n\}$ and column indexed by $A = \{e_1, ..., e_m\}$ and where entry $(i, j)$ in the matrix $n_{ij}$ is
+			\begin{equation}
+				n_{ij} = \begin{cases}
+					1, \quad \text{if} \ v_i = h(e_j) \\
+					-1, \quad \text{if} \ v_i = t(e_j) \\
+					0, \quad \text{otherwise}
+				\end{cases}
+			\end{equation}
+
+			\begin{equation}
+				\begin{bmatrix}
+					-1 & 0 & -1 & -1 & 1 \\
+					1 & -1 & 0 & 0 & 0 \\
+					0 & 0 & 0 & 1 & -1 \\
+					0 & 1 & 1 & 0 & 0
+				\end{bmatrix}
+			\end{equation}
+
+		\section{Sperner's Lemma}
 
 	\chapter{Paths, Trees, and Cycles}
 		\section{Walk}
@@ -419,352 +679,32 @@
 				(Proof by Contradiction) Suppose the output graph $T$ of the algorithm is NOT connected. Let $T_1$ be a component of $T$, let $x\in T_1$ and $y \notin T_1$. But $G$ is a connected graph (given from the beginning), so there must be a path in $G$ that connects $x$ and $y$. Let such a path in $G$ be $p=xe_1v_1e_2,..v_{k-1}e_ky$. Clearly, $p\notin T_1$. So there must be a first vertex in $P$ that not in $T_1$. So $e_i \notin E(T)$, the only way this can happen when applying the algorithm is if $T + e_i$ creates a cycle $C$, i.e., $e_i \in C$, so $C - e_i$ is a path connecting $v_{i-1}$ and $v_i$. So $c - e_i \in T$, so $v_{i-1}$ is connected to $v_i \in T$. Contradiction. 
 			\end{proof}
 
-		\section{Special Graphs}
-			\begin{definition}
-				A \textbf{complete} graph $K_n (n \ge 1)$ is a simple graph with $n$ vertices and with exactly one edge between each pair of distinct vertices.
-			\end{definition}
+		\section{Cayley's Formula}
 
-			\begin{definition}
-				A \textbf{cycle} graph $C_n (n \ge 3)$ consists of $n$ vertices $v_1, ... v_n$ and $n$ edges $\{v_1, v_2\}, \{v_2, v_3\}, ... \{v_{n-1}, v_n\}$
-			\end{definition}
+	\chapter{Connectivity}
+		\section{Connectivity}
 
-			\begin{definition}
-				A \textbf{wheel} graph $W_n (n \ge 3)$ is a simple graph obtains by adding one vertex to the cycle graph $C_n$, and connecting this new vertex to all vertices of $C_n$ 
-			\end{definition}
+		\section{Blocks}
 
-			\begin{definition}
-				A simple graph is said to be \textbf{bipartite} if the vertex set can be expressed as the union of two disjoint non-empty subsets $V_1$ and $V_2$ such that every edges has one end in $V_1$ and another end in $V_2$
-			\end{definition}
+	\chapter{Euler Tours and Hamilton Cycles}
+		\section{Euler Tours}
 
-			\begin{figure}[!ht]
-				\centering
-				\begin{tikzpicture}[node distance = 1.2cm]
-					\node (A) [circleNode] {A};
-					\node (B) [circleNode, right of = A] {B};
-					\node (C) [circleNode, below of = A] {C};
-					\node (D) [circleNode, right of = C] {D};
-					\node (E) [circleNode, below of = C] {E};
-					\node (F) [circleNode, right of = E] {F};
-					\draw [link] (A) -- (B);
-					\draw [link] (A) -- (D);
-					\draw [link] (C) -- (B);
-					\draw [link] (C) -- (F);
-					\draw [link] (E) -- (D);
-					\draw [link] (E) -- (F);
-					\draw [link] (A) -- (F);
-				\end{tikzpicture}
-			\end{figure}
+		\section{Hamilton Cycles}
 
-			\begin{definition}[complete bipartite]
-				The \textbf{complete bipartite} graph $K_{mn}$ is the bipartite graph $V_1$ containing $m$ vertices and $V_2$ containing $n$ vertices such that each vertiex in $V_1$ is adjacent to every vertex in $V_2$
-			\end{definition}
+	\chapter{Planarity}
+		\section{Plane and Planar Graphs}
 
-			\begin{example}
-				Here is an example for $K_{53}$
-				\begin{figure}[!ht]
-					\centering
-					\begin{tikzpicture}[node distance = 1.2cm]
-						\node (A) [circleNode] {A};
-						\node (B) [circleNode, below of = A] {B};
-						\node (C) [circleNode, below of = B] {C};
-						\node (D) [circleNode, below of = C] {D};
-						\node (E) [circleNode, below of = D] {E};
-						\node (F) [circleNode, right of = B] {F};
-						\node (G) [circleNode, right of = C] {G};
-						\node (H) [circleNode, right of = D] {H};
-						\draw [link] (A) -- (F);
-						\draw [link] (A) -- (G);
-						\draw [link] (A) -- (H);
-						\draw [link] (B) -- (F);
-						\draw [link] (B) -- (G);
-						\draw [link] (B) -- (H);
-						\draw [link] (C) -- (F);
-						\draw [link] (C) -- (G);
-						\draw [link] (C) -- (H);
-						\draw [link] (D) -- (F);
-						\draw [link] (D) -- (G);
-						\draw [link] (D) -- (H);
-						\draw [link] (E) -- (F);
-						\draw [link] (E) -- (G);
-						\draw [link] (E) -- (H);
-					\end{tikzpicture}
-				\end{figure}
-			\end{example}
+		\section{Dual Graphs}
 
-			\begin{theorem}(K\"onig)
-				A graph $G$ is bipartite iff every cycle is even.
-			\end{theorem}
+		\section{Euler's Formula}
 
-			\begin{proof}
-				Hereby we prove the $\Rightarrow$ and $\Leftarrow$
-				\begin{itemize}
-					\item ($\Rightarrow$) If the graph $G$ is bipartite, by definition, the vertices of graph can be partition into two groups, that within the group there is no connection between vertices. Therefore, for each cycle, the odd index of vertices and even index of vertices has to be choose alternatively from each groups. Therefore the cycle has to be even.
-					\item ($\Leftarrow$) Prove by contradiction. A graph can be connected or not connected.
-					\begin{itemize}
-						\item If $G$ is connected and has at least two vertices, for an arbitrary vertex $v\in V(G)$, we can calculate the minimum number of edges between the other vertices $v^\prime$ and $v$ (i.e., length, denoted by $l(v^\prime, v)$), for all the vertices that has odd length to $v$, assign them to set $V_1$, for the rest of vertices (and $v$), assign to set $V_2$. Assume that $G$ is not bipartite, which means there are at least one edge between distinct vertices in set $V_1$ or set $V_2$, without lost of generality, assume that edge is $uw$, $u, w\in V_1$. For all vertices in $V_1$ there is an odd length of path between the vertex and $v$, therefore, there exists an odd $l(u,v)$, and an odd $l(w-v)$. The length of cycle $l(u, w, v) = 1 + l(u, v) + l(w, v)$, which is an odd number, it contradict with the prerequisite that all cycles are even, which means the assumption that $G$ is not bipartite is incorrect, $G$ should be bipartite.
-						\item If $G$ is not connected. Then $G$ can be partition into a set of disjointed subgraphs which are connected with at least two vertices or contains only one vertex. For the subgraph that has more that one vertices, we already proved that it has to be bipartite. For the subgraph $G_i \subset G, i = 1, 2, ..., n$, the vertices can be partition into $V_{i1} \in V(G_i)$ and $V_{i2} \in V(G_i)$, where $V_{i1} \cap V_{i2} = \emptyset$, the union of those subgraphs are bipartite too because $V_1 = \cup_{i=1}^n V_{i1} \in V(G)$ and $V_2 = \cup_{i=1}^n V_{i2} \in V(G)$ satisfied the condition of bipartite. For the subgraph that has one one vertices, those vertices can be assigned into either $V_1$ or $V_2$.
-					\end{itemize}
-				\end{itemize}
-			\end{proof}
+		\section{Bridges}
 
-			\begin{example}
-				The following graph is bipartite, it only contains even cycles.\\
-				\begin{figure}[!ht]
-					\centering
-					\begin{tikzpicture}
-						\node (a) [solidNode, label=above:{a}] {};
-						\node (b) [solidNode, label=above:{b}, right of = a] {};
-						\node (c) [solidNode, label=above:{c}, right of = b] {};
-						\node (d) [solidNode, label=above:{d}, right of = c] {};
-						\node (e) [solidNode, label=below:{e}, below of = a] {};
-						\node (f) [solidNode, label=below:{f}, below of = b] {};
-						\node (g) [solidNode, label=below:{g}, below of = c] {};
-						\node (h) [solidNode, label=below:{h}, below of = d] {};
-						\draw [link] (a) -- (b);
-						\draw [link] (b) -- (c);
-						\draw [link] (c) -- (d);
-						\draw [link] (a) -- (e);
-						\draw [link] (b) -- (f);
-						\draw [link] (c) -- (g);
-						\draw [link] (d) -- (h);
-						\draw [link] (e) -- (f);
-						\draw [link] (f) -- (g);
-						\draw [link] (g) -- (h);
-						\draw [link] (a) to [out = 60, in = 120, looseness = 1] (d);
-						\draw [link] (e) to [out = 300, in = 240, looseness = 1] (h);
-					\end{tikzpicture}
-				\end{figure}\\
-				We can rearrange the graph to be more clear as following\\
-				\begin{figure}[!ht]
-					\centering
-					\begin{tikzpicture}
-						\node (a) [solidNode, label=right:{a}] {};
-						\node (b) [solidNode, label=left:{b}, left of=a] {};
-						\node (c) [solidNode, label=right:{c}, below of=a] {};
-						\node (d) [solidNode, label=left:{d}, below of=b] {};
-						\node (e) [solidNode, label=left:{e}, below of=d] {};
-						\node (f) [solidNode, label=right:{f}, below of=c] {};
-						\node (g) [solidNode, label=left:{g}, below of=e] {};
-						\node (h) [solidNode, label=right:{h}, below of=f] {};
-						\draw [link] (a) -- (b);
-						\draw [link] (b) -- (c);
-						\draw [link] (c) -- (d);
-						\draw [link] (a) -- (e);
-						\draw [link] (b) -- (f);
-						\draw [link] (c) -- (g);
-						\draw [link] (d) -- (h);
-						\draw [link] (e) -- (f);
-						\draw [link] (f) -- (g);
-						\draw [link] (g) -- (h);
-						\draw [link] (a) -- (d);
-						\draw [link] (e) -- (h);
-					\end{tikzpicture}
-				\end{figure}\\
-				The vertices of graph $G$ can be partition into two sets, $\{a, c, f, h\}$ and $\{b, d, e, g\}$
-			\end{example}
+		\section{Kuratowski's Theorem}
 
-			\begin{example}
-				The following graph is not bipartite\\
-				\begin{figure}[!ht]
-					\centering
-					\begin{tikzpicture}[node distance=1cm]
-						\node (11) [solidNode, label=left:{11}] {};
-						\node (4) [solidNode, label=below:{4}, below of=11, yshift=-0.41cm] {};
-						\node (3) [solidNode, label=below:{3}, below of=4, xshift=-1cm] {};
-						\node (5) [solidNode, label=below:{5}, below of=4, xshift=1cm] {};
-						\node (1) [solidNode, label=below:{1}, below of=3, xshift=-2.41cm] {};
-						\node (2) [solidNode, label=below:{2}, below of=3, xshift=-1cm] {};
-						\node (6) [solidNode, label=below:{6}, below of=3, xshift=1cm] {};
-						\node (10) [solidNode, label=below:{10}, below of=5, xshift=1cm] {};
-						\node (12) [solidNode, label=below:{12}, below of=5, xshift=2.41cm] {};
-						\node (7) [solidNode, label=below:{7}, below of=2, xshift=1cm] {};
-						\node (8) [solidNode, label=left:{8}, below of=7, xshift=1cm] {};
-						\node (9) [solidNode, label=below:{9}, below of=6, xshift=1cm] {};
-						\node (13) [solidNode, label=below:{13}, below of=8, yshift=-0.41cm] {};
-						\draw [link] (11) -- (1);
-						\draw [link] (11) -- (12);
-						\draw [link] (11) -- (4);
-						\draw [link] (4) -- (3);
-						\draw [link] (4) -- (5);
-						\draw [link] (3) -- (2);
-						\draw [link] (3) -- (6);
-						\draw [link] (5) -- (6);
-						\draw [link] (5) -- (10);
-						\draw [link] (1) -- (2);
-						\draw [link] (10) -- (12);
-						\draw [link] (2) -- (7);
-						\draw [link] (6) -- (7);
-						\draw [link] (6) -- (9);
-						\draw [link] (10) -- (9);
-						\draw [link] (7) -- (8);
-						\draw [link] (9) -- (8);
-						\draw [link] (8) -- (13);
-						\draw [link] (1) -- (13);
-						\draw [link] (12) -- (13);
-					\end{tikzpicture}
-				\end{figure}\\
-				The cycle $c=v_1v_11v_4v_3v_2$ have odd number of vertices.
-			\end{example}
+		\section{Four-Color Theorem}
 
-	\chapter{Complexity}
-		\section{Complexity}
-			\fixme{This part is going to be moved to Algorithm notes (or I will just delete this part because of duplication).} We want to know guaranteed performances - "worse case" scenarios -  for any algorithm working on any problem instance.
-
-			The following example is for addition of two matrices: \\
-			\begin{algorithm}[!ht]
-				\caption{Add two $m \times n$ matrices $A$, $B$ to get matrix $C$}
-				\begin{algorithmic}
-					\FOR {$i=1, 2, ..., m$}
-						\FOR {$j=1, 2, ..., n$}
-							\STATE $C_{ij} = A_{ij} + B_{ij}$
-						\ENDFOR
-					\ENDFOR
-				\end{algorithmic}				
-			\end{algorithm}\\
-
-			The "running time" of an algorithm is measured by the number of basic operational steps.
-
-			For so called "basic" steps, it includes
-			\begin{itemize}
-				\item $+$, $-$, $\times$, $\div$
-				\item assignments and storage of a variable
-				\item comparisons
-			\end{itemize}
-
-			For the example above
-			\begin{itemize}
-				\item $c_1 m n$ for addition $C_{ij} = A_{ij} + B_{ij}$
-				\item $c_2 m n$ for saving $C_{ij}$
-				\item $c_3 m n$ for comparison and assignment for $i$ and $j$
-			\end{itemize}
-			$c_1, c_2, c_3$ does not matter, the number of steps are $m \times n$, we say the algorithm runs $O(mn)$ (big O notation, the worse case)
-
-			\begin{example}
-				$f(n) = 3n^3 + 4n^2$\\
-				Claim: $f(n)$ is $O(n^3)$\\
-				Proof: Find a $c$ for $cn^3 - 3n^3 - 4n^2$ that there exist a $n_0$, for $\forall n \ge n_0$, the inequality holds.
-			\end{example}
-
-		\section{O notation, Omega notation, Theta notation}
-			\begin{definition}[O notation]
-				An algorithm is said to run in $O(f(n))$ time if for some constant $C (\ge 0)$, and $n_0$ the time takes algorithm is at most $Cf(n)$ for all $n\ge n_0$ 
-			\end{definition}
-
-			\begin{definition}[$\Omega$ notation]
-				An algorithm is said to run in $\Omega(f(n))$ time if for some constant $C^{'} (\ge 0)$, and $n_0$. For all instance $n \ge n_0$, the time takes algorithm is at least $C^{'}f(n)$ for some instances. 
-			\end{definition}
-
-			\begin{definition}[$\Theta$ notation]
-				An algorithm is said to be $\Theta(f(n))$ if it is both $O(f(n))$ and $\Omega(f(n))$
-			\end{definition}
-
-			\begin{example}
-				$\frac{1}{2}n^2 - 3n$, $\Omega(n^2) \le \Theta(n^2) \le O(n^2)$\\
-				Find $c^{'}$ and $c$ (both > 0) where $c^{'}n^2 \le \frac{1}{2}n^2 - 3n \le cn^2$ for a given $n_0$, $\forall n\ge n_0$ the inequality holds.\\
-				Let $c^{'} = \frac{1}{14}$ and $c = \frac{1}{2}$, $\forall n \ge n_0$, where $n_0 = 7$, the inequality always holds.
-			\end{example}
-
-		\section{Representation of data}
-			For set $\{1, 3, 4, 6, 8\}$ we have two ways to represent, array and list.
-
-			For array, the representation is
-			\begin{figure}[!ht]
-				\centering
-				\begin{tikzpicture}
-					\matrix [rowArray] (rowArray) {
-						1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\
-						1 & 0 & 1 & 1 & 0 & 1 & 0 & 1\\
-					};
-				\end{tikzpicture}
-			\end{figure}
-
-			For list, the representation is
-			\begin{figure}[!ht]
-				\centering
-				\begin{tikzpicture}[every node/.style = {rectangle split, rectangle split parts = 2, rectangle split horizontal}, node distance = 1em, start chain, every join/.style = {->, shorten <= -4.5pt}]
-					\node [draw, on chain, join] {1};
-					\node [draw, on chain, join] {3};
-					\node [draw, on chain, join] {4};
-					\node [draw, on chain, join] {6};
-					\node [draw, on chain, join] {8};
-					\node [draw, on chain, join] {};
-				\end{tikzpicture}
-			\end{figure}
-
-			There is no "better" representation, one can be better than the other one in different cases.
-
-			\begin{example}	
-				For $\emptyset$, array need to build a space with $n$ cells of 0, complexity $O(n)$, list just need to build the first cell, $O(1)$
-			\end{example}
-
-			\begin{example}
-				To find if a number is in a set, array needs $O(1)$ (look at the address), list needs $O(n)$ (loop through list, worst case, entire list)
-			\end{example}
-
-		\section{Size of a problem}
-			Number of bits needed to store the problem
-
-			\begin{example}
-				Let $0 \le A_{ij} \le 2^{51}$
-			\end{example}
-
-			Representation by the bits of the number, $A_{ij} \le 2^51$ can be represented by max of $O(log(A_{ij}))$, (51 bits)
-
-			For matrix addition that the total storage for addtion two matrix is $O(mnk)$, $k=O(log|A_{mn}|)$
-
-		\section{P and NP}
-			\begin{itemize}
-				\item P
-				\item Co-P
-				\item NP
-				\item Co-NP: The class of decision problems for which a yes response corresponds to a no for answering menmber of NP.
-				\begin{example}
-					Given a TSP, we ask does there \textbf{not} exist a tour?
-				\end{example}
-			\end{itemize}
-
-			\begin{conjecture}
-				\begin{equation}
-					P \ne NP
-				\end{equation}
-			\end{conjecture}
-
-			\begin{definition}[polynomial reduction]
-				We say a problem A polynomially reduces to problem B, if we can transform problem A into problem B in polynomial number of steps so that if solve B in poly time ,we can reconstruct solution to A in poly time.
-			\end{definition}
-
-			\begin{definition}[NP-hard]
-				Problems to which all members of NP reduces to. If one of those problem can be solved in poly time, we prove that $P=NP$.
-			\end{definition}
-
-			\begin{definition}[NPC]
-				Decision problems that belong to NP-hard. 
-			\end{definition}
-
-			Here are some relations between different classes of problems
-			\begin{itemize}
-				\item $NP \subset DP$
-				\item $P \subset NP$
-				\item $P \subset NP \cup Co-NP$
-				\item $NP-complete = NP \cup NP-hard$
-				\item $Undecide \cup NP = \emptyset$
-			\end{itemize}
-
-			Given $n$, $m$ number of variables and constants. As well as the largest const $C$ of a problem:
-			\begin{itemize}
-				\item All algorithm will run in poly time if the number of guess is a poly function
-				\begin{example}
-					$O(mn)$, $O(m + n\log C$
-				\end{example}
-				\item strongly poly time
-				\begin{example}
-					$O(n^3.5)$
-				\end{example}
-				\item pseudo-poly time
-				\begin{example}
-					$O(mn + C)$, $O(Cn)$
-				\end{example}
-			\end{itemize}
+		\section{Graphs on other surfaces}
 
 	\chapter{Minimum Spanning Tree Problem}
 		\section{Basic Concepts}
@@ -790,9 +730,9 @@
 
 			The only way a connection problem will be different than MSP is if we relax the restriction on $C_e > 0$ in the connection problem.
 
-		\section{Algorithms for Solving MSP}
+		\section{Kroskal's Algorithm}
 			\begin{algorithm}
-				\caption{Kroskal Algorithm $O(m \log m)$}
+				\caption{Kroskal's Algorithm, $O(m \log m)$}
 				\begin{algorithmic}
 					\REQUIRE A connected graph
 					\ENSURE A MST
@@ -804,7 +744,7 @@
 			\end{algorithm}
 
 			\begin{algorithm}
-				\caption{Prim Algorithm $O(nm)$}
+				\caption{Prim's Algorithm, $O(nm)$}
 				\begin{algorithmic}
 					\REQUIRE A connected graph
 					\ENSURE A MST
@@ -823,6 +763,7 @@
 			\begin{definition}[cut]
 				For a graph $G=(V, E)$ and $A \subseteq V$ we denote $\delta(A) = \{e \in E :\text{$e$ has an end in $A$ and an end in $V\setminus A$}\}$. A set of the form $\delta(A)$ for some $A$ is called a \textbf{cut} of $G$.
 			\end{definition}
+
 			\begin{definition}
 				We also define $\gamma(A) = \{e\in E: \text{both ends of $e$ are in $A$}\}$				
 			\end{definition}
@@ -838,6 +779,10 @@
 			\begin{theorem}
 				Suppose $B \subseteq E$, that $B$ is extendsible to an MST and that $e$ is a minimum cost edge of some cut $D$ satisfying $D\cap B = \emptyset$, then $B\cup \{e\}$ is extensible to an MST.
 			\end{theorem}
+
+		\section{Prim's Algorithm}
+
+		\section{Comparison between Kroskal's and Prim's Algorithm}
 
 		\section{Solve MST in LP}
 			Given a connected graph $G=(V, E)$ and a cost on the edges $C_e$ for all $e\in E$, Then we can formulate the following LP
@@ -858,83 +803,16 @@
 			\end{align}
 
 	\chapter{Shortest-Path Problem}
-		\section{Directed Graph}
-			\begin{definition}
-				A graph $G=(V, E)$ is called directed if for each edge $e\in E$, there is a \textbf{head} $h(e)\in V$ and a \textbf{tail} $t(e)\in V$ and te edges of $e$ are precisely $h(e)$ and $t(e)$, denoted $e = (t(e), h(e))$
-			\end{definition}
-
-			\begin{figure}
-				\centering
-				\begin{tikzpicture}[node distance = 2cm]
-					\node (1) [circleNode] {u};
-					\node (2) [circleNode, right of = 1] {w};
-					\node (3) [circleNode, below of = 1] {v};
-					\node (4) [circleNode, right of = 3] {z};
-					\draw [arrow] (1) -- (3);
-					\draw [arrow] (1) -- (4);
-					\draw [arrow] (3) -- (4);
-					\draw [arrow] (1) to [out = 30, in = 150] (2);
-					\draw [arrow] (2) -- (1);
-					\draw [arrow] (4) to [looseness = 3] (4);
-				\end{tikzpicture}
-			\end{figure}
-
-			\begin{definition}
-				We call directed graphs \textbf{digraphs}, we call edges in a digraph are called \textbf{arcs}, and vertices in a digraph \textbf{nodes}
-			\end{definition}
-
-			\begin{definition}
-				Similar as in the undirected case we have walks, traces, paths and cycles in digraphs.
-			\end{definition}
-
-			\begin{definition}
-				A vertex $v\in V$ is \textbf{reachable} from a vertex $u \in V$ if there is a $(u,v)$-dipath. If at the same time $u$ is reachable from $v$, they are \textbf{strongly connected}
-			\end{definition}
-
-			\begin{definition}
-				A digraph is strongly connected if every pair of vertices are strongly connected.
-			\end{definition}
-
-			\begin{definition}
-				A digraph is \textbf{strict} if it has no loops and whenever $e$ and $f$ are parallel, $h(e) = t(f)$
-			\end{definition}
-
-			\begin{definition}
-				For a vertex $v$ in a digraph $D$, the \textbf{indegree} of $v$ in $D$, denoted by $d^+(v)$ is the number of arcs of $D$ having head $V$. The \textbf{outdegree} of $v$ is denoted by $d^-(v)$ is the number of arcs of $D$ having tail $v$.
-			\end{definition}
-
-			Let $D=(V, A)$ be a digraph with no loops a vertex-arc \textbf{incident matrix} for $D$ is a $(0, 1, -1)$ matrix $N$ with rows indexed by $V = \{v_1, ..., v_n\}$ and column indexed by $A = \{e_1, ..., e_m\}$ and where entry $(i, j)$ in the matrix $n_{ij}$ is
-			\begin{equation}
-				n_{ij} = \begin{cases}
-					1, \quad \text{if} \ v_i = h(e_j) \\
-					-1, \quad \text{if} \ v_i = t(e_j) \\
-					0, \quad \text{otherwise}
-				\end{cases}
-			\end{equation}
-
-			\begin{equation}
-				\begin{bmatrix}
-					-1 & 0 & -1 & -1 & 1 \\
-					1 & -1 & 0 & 0 & 0 \\
-					0 & 0 & 0 & 1 & -1 \\
-					0 & 1 & 1 & 0 & 0
-				\end{bmatrix}
-			\end{equation}
-
 		\section{Basic Concepts}
-			\begin{itemize}
-				\item \textbf{INPUT} a digraph $G$ a node $r \in V$, and if cost $c_e$ for all $e\in E$
-				\item \textbf{OUTPUT} find for each $v\in V$ a dipath from $r$ to $v$ of least cost (if cost exists).
-			\end{itemize}
-
 			All Shortest-Path methods are based on the same concept, suppose we know there exists a dipath from $r$ to $v$ of a cost $y_v$. For each vertex $v \in V$ and we find an arc $(v, w) \in E$ satisfying $y_v + v_{vw} < y_w$. Since appending $(v, w)$ to the dipath to $v$ takes a cheaper dipath to $w$ then we can update $y_w$ to a lower cost dipath.
 
-			So if the following property holds for all vertices we have found the least cost dipath from $r$ to all vertices
-			\begin{equation}
-				y_v + c_{vw} \ge y_w \quad \forall (v, w) \in E
-			\end{equation}
-				
-			We call $y = (y_v: v\in V)$ a feasible potential if it satisfies that and $y_r = 0$
+			\begin{definition}[feasible potential]
+				We call $y = (y_v: v\in V)$ a \textbf{feasible potential} if it satisfies
+				\begin{equation}
+					y_v + c_{vw} \ge y_w \quad \forall (v, w) \in E
+				\end{equation}
+				and $y_r = 0$
+			\end{definition}			
 
 			\begin{proposition}
 				Feasible potential provides lower bound for the shortest path cost.
@@ -947,29 +825,32 @@
 				\end{equation}
 			\end{proof}
 
-			Property of previous proposition provides a condition for a shortest path algorithm.
+		\section{Breadth-First Search Algorithm}
 
-		\section{Ford's algorithm}
-			We will initialize the algorithm with $y_r = 0$ and $y_v = \infty, v\in V\setminus r$
+		\section{Ford's ``algorithm''}
+			Define a predecessor function $P(w), \forall w \in V$ and set $P(w)$ to $v$ whenever $y_w$ is set to $y_v + c_{vw}$
 
-			For the reason to recreate the shortest diath we will keep a predecessor function $P(w) \forall w \in V$ and set $P(w)$ to $v$ whenever $y_w$ is set to $y_v + c_{vw}$
+			\begin{algorithm}
+				\caption{Ford's Algorithm}
+				\begin{algorithmic}
+					\ENSURE Shortest Paths from $r$ to all other nodes in $V$
+					\REQUIRE A digraph with arc costs,starting node $r$
+					\STATE Initialize, $y_r = 0$ and $y_v = \infty, v\in V\setminus r$
+					\STATE Initialize, $P(r) = 0, P(v) = -1, \forall v \in V \setminus r$
+					\WHILE {$\mathbf{y}$ is not a feasible potential}
+						\STATE Let $e = (v, w)\in E$ (this could be problematic)
+						\IF {$y_v + c_{vw} < y_w$ (incorrect)}
+							\STATE $y_w \gets y_v + c_{vw}$ (correct it)
+							\STATE $P(w) = v$ (set $v$ as predecessor)
+						\ENDIF
+					\ENDWHILE
+				\end{algorithmic}
+			\end{algorithm}
 
-			If an arc $(v, w)$ violates $y_v + c_{vw} \ge y_w$ we call it incorrect.
+			\notice{Technically speaking, this is not an algorithm, for the following reasons: 1) We did not specify how to pick $e$, 2) This procedure might not stop given some situations, e.g., if there is a cycle with minus total weight}
 
-			To correct $(v, w)$ means to set $y_w = y_v + c_{vw}$ and to set $P(w) = v$
-		
-			To initialize we set
-			\begin{align}
-				y_r &= 0, y_v = \infty, \forall v\in V \setminus r\\
-				P(r) &= 0, P(v) = -1, \forall v \in V \setminus r
-			\end{align}
-
-			While $y$ is not a feasible potential find incorrect arc $(v, w)$ and correct it.
-
-			This algorithm is not perfect. If there is a cycle with minus total weight, it will never stop.
-
-			Here is another example that could take $O(2^n)$ to solve.
-			\begin{figure}
+			\notice{This method can be really bad. Here is another example that could take $O(2^n)$ to solve.}
+			\begin{figure}[!ht]
 				\centering
 				\begin{tikzpicture}[node distance = 1cm]
 					\node (0) [circleNode] {$v_0$};
@@ -995,66 +876,76 @@
 			\begin{algorithm}
 				\caption{Ford-Bellman Algorithm}
 				\begin{algorithmic}
-					\ENSURE Minimum spanning tree
-					\REQUIRE Connected tree
-					\STATE Initialize $y$ and $P$
-					\STATE $i \gets 0$
-					\WHILE {$i < n$ and $y$ is not a feasible potential}
-						\STATE $i++$
-						\FOR {$e\in E$}
-							\IF {$e$ is incorrect}
-								\STATE correct $e$
+					\ENSURE Shortest Paths from $r$ to all other nodes in $V$
+					\REQUIRE A digraph with arc costs,starting node $r$
+					\STATE Initialize $y$ and $p$
+					\FOR {$i = 0; i < N; i++$}
+						\FOR {$\forall e = (v, w) \in E$}
+							\IF {$y_v + c_{vw} < y_w$ (incorrect)}
+								\STATE $y_w \gets y_v + c_{vw}$ (correct it)
+								\STATE $P(w) = v$ (set $v$ as predecessor)
 							\ENDIF
 						\ENDFOR
-					\ENDWHILE
+					\ENDFOR
+					\FOR {$\forall e = (v, w) \in E$}
+						\IF {$y_v + c_{vw} < y_w$ (incorrect)}
+							\STATE Return error, negative cycle
+						\ENDIF
+					\ENDFOR
 				\end{algorithmic}
 			\end{algorithm}
-			(Only correct the node that comes from a node that has been corrected.)
+			\notice{Only correct the node that comes from a node that has been corrected.}
 
-			A usual representation of a diagraph is to store all the arcs having tail $v$ in a list $L_v$ to \textbf{scan} $v$ means the following:
+			A usual representation of a digraph is to store all the arcs having tail $v$ in a list $L_v$ to \textbf{scan} $v$ means the following:
 			\begin{itemize}
 				\item For $(v, w) \in L_v$, if $(v, w)$ is incorrect, then correct $(v, w)$
 			\end{itemize}
 
 			For Bellman, will either terminate with shortest path from $r$ to all $v\in V\setminus r$ or it will terminate stating that there is a negative cycle. In $O(mn)$
 
-			In the alogrithm if $i = n$ and there exists a feasible potential, the problem has a negative cycle.
+			In the algorithm if $i = n$ and there exists a feasible potential, the problem has a negative cycle.
 
-			(Finding a negative cycle in graph is NP hard???)
-
-		\section{Acyclic Graphs}
 			Suppose that the nodes of $G$ can be ordered from left to right so that all arcs go from left to right. That is suppose there is an ordering $v_1, v_2, ..., v_n \in V$ so that $(v_i, v_j) \in V$ implies $i < j$. We call such an ordering \textbf{topological} sort.
 
 			If we order $E$ in the sequence that $v_iv_j$ precedes $v_kv_i$ if $i<k$ based on topological order then ford algorithm will terminate in one pass.
+
+		\section{SPFA Algorithm}
 
 		\section{Dijkstra Algorithm}
 			\begin{algorithm}
 				\caption{Dijkstra Algorithm}
 				\begin{algorithmic}
-					\ENSURE Minimum spanning tree
-					\REQUIRE Connected tree
-					\STATE Initialize $y$ and $P$
+					\ENSURE Shortest Paths from $r$ to all other nodes in $V$
+					\REQUIRE A digraph with arc costs,starting node $r$
+					\STATE Initialize $y$ and $p$
 					\STATE $S \gets V$
-					\WHILE {$S \ne \Phi$}
+					\WHILE {$S \ne \emptyset$}
 						\STATE Choose $v \in S$ with minimum $y_v$
 						\STATE $S \gets S\setminus v$
-						\STATE Scan $v$
+						\FOR {$\forall w, (v, w) \in E$}
+							\IF {$y_v + c_{vw} < y_w$ (incorrect)}
+								\STATE $y_w \gets y_v + c_{vw}$ (correct it)
+								\STATE $P(w) = v$ (set $v$ as predecessor)
+							\ENDIF
+						\ENDFOR
 					\ENDWHILE
 				\end{algorithmic}
 			\end{algorithm}
 
-		\section{All pairs shortest path problem}
-			If all weights/distances in the graph are nonnegative then we could use dijstra withn starting nodes being eac one of the vertices of the graph. This method will take $O(n^3)$
+		\section{A* Algorithm}
 
-			If weight/distances are arbitary and we would like to find shortest path beteen all pairs of vertices or detect a negative ccle we could use Bellman-Ford Algorithm with $O(n^4)$
+		\section{Floyd-Warshall Algorithm}
+			If all weights/distances in the graph are nonnegative then we could use Dijkstra within starting nodes being any one of the vertices of the graph. This method will take $O(n^3)$
 
-			We would like an algorithm to find shortest path between any two pairs in a graph for arbitary weights (determined, negative, cycles) in $O(n^3)$
+			If weight/distances are arbitrary and we would like to find shortest path between all pairs of vertices or detect a negative cycle we could use Bellman-Ford Algorithm with $O(n^4)$
 
-			Let $d_{ij}^k$ denote the length of the shortest path from $i$ to $j$ such that all intermidiate vertices are contained in the set $\{1, ..., k\}$
+			We would like an algorithm to find shortest path between any two pairs in a graph for arbitrary weights (determined, negative, cycles) in $O(n^3)$
+
+			Let $d_{ij}^k$ denote the length of the shortest path from $i$ to $j$ such that all intermediate vertices are contained in the set $\{1, ..., k\}$
 
 			\begin{figure}
 				\centering
-				\begin{tikzpicture}[node distance = 2cm]
+				\begin{tikzpicture}[node distance = 1cm]
 					\node (2) [circleNode] {2};
 					\node (1) [circleNode, below of=2, xshift = -1cm] {1};
 					\node (3) [circleNode, below of=2] {3};
@@ -1073,16 +964,16 @@
 
 			In this case $d_{14}^5 = 5$
 
-			If the vertex $k$ is not an intermidiate vertex on $p$, then $d_{ij}^k = d_{ij}^{k-1}$, notice that $d_{15}^4 = -1$, node 4 is not intermidiate, so $d_{15}^3 = -1$
+			If the vertex $k$ is not an intermediate vertex on $p$, then $d_{ij}^k = d_{ij}^{k-1}$, notice that $d_{15}^4 = -1$, node 4 is not intermediate, so $d_{15}^3 = -1$
 
-			If the vertex $k$ is an intermidiate on $p$, then $d_{ij}^k = d_{ik}^{k-1} + d_{kj}^{k-1}$, $d_{14}^5 = 0$ ($p=1\rightarrow3\rightarrow5\rightarrow4$), i.e., $d_{14}^5 = d_{15}^4 + d_{54}^4 = 0$
+			If the vertex $k$ is an intermediate on $p$, then $d_{ij}^k = d_{ik}^{k-1} + d_{kj}^{k-1}$, $d_{14}^5 = 0$ ($p=1\rightarrow3\rightarrow5\rightarrow4$), i.e., $d_{14}^5 = d_{15}^4 + d_{54}^4 = 0$
 
 			Therefore $d_{ij}^k = \min\{d_{ij}^{k-1}, d_{ik}^{k-1} + d_{kj}^{k-1}\}$
 
-		\section{Floyd-Warshall Algorithm}
+		
 			Input: graph $G=(V, E)$ with weight on edges
-			Output: Shortest path between all pairs of vertices on existance of a negative cycle
-			Step1: Initializie
+			Output: Shortest path between all pairs of vertices on existence of a negative cycle
+			Step 1: Initialize
 			\begin{align}
 				d_{ij}^0 = 
 				\begin{cases}
@@ -1091,7 +982,7 @@
 					\infty \quad \text{if } (i, j) \notin E
 				\end{cases}
 			\end{align}
-			Step2:
+			Step:
 			For k = 1 to n
 				For i = 1 to n
 					For j = 1 to n
@@ -1245,9 +1136,11 @@
 
 			If during the previous processes, there exist an element of negative value in the diagonal, it means there exists negative cycle.
 
+		\section{Johnson's Algorithm}
+
 	\chapter{Maximum Flow Problem}
-		\section{Maxiumn Flow}
-			Let $D=(V, A)$ be a strict diagraph with distinguished vertices $s$ and $t$. We call $s$ the source and $t$ the sink, let $\mu=\{\mu_e: e\in A\}$ be a nonnegative integer-valued capacity function defined on the arcs of $D$. The maximum flow problem on $(D, s, t, \mu)$ is the following Linear program.
+		\section{Basic Concept}
+			Let $D=(V, A)$ be a strict diagraph with distinguished vertices $s$ and $t$. We call $s$ the source and $t$ the sink, let $u=\{u_e: e\in A\}$ be a nonnegative integer-valued capacity function defined on the arcs of $D$. The maximum flow problem on $(D, s, t, u)$ is the following Linear program.
 			\begin{align}
 				\max \quad & v\\
 				\text{s.t.} \quad & \sum_{h(e)=i}x_e - \sum_{t(e) = i} x_e = \begin{cases}
@@ -1255,40 +1148,39 @@
 					v, \quad \text{if } i = t \\
 					0, \quad \text{otherwise}
 				\end{cases}\\
-				& 0\le x_e \le \mu_e, \quad \forall e\in A
+				& 0\le x_e \le u_e, \quad \forall e\in A
 			\end{align}
 			We think of $x_e$ as being the flow on arc $e$. Constraint says that for $i \neq s, t$ the flow into a vertex has to be equal to the flow out of vertex. That is, flow is conceded at vertex $i$ for $i=s$ and for $i=t$ the net flow in the entire digraph must be equal to $v$.
-			An $x$ that satisfied the above constraints is an $(s,t)$-flow of value $v$. If in addition it satisfies the bounding constraints, then it is a feasible $(s,t)$-flow.
+			A $\mathbf{x_e}$ that satisfied the above constraints is an $(s,t)$-flow of value $v$. If in addition it satisfies the bounding constraints, then it is a feasible $(s,t)$-flow.
 			A feasible $(s,t)$-flow that has maximum $v$ is optimal on maximum.
-
-
-			\begin{figure}
-				\centering
-				\begin{tikzpicture}[node distance = 2cm]
-					\node (1) [circleNode] {1};
-					\node (3) [circleNode, right of=1] {3};
-					\node (s) [circleNode, below of=1, xshift = -1cm] {s};
-					\node (2) [circleNode, below of=s, xshift = 1cm] {2};
-					\node (t) [circleNode, below of=3, xshift = 1cm] {t};
-					\node (4) [circleNode, below of=t, xshift = -1cm] {4};
-					\draw [arrow] (s) -- node [above] {6} (1);
-					\draw [arrow] (s) -- node [above] {3} (2);
-					\draw [arrow] (1) -- node [above] {2} (2);
-					\draw [arrow] (1) -- node [above] {5} (3);
-					\draw [arrow] (2) -- node [above] {4} (4);
-					\draw [arrow] (3) -- node [above] {3} (t);
-					\draw [arrow] (4) -- node [above] {1} (t);
-				\end{tikzpicture}
-			\end{figure}
 
 		\section{The main theorem}
 			\begin{theorem}
-				For $S \subseteq V$ we define $(S, \bar{S})$ to be a $(s, t)$-cut if $s\in S$ and $t\in \bar{S}=V-S$, the capacity of the cut, denoted $\mu(S, \bar{S})$ is $\sum \{\mu_e: e\in \delta^-(S)\}$ where $\delta^-(S) = \{e\in A: t(e) \in S \text{ and } h(e) \in \bar{S}\}$
+				For $S \subseteq V$ we define $(S, \bar{S})$ to be a $(s, t)$-cut if $s\in S$ and $t\in \bar{S}=V-S$, the capacity of the cut, denoted $u(S, \bar{S})$ is $\sum \{u_e: e\in \delta^-(S)\}$ where $\delta^-(S) = \{e\in A: t(e) \in S \text{ and } h(e) \in \bar{S}\}$
 			\end{theorem}
 
 			\begin{example}
-				$S = \{1, 2, 3, s\}$, $\bar{S} = \{4, t\}$\\
-				$\delta^-(S) = \{(2, 4), (3, t)\} \Rightarrow \mu(S, \bar{S}) = 7$
+				For the following graph:\\
+				\begin{figure}[!ht]
+					\centering
+					\begin{tikzpicture}[node distance = 1cm]
+						\node (1) [circleNode] {1};
+						\node (3) [circleNode, right of=1] {3};
+						\node (s) [circleNode, below of=1, xshift = -1cm] {s};
+						\node (2) [circleNode, below of=s, xshift = 1cm] {2};
+						\node (t) [circleNode, below of=3, xshift = 1cm] {t};
+						\node (4) [circleNode, below of=t, xshift = -1cm] {4};
+						\draw [arrow] (s) -- node [above] {6} (1);
+						\draw [arrow] (s) -- node [above] {3} (2);
+						\draw [arrow] (1) -- node [right] {2} (2);
+						\draw [arrow] (1) -- node [above] {5} (3);
+						\draw [arrow] (2) -- node [above] {4} (4);
+						\draw [arrow] (3) -- node [above] {3} (t);
+						\draw [arrow] (4) -- node [above] {1} (t);
+					\end{tikzpicture}
+				\end{figure}\\
+				Let $S = \{1, 2, 3, s\}$, $\bar{S} = \{4, t\}$\\
+				then $\delta^-(S) = \{(2, 4), (3, t)\} \Rightarrow u(S, \bar{S}) = 7$
 			\end{example}
 
 			\begin{definition}
@@ -1300,9 +1192,9 @@
 			\end{definition}
 
 			\begin{example}
-				\begin{figure}
+				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 1cm]
 						\node (1) [circleNode] {1};
 						\node (3) [circleNode, right of=1] {3};
 						\node (s) [circleNode, below of=1, xshift = -1cm] {s};
@@ -1456,27 +1348,25 @@
 		\section{Polynomial Algorithm for max flow}
 			Let $(D,s,t,u)$ be a max flow problem and let $x$ be a feasible flow for $D$, the \textbf{x-layers} of $D$ are define be the following algorithm
 
-			Layer algorithm DINIC 1977
+			Layer algorithm (Dinic 1977)
 			Input: A network $(D, s, t, u)$ and a feasible flow $x$
 			Output: The \textbf{x-layers} $V_0, V_1, ..., V_l$ where $V_i \cap V_j = \emptyset \forall i \neq j$
 
 			Step 1: Set $V_0 = \{s\}, i \gets 0 and l(x) = 0$
-			Step 2: Let $R$ be the set of vertices $w$ such that there is an arc $e$ withn either:
+			Step 2: Let $R$ be the set of vertices $w$ such that there is an arc $e$ with either:
 				\begin{itemize}
 					\item $t(e) \in V_i, h(e) = w, x_e < u_e$ or
 					\item $h(e) \in V_j, t(e) = w, x_e > 0$ 
 				\end{itemize}
-			Step 3: If $t \in R$, set $V_{i+1} = \{t\}$, $l(t) = i + 1$ and stop. Set $V_{i+1} \gets R\setminus \cup_{0 \le j \le i} V_j$, $l \ges i+1, l(x) = i$, goto Step 2.
+			Step 3: If $t \in R$, set $V_{i+1} = \{t\}$, $l(t) = i + 1$ and stop. Set $V_{i+1} \gets R\setminus \cup_{0 \le j \le i} V_j$, $l \gets i+1, l(x) = i$, goto Step 2.
 			If $V_{i+1} = \emptyset$, set $l(x) = i$ and Stop.
 
 			\begin{example}
 				For the following graph
 				\begin{figure}
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 1cm]
 						\node (1) [circleNode] {1};
-						\node (3) [circleNode, right of=1] {3};
-						\node (5) [circleNode, right of=3] {5};
 						\node (s) [circleNode, below of=1, xshift = -1cm] {s};
 						\node (2) [circleNode, below of=s, xshift = 1cm] {2};
 						\node (t) [circleNode, below of=1, xshift = 1cm] {t};
@@ -1507,7 +1397,7 @@
 
 			The layer network $D_x$ is defined by $V(D_x) = V_0 \cup V_1 \cup V_2 \dots \cup V_{l(x)}$
 
-			Suppose we have computed the layers of $D$ and $t \in V_l(x)$, the last layer (last layer I am goint to $V_e$)
+			Suppose we have computed the layers of $D$ and $t \in V_l(x)$, the last layer (last layer I am goin to $V_e$)
 
 			For each $i, 1 \le i \le l$, define a set of arcs $A_i$ and a function $\hat{u}$ on $A_i$ as following. For each $e\in A(D)$
 			\begin{itemize}
@@ -1519,9 +1409,8 @@
 
 			We can think of $D_x$ as being make of arc shortest (in terms of numbers of arcs) x-augmenting paths.
 
-			A feasible flow in a network is said to be maximal (does not means maximum) if every $(s, t)$-directed path containts at least one saturated arc.
+			A feasible flow in a network is said to be maximal (does not means maximum) if every $(s, t)$-directed path contains at least one saturated arc.
 
-		\section{Layered Network}
 			For layered algorithm $V_0, V_1, ..., V_L$
 
 			Arcs:
@@ -1532,7 +1421,7 @@
 
 			Maximal Flow: If every directed $(s, t)$-path has at least one saturated arc.
 
-			Computing maximal flow is easier than computing maximum flow, since we never need to consider cancelling flows on reverse arcs,
+			Computing maximal flow is easier than computing maximum flow, since we never need to consider canceling flows on reverse arcs,
 
 			Let $\hat{x}$ be a maximal flow on the layered network $D_x$, we can define new flows in $D(x^\prime)$ by
 			\begin{align}
@@ -1540,7 +1429,7 @@
 				x_e^\prime = x_e - \hat{x_e}, \quad \text{If } h(e) \in V_{i-1}, t(e)\in V_i
 			\end{align}
 
-		\section{Maximal Flow Algorithm}
+		\section{Dinic Algorithm}
 			Input: A layered network $(D_x, s, t, \hat{u})$ and a feasible flow x
 			Output: A maximal flow $\hat{x}$ from $D_x$
 
@@ -1550,81 +1439,66 @@
 			Step 4: If $i = s$, Stop, Otherwise delete $i$ and all incident arcs with $H$, set $i \gets T(i)$ and goto Step 2
 			Step 5: Construct the directed path, $s = i_0e_1i_1e_2...e_ki_k=t$ where $i_{j-1} = T(i_j), 1\le j \le k$. Set $D=\min\{\hat{u_{e_j}}-\hat{x_{e_j}}:i\le j \le k\}$, set $\hat{x_{e_j}} \gets \hat{x_{e_j}} + D, i \le j \le k$. Delete from $H$ all saturated arcs on this path, set $i \gets 1$ and goto Step 2.
 
-	\chapter{Minimum Cost Flow Problem}
-
-	\chapter{Assignment and Matching Problem}
-
-	\chapter{Polygon Triangulation}
-		\section{Types of Polygons}
-			\begin{definition}[simple polygon]
-				A \textbf{simple polygon} is a closed polygonal curve without self-intersection.
-			\end{definition}
-
-			\begin{figure}[h!]
-				\centering
-				\begin{tikzpicture}[scale=0.6]
-					\draw (0, 0) -- (3, -1) -- (4, 3) -- (2, 4) -- (0, 0);
-					\draw (6, 3) -- (8, -1) -- (9, 2) -- (5.5, 0) -- (6, 3);
-					\node at (2, -1.5) [below] {Simple Polygon};
-					\node at (7.5, -1.5) [below] {Non-simple Polygon};
-				\end{tikzpicture}
-			\end{figure}
-
-			Polygons are basic building blocks in most geometric applications. It can model arbitrarily complex shapes, and apply simple algorithms and algebraic representation/manipulation.
-			
-		\section{Triangulation}
-			\begin{definition}[Triangulation]
-				\textbf{Triangulation} is to partition polygon $P$ into non-overlapping triangles using diagonals only. It reduces complex shapes to collection of simpler shapes. Every simple $n$-gon admits a triangulation which has $n-2$ triangles.				
-			\end{definition}
-
-			\begin{figure}[h!]
-				\centering
-				\begin{tikzpicture}[scale=0.6]
-					\draw [thick] (0, 0) -- (3, 4) -- (2, 5) -- (3.5, 5.5) -- (1, 6.4) -- (-1, 5) -- (-2, 4.5) -- (-1.3, 2.4) -- (-2, 1) -- (0, 0);
-					\draw (-2, 1) -- (3, 4);
-					\draw (-1.3, 2.4) -- (3, 4);
-					\draw (-2, 4.5) -- (3, 4);
-					\draw (-1, 5) -- (3, 4);
-					\draw (-1, 5) -- (2, 5);
-					\draw (2, 5) -- (1, 6.4);
-					\node at (0, 0) [below] {Triangulation};
-				\end{tikzpicture}
-			\end{figure}
-
 			\begin{theorem}
-				Every polygon has a triangulation				
+				Dinic algorithm runs in $O(|E||V|^2)$
 			\end{theorem}
 
-			\begin{lemma}
-				Every polygon with more than three vertices has a diagonal.
-			\end{lemma}
-
 			\begin{proof}
-				(by Meisters, 1975) Let $P$ be a polygon with more than three vertices. Every vertex of a $P$ is either \textit{convex} or \textit{concave}. W.L.O.G.(any polygon must has convex corner) Assume $p$ is a convex vertex. Denote the neighbors of $p$ as $q$ and $r$. If $\bar{qr}$ is a diagonal, done, and we call $\triangle{pqr}$ is an \textit{ear}. If $\triangle{pqr}$ is not an ear, it means at least one vertex is inside $\triangle{pqr}$, assume among those vertexes inside $\triangle{pqr}$, $s$ is a vertex closest to $p$, then $\bar{ps}$ is a diagonal.
-			\end{proof}
-			
-		\section{Art Gallery Theorem}
-			\begin{theorem}
-				Every $n$-gon can be guarded with $\lfloor \frac{n}{3} \rfloor$ vertex guards
-			\end{theorem}
-
-			\begin{lemma}
-				Triangulation graph can be 3-colored.
-			\end{lemma}
-
-			\begin{problem}
-				The floor plan of an art gallery modeled as a simple polygon with $n$ vertices, there are guards which is stationed at fixed positions with 360 degree vision but cannot see through the walls. How many guards does the art gallery need for the security? (Fun fact: This problem was posted to Vasek Chvatal by Victor Klee in 1973).				
-			\end{problem}
-
-			\begin{proof}
-				- $P$ plus triangulation is a planar graph\\
-				- 3-coloring means there exist a 3-partition for vertices that no edge or diagonal has both endpoints within the same set of vertices.\\
-				- Proof by Induction:\\
-				\indent - Remove an ear (there will always exist ear) \\
-				\indent - Inductively 3-color the rest\\
-				\indent - Put ear back, coloring new vertex with the label not used by the boundary diagonal.
+				Step 1 is $O(|E||V|)$
+				Step 2 runs Step 1 for $O(|V|)$ times
 			\end{proof}
 
-		\section{Triangulation Algorithms}
+	\chapter{Minimum Weight Flow Problem}
+		\section{Transshipment Problem}
+			Transshipment Problem $(D, b, w)$ is a linear program of the form
+			\begin{align}
+				\min \quad & wx\\
+				\text{s.t.} \quad & Nx = b\\
+								  & x \ge 0
+			\end{align}
+			Where $N$ is a vertex-arc incident matrix. For a feasible solution to LP to exist, the sum of all $b$s must be zero. Since the summation of rows of $N$ is zero. The interpretation of the LP is as follows.
 
+			The variables are defined on the edges of the digraph and that $x_e$ denote the amount of flow of some commodity from the tail of $e$ to the head of $e$
 
+			Each constraints
+			\begin{equation}
+				\sum_{h(e) = i} x_e - \sum_{t(e) = i}x_e = b_i
+			\end{equation}
+			represents consequential of flow of all edges into k vertex that have a demand of $b_i > 0$, or a supply of $b_i < 0$. If $b_i = 0$ we call that vertex a transshipment vertex.
+
+	\chapter{Matchings}
+		\section{Hall's ``Marriage'' Theorem}
+
+		\section{Transversal Theorey}
+
+		\section{Menger's Theorem}
+
+		\section{The Hungarian Algorithm}
+
+	\chapter{Colorings}
+		\section{Edge Chromatic Number}
+
+		\section{Vizing's Theorem}
+
+		\section{The Timetabling Problem}
+
+		\section{Vertex Chromatic Number}
+
+		\section{Brooks' Theorem}
+
+		\section{Haj\'{o}s' Theorem}
+
+		\section{Chromatic Polynomials}
+
+		\section{Girth and Chromatic Number}
+
+	\chapter{Independent Sets and Cliques}
+		\section{Independent Sets}
+
+		\section{Ramsey's Theorem}
+
+		\section{Tur\'{a}n's Theorem}
+
+		\section{Schur's Theorem}
+
+	\chapter{Matroids}
