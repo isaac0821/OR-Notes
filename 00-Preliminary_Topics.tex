@@ -1,6 +1,102 @@
 \part{Preliminary Topics}
+	\chapter{Introduction to Optimization}
+
 	\chapter{Review of Linear Algebra}
+		\section{Field}
+			\begin{definition}[Field]
+				Let $F$ denote either the set  of real numbers or the set of complex numbers.
+				\begin{itemize}
+					\item Addition is commutative: $x + y = y + x, \forall x, y \in F$
+					\item Addition is associative: $x + (y + z) = (x + y) + z, \forall x, y, z \in F$
+					\item Element 0 exists and unique: $\exists 0, x + 0 = x, \forall x \in F$
+					\item To each $x \in F$ there corresponds a unique element $(-x) \in F$ such that $x + (-x) = 0$
+					\item Multiplication is commutative: $xy = yx, \forall x, y \in F$
+					\item Multiplication is associative: $x(yz) = (xy)z, \forall x, y, z \in F$
+					\item Element 1 exists and unique: $\exists 1, x1=x, \forall x \in F$
+					\item To each $x\neq 0 \in F$ there corresponds a unique element $x^{-1} \in F$ that $xx^{-1} = 1$
+					\item Multiplication distributes over addition: $x(y + z) = xy + xz, \forall x, y, z \in F$
+				\end{itemize}
+				Suppose one has a set $F$ of objects $x, y, z, ...$ and two operations on the elements of $F$ as follows. The first operation, called addition, associates with each pair of elements $x, y \in F$ an element $(x + y)\in F$; the second operation, called multiplication, associates with each pair $x, y$ an element $xy \in F$; and these two operations satisfy all conditions above. The set $F$, together with these two operations, is then called a \textbf{field}.
+			\end{definition}
 
-	\chapter{Convex Sets}
+			\begin{definition}[Subfield]
+				A \textbf{subfield} of the field $C$ is a set $F$ of complex numbers which itself is a field.
+			\end{definition}
 
-	\chapter{Convex Functions and Generalizations}
+			\begin{example}
+				The set of integers is not a field.
+			\end{example}
+
+			\begin{example}
+				The set of rational numbers is a field.
+			\end{example}
+
+			\begin{example}
+				The set of all complex numbers of the form $x + y\sqrt{2}$ where $x$ and $y$ are rational, is a subfield of $\mathbb{C}$.
+			\end{example}
+
+			\notice{In this note, we (...Lan) assume that the field involved is a subfield of the complex numbers $\mathbb{C}$. More generally, if $F$ is a field, it may be possible to add the unit $1$ to itself a finite number of times and obtain $0$, which does not happen in the subfield of $\mathbb{C}$. If it does happen in $F$, the least $n$ such that the sum of $n$ 1's is 0 is called \textbf{characteristic} of the field $F$. If it does not happen, then $F$ is called a field of \textbf{characteristic zero}.}
+
+		\section{Real Vector Spaces}
+
+		\section{Linear, Conic, Affine, and Convex Combinations}
+
+		\section{Inner Products}
+			\begin{definition}[Inner Product]
+				Let $F$ be the field of real numbers or the field of complex numbers, and $V$ a vector space over $F$. An \textbf{inner product} on $V$ is a function which assigns to each ordered pair of vectors $\alpha$, $\beta$ in $V$ a scalar $<\alpha|\beta>$ in $F$ in such a way that $\forall \alpha, \beta, \gamma \in V, c \in \mathbb{R}$ that
+				\begin{itemize}
+					\item $<\alpha+\beta|\gamma> = <\alpha|\gamma> + <\beta|\gamma>$
+					\item $<c\alpha|\beta> = c<\alpha|\beta>$
+					\item $<\alpha|\beta> = \overline{<\beta|\alpha>}$
+					\item $<\alpha|\alpha> \ge 0$, $<\alpha|\alpha> = 0$ iff $\alpha = \mathbf{0}$
+				\end{itemize}
+				Furthermore, the above properties imply that
+				\begin{itemize}
+					\item $<\alpha|c\beta+\gamma> = \bar{c}<\alpha|\beta> + <\alpha|\gamma>$
+				\end{itemize}
+			\end{definition}
+
+			\begin{definition}
+				On $F^n$ there is an inner product which we call the \textbf{standard inner product}. It is defined on $\mathbf{\alpha} = (x_1, x_2, ..., x_n)$ and $\mathbf{\beta} = (y_1, y_2, ..., y_n)$ by
+				\begin{equation}
+					<\alpha|\beta> = \sum_j x_j \bar{y_j}
+				\end{equation}
+				For $F = \mathbb{R}^n$
+				\begin{equation}
+					<\alpha|\beta> = \sum_j x_j y_j
+				\end{equation}
+				In the real case, the standard inner product is often called the dot product and denoted by $\alpha \cdot \beta$
+			\end{definition}
+
+			\begin{example}
+				For $\mathbf{\alpha} = (x_1, x_2)$ and $\mathbf{\beta} = (y_1, y_2)$ in $\mathbb{R}^2$, the following is an inner product.
+				\begin{equation}
+					<\alpha|\beta> = x_1y_1 - x_2y_1 - x_1y_2 + 4x_2y_2
+				\end{equation}
+			\end{example}
+
+			\begin{example}
+				For $\mathbb{C}^{n\times n}$, 
+				\begin{equation}
+					<\mathbf{A}|\mathbf{B}> = trace(\mathbf{B}^* \mathbf{A})
+				\end{equation}
+				is an inner product, where
+				\begin{equation}
+					\mathbf{A}^*_{ij} = \bar{\mathbf{A}}_{ji} \quad (\textbf{conjugate transpose})
+				\end{equation}
+				For $\mathbb{R}^{n\times n}$,
+				\begin{equation}
+					<\mathbf{A}|\mathbf{B}> = trace(\mathbf{B}^T \mathbf{A}) = \sum_j (AB^T)_{jj} = \sum_j\sum_k A_{jk}B_{jk}
+				\end{equation}
+			\end{example}
+			
+		\section{Norms}
+
+		\section{Eigenvectors and Eigenvalues}
+
+		\section{}
+
+	\chapter{Review of Real Analysis}
+		\section{Sequences and Series}
+
+		\section{Open Sets and Closed Sets}

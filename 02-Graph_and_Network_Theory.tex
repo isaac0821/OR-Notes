@@ -9,36 +9,35 @@
 				The following graph\\
 				\begin{figure}[!h]
 					\centering
-					\caption{An example of graph}
-					\begin{tikzpicture}[node distance = 1.7cm]
-						\node (v_2) [circleNode] {$v_2$};
-						\node (v_3) [circleNode, right of = v_2] {$v_3$};
-						\node (v_1) [circleNode, below of = v_2] {$v_1$};
-						\node (v_4) [circleNode, below of = v_3] {$v_4$};
-						\node (v_5) [circleNode, right of = v_3] {$v_5$};
-						\node (v_6) [circleNode, below of = v_5] {$v_6$};
+					\begin{tikzpicture}[node distance = 1.3cm]
+						\node (v_2) [solidNode, label=above:{$v_2$}] {};
+						\node (v_3) [solidNode, label=above:{$v_3$}, right of = v_2] {};
+						\node (v_1) [solidNode, label=below:{$v_1$}, below of = v_2] {};
+						\node (v_4) [solidNode, label=below:{$v_4$}, below of = v_3] {};
+						\node (v_5) [solidNode, label=above:{$v_5$}, right of = v_3] {};
+						\node (v_6) [solidNode, label=below:{$v_6$}, below of = v_5] {};
 						\draw [link] (v_2) -- node [left] {$e_2$} (v_1);
 						\draw [link] (v_2) -- node [below] {$e_5$} (v_4);
-						\draw [link] (v_1) to [out = 180, in = 270, looseness = 5] node [right] {$e_1$} (v_1);
+						\draw [link] (v_1) to [out = 180, in = 270, looseness = 5] node [left] {$e_1$} (v_1);
 						\draw [link] (v_2) to [out = 45, in = 135] node [above] {$e_3$} (v_3);
-						\draw [link] (v_2) -- node [above] {$e_4$} (v_3);
+						\draw [link] (v_2) -- node [below] {$e_4$} (v_3);
 						\draw [link] (v_3) -- node [right] {$e_6$} (v_1);
 						\draw [link] (v_5) -- node [right] {$e_7$} (v_6);
 					\end{tikzpicture}			
 				\end{figure}\\
 				can be represented as\\
 				\begin{align}
-					V = V(G) = \{v_1, v_2, v_3, v_4, v_5, v_6\} \\
-					E = E(G) = \{e_1, e_2, e_3, e_4, e_5, e_6, e_7\}\\
-					e_1 = v_1v_2, e_2 = v_2v_4, ...
+					V &= V(G) = \{v_1, v_2, v_3, v_4, v_5, v_6\} \\
+					E &= E(G) = \{e_1, e_2, e_3, e_4, e_5, e_6, e_7\}\\
+					e_1 &= v_1v_2, \quad e_2 = v_2v_4, \quad \dots
 				\end{align}				
 			\end{example}
 
-			\begin{definition}[loop, parallel, simple graph]
+			\begin{definition}[Loop, Parallel, Simple Graph]
 				An edge with identical ends is called a \textbf{loop}, Two edges having the same ends are said to be \textbf{parallel}, A graph without loops or parallel edges is called \textbf{simple graph}
 			\end{definition}
 
-			\begin{definition}[adjacent]
+			\begin{definition}[Adjacent]
 				Two edges of a graph are \textbf{adjacent} if they have a common end, two vertices are \textbf{adjacent} if they are jointed by an edge.
 			\end{definition}
 
@@ -47,22 +46,22 @@
 		\section{The Adjacency and Incidence Matrices}
 
 		\section{Subgraph}
-			\begin{definition}[subgraph]
+			\begin{definition}[Subgraph]
 				Given two graphs $G$ and $H$, $H$ is a \textbf{subgraph} of $G$ if $V(H)\subseteq V(G)$, $E(H)\subseteq E(G)$ and an edge has the same ends in $H$ as it does in $G$. Furthermore, if $E(H)\neq E(G)$ then $H$ is a proper subgraph.
 			\end{definition}
 			
-			\begin{definition}[spanning]
+			\begin{definition}[Spanning]
 				A subgraph $H$ on $G$ is \textbf{spanning} if $V(H) = V(G)$
 			\end{definition}
 
-			\begin{definition}[vertex-induced, edge-induced]
+			\begin{definition}[Vertex-induced, Edge-induced]
 				For a subset $V^{'}\subseteq V(G)$ we define an \textbf{vertex-induced} subgraph $G[V^{'}]$ to be the subgraph with vertices $V^{'}$ and those edges of $G$ having both ends in $V^{'}$. The \textbf{edge-induced} subgraph $G[E^{'}]$ has edges $E^{'}$ and those vertices of $G$ that are ends to edges in $E^{'}$.
 			\end{definition}
 
 			\notice{If we combine node-induced or edge-induced subgraphs $G(V^{'})$ and $G(V - V^{'})$, we cannot always get the entire graph.}
 
 		\section{Degree}
-			\begin{definition}[degree]
+			\begin{definition}[Degree]
 				Let $v\in V(G)$, then the \textbf{degree} of $v\in V(G)$ denote by $d_G(v)$ is defines to be the number of edges incident of $v$. Loops counted twice.
 			\end{definition}			
 
@@ -74,7 +73,7 @@
 			\end{theorem}
 
 			\begin{proof}
-				$\forall$ edge $e=\mu v$ with $\mu \neq v$, $e$ is  and counted once for $\mu$ and once for $v$, a total of two altogether. If $e=\mu \mu$, a loop, then it is counted twice for $\mu$			
+				$\forall$ edge $e=uv$ with $u \neq v$, $e$ is counted once for $u$ and once for $v$, a total of two altogether. If $e=uu$, a loop, then it is counted twice for $u$.
 			\end{proof}
 
 			\begin{problem}
@@ -91,19 +90,19 @@
 					\item The following graph contains 12 vertices and 18 edges, each vertex has a degree of 3.\\
 						\begin{figure}[!ht]
 							\centering
-							\begin{tikzpicture}[node distance=1cm]
+							\begin{tikzpicture}[node distance=0.5cm]
 								\node (1) [solidNode] {};
 								\node (2) [solidNode, below of=1] {};
 								\node (3) [solidNode, below of=2] {};
 								\node (4) [solidNode, below of=3] {};
 								\node (5) [solidNode, below of=4] {};
 								\node (6) [solidNode, below of=5] {};
-								\node (7) [solidNode, right of=1, xshift=2cm] {};
-								\node (8) [solidNode, right of=2, xshift=2cm] {};
-								\node (9) [solidNode, right of=3, xshift=2cm] {};
-								\node (10) [solidNode, right of=4, xshift=2cm] {};
-								\node (11) [solidNode, right of=5, xshift=2cm] {};
-								\node (12) [solidNode, right of=6, xshift=2cm] {};
+								\node (7) [solidNode, right of=1, xshift=1cm] {};
+								\node (8) [solidNode, right of=2, xshift=1cm] {};
+								\node (9) [solidNode, right of=3, xshift=1cm] {};
+								\node (10) [solidNode, right of=4, xshift=1cm] {};
+								\node (11) [solidNode, right of=5, xshift=1cm] {};
+								\node (12) [solidNode, right of=6, xshift=1cm] {};
 								\draw [link] (1) -- (7);
 								\draw [link] (1) -- (8);
 								\draw [link] (1) -- (9);
@@ -140,7 +139,7 @@
 				\begin{equation}
 					V = V_E\cup V_O \Rightarrow 
 					\sum_{v\in V}d(v) = \sum_{v\in V_E} d(v) + \sum_{v\in V_O}d(v) = 2|E|
-				\end {equation}			
+				\end{equation}			
 			\end{proof}
 
 		\section{Special Graphs}
@@ -160,42 +159,45 @@
 				A simple graph is said to be \textbf{bipartite} if the vertex set can be expressed as the union of two disjoint non-empty subsets $V_1$ and $V_2$ such that every edges has one end in $V_1$ and another end in $V_2$
 			\end{definition}
 
-			\begin{figure}[!h]
-				\centering
-				\begin{tikzpicture}[node distance = 1.2cm]
-					\node (A) [circleNode] {A};
-					\node (B) [circleNode, right of = A] {B};
-					\node (C) [circleNode, below of = A] {C};
-					\node (D) [circleNode, right of = C] {D};
-					\node (E) [circleNode, below of = C] {E};
-					\node (F) [circleNode, right of = E] {F};
-					\draw [link] (A) -- (B);
-					\draw [link] (A) -- (D);
-					\draw [link] (C) -- (B);
-					\draw [link] (C) -- (F);
-					\draw [link] (E) -- (D);
-					\draw [link] (E) -- (F);
-					\draw [link] (A) -- (F);
-				\end{tikzpicture}
-			\end{figure}
+			\begin{example}
+				Here is an example for bipartite graph
+				\begin{figure}[!h]
+					\centering
+					\begin{tikzpicture}[node distance = 0.7cm]
+						\node (A) [solidNode] {};
+						\node (B) [solidNode, right of = A] {};
+						\node (C) [solidNode, below of = A] {};
+						\node (D) [solidNode, right of = C] {};
+						\node (E) [solidNode, below of = C] {};
+						\node (F) [solidNode, right of = E] {};
+						\draw [link] (A) -- (B);
+						\draw [link] (A) -- (D);
+						\draw [link] (C) -- (B);
+						\draw [link] (C) -- (F);
+						\draw [link] (E) -- (D);
+						\draw [link] (E) -- (F);
+						\draw [link] (A) -- (F);
+					\end{tikzpicture}
+				\end{figure}
+			\end{example}
 
-			\begin{definition}[complete bipartite]
-				The \textbf{complete bipartite} graph $K_{mn}$ is the bipartite graph $V_1$ containing $m$ vertices and $V_2$ containing $n$ vertices such that each vertiex in $V_1$ is adjacent to every vertex in $V_2$
+			\begin{definition}[Complete Bipartite Graph]
+				The \textbf{complete bipartite graph} $K_{mn}$ is the bipartite graph $V_1$ containing $m$ vertices and $V_2$ containing $n$ vertices such that each vertiex in $V_1$ is adjacent to every vertex in $V_2$
 			\end{definition}
 
 			\begin{example}
 				Here is an example for $K_{53}$
 				\begin{figure}[!h]
 					\centering
-					\begin{tikzpicture}[node distance = 1.2cm]
-						\node (A) [circleNode] {A};
-						\node (B) [circleNode, below of = A] {B};
-						\node (C) [circleNode, below of = B] {C};
-						\node (D) [circleNode, below of = C] {D};
-						\node (E) [circleNode, below of = D] {E};
-						\node (F) [circleNode, right of = B] {F};
-						\node (G) [circleNode, right of = C] {G};
-						\node (H) [circleNode, right of = D] {H};
+					\begin{tikzpicture}[node distance = 0.7cm]
+						\node (A) [solidNode] {};
+						\node (B) [solidNode, below of = A] {};
+						\node (C) [solidNode, below of = B] {};
+						\node (D) [solidNode, below of = C] {};
+						\node (E) [solidNode, below of = D] {};
+						\node (F) [solidNode, right of = B] {};
+						\node (G) [solidNode, right of = C] {};
+						\node (H) [solidNode, right of = D] {};
 						\draw [link] (A) -- (F);
 						\draw [link] (A) -- (G);
 						\draw [link] (A) -- (H);
@@ -235,7 +237,7 @@
 				The following graph is bipartite, it only contains even cycles.\\
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}
+					\begin{tikzpicture}[node distance=0.7cm]
 						\node (a) [solidNode, label=above:{a}] {};
 						\node (b) [solidNode, label=above:{b}, right of = a] {};
 						\node (c) [solidNode, label=above:{c}, right of = b] {};
@@ -261,7 +263,7 @@
 				We can rearrange the graph to be more clear as following\\
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}
+					\begin{tikzpicture}[node distance=0.7cm]
 						\node (a) [solidNode, label=right:{a}] {};
 						\node (b) [solidNode, label=left:{b}, left of=a] {};
 						\node (c) [solidNode, label=right:{c}, below of=a] {};
@@ -291,20 +293,20 @@
 				The following graph is not bipartite\\
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance=1cm]
+					\begin{tikzpicture}[node distance=0.5cm]
 						\node (11) [solidNode, label=left:{11}] {};
-						\node (4) [solidNode, label=below:{4}, below of=11, yshift=-0.41cm] {};
-						\node (3) [solidNode, label=below:{3}, below of=4, xshift=-1cm] {};
-						\node (5) [solidNode, label=below:{5}, below of=4, xshift=1cm] {};
-						\node (1) [solidNode, label=below:{1}, below of=3, xshift=-2.41cm] {};
-						\node (2) [solidNode, label=below:{2}, below of=3, xshift=-1cm] {};
-						\node (6) [solidNode, label=below:{6}, below of=3, xshift=1cm] {};
-						\node (10) [solidNode, label=below:{10}, below of=5, xshift=1cm] {};
-						\node (12) [solidNode, label=below:{12}, below of=5, xshift=2.41cm] {};
-						\node (7) [solidNode, label=below:{7}, below of=2, xshift=1cm] {};
-						\node (8) [solidNode, label=left:{8}, below of=7, xshift=1cm] {};
-						\node (9) [solidNode, label=below:{9}, below of=6, xshift=1cm] {};
-						\node (13) [solidNode, label=below:{13}, below of=8, yshift=-0.41cm] {};
+						\node (4) [solidNode, label=below:{4}, below of=11, yshift=-0.205cm] {};
+						\node (3) [solidNode, label=below:{3}, below of=4, xshift=-0.5cm] {};
+						\node (5) [solidNode, label=below:{5}, below of=4, xshift=0.5cm] {};
+						\node (1) [solidNode, label=below:{1}, below of=3, xshift=-1.205cm] {};
+						\node (2) [solidNode, label=below:{2}, below of=3, xshift=-0.5cm] {};
+						\node (6) [solidNode, label=below:{6}, below of=3, xshift=0.5cm] {};
+						\node (10) [solidNode, label=below:{10}, below of=5, xshift=0.5cm] {};
+						\node (12) [solidNode, label=below:{12}, below of=5, xshift=1.205cm] {};
+						\node (7) [solidNode, label=below:{7}, below of=2, xshift=0.5cm] {};
+						\node (8) [solidNode, label=left:{8}, below of=7, xshift=0.5cm] {};
+						\node (9) [solidNode, label=below:{9}, below of=6, xshift=0.5cm] {};
+						\node (13) [solidNode, label=below:{13}, below of=8, yshift=-0.205cm] {};
 						\draw [link] (11) -- (1);
 						\draw [link] (11) -- (12);
 						\draw [link] (11) -- (4);
@@ -681,7 +683,6 @@
 
 		\section{Cayley's Formula}
 
-	\chapter{Connectivity}
 		\section{Connectivity}
 
 		\section{Blocks}
