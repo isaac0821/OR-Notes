@@ -1467,6 +1467,54 @@
 			\end{equation}
 			represents consequential of flow of all edges into k vertex that have a demand of $b_i > 0$, or a supply of $b_i < 0$. If $b_i = 0$ we call that vertex a transshipment vertex.
 
+		\section{Network Simplex Method}
+			\notice{Similar to Simplex Method in LP, even though in worst case may be inefficient. In most cases it is simple and empirically efficient.}
+
+			\begin{lemma}
+				Let $C_1$ and $C_2$ be distinct cycles in a graph $G$ and let $e\in C_1 \cup C_2$. Then $(C_1 \cup C_2) \setminus e$ contains a cycle.
+			\end{lemma}
+
+			\begin{proof}
+				Case 1: $C_1 \cap C_2 = \emptyset$. Trivia.\\
+				Case 2: $C_1 \cap C_2 \neq \emptyset$. Let $e\in C_2$ and $f=uv \in C_1 \setminus C_2$. Starting at $v$ traverse $C_1$ in the direction away from $u$ until the first vertex of $C_2$, say $x$. Denote the $(v, x)$-path as $P$. Starting at $u$ traverse $C_1$ in the direction away from $v$ until the first vertex of $C_2$, say $y$. Denote the $(u, y)$-path as $Q$. $C_2$ is a cycle, there are two $(x, y)$-path in $C_2$. Denote the $(x, y)$-path without $e$ as $R$. Then $vPxRyQ^{-1}uf$ is a cycle.
+			\end{proof}
+
+			\begin{theorem}
+				Let $T$ be a spanning tree of $G$. And let $e\in E\setminus T$ then $T+e$ contains a unique cycle $C$ and for any edge $f\in C$, $T+e-f$ is a spanning tree of $G$
+			\end{theorem}
+
+			Let $(D, b, w)$ be a transshipment problem. A feasible solutions $x$ is a \textbf{feasible tree solution} if there is a spanning tree $T$ such that $||x|| = \{e\in A, x_e\neq 0\} \subseteq T$.
+
+			For any tree $T$ of $D$ and for $e\in A\setminus T$, it follows from above theorem that $T+e$ contains a unique cycle. Denote that cycle $C(T, e)$ and orient it in the direction of $e$, define $w(T, e) = \sum\{w_e: e \text{ forward in } C(T, e)\} - \sum\{w_e: e \text{ reverse in } C(T,e)\}$.
+
+			We think of $w(T, e)$ as the weight of $C(T,e)$.
+
+			\begin{algorithm}
+				\caption{Network Simplex Method Algorithm}
+				\begin{algorithmic}
+					\ENSURE An optimal solution or the conclusion that $(D, b, w)$ is unbounded
+					\REQUIRE A transshipment problem $(D, b, w)$ and a feasible tree solution $x$ containing to a spanning tree $T$
+					\WHILE{$\exists e\in A\setminus T, w(T,e) < 0$}
+						\STATE let $e \in A \setminus T$ be such that $w(T, e) < 0$.
+						\IF {$C(T, e)$ has no reverse arcs}
+							\STATE Return unboundedness
+						\ELSE
+							\STATE Set $\theta = \min\{x_f: f \text{ reverse in } C(T, e)\}$ and set $f = \{f\in C(T, e): f \text{ reverse in } C(T, e), x_f = \theta\}$
+							\IF {$f$ forward in $C(T, e)$}
+								\STATE $x_f \gets x_f + \theta$
+							\ELSE
+								\STATE $x_f \gets x_f - \theta$
+							\ENDIF
+							\STATE Let $f \in F$ and $T \gets T+e-f$
+						\ENDIF
+					\ENDWHILE
+					\STATE Return $x$ as optimal					
+				\end{algorithmic}
+			\end{algorithm}
+
+			% step1: if w(T, e) \ge 0 for all e\in A - T then stop with x is optimal
+			% step2: let e \in A - T be such that w(T, e) < 0. If C(T, e) has no reverse arcs stop and return unboundedness. otherwise set \theta = \min\{x_f: f reverse in C(T,e)\} and set f = \{f\in C(T, e): f reverse in C(T,e), x_f = \theta\}
+			% step3: x_f = x_f + \theta if f forward in C(T,e); x_f = x_f - \theta if f reverse in C(T, e). Let f \in F and set T = T+e-f, goto 1
 	\chapter{Matchings}
 		\section{Hall's ``Marriage'' Theorem}
 
