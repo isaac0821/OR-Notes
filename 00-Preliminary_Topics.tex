@@ -1,5 +1,41 @@
 \part{Preliminary Topics}
 	\chapter{Introduction to Optimization}
+		\section{Optimization Model}
+			The following is the basic forms of terminology:
+				\begin{align}
+					\text{(P)} \quad \text{min} \quad & f(x)  \\
+								\text{s.t.} \quad & g_i(x)\le 0, \quad i=1,2,...,m \\
+											& h_j(x)=0, \quad j=1,2,...,l \\
+											& x \in X 
+				\end{align}
+				We have
+				\begin{itemize}
+					\item - $x\in R^n \rightarrow X \subseteq R^m$
+					\item $g_i(x)$ are called inequality constraints
+					\item $h_j(x)$ are called equality constraints
+					\item $X$ is the domain of the variables (e.g. cone, polygon, $\{0, 1\}^n$, etc.)
+					\item Let $F$ be the feasible region of $(P)$:
+					\begin{itemize}
+						\item $x^0$ is a feasible solution iff $x^0\in F$
+						\item $x^*$ is an optimized solution iff $x^* \in F$ and $f(x^*)\le f(x^0), \forall x^0 \in F$ (for minimized problem)
+					\end{itemize}
+				\end{itemize}
+
+			\notice{Not every $(P)$ has a feasible region, we can have $F=\emptyset$. Even if $F \ne \emptyset$, there might not be an solution to $P$, e.g. unbounded. If $(P)$ has optimized solution(s), it could be 1) Unique 2) Infinite number of solution 3) Finite number of solution}
+
+			Types of Optimization Problem
+			\begin{itemize}
+				\item $m = l = 0$, $x \in R^n$, unconstrained problem
+				\item $m + l > 0$, constrained problem
+				\item $f(x), g_i(x), h_j(x)$ are linear, Linear Optimization
+				\begin{itemize}
+					\item If $X=R^n$, Linear Programming
+					\item If $X$ is discrete,  Discrete Optimization
+					\item If $X \subseteq Z^n$, Integer Programming
+					\item If $X\in \{0,1\}^n$, Binary Programming
+					\item If $X\in Z^n \times R^m$, Mixed Integer Programming
+				\end{itemize}
+			\end{itemize}
 
 	\chapter{Review of Linear Algebra}
 		\section{Field}
@@ -40,6 +76,8 @@
 		\section{Real Vector Spaces}
 
 		\section{Linear, Conic, Affine, and Convex Combinations}
+
+		\section{Determinants}
 
 		\section{Inner Products}
 			\begin{definition}[Inner Product]
@@ -93,10 +131,102 @@
 		\section{Norms}
 
 		\section{Eigenvectors and Eigenvalues}
+			\begin{definition}
+				If $\mathbf{A}$ is an $n \times n$ matrix, then a nonzero vector $\mathbf{x} \in \mathbb{R}^n$ is called an \textbf{eigenvector} of $\mathbf{A}$ if $\mathbf{Ax}$ is a scalar multiple of $\mathbf{x}$, i.e.
+				\begin{equation}
+					\mathbf{Ax} = \lambda \mathbf{x}
+				\end{equation}
+				for some scalar $\lambda$. The scalar $\lambda$ is called \textbf{eigenvalue} of $\mathbf{A}$ and the vector $\mathbf{x}$ is said to be an \textbf{eigenvector corresponding to $\lambda$}
+			\end{definition}
 
-		\section{}
+			\begin{theorem}[Characteristic Equation]
+				If $\mathbf{A}$ is an $n \times n$ matrix, then $\lambda$ is an eigenvalue of $\mathbf{A}$ iff
+				\begin{equation}
+					\det(\lambda I - A) = 0
+				\end{equation}
+			\end{theorem}
+
+			\begin{corollary}
+				\begin{equation}
+					\sum \lambda_A = tr(\mathbf{A})
+				\end{equation}
+			\end{corollary}
+
+			\begin{corollary}
+				\begin{equation}
+					\prod \lambda_A = \det(\mathbf{A})
+				\end{equation}
+			\end{corollary}
+
+			\notice{Gaussian elimination changes the eigenvalues.}
+
+
+		\section{Decompositions}
 
 	\chapter{Review of Real Analysis}
 		\section{Sequences and Series}
 
+	\chapter{Review of Topology}
 		\section{Open Sets and Closed Sets}
+			\begin{definition}[Metric Space]
+				A \textbf{metric space} is a set $X$ where we have a notion of distance. That is, if $x, y \in X$, then $d(x, y)$ is the distance between $x$ and $y$. The particular distance function must satisfy the following conditions:
+				\begin{itemize}
+					\item $d(x, y) > 0, \forall x, y \in X$
+					\item $d(x, y) = 0 \iff x=y$
+					\item $d(x, y) = d(y, x)$
+					\item $d(x, z) \le d(x, y) + d(y, z)$
+				\end{itemize}
+			\end{definition}
+
+			\begin{definition}[Ball]
+				Let $X$ be a metric space. A \textbf{ball} $B$ of radius $r$ around a point $x \in X$ is
+				\begin{equation}
+					B = \{y \in X|d(x, y) < r\}
+				\end{equation}
+			\end{definition}
+
+			\begin{definition}[Open Set]
+				A subset $O \subseteq X$ is \textbf{open} if $\forall x \in O, \exists r, B=\{x\in X|d(x, y) < r\} \subseteq O$
+			\end{definition}
+
+			\begin{theorem}
+				The union of any collection if open sets is open.
+			\end{theorem}
+
+			\begin{theorem}
+				The intersection of any finite number of open sets is open.
+			\end{theorem}
+
+			\begin{remark}
+				The intersection of infinite number of open sets is not necessarily open.
+			\end{remark}
+
+			\begin{definition}[Limit point]
+				A point $z$ is a \textbf{limit point} for a set $A$ if every open set $U$ that $z\in U$ intersects $A$ in a point other than $z$.
+			\end{definition}
+
+			\notice{$z$ is not necessarily in $A$.}
+
+			\begin{definition}[Closed Set]
+				A set $C$ is \textbf{closed} iff it contains all of its limit points.
+			\end{definition}
+
+			\begin{theorem}
+				Every intersection of closed sets is closed.
+			\end{theorem}
+
+			\begin{theorem}
+				Every finite union of closed sets is closed.
+			\end{theorem}
+
+			\begin{remark}
+				The union of infinite number of closed sets is not necessarily closed.
+			\end{remark}
+
+			\begin{theorem}
+				A set $C$ is a closed set if $X \setminus C$ is open
+			\end{theorem}
+
+			\begin{remark}
+				The empty set is open and closed, the whole space $X$ is open and closed.
+			\end{remark}

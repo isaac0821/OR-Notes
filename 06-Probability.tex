@@ -1,11 +1,12 @@
 \part{Probability, Stochastic Processes and Markov Chains}
 	\chapter{Probability}
 
+	\onecolumn
 	\chapter{Random Variables}
 		\section{Relationship between Some Random Variables}
 			\begin{figure}[h]
 				\centering
-				\begin{tikzpicture}[node distance = 2cm]
+				\begin{tikzpicture}[node distance = 1.8cm]
 					\node (Pascal) [roundedRectangle] {Pascal($n$, $p$)};
 					\node (Poisson) [roundedRectangle, xshift = 6cm] {Poisson($\lambda$)};
 					\node (Geometric) [roundedRectangle, below of = Pascal] {Geometric($p$)};
@@ -16,7 +17,7 @@
 					\node (Hypergeometric) [roundedRectangle, below of = Geometric, xshift = 12.5cm] {Hypergeometric($M$, $N$, $K$)};
 					\node (SNormal) [roundedRectangle, below of = Lognormal, xshift=2cm] {Normal(0, 1)};
 					\node (Beta) [roundedRectangle, below of = Lognormal, xshift = 7cm] {Beta($\alpha$, $\beta$)};
-					\node (DExponential) [roundedRectangle, below of = Beta, xshift = 4cm] {Double-Exponential($0$, $\lambda$, $\lambda$)};
+					\node (DExponential) [roundedRectangle, below of = Beta, xshift = 3.8cm] {Double-Exponential($0$, $\lambda$, $\lambda$)};
 					\node (Cauchy) [roundedRectangle, below of = SNormal, xshift = -6cm] {Cauchy};
 					\node (Gamma) [roundedRectangle, below of = SNormal, xshift = 2cm] {Gamma($r$,$\lambda$)};
 					\node (tv) [roundedRectangle, below of = Cauchy, xshift = 1cm] {$t_{(v)}$};
@@ -176,6 +177,7 @@
 			\end{longtable} 
 		\end{landscape}
 
+	\twocolumn
 	\chapter{Limit Theorems}
 
 	\chapter{The Bernoulli and Poisson Process}
