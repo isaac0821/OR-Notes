@@ -19,11 +19,13 @@
 					\sum_{j=1}^na_{ij}x_j > b_i \Rightarrow \sum_{j=1}^na_{ij}x_j \ge b_i + \epsilon 
 				\end{equation}
 				where $\epsilon$ is a small number.
+			
 			\subsection{Minimization and Maximization}
 				To convert a minimization problem into a maximization problem, we can use the following to define a new objective function
 				\begin{equation}
 					\min \sum_{j=1}^nc_jx_j = -\max \sum_{j=1}^n c_jx_j 
 				\end{equation}
+			
 			\subsection{Standard Form and Canonical Form}
 				Standard Form
 				\begin{align}
@@ -102,7 +104,7 @@
 
 	\chapter{Simplex Method}
 		\section{Basic Feasible Solutions and Extreme Points}
-			\subsection{Basic Feasible Solution}
+			\begin{definition}
 				Consider the system $\{A_{m\times n}x=b_m, x\ge 0\}$, suppose $rank(A, b) = rank(A) =m$, we can arrange $A$ and have a partition of $A$. Let $A=[B, N]$ where $B$ is $m\times m$ invertible matrix, and $N$ is a $m\times (n-m)$ matrix. The solution $x=\left[\begin{matrix}x_B\\x_N\end{matrix}\right]$ to the equation $Ax=b$, where
 				\begin{equation}
 					x_B = B^{-1}b 
@@ -112,22 +114,22 @@
 					x_N = 0 
 				\end{equation}
 				is called \textbf{basic solution} of system. If $x_B \ge 0$, it is called \textbf{basic feasible solution}. If $x_B > 0$ it is called \textbf{non-degenerate basic feasible solution}. For $x_B \ge 0$, if some $x_j = 0$, those components are called \textbf{degenerated basic feasible solution}.\\
-				$B$ is called the \textbf{basic matrix}, $N$ is called \textbf{nonbasic matrix}
+				$B$ is called the \textbf{basic matrix}, $N$ is called \textbf{nonbasic matrix}				
+			\end{definition}
 
-			\subsection{Correspondence between B.F.S and E.P.}
-				\begin{theorem}
-					$x$ is an E.P. $\iff$ $x$ is a B.F.S
-				\end{theorem}
-				
-				\begin{proof}
-					First, Let $x$ be a B.F.S., Suppose $x=\lambda u + (1 - \lambda) v$, for $u, v \in S, \lambda \in (0, 1)$\\
-					Let $I = \{i: x_i > 0\}$ Then\\
-					- if $i \notin I$ then $x_i = 0$, which implies $u_i = v_i = 0$
-					- $\because Au = Av = b$, $\therefore A(u-v) = 0 \Rightarrow \sum_{i=1}^n(u_i - v_i)a_i = 0$, $\because u_i = v_i = 0$, for $i\notin I$, it implies $u_i = v_i$ for $i\in I$, Hence $u=v$, $x$ is E.P.\\
-					Second, suppose $x$ is not B.F.S., i.e. $\{a_i: i \in I\}$ are linearly dependent.\\
-					Then there $\exists u\ne 0, u_i =0 , i\notin I$ such that $Au=0$.\\
-					Hence, for a small $\epsilon$, $x=\frac12(x + \epsilon u) + \frac12(x - \epsilon u)$, $x$ is not E.P.					
-				\end{proof}
+			\begin{theorem}
+				$x$ is an E.P. $\iff$ $x$ is a B.F.S
+			\end{theorem}
+			
+			\begin{proof}
+				First, Let $x$ be a B.F.S., Suppose $x=\lambda u + (1 - \lambda) v$, for $u, v \in S, \lambda \in (0, 1)$\\
+				Let $I = \{i: x_i > 0\}$ Then\\
+				- if $i \notin I$ then $x_i = 0$, which implies $u_i = v_i = 0$
+				- $\because Au = Av = b$, $\therefore A(u-v) = 0 \Rightarrow \sum_{i=1}^n(u_i - v_i)a_i = 0$, $\because u_i = v_i = 0$, for $i\notin I$, it implies $u_i = v_i$ for $i\in I$, Hence $u=v$, $x$ is E.P.\\
+				Second, suppose $x$ is not B.F.S., i.e. $\{a_i: i \in I\}$ are linearly dependent.\\
+				Then there $\exists u\ne 0, u_i =0 , i\notin I$ such that $Au=0$.\\
+				Hence, for a small $\epsilon$, $x=\frac12(x + \epsilon u) + \frac12(x - \epsilon u)$, $x$ is not E.P.					
+			\end{proof}
 
 		\section{Simplex Method}
 			\subsection{Key to Simplex Method}
@@ -171,22 +173,22 @@
 					\begin{algorithmic}[1]
 						\REQUIRE Given a basic feasible solution with basis $B$
 						\ENSURE Optimal objective value $\min z= cx$
-						\STATE set $\mathcal{B}$ for basic variables, set $\mathcal{N}$ for nonbasic variables
-						\STATE $\mathcal{B} \gets \text{all slack variables}$
-						\STATE $\mathcal{N} \gets \text{all variables excepts slack variables}$
+						\STATE Set $\mathbf{B}$ for basic variables, $\mathbf{N}$ for nonbasic variables
+						\STATE $\mathbf{B} \gets \text{all slack variables}$
+						\STATE $\mathbf{N} \gets \text{all variables excepts slack variables}$
 						\FOR{$\forall j$}
 							\STATE $z_j=c_BB^{-1}a_j=0$				
 						\ENDFOR
 						\WHILE{$\exists z_j-c_j > 0$}
 							\STATE $z_j=wa_j-c_j=c_BB^{-1}a_j-c_j$
-							\STATE $z_k-c_k=\max\limits_{j \in \mathcal{N}}\{z_j-c_j\}$
+							\STATE $z_k-c_k=\max\limits_{j \in \mathbf{N}}\{z_j-c_j\}$
 							\STATE $y_k=B^{-1}a_k$
 							\IF{$\exists y_{ik} >0$}
-								\STATE $\theta_r=\min\limits_{i \in \mathcal{B}}\{\theta_i=\frac{\bar{b}_i}{y_{ik}}:y_{ik}>0\}$
-								\STATE $\mathcal{B} \gets \mathcal{B} \backslash \{k\}$
-								\STATE $\mathcal{N} \gets \mathcal{N} \cup \{k\}$
-								\STATE $\mathcal{B} \gets \mathcal{B} \cup \{r\}$
-								\STATE $\mathcal{N} \gets \mathcal{N} \backslash \{r\}$
+								\STATE $\theta_r=\min\limits_{i \in \mathbf{B}}\{\theta_i=\frac{\bar{b}_i}{y_{ik}}:y_{ik}>0\}$
+								\STATE $\mathbf{B} \gets \mathbf{B} \backslash \{k\}$
+								\STATE $\mathbf{N} \gets \mathbf{N} \cup \{k\}$
+								\STATE $\mathbf{B} \gets \mathbf{B} \cup \{r\}$
+								\STATE $\mathbf{N} \gets \mathbf{N} \backslash \{r\}$
 							\ELSE
 								\STATE Unbounded
 							\ENDIF
@@ -310,9 +312,8 @@
 					\textbf{Case B.2:} Some artificial variables are in the basis at zero values\\
 					This is because of degeneracy. We pivot on those artificial variables, once they leave the basis, eliminate them.
 			\subsection{Big M Method}
-				(To Be Edited)
+
 			\subsection{Single Artificial Variable}
-				(To Be Edited)
 
 		\section{Revised Simplex Method}
 			\subsection{Key to Revised Simplex Method}

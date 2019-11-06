@@ -744,6 +744,7 @@
 				\end{algorithmic}
 			\end{algorithm}
 
+		\section{Prim's Algorithm}
 			\begin{algorithm}
 				\caption{Prim's Algorithm, $O(nm)$}
 				\begin{algorithmic}
@@ -756,11 +757,13 @@
 				\end{algorithmic}
 			\end{algorithm}
 
+		\section{Comparison between Kroskal's and Prim's Algorithm}
 			\begin{itemize}
 				\item Kroskal start with a forest that contains all vertices, Prim start with a tree that only contain one vertex.
 				\item Kroskal cannot gurantee every step it is a tree but can gurantee it is spanning, Prim can gurantee every step it is a tree but cannot gurantee spanning.
 			\end{itemize}
 
+		\section{Extensible MST}
 			\begin{definition}[cut]
 				For a graph $G=(V, E)$ and $A \subseteq V$ we denote $\delta(A) = \{e \in E :\text{$e$ has an end in $A$ and an end in $V\setminus A$}\}$. A set of the form $\delta(A)$ for some $A$ is called a \textbf{cut} of $G$.
 			\end{definition}
@@ -774,16 +777,12 @@
 			\end{theorem}
 
 			\begin{definition}
-				Let us call a subset $A \in E$ \textbf{extendsible} to a minimum spanning tree problem if $A$ is contained in the edge set of some MST of $G$
+				Let us call a subset $A \in E$ \textbf{extensible} to a minimum spanning tree problem if $A$ is contained in the edge set of some MST of $G$
 			\end{definition}
 
 			\begin{theorem}
-				Suppose $B \subseteq E$, that $B$ is extendsible to an MST and that $e$ is a minimum cost edge of some cut $D$ satisfying $D\cap B = \emptyset$, then $B\cup \{e\}$ is extensible to an MST.
+				Suppose $B \subseteq E$, that $B$ is extensible to an MST and that $e$ is a minimum cost edge of some cut $D$ satisfying $D\cap B = \emptyset$, then $B\cup \{e\}$ is extensible to an MST.
 			\end{theorem}
-
-		\section{Prim's Algorithm}
-
-		\section{Comparison between Kroskal's and Prim's Algorithm}
 
 		\section{Solve MST in LP}
 			Given a connected graph $G=(V, E)$ and a cost on the edges $C_e$ for all $e\in E$, Then we can formulate the following LP
@@ -828,11 +827,11 @@
 
 		\section{Breadth-First Search Algorithm}
 
-		\section{Ford's ``algorithm''}
+		\section{Ford's Method}
 			Define a predecessor function $P(w), \forall w \in V$ and set $P(w)$ to $v$ whenever $y_w$ is set to $y_v + c_{vw}$
 
 			\begin{algorithm}
-				\caption{Ford's Algorithm}
+				\caption{Ford's Method}
 				\begin{algorithmic}
 					\ENSURE Shortest Paths from $r$ to all other nodes in $V$
 					\REQUIRE A digraph with arc costs,starting node $r$
@@ -1155,9 +1154,9 @@
 			A $\mathbf{x_e}$ that satisfied the above constraints is an $(s,t)$-flow of value $v$. If in addition it satisfies the bounding constraints, then it is a feasible $(s,t)$-flow.
 			A feasible $(s,t)$-flow that has maximum $v$ is optimal on maximum.
 
-		\section{The main theorem}
+		\section{Prime and Dual Problem}
 			\begin{theorem}
-				For $S \subseteq V$ we define $(S, \bar{S})$ to be a $(s, t)$-cut if $s\in S$ and $t\in \bar{S}=V-S$, the capacity of the cut, denoted $u(S, \bar{S})$ is $\sum \{u_e: e\in \delta^-(S)\}$ where $\delta^-(S) = \{e\in A: t(e) \in S \text{ and } h(e) \in \bar{S}\}$
+				For $S \subseteq V$ we define $(S, \bar{S})$ to be a $(s, t)$-cut if $s\in S$ and $t\in \bar{S}=V-S$, the capacity of the cut, denoted $u(S, \bar{S})$ as $\sum \{u_e: e\in \delta^-(S)\}$ where $\delta^-(S) = \{e\in A: t(e) \in S \text{ and } h(e) \in \bar{S}\}$
 			\end{theorem}
 
 			\begin{example}
@@ -1204,18 +1203,18 @@
 						\node (4) [circleNode, below of=t, xshift = -1cm] {4};
 						\draw [arrow] (s) -- node [above] {5} (1);
 						\draw [arrow] (s) -- node [above] {4} (2);
-						\draw [arrow] (1) -- node [above] {2} (2);
+						\draw [arrow] (1) -- node [left] {2} (2);
 						\draw [arrow] (1) -- node [above] {1} (3);
-						\draw [arrow] (1) -- node [above] {4} (4);
+						\draw [arrow] (1) -- node [below] {4} (4);
 						\draw [arrow] (2) -- node [above] {5} (4);
-						\draw [arrow] (4) -- node [above] {4} (3);
+						\draw [arrow] (4) -- node [right] {4} (3);
 						\draw [arrow] (3) -- node [above] {1} (t);
 						\draw [arrow] (4) -- node [above] {6} (t);
-						\draw [arrow] (t) -- node [above] {1} (1);
+						\draw [arrow] (t) -- node [right] {1} (1);
 					\end{tikzpicture}
 				\end{figure}
 
-				Let $S = \{s, 1, 2, 3\}$, $\bar{S} = \{4, t\}$, $u(S, \bar{S}) = u_{14} + u_{24} + u{3t} = 10$, $\delta^-(S) = \{(1, 4), (2, 4), (3, t)\}$, $\delta^+{S} = \{(t, 1)\}$				
+				Let $S = \{s, 1, 2, 3\}$, $\bar{S} = \{4, t\}$, $u(S, \bar{S}) = u_{14} + u_{24} + u_{3t} = 10$, $\delta^-(S) = \{(1, 4), (2, 4), (3, t)\}$, $\delta^+{S} = \{(4, 3), (t, 1)\}$				
 			\end{example}
 
 			\begin{lemma}
@@ -1236,7 +1235,7 @@
 				\end{equation}
 			\end{proof}
 
-			\notice{Flow is the prime variable, capacity is the dual.}
+			\notice{Flow is the prime variable, capacity is the dual variable.}
 
 			\begin{corollary}
 				If $x$ is a feasible flow of value $v$, and $(S, \bar{S})$ is an $(s, t)$-cut, then
@@ -1265,12 +1264,50 @@
 				$\Rightarrow$ $x$ is as large as it can get when as $u(S, \bar{S})$ is as small as it can get.
 			\end{proof}
 
+			The LP of maximum flow can be modeled as following
+			\begin{align}
+				\max \quad & f = \left[\begin{matrix}0 & 0 & \cdots & 0 & 1\end{matrix}\right]\left[\begin{matrix}\mathbf{x} \\ f\end{matrix}\right]\\
+				\text{s.t.} \quad & \left[\begin{matrix}\mathbf{A} & \mathbf{F}\end{matrix}\right]\left[\begin{matrix}\mathbf{x}\\ f\end{matrix}\right] = \mathbf{0}\\
+				& \mathbf{Ix} \le \mathbf{u}\\
+				& \left[\begin{matrix}\mathbf{x}\\ f\end{matrix}\right] \ge 0
+			\end{align}
+
+			In which $\mathbf{A}$ is the vertex-arc incident matrix and $\mathbf{F}$ is a column vector where the first row is 1, last row is -1 and all other rows are 0s. $\mathbf{u}$ is the column vector of upper bound of each arcs.
+			\begin{align}
+				\mathbf{A} &= \mathbf{A}_{|E|\times |V|} = [a_{ij}], \text{ where } a_{ij} = \begin{cases}
+					1, \quad \text{if $v_i = h(e_j)$} \\
+					-1, \quad \text{if $v_i = t(e_j)$} \\
+					0, \quad \text{otherwise}
+				\end{cases}\\
+				\mathbf{F} &= \left[\begin{matrix}1 & \cdots & 0 & \cdots & -1\end{matrix}\right]^\top \\
+				\mathbf{u} &= \left[\begin{matrix}u_1 & u_2 & \cdots & u_{|E|}\end{matrix}\right]^\top
+			\end{align}
+
+			Then, we take the dual of LP
+			\begin{align}
+				\min \quad & \mathbf{u}\mathbf{w_E} \\
+				\text{s.t.} \quad & \left[\begin{matrix}
+					\mathbf{w_V} & \mathbf{w_E}
+				\end{matrix}\right]\left[\begin{matrix}
+					\mathbf{A} & \mathbf{F} \\ \mathbf{I} & \mathbf{0}
+				\end{matrix}\right] \ge 0 \\
+				& \mathbf{w_V} \quad \text{unrestricted} \\
+				& \mathbf{w_E} \ge \mathbf{0}
+			\end{align}
+
+			In which $\mathbf{w_V}$ is the capacity variable of each vertex, $\mathbf{w_E}$ is the capacity of each arc. $\mathbf{u}, \mathbf{E}, \mathbf{F}$ have the same meaning as in prime.
+			\begin{align}
+				\mathbf{w_V} &= \left[\begin{matrix}w_1 & w_2 & \cdots & w_{|V|}\end{matrix}\right]^\top \\
+				\mathbf{w_E} &= \left[\begin{matrix}w_{|V| + 1} & w_{|V| + 2} & \cdots & w_{|V| + |E|}\end{matrix}\right]^\top
+			\end{align}
+
+		\section{Maximum Flow Minimum Cut Theorem}
 			\begin{definition}
 				Let $P$ be a path, (not necessarily a dipath), $P$ is called \textbf{unsaturated} if every \textbf{forward} arc is unsaturated ($x_e < u_e$) and ever \textbf{reverse} arc has positive flow ($x_e > 0$). If in addition $P$ is an $(s, t)$-path, then $P$ is called an \textbf{x-augmenting path}
 			\end{definition}
 
 			\begin{theorem}
-				A feasible flow $x$ in a digraph $D$ is maximum iff $D$ has augmenting paths.
+				A feasible flow $x$ in a digraph $D$ is maximum iff $D$ has no augmenting paths.
 			\end{theorem}
 			
 			\begin{proof}
@@ -1294,9 +1331,9 @@
 
 				($\Leftarrow$) Suppose $D$ admits no x-augmenting path, Let $S$ be the set of vertices reachable from $s$ by x-unsaturated path clearly $s\in S$ and $t\notin S$ (because otherwise there would be an augmenting path). Thus, $(S, \bar{S})$ is a $(s, t)$-cut.
 
-				Let $e\in \delta^-{S}$ then $e$ must be saturated. For otherwise we could add the $h(e)$ to $S$
+				Let $e\in \delta^-(S)$ then $e$ must be saturated. For otherwise we could add the $h(e)$ to $S$
 
-				Let $e\in \delta^+{S}$ then $e$ must be flow less. For otherwise we could add the $t(e)$ to $S$.
+				Let $e\in \delta^+(S)$ then $e$ must be flow less. For otherwise we could add the $t(e)$ to $S$.
 
 				According to previous corollary, that $x$ is maximum.
 			\end{proof}
@@ -1305,7 +1342,7 @@
 				For any digraph, the value of a maximum $(s, t)$-flow is equal to the capacity of a minimum $(s, t)$-cut
 			\end{theorem}
 
-		\section{Maximum flow algorithm}
+		\section{Ford-Fulkerson Method}
 			Finding augmenting paths is the key of max-flow algorithm, we need to describe two functions, labeling and scanning a vertex.
 
 			A vertex is first labeled if we can find x-unsaturated path from $s$, i.e., $(s, v)$-unsaturated path.
@@ -1330,10 +1367,27 @@
 				\end{algorithmic}
 			\end{algorithm}
 
+			\begin{algorithm}
+				\caption{Ford-Fulkerson algorithm}
+				\begin{algorithmic}
+					\ENSURE Max-flow $x$ with value $v$
+					\REQUIRE Digraph with source $s$ and sink $t$, a capacity function $u$ and a feasible flow (could be $x_e = 0$)
+					\STATE Initialize, $v \gets x$
+					\STATE Designate all vertices as unlabeled and unscanned
+					\STATE Label $s$
+					\WHILE {There exists vertex unlabeled or unscanned}
+						\STATE Let $i$ be such a vertex, for each arc $e$ with $t(e) = i, x_e < u_e$ and $h(e)$ unlabeled, label $h(e)$
+						\STATE For each arc $e$ with $h(e) = i, x_e > 0$ and $t(e)$ unlabeled, label $t(e)$, designate $i$ as scanned.
+						\STATE If $t$ is not label
+					\ENDWHILE
+					\STATE $x$ is the maximum.
+				\end{algorithmic}
+			\end{algorithm}
+
 			Labeling algorithm can be exponential, the following is an example
-			\begin{figure}
+			\begin{figure}[!ht]
 				\centering
-				\begin{tikzpicture}[node distance = 2cm]
+				\begin{tikzpicture}[node distance = 1cm]
 					\node (1) [circleNode] {1};
 					\node (s) [circleNode, below of=1, xshift = -1cm] {s};
 					\node (2) [circleNode, below of=s, xshift = 1cm] {2};
@@ -1512,13 +1566,111 @@
 				\end{algorithmic}
 			\end{algorithm}
 
+			The following is an example of cycling
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {1, a} (2);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {-1, b} (2);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {3, c} (2);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {1, h} (3);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {-1, i} (3);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {3, j} (3);
+					\draw [arrow] (2) to [out = 30, in = 150] node [above] {3, d} (3);
+					\draw [arrow] (2) to [out = 30, in = 150] node [above] {-3, e} (3);
+					\draw [arrow] (3) to [out = 30, in = 150] node [above] {3, f} (2);
+					\draw [arrow] (3) to [out = 30, in = 150] node [above] {-3, g} (2);
+				\end{tikzpicture}
+			\end{figure}
+
+			Then for
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {a} (2);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {i} (3);
+					\draw [arrow, dashed] (1) to [out = 30, in = 150] node [above] {j (to enter)} (3);
+				\end{tikzpicture}
+			\end{figure}
+
+			$w(T, j) = w_j - w_i = -3-3 = -6$
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {a} (2);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {j} (3);
+					\draw [arrow, dashed] (1) to [out = 30, in = 150] node [above] {h (to enter)} (3);
+				\end{tikzpicture}
+			\end{figure}
+
+			$w(T, h) = w_h + w_j - w_i = 3-3-1=-1$
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+					\draw [arrow, dashed] (1) to [out = 30, in = 150] node [above] {b (to enter)} (2);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {j} (3);
+					\draw [arrow] (1) to [out = 30, in = 150] node [above] {h} (3);
+				\end{tikzpicture}
+			\end{figure}
+
+			Keep going and we will find cycling.
+
+			To Avoid cycling we will introduce the modified network Simplex Method. Let $T$ be a \textbf{rooted} spanning tree. Let $f$ be an arc in $T$, we say $f$ is \textbf{away} from the root $r$ if $t(f)$ is the component of $T-f$. Otherwise we say $f$ is \textbf{towards} $r$.
+
+			Let $x$ be a feasible tree solution associated with $T$, then we say $T$ is a \textbf{strong feasible tree} if for every arc $f \in T$ with $x_f = 0$ then $f$ is away from $r\in T$.
+
+			Modification to NSM:
+			\begin{itemize}
+				\item The algorithm is initialed with a strong feasible tree.
+				\item $f$ in pivot phase is chosen to be the first reverse arc of $C(T, e)$ having $x_f = \theta$. By ``first'', we mean the first arc encountered in traversing $C(T, e)$ in the direction of $e$, starting at the vertex $i$ of $C(T, e)$ that minimizes the number of arcs in the unique $(r, i)$-path in $T$.
+			\end{itemize}
+
+			\notice{In the second rule above, $r$ could also be in the cycle, in that case, $i$ is $r$.}
+
+			Finding initial strong feasible tree.
+
+			Pick a vertex in $D$ to be root $r$. The tree $T$ has an arc $e$ with the $t(e) = r$ and $h(e) = v$. For each $v\in V\setminus r$ with $b_v \ge 0$ and has an arc $e$ with $h(e) = r$ and $t(e) = v$ for each $v \in V\setminus r$ for which $b_v < 0$.
+			Wherever possible the arcs of $T$ are chosen from $A$, where an appropriate arc doesn't exist. We create an \textbf{artificial arc} and give its weight $|V|(\max\{w_e: e\in A\} + 1$. This is similar to Big-M method and if optimal solution contains artificial arcs ongoing arc problem is infeasible.
+
+			\notice{This algorithm can be really bad, its mimic of Simplex Method of LP, which means we can run into exponential operations}
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}[node distance = 1.7cm]
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, right of = 1] {1};
+					\node (3) [circleNode, below of = 1] {3};
+					\node (4) [circleNode, below of = 2] {4};
+					\draw [arrow] (1) -- node [above] {1} (3);
+					\draw [arrow] (2) -- node [right] {2} (1);
+					\draw [arrow] (1) -- node [above] {4} (4);
+					\draw [arrow] (3) -- node [left] {1} (2);
+					\draw [arrow] (3) -- node [below] {5} (4);
+					\draw [arrow] (2) -- (4);
+				\end{tikzpicture}
+			\end{figure}
+
 			% step1: if w(T, e) \ge 0 for all e\in A - T then stop with x is optimal
 			% step2: let e \in A - T be such that w(T, e) < 0. If C(T, e) has no reverse arcs stop and return unboundedness. otherwise set \theta = \min\{x_f: f reverse in C(T,e)\} and set f = \{f\in C(T, e): f reverse in C(T,e), x_f = \theta\}
 			% step3: x_f = x_f + \theta if f forward in C(T,e); x_f = x_f - \theta if f reverse in C(T, e). Let f \in F and set T = T+e-f, goto 1
 	\chapter{Matchings}
 		\section{Hall's ``Marriage'' Theorem}
 
-		\section{Transversal Theorey}
+		\section{Transversal Theory}
 
 		\section{Menger's Theorem}
 
