@@ -1154,7 +1154,7 @@
 			A $\mathbf{x_e}$ that satisfied the above constraints is an $(s,t)$-flow of value $v$. If in addition it satisfies the bounding constraints, then it is a feasible $(s,t)$-flow.
 			A feasible $(s,t)$-flow that has maximum $v$ is optimal on maximum.
 
-		\section{Prime and Dual Problem}
+		\section{Solving Maximum Flow Problem in LP}
 			\begin{theorem}
 				For $S \subseteq V$ we define $(S, \bar{S})$ to be a $(s, t)$-cut if $s\in S$ and $t\in \bar{S}=V-S$, the capacity of the cut, denoted $u(S, \bar{S})$ as $\sum \{u_e: e\in \delta^-(S)\}$ where $\delta^-(S) = \{e\in A: t(e) \in S \text{ and } h(e) \in \bar{S}\}$
 			\end{theorem}
@@ -1264,7 +1264,8 @@
 				$\Rightarrow$ $x$ is as large as it can get when as $u(S, \bar{S})$ is as small as it can get.
 			\end{proof}
 
-			The LP of maximum flow can be modeled as following
+		\section{Prime and Dual of Maximum Network Flow Problem}
+			The LP of maximum flow can be modeled as following, WLOG, we let $s = v_1 \in V, t = v_{|V|} \in V$.
 			\begin{align}
 				\max \quad & f = \left[\begin{matrix}0 & 0 & \cdots & 0 & 1\end{matrix}\right]\left[\begin{matrix}\mathbf{x} \\ f\end{matrix}\right]\\
 				\text{s.t.} \quad & \left[\begin{matrix}\mathbf{A} & \mathbf{F}\end{matrix}\right]\left[\begin{matrix}\mathbf{x}\\ f\end{matrix}\right] = \mathbf{0}\\
@@ -1272,14 +1273,14 @@
 				& \left[\begin{matrix}\mathbf{x}\\ f\end{matrix}\right] \ge 0
 			\end{align}
 
-			In which $\mathbf{A}$ is the vertex-arc incident matrix and $\mathbf{F}$ is a column vector where the first row is 1, last row is -1 and all other rows are 0s. $\mathbf{u}$ is the column vector of upper bound of each arcs.
+			In which $\mathbf{A}$ is the vertex-arc incident matrix and $\mathbf{F}$ is a column vector where the first row is -1, last row is 1 and all other rows are 0s, which is because we denote the first vertex as source $s$ and the last vertex as the sink $t$. $\mathbf{u}$ is the column vector of upper bound of each arcs.
 			\begin{align}
 				\mathbf{A} &= \mathbf{A}_{|E|\times |V|} = [a_{ij}], \text{ where } a_{ij} = \begin{cases}
 					1, \quad \text{if $v_i = h(e_j)$} \\
 					-1, \quad \text{if $v_i = t(e_j)$} \\
 					0, \quad \text{otherwise}
 				\end{cases}\\
-				\mathbf{F} &= \left[\begin{matrix}1 & \cdots & 0 & \cdots & -1\end{matrix}\right]^\top \\
+				\mathbf{F} &= \left[\begin{matrix}-1 & \cdots & 0 & \cdots & 1\end{matrix}\right]^\top \\
 				\mathbf{u} &= \left[\begin{matrix}u_1 & u_2 & \cdots & u_{|E|}\end{matrix}\right]^\top
 			\end{align}
 
@@ -1289,17 +1290,33 @@
 				\text{s.t.} \quad & \left[\begin{matrix}
 					\mathbf{w_V} & \mathbf{w_E}
 				\end{matrix}\right]\left[\begin{matrix}
-					\mathbf{A} & \mathbf{F} \\ \mathbf{I} & \mathbf{0}
+					\mathbf{A} \\ \mathbf{I}
 				\end{matrix}\right] \ge 0 \\
+				& \left[\begin{matrix}
+					\mathbf{w_V} & \mathbf{w_E}
+				\end{matrix}\right]\left[\begin{matrix}
+					\mathbf{F} \\\mathbf{0}
+				\end{matrix}\right] = 1\\
 				& \mathbf{w_V} \quad \text{unrestricted} \\
 				& \mathbf{w_E} \ge \mathbf{0}
 			\end{align}
 
-			In which $\mathbf{w_V}$ is the capacity variable of each vertex, $\mathbf{w_E}$ is the capacity of each arc. $\mathbf{u}, \mathbf{E}, \mathbf{F}$ have the same meaning as in prime.
+			In which $\mathbf{w_V}$ is ``whether or not'' vertex $v$ is in $S$ where $(S, \bar{S})$ represents a cut, $\mathbf{w_E}$ is ``whether or not'' an arc in in $\delta^+(S)$. $\mathbf{u}, \mathbf{E}, \mathbf{F}$ have the same meaning as in prime.
 			\begin{align}
 				\mathbf{w_V} &= \left[\begin{matrix}w_1 & w_2 & \cdots & w_{|V|}\end{matrix}\right]^\top \\
 				\mathbf{w_E} &= \left[\begin{matrix}w_{|V| + 1} & w_{|V| + 2} & \cdots & w_{|V| + |E|}\end{matrix}\right]^\top
 			\end{align}
+
+			To make it more clear, it can be rewritten as following
+			\begin{align}
+				\min \quad & \sum_{e \in E} u_ew_e\\
+				\text{s.t.} \quad & w_i - w_j + w_{|V| + e} \ge 0, \forall e = (i, j) \in E\\
+				& -w_1 + w_{|V|} = 1\\
+				& \mathbf{w_V} \quad \text{unrestricted} \\
+				& \mathbf{w_E} \ge \mathbf{0}
+			\end{align}
+
+			The meaning for the first set of constraint is to decide whether or not an arc is in $\delta^+(S)$ of a $(S, \bar{S})$, which is decided by $w_V$. The $w_1 - w_{|V|} = 1$, which is the second set of constraint means the source $s = v_1$ and the sink $t = v_{|V|}$ has to be in $S$ and $\bar{S}$ respectively.
 
 		\section{Maximum Flow Minimum Cut Theorem}
 			\begin{definition}
@@ -1664,9 +1681,81 @@
 				\end{tikzpicture}
 			\end{figure}
 
-			% step1: if w(T, e) \ge 0 for all e\in A - T then stop with x is optimal
-			% step2: let e \in A - T be such that w(T, e) < 0. If C(T, e) has no reverse arcs stop and return unboundedness. otherwise set \theta = \min\{x_f: f reverse in C(T,e)\} and set f = \{f\in C(T, e): f reverse in C(T,e), x_f = \theta\}
-			% step3: x_f = x_f + \theta if f forward in C(T,e); x_f = x_f - \theta if f reverse in C(T, e). Let f \in F and set T = T+e-f, goto 1
+		\section{Out-of-Kilter algorithm}
+			This algorithm is a Primal-dual method and is applied to the minimum weight circulation problem
+
+			\begin{definition}
+				The minimum weight circulation problem is defined as follows:
+				\begin{align}
+					\min \quad & wx\\
+					\text{s.t.} \quad & Nx = 0\\
+						& l\le x \le u
+				\end{align}
+				It turns out that the circulation problem is equivalent with transshipment problem.
+			\end{definition}
+
+			We will show how to transform any transshipment into circulation. (The reverse is also possible.)
+
+			Let $(D, b, w)$ be a transshipment problem and define two new vertices $s$ and $t$. For each supply vertex $x$ add the arc $(s, x)$ to $D$ with $l_x = 0, u_x = -b_x, w_x = 0$. Similarly, for each demand vertex $x$, add the arc $(x, t)$ to $D$ with $l_x = 0, u_x = b_x, w_x = 0$. Finally, add an arc $(t, s)$ having $w_{ts} = 0, l_{ts} = u_{ts} = \sum\{b_x: \forall x, x is demand vertex\}$. Each original arc is given a $l_x = 0, u_x = \sum\{b_x : \forall x, x is a demand vertex\}$, $w_x$ remains unchanged.
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}
+					\node (2) [circleNode] {2, -2};
+					\node (1) [circleNode, below of=2] {1, -1};
+					\node (3) [circleNode, right of=2] {3, 2};
+					\node (4) [circleNode, below of=3] {4, 1};
+					\draw (2) -- node [above] {5} (3);
+					\draw (2) -- node [above] {11} (4);
+					\draw (1) -- node [above] {7} (3);
+					\draw (1) -- node [above] {12} (4);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}
+					\node (2) [circleNode] {2, -2};
+					\node (s) [circleNode, below of=2, xshift = -1cm] {s};
+					\node (1) [circleNode, below of=s, xshift = 1cm] {1, -1};
+					\node (3) [circleNode, right of=2] {3, 2};
+					\node (t) [circleNode, below of=3, xshift = 1cm] {t};
+					\node (4) [circleNode, below of=t, xshift = -1cm] {4, 1};
+					\draw (s) -- node [above] {0, 2, 0} (2);
+					\draw (s) -- node [above] {0, 1, 0} (1);
+					\draw (2) -- node [above] {0, 3, 5} (3);
+					\draw (2) -- node [above] {0, 3, 11} (4);
+					\draw (1) -- node [above] {0, 3, 7} (3);
+					\draw (1) -- node [above] {0, 3, 12} (4);
+					\draw (3) -- node [above] {0, 2, 0} (t);
+					\draw (4) -- node [above] {0, 3, 0} (t);
+					\draw (t) -- node [below] {3, 3, 0} (s);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{theorem}
+				(For LP optimality conditions we need primal feasibility, dual feasibility and complementary slackness. Primal and dual feasibility are obvious so we need to show complementary slackness through following theorem.)
+
+				Let $x$ be a feasible circulation flow for $(D, l, u, w)$. And suppose there exists a real value vector $\{y_i: i \in V\}$ which we called \textbf{vertex-numbers}. For all edges $e\in A$
+				\begin{align}
+					y_{h(e)} - y_{t(e)} &> w_e \text{ implies } x_e = u_e\\
+					y_{h(e)} - y_{t(e)} &< w_e \text{ implies } x_e = l_e
+				\end{align}
+				Then $x$ is optimal to the circulation problem.
+			\end{theorem}
+
+			\begin{proof}
+				For each $e \in A$ define $\gamma_e = \max\{y_{h(e)} - y_{t(e)} - w_e, 0\}$, $\mu_e = \max\{w_e - y_{h(e)} + y_{t(e)}, 0\}$, $\gamma_e - \mu_e = y_{h(e)} - y_{t(e)} - w_e$.
+				\begin{align}
+					\sum_{e\in A} (\mu_el_e - \gamma_eu_e) &= \sum_{e\in A} (\mu_el_e - \gamma_eu_e) + \sum_{i \in V}y_i(\sum_{h(e) = i} x_e - \sum_{t(e) = i} x_e)\\
+					&= \sum_{e\in A} (\mu_el_e - \gamma_eu_e + x_e(y_{h(e)} - y_{t(e)}))\\
+					&= \sum_{e\in A} (\mu_el_e - \gamma_eu_e + x_e(\gamma_e - \mu_e + w_e))\\
+					&= \sum_{e\in A} (\gamma_e(x_e - u_e) + \mu_e(l_e - x_e) + x_ew_e)\\
+					&\le \sum_{e\in A} x_ew_e 
+				\end{align}
+				The last inequality will be satisfied as equality iff the first two hold.
+			\end{proof}
+
 	\chapter{Matchings}
 		\section{Hall's ``Marriage'' Theorem}
 
