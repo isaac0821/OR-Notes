@@ -70,7 +70,7 @@
 				\end{align}	
 			
 			\subsection{Special Ordered Sets}
-				\framebox{\textbf{SOS1 Description}} Out of a set of yes-no decisions, at most one decision variable can be yes. \
+				Out of a set of yes-no decisions, at most one decision variable can be yes. Also known as SOS1.
 				\begin{align}
 					x_1=1,x_2=x_3&=\dots=x_n=0  \\
 					&\text{or}  \\
@@ -79,7 +79,7 @@
 				\end{align} 
 				Modeling:
 				\begin{equation} \sum_{i} x_i = 1, \quad i \in N \end{equation}
-				\framebox{\textbf{SOS2 Description 1}} Out of a set of binary variables, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list.\\
+				Out of a set of binary variables, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list. Also known as SOS2.
 				Modeling:
 				If $x_1, x_2, ... , x_n$ is a SOS2, then
 				\begin{align}
@@ -87,8 +87,8 @@
 					& x_i + x_j \le 1, \forall i \in \{1, 2,..., n\}, j \in \{i+2, i+3, ..., n\}  \\
 					&x_i \in \{0, 1\}
 				\end{align}
-				\framebox{\textbf{SOS2 Description 2}} There is another type of definition, that is out of a set of nonnegative variables \textbf{not binary here}, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list. All variables summing to 1.\\
-				This definition of SOS2 is used in the following section \textit{Piecewise Linear Formulations}\\
+				There is another type of definition, that is out of a set of nonnegative variables \textbf{not binary here}, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list. All variables summing to 1.\\
+				This definition of SOS2 is used in Piecewise Linear Formulations.
 								
 			\subsection{Piecewise Linear Formulations}
 				The objective function is a sequence of line segments, e.g. $y=f(x), $ consists $k-1$ linear segments going through $k$ given points $(x_1, y_1), (x_2, y_2), ... ,(x_k, y_k)$.\\
@@ -183,7 +183,7 @@
 			\subsection{Valid Inequalities and Faces}
 				- The inequality denoted by $(\pi, \pi_o)$ is called a \textbf{valid inequality} for $P$ if $\pi x \le \pi_0, \forall x \in P$\\
 				- Note that $(\pi, \pi_0)$ is a valid inequality iff $P$ lies in the half-space $\{x\in \mathbb{R}^n|Ax\le b\}$\\
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 				\centering
 				\begin{tikzpicture}[scale=0.4]
 					\draw (0,0) -- (3, -0.4) -- (3.3, 4.1) -- (-0.2, 4.1) -- (0, 0);
@@ -238,7 +238,7 @@
 		\section{LP based Branch and Bound}
 			\subsection{Idea of Divide and Conquer}
 				For each iteration, divide the feasible region of LP into two parts (and an infeasible part), solve the LP in those parts.\\
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.5]
 						\draw [<->] (10, 0) -- (0,0) -- (0,10);
@@ -305,7 +305,7 @@
 				- The tighter the better, LP is better\\
 				
 		\section{Branch and Bound Algorithm}
-			\begin{algorithm}[h!]
+			\begin{algorithm}[!ht]
 				\caption{Branch and Bound}
 				\begin{algorithmic}[1]
 					\STATE find a feasible solution as the initial Lower bound $L$
@@ -353,7 +353,7 @@
 			\subsection{Strong Branching}
 				Select a few candidates $(K)$, create all sub-problems for each of these variables, run a few dual simplex iterations to see the improved bounds, select the variable with the best bounds.\\
 				for variable $x_j\in K$, we branch and do a few iterations to find two reductions of gaps, i.e. $D_j^+$ and $D_j^-$,
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.2]
 						\draw (0, 5) circle [radius=0.5];
@@ -400,7 +400,7 @@
 				For $\hat{x} \notin S$, $\exists j \in N$ such that
 				\begin{equation}\hat{x_j} -\lfloor\hat{x_j}\rfloor > 0 \end{equation}
 				Create two sub-problems
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.2]
 						\draw (0, 5) circle [radius=0.5];
@@ -417,7 +417,7 @@
 
 			\subsection{Constraint Branching}
 				Use parallel constraints to branch, e.g.
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.2]
 						\draw (0, 5) circle [radius=0.5];
@@ -434,7 +434,7 @@
 			
 			\subsection{SOS}
 				For SOS1,
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.2]
 						\draw (0, 5) circle [radius=0.5];
@@ -447,9 +447,9 @@
 						\node [right] at (2.5, 2.5) {$\sum_{i=k+1}^{n}x_i=1$};
 					\end{tikzpicture}
 					\caption{Traditional Branching}
-				\end{figure}\\		
+				\end{figure}		
 				For SOS2 (using the first definition),
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.2]
 						\draw (0, 5) circle [radius=0.5];
@@ -466,7 +466,7 @@
 			
 			\subsection{GUB}
 				This is where $x_i \in \{0, 1\}$, at most one variable can be 1,
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.2]
 						\draw (0, 5) circle [radius=0.5];
@@ -489,7 +489,7 @@
 							& x_i \in \{0, 1\}, \quad \forall i \in C 
 				\end{align}
 				\textbf{Observation} For any fractional solution, there are at least two elements $(i,j)$ so that $i$ and $j$ are both partially covered by the same set $S$, but there is another set $T$ that only covers $i$
-				\begin{figure}[h!]
+				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[scale=0.2]
 						\draw (0, 5) circle [radius=0.5];
@@ -518,13 +518,13 @@
 				\begin{equation}
 					y_i=\begin{cases}1, \text{ if } i \in C \\ 0, \text{ otherwise}\end{cases}
 				\end{equation}
-				Find the maximum clique via:\\
+				Find the maximum clique via:
 				\begin{align}
 					\max \quad &\sum \bar{x_i} y_i  \\
 					\text{s.t.} \quad & y_i + y_j \le 1, \forall \{i, j\} \notin E 
-				\end{align}\\
-				\textbf{Option 2 - Heuristic:}\\
-				\begin{algorithm}[h!]
+				\end{align}
+				\textbf{Option 2 - Heuristic:}
+				\begin{algorithm}[!ht]
 					\caption{Heuristic method to find a clique}
 					\begin{algorithmic}[1]
 						\STATE find $v=\text{argmax}_{i\in V} \{\bar{x_i}\}, C=\{v\}$
@@ -801,7 +801,7 @@
 				denote
 				\begin{equation}\bar{FS}(i) = \{(i,j)\in \bar{A}\} \end{equation}
 				Then the algorithm to find all sub-tour is the following:
-				\begin{algorithm}[h!]
+				\begin{algorithm}[!ht]
 					\caption{Sub-tour Searching Algorithm}
 					\begin{algorithmic}[1]
 						\STATE $K = \emptyset$

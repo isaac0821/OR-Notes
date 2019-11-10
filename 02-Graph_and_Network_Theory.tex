@@ -1714,7 +1714,7 @@
 
 			\begin{figure}
 				\centering
-				\begin{tikzpicture}
+				\begin{tikzpicture} [node distance = 2cm]
 					\node (2) [circleNode] {2, -2};
 					\node (s) [circleNode, below of=2, xshift = -1cm] {s};
 					\node (1) [circleNode, below of=s, xshift = 1cm] {1, -1};
@@ -1755,6 +1755,68 @@
 				\end{align}
 				The last inequality will be satisfied as equality iff the first two hold.
 			\end{proof}
+
+			The following is the formulation of circulation problem
+			\begin{align}
+				\text{(P)} \quad \min \quad & wx\\
+				\text{s.t.} \quad & Nx = 0 \quad y \\
+								  & x \ge l \quad z^l \\
+								  & -x \le -u \quad z^u\\
+				\text{(D)} \quad \max \quad & lz^l - uz^u \\
+				\text{(s.t.)} \quad & yN^{-1} + z^l-z^u \le w\\
+									& y \quad free\\
+									&z^l, z^u \ge 0 \\
+				\text{(CS)} \quad & y_{h(e)} - y_{t(e)} > w_e \Rightarrow x_e = u_e\\
+								  & y_{h(e)} - y_{t(e)} < w_e \Rightarrow x_e = l_e
+			\end{align}
+
+			There is an alternative way of circulation optimality for a circulation problem. We define a \textbf{kilter-diagram} as follows.
+
+			For every edge construct the following:
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}
+					\draw [arrow] (0,0) -- (0, 3);
+					\draw [arrow] (0, 0) -- (3, 0);
+					\draw [link] (1, -1) -- (1, 1) -- (2, 1) -- (2, 3);
+					\draw node at (0, 3) [above] {$y_{h(e} - y_{t(e)}$};
+					\draw node at (3, 0) [above] {$x_e$};
+					\draw node at (1, -1) [above] {$l_e$};
+					\draw node at (2, 0) [above] {$u_e$};
+				\end{tikzpicture}
+			\end{figure}
+
+			For each point $(x_e, y_{h(e)} - y_{t(e)})$ we define a \textbf{kilter-number} $k_e$, be the minimum positive distance change in $x_e$ required to put in on the kilter line.
+			\begin{example}
+				For edge $e: w_e = 2, l_e = 0, u_e = 3$, assume $x_e = 2, y_{h(e)} - y_{t(e)} = 3$, then $k_e = 1$
+			\end{example}
+
+			\begin{lemma}
+				If for every circulation $x$ and vertex number $y$ we have $\sum_{e \in A} k_e = 0$, then $x$ is optimal.
+			\end{lemma}
+
+			\begin{proof}
+				Since $k_e$ is a nonnegative number, then the only way that $\sum_{e \in A} k_e = 0$ is $k_e = 0, \forall e\in A$, which means $\forall e\in A, l_e \le x_e \le u_e$. Furthermore, the complementary slackness are satisfied.
+			\end{proof}
+
+			General idea of algorithm follows. Suppose we are given a circulation $x$ and vertex-numbers $y$ (we do not require feasibility). Usually we pick $x=0, y=0$. If every edge is in kilter-line then we are optimal.
+
+			Otherwise there is at least one edge $e^*$ that is out-of kilter. The algorithm consist of two phases, one called \textbf{flow-change} phase (horizontally), then other \textbf{number-change} phase (vertically).
+
+			In the flow-change phase, we want to find a new circulation for an out-of-kilter edge $e^*$ say $\hat{e}$ such that we reduce the kilter number $k_{e^*}$, without increasing any other kilter number for other edges.
+
+			To do this, denote the edges of $e^*$ to be $s$ and $t$, where such that $k_{e^*}$ will be decreased by increasing the flow from $s$ to $t$ on $e^*$.
+
+			If $e^*=(s, t)$ this will accomplished by increasing $x_{e^*}$ and if $e=(t, s)$  it is accomplished by decreasing $x_{e^*}$. 
+
+			To do this we look for an $(s, t)$-path $p$ of the following edges.
+
+			- If $e$ is forward in $p$, then increasing $x_e$ does not increase $k_e$ and
+			- If $e$ is reversed in $p$, then decreasing $x_e$ dose not increase $k_e$
+
+			In terms of kilter diagram, an arc satisfies "forward" if it is forward and in left side of kilter line, and it satisfies $reversed$ if it is reverse and in right side of kilter line.
+
+			Suppose we can not find such a path. From $s$ to $t$, let $x$ be the vertices that can decrease by an augmenting path. Then either we can change the vertex numbers $y$ so that $\sum_{e\in A} k_e$ does not increase but $x$ does, or we can show that problem is infeasible.
 
 	\chapter{Matchings}
 		\section{Hall's ``Marriage'' Theorem}
