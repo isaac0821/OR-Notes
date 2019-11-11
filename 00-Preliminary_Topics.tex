@@ -81,35 +81,35 @@
 
 		\section{Inner Products}
 			\begin{definition}[Inner Product]
-				Let $F$ be the field of real numbers or the field of complex numbers, and $V$ a vector space over $F$. An \textbf{inner product} on $V$ is a function which assigns to each ordered pair of vectors $\alpha$, $\beta$ in $V$ a scalar $<\alpha|\beta>$ in $F$ in such a way that $\forall \alpha, \beta, \gamma \in V, c \in \mathbb{R}$ that
+				Let $F$ be the field of real numbers or the field of complex numbers, and $V$ a vector space over $F$. An \textbf{inner product} on $V$ is a function which assigns to each ordered pair of vectors $\mathbf{\alpha}$, $\mathbf{\beta}$ in $V$ a scalar $<\mathbf{\alpha}|\mathbf{\beta}>$ in $F$ in such a way that $\forall \mathbf{\alpha}, \mathbf{\beta}, \mathbf{\gamma} \in V, c \in \mathbb{R}$ that
 				\begin{itemize}
-					\item $<\alpha+\beta|\gamma> = <\alpha|\gamma> + <\beta|\gamma>$
-					\item $<c\alpha|\beta> = c<\alpha|\beta>$
-					\item $<\alpha|\beta> = \overline{<\beta|\alpha>}$
-					\item $<\alpha|\alpha> \ge 0$, $<\alpha|\alpha> = 0$ iff $\alpha = \mathbf{0}$
+					\item $<\mathbf{\alpha}+\mathbf{\beta}|\mathbf{\gamma}> = <\mathbf{\alpha}|\mathbf{\gamma}> + <\mathbf{\beta}|\mathbf{\gamma}>$
+					\item $<c\mathbf{\alpha}|\mathbf{\beta}> = c<\mathbf{\alpha}|\mathbf{\beta}>$
+					\item $<\mathbf{\alpha}|\mathbf{\beta}> = \overline{<\mathbf{\beta}|\mathbf{\alpha}>}$
+					\item $<\mathbf{\alpha}|\mathbf{\alpha}> \ge 0$, $<\mathbf{\alpha}|\mathbf{\alpha}> = 0$ iff $\mathbf{\alpha} = \mathbf{0}$
 				\end{itemize}
 				Furthermore, the above properties imply that
 				\begin{itemize}
-					\item $<\alpha|c\beta+\gamma> = \bar{c}<\alpha|\beta> + <\alpha|\gamma>$
+					\item $<\mathbf{\alpha}|c\mathbf{\beta}+\mathbf{\gamma}> = \bar{c}<\mathbf{\alpha}|\mathbf{\beta}> + <\mathbf{\alpha}|\mathbf{\gamma}>$
 				\end{itemize}
 			\end{definition}
 
 			\begin{definition}
 				On $F^n$ there is an inner product which we call the \textbf{standard inner product}. It is defined on $\mathbf{\alpha} = (x_1, x_2, ..., x_n)$ and $\mathbf{\beta} = (y_1, y_2, ..., y_n)$ by
 				\begin{equation}
-					<\alpha|\beta> = \sum_j x_j \bar{y_j}
+					<\mathbf{\alpha}|\mathbf{\beta}> = \sum_j x_j \bar{y_j}
 				\end{equation}
 				For $F = \mathbb{R}^n$
 				\begin{equation}
-					<\alpha|\beta> = \sum_j x_j y_j
+					<\mathbf{\alpha}|\mathbf{\beta}> = \sum_j x_j y_j
 				\end{equation}
-				In the real case, the standard inner product is often called the dot product and denoted by $\alpha \cdot \beta$
+				In the real case, the standard inner product is often called the dot product and denoted by $\mathbf{\alpha} \cdot \mathbf{\beta}$
 			\end{definition}
 
 			\begin{example}
 				For $\mathbf{\alpha} = (x_1, x_2)$ and $\mathbf{\beta} = (y_1, y_2)$ in $\mathbb{R}^2$, the following is an inner product.
 				\begin{equation}
-					<\alpha|\beta> = x_1y_1 - x_2y_1 - x_1y_2 + 4x_2y_2
+					<\mathbf{\alpha}|\mathbf{\beta}> = x_1y_1 - x_2y_1 - x_1y_2 + 4x_2y_2
 				\end{equation}
 			\end{example}
 
@@ -129,6 +129,43 @@
 			\end{example}
 			
 		\section{Norms}
+			\begin{definition}[Norms]
+				A \textbf{norm} on a vector space $\mathcal{V}$ is a function $\|\cdot\|:\mathcal{V} \rightarrow \mathbb{R}$ for which the following three properties hold for all point $\mathbf{x}, \mathbf{y} \in \mathcal{V}$ and scalars $\lambda \in \mathbb{R}$
+				\begin{itemize}
+					\item (Absolute homogeneity) $\|\lambda \mathbf{x} \| = |\lambda| \|\mathbf{x}\|$
+					\item (Triangle inequality) $\|\mathbf{x} + \mathbf{y}\| \le \|\mathbf{x}\| + \|\mathbf{y}\|$
+					\item (Positivity) Equality $\|\mathbf{x}\| = 0$ holds iff $\mathbf{x} = 0$
+				\end{itemize}
+			\end{definition}
+
+			\begin{definition}[$L_p$-norms]
+				Let $p \ge 1$ be a real number. We define the $p$-norm of vector $\mathbf{v}\in \mathbb{R}^n$ as:
+				\begin{equation}
+					\|\mathbf{x}\|_p = (\sum_{i = 1}^n|v_i|^p)^{\frac{1}{p}}
+				\end{equation}
+				Particularly
+				\begin{align}
+					\|\mathbf{v}\|_1 &= \sum_{i = 1}^n|v_i|\\
+					\|\mathbf{v}\|_2 &= \sqrt{\sum_{i = 1}^n v_i^2}\\
+					\|\mathbf{v}\|_\infty &= \max_{i=1}^n |v_i|
+				\end{align}
+			\end{definition}
+
+			\begin{definition}[Frobenius norm]
+				$\mathbf{X} \in \mathbb{R}^{m \times n}$, the \textbf{Frobenius norm} is defined as
+				\begin{equation}
+					\|\mathbf{X}\|_F = \sqrt{trace(\mathbf{X}^\top \mathbf{X})}
+				\end{equation}
+			\end{definition}
+
+			\begin{definition}[Dual norm]
+				For an arbitrary norm $\|\cdot\|$ on Euclidean space $\mathbf{E}$, the \textbf{dual norm} $\|\cdot\|^*$ on $\mathbf{E}$ is defined by
+				\begin{equation}
+					\|\mathbf{v}\|^* = \max \{<\mathbf{v}|\mathbf{x}>|\|\mathbf{x}\| \le 1\}
+				\end{equation}
+			\end{definition}
+
+			For $p, q \in [1, \infty]$, the $l_p$ and $l_q$ norms on $\mathbb{R}^n$ are dual to each other whenever $\frac1p + \frac1q = 1$.
 
 		\section{Eigenvectors and Eigenvalues}
 			\begin{definition}
