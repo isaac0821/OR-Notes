@@ -1818,6 +1818,39 @@
 
 			Suppose we can not find such a path. From $s$ to $t$, let $x$ be the vertices that can decrease by an augmenting path. Then either we can change the vertex numbers $y$ so that $\sum_{e\in A} k_e$ does not increase but $x$ does, or we can show that problem is infeasible.
 
+			INPUT a minimum circulation problem $(D, l, u, w)$ a circulation $x$ and vertex-numbers $y$
+			OUTPUT conclusion that $(D, l, u, w)$ is 
+
+			Step 1: If every arc is in kilter $(k_e = 0, \forall e\in A)$. Stop with $x$ is optimal. Otherwise let $e^*$ be an out-of-kilter arc. If increasing $x_{e^*}$ decreases $k_{e^*}$ set $s=h(e^*)$ and $t(e^*)$ otherwise set $s=t(e^*)$ and $t=h(e^*)$
+
+			Step 2: If there exists an $(s, t)$ augmenting path $p$ then goto Step 3, otherwise goto Step 4.
+
+			STEP 3: Set $y_e = y_{h(e)} - y_{t(e)}, e\in A$
+			Set $\Delta_1 = \min\{u_e - x_e: e is forward and y_e \ge w_e\}$
+			Set $\Delta_2 = \min\{l_e - x_e: e is forward and y_e < w_e\}$
+			Set $\Delta_3 = \min\{x_e - l_e: e is reverese and y_e \le w_e\}$
+			Set $\Delta_4 = \min\{x_e - u_e: e is reverese and y_e > w_e\}$
+			$\Delta = \min\{\Delta_i, i = 1, 2, 3, 4\}$
+
+			Increase $x_e$ by $\Delta$ on each forword arc in $p$, decrease $x_e$ by $\Delta$ on each reverse arc in $p$.
+
+			If $e^* = (s, t)$ decrease $x_{e^*}$ by $\Delta$, otherwise increase $x_{e^*}$ by $\Delta$
+
+			If $k_{e^*} > 0$ goto Step 2. otherwise goto Step 1.
+
+			Step 4: Let $X$ be the set of veertices reachable from $s$ by augmenting paths, then $t \notin X$, if every arc $e$ with $h(e) \in X$ has $x_e \le l_e$ and every arc $e$ with $t(e) \in X$ has $x_e \ge u_e$, and at least one of the above inequality is strict, then Stop with problem infeasible
+
+			Otherwise set
+			$\delta_1 = \min\{w_e - y_e: t(e) \in X, y_e < w_e, x_e \le u_e \neq l_e\}$
+			$\delta_2 = \min\{y_e - w_e: h(e) \in X, y_e > w_e, x_e \ge u_e \neq l_e\}$
+			$\delta = \min\{\delta_1, \delta_2\}$
+
+			Set $y_i = y_i + \delta$ for $i \notin X$
+
+			If $k_{e^*} > 0$, goto Step 2, otherwise goto Step 1.
+
+			Out-of-kilter takes $O(|E||V|K)$ where $K = \sum_{e\in A} k_e$. However, there is an algorithm called \textbf{scaling algorithm} that uses out-of-kilter as subroutine that runs in $O(R|E|^2|V|)$ where $R = \lceil \max\{\log_2 u_e: e\in A\}\rceil$
+
 	\chapter{Matchings}
 		\section{Hall's ``Marriage'' Theorem}
 
