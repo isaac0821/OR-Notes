@@ -1852,6 +1852,93 @@
 			Out-of-kilter takes $O(|E||V|K)$ where $K = \sum_{e\in A} k_e$. However, there is an algorithm called \textbf{scaling algorithm} that uses out-of-kilter as subroutine that runs in $O(R|E|^2|V|)$ where $R = \lceil \max\{\log_2 u_e: e\in A\}\rceil$
 
 	\chapter{Matchings}
+		\section{Maximum Cardinality Matching}
+			\begin{definition}[Matching]
+				Let $G = (V, E)$ be a graph, a \textbf{matching} is a subset of edges $M$ such that no two member of $M$ are adjacent.
+			\end{definition}
+
+			\begin{definition}[Cover]
+				Let $M$ be a matching in $G$. A vertex is said to be \textbf{covered} by $M$ ($M$-covered) if it is incident to a member of $M$.
+			\end{definition}
+			
+			\begin{definition}[Exposed]
+				A vertex is said to be \textbf{exposed} by $M$ ($M$-exposed) if it is not incident to $M$.
+			\end{definition}
+
+			\begin{definition}[M-alternating]
+				A path $p$ in $G$ is $M$-alternating path if every internal vertex is $M$-covered.
+			\end{definition}
+
+			\begin{definition}[M-augmenting]
+				A path $p$ in $G$ is $M$-augmenting if it is alternating and it's ends are exposed.
+			\end{definition}
+
+			\begin{lemma}
+				Every augmenting path $p$ has property that let $M^\prime = (M \cup p) \setminus (M \cap p)$ then $M^\prime$ contains one more edge then $M$
+			\end{lemma}
+
+			\begin{theorem}
+				A matching $M$ in a graph $G$ is maximum iff $G$ has no augmenting path.
+			\end{theorem}
+
+			\begin{proof}
+				($\Rightarrow$) It is clear that if $M$ is maximum, it has no augmenting paths since otherwise by problem claim we can increase by one.
+
+				($\Leftarrow$) Suppose $M$ is not maximum and let $M^\prime$ be a bigger matching. Let $A = M \delta M^\prime$ now no vertex of $G$ is incident to more than two members of $A$. For otherwise either two members of $M$ or two members of $M^\prime$ would be adjacent. Contradict the definition of matching. It follows that every component of the edges incident subgraph $G[A]$ is either an even cycle with edge augmenting in $M\Delta M^\prime$ or else $A$ path with edges alternating between $M$ and $M^\prime$.
+
+				Since $|M^\prime| \ge |M|$ then the even cycle cannot help because exchanging $M$ and $M^\prime$ will have same cardinacity.
+
+				The path case implies that $p$ is alterating in $M$ and since $|M^\prime| > |M|$ the end arc exposed so that $p$ is augmenting.
+			\end{proof}
+
+			\begin{definition}[M-alternating tree]
+				An \textbf{M-alternating tree} $T$ is a rooted tree satisfied the following condition:
+				\begin{itemize}
+					\item The root $r$ is $M-exposed$
+					\item The unique path from $r$ to any vertex $T$ is M-alternating
+					\item Every vertex in $T$, except $r$ is incident to a matching edge of $T$
+				\end{itemize}
+				A vertex $X$ of $T$ is inner if $(r, s)$-path in $T$ has an odd number of edges. Otherwise $x$ is outer.
+			\end{definition}
+
+			\begin{lemma}
+				Let $M$ be a matching in $G$ and let $T$ be an $M$-alternating tree with root $r$, then the following conclusion hold
+				\begin{itemize}
+					\item If $v \neq r$ is an outer vertex and $p$ is the unique $(r,v)$-path in $T$ then the edge of $p$ incident to $v$ is in $M$
+					\item The number of inner vertices in $T$ equals the number of matching edges in $T$.
+				\end{itemize}
+			\end{lemma}
+
+			\begin{definition}[Alternating forest]
+				An \textbf{alternating forest} is a forest of $G$ where every components is an alternating tree. An alternating forest $(F, e)$ is an alternating forest to be then with an edge $e = M, V$ where $M$ and $V$ are outer vertices contained in two distinct components of $F$.
+			\end{definition}
+
+			\begin{example}
+				A \textbf{Hungarian forest} $F$ is an alternating forest containing all exposed vertices of $G$ and such that the outer vertices of $F$ are adjacent in $G$ only to inner vertices of $F$
+			\end{example}
+
+			\begin{definition}[Augmenting forest]
+				An \textbf{augmenting forest} $(F, e)$ where $F$ is an augmenting forest and $e = uv$ connects two outer vertices in distinct components of $F$.
+			\end{definition}
+
+			The plan is to grow an alternating forest that eventually become augmenting or Hungarian. Augmenting forest will increase the cardinality of the match, Hungarian implies that you have found optimal maximum cardinality matching.
+
+			\begin{theorem}
+				Let $(F, e)$ be an augmenting forest. And let $T_1$ and $T_2$ be the two components of $F$ containing an end of $e$. Let $p_i$ be the unique path in $T_i$ from the root to the end of $e$, then $p_1ep_2^{-1}$ is an augmenting path.
+			\end{theorem}
+
+			\begin{theorem}
+				If $F$ is a Hungarian forest for some matching $M$ then $M$ is a maximum match.
+			\end{theorem}
+
+			The above theorems suggest a method for computing maximum matching. Let $M$ be a matching of $G$ and let $F$ be an alternating forest in $G$ made up of all M-exposing vertices. If $F$ happens to be Hungarian, stop with the max matching $M$. If $(F, e)$ for some $e$ is augmenting then we increase our matching by 1 and start process.
+
+			Suppose $F$ is neither Hungarian nor augmenting, by definition, there must be an edge $e$ incident to an outer vertex of $F$ to no inner vertex of $F$. But $e$ cannot be incident to two outer vertices of $F$ in distinct components, since $(F, e)$ is not augmenting. Hence there are only two cases:
+
+			Case 1: $e=uv$ where $u$ is outer in $F$ and $v$ is not outer in $F$. The only way its possible if $v$ is covered. Augmenting $F$ to $M$ will increase the matching. 
+
+			Case 2: $e=uv$ where $u$ and $v$ are outer vertices in $F$. Let $r$ be the root of the component of $F$ containing $u$ and $v$, let $p_u$ and $p_v$ be $(r,u)$-path and $(r, v)$-path in $F$. Let $b$ be the last vertex these two paths have in common and let $p$ be the $(u, v)$-path in $F$, let $p_u^\prime$ be $(b-u)$-path and $p_v^\prime$ be the $(b,v)$-path respectively. Let $n$ be the length of $p_u$, let $m$ be the length of $p_v$, let k be the length of $(r, b)$-path. Let $c$ be the cycle $(p_u^\prime e p_v^{\prime}^{-1})$. Number of vertices in $c$ is $n + m-2k + 1$, $n, m$ are even, so $c$ is always an odd length cycle. If $G$ has no odd cycles, we call those graph bipartite. To this case can not happen in bipartite graph so algorithm without case 2 will solve bipartite matching.
+
 		\section{Hall's ``Marriage'' Theorem}
 
 		\section{Transversal Theory}

@@ -81,12 +81,28 @@
 				Modeling:
 				\begin{align}
 					\min \quad & \sum_{j\in J}c_{j}x_jt + \alpha t \\
-					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in J \\
 									  & \sum_{j\in J}d_jx_jt + \beta t = 1\\
 									  & t > 0 \\
 					                  & x_j \ge 0, \quad \forall j\in J \\
 					                  & (t = \frac1{\sum_{j\in J}d_jx_j + \beta}) 
 				\end{align}
+
+				\begin{align}
+					\min \quad & z^P = \frac{\mathbf{c^\top x} + d}{\mathbf{e^\top x} + f}\\
+					\text{s.t.} \quad & \mathbf{Gx} \le \mathbf{h}\\
+					                  & \mathbf{Ax} = \mathbf{b}
+				\end{align}
+
+				Modeling
+				\begin{align}
+					\min \quad & z^R = \mathbf{c^\top y} + dz\\
+					\text{s.t.} \quad & \mathbf{Gy} - \mathbf{h}z \le 0\\
+									  & \mathbf{Ay} - \mathbf{b}z = 0\\
+									  & \mathbf{e^\top y} + fz = 1\\
+									  & z \ge 0
+				\end{align}
+
 			\subsection{A range Constraint}
 				Consider the following model statement:
 				\begin{align}
