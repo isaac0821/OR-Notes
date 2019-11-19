@@ -1937,7 +1937,23 @@
 
 			Case 1: $e=uv$ where $u$ is outer in $F$ and $v$ is not outer in $F$. The only way its possible if $v$ is covered. Augmenting $F$ to $M$ will increase the matching. 
 
-			Case 2: $e=uv$ where $u$ and $v$ are outer vertices in $F$. Let $r$ be the root of the component of $F$ containing $u$ and $v$, let $p_u$ and $p_v$ be $(r,u)$-path and $(r, v)$-path in $F$. Let $b$ be the last vertex these two paths have in common and let $p$ be the $(u, v)$-path in $F$, let $p_u^\prime$ be $(b-u)$-path and $p_v^\prime$ be the $(b,v)$-path respectively. Let $n$ be the length of $p_u$, let $m$ be the length of $p_v$, let k be the length of $(r, b)$-path. Let $c$ be the cycle $(p_u^\prime e p_v^{\prime}^{-1})$. Number of vertices in $c$ is $n + m-2k + 1$, $n, m$ are even, so $c$ is always an odd length cycle. If $G$ has no odd cycles, we call those graph bipartite. To this case can not happen in bipartite graph so algorithm without case 2 will solve bipartite matching.
+			Case 2: $e=uv$ where $u$ and $v$ are outer vertices in $F$. Let $r$ be the root of the component of $F$ containing $u$ and $v$, let $p_u$ and $p_v$ be $(r,u)$-path and $(r, v)$-path in $F$. Let $b$ be the last vertex these two paths have in common and let $p$ be the $(u, v)$-path in $F$, let $p_u^\prime$ be $(b-u)$-path and $p_v^\prime$ be the $(b,v)$-path respectively. Let $n$ be the length of $p_u$, let $m$ be the length of $p_v$, let k be the length of $(r, b)$-path. Let $c$ be the cycle $(p_u^\prime e {p_v^{\prime}}^{-1})$. Number of vertices in $c$ is $n + m-2k + 1$, $n, m$ are even, so $c$ is always an odd length cycle. If $G$ has no odd cycles, we call those graph bipartite. To this case can not happen in bipartite graph so algorithm without case 2 will solve bipartite matching.
+
+			If a graph has no odd cycles, i.e., bipartite, then we have an algorithm using augmenting forest and Hungarian forest and case 1.
+
+			We now have to deal with odd cycles. The idea is to "shrink" add cycles to a super node
+
+			Let $S\subseteq E(G)$, denote by $G: S$ the subgraph with edge set $S$
+			\begin{equation}
+				G:S = G\setminus (E(G)-S)
+			\end{equation}
+			The contraction of $S$ to be the $G\setminus S$ with $E(G / S) = E(G) - S$. $V(G/S)$ to be the components of $G:S$ and if $e\in E(G/S)$ then the ends of $e$ in $G/S$ are in components of $G:S$ containing both ends in $G$
+
+			Let network to general case 2. $b$ is outer vertex. Let $B$ be the set of edges of cycle $C$, we call $B$ a \textbf{blossom}. We propose to replace $M$ by $M - B$, $G$ by $G/B$ and $F$ by $F/B$
+
+		\section{Edmonds's Blossom Algorithm}
+			$O(|V|^4)$
+			- Non-bipartite matching is one of very few problems in $P$, for which LP relaxation will not provide optimal solution.
 
 		\section{Hall's ``Marriage'' Theorem}
 
