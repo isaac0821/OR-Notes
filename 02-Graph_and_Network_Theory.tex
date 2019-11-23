@@ -1990,3 +1990,75 @@
 		\section{Schur's Theorem}
 
 	\chapter{Matroids}
+		\section{Matroids}
+			\begin{definition}[Matroids]
+				Let $S$ be a finite set of \textbf{elements} and let $d$ be a collection of subsets of $S$ satisfying the property
+				\begin{equation}
+					\text{If } x \le y, y\in d, \Rightarrow x \in d
+				\end{equation}
+				The pair $(S, d)$ is called an \textbf{independent system} and the members of $d$ are called \textbf{independent sets}.
+			\end{definition}
+
+			\begin{example}
+				Let $G$ be a graph and let $S \in E(G)$ define $M\subseteq S$ to be independent if $M$ is a matching
+			\end{example}
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, right of=1] {2};
+					\node (3) [circleNode, right of=2] {3};
+					\node (5) [circleNode, right of=3] {5};
+					\node (4) [circleNode, below of=3] {4};
+					\node (6) [circleNode, below of=5] {5};
+					\draw [link] (1) -- (2);
+					\draw [link] (2) -- (3);
+					\draw [link] (2) -- (4);
+					\draw [link] (3) -- (5);
+					\draw [link] (4) -- (6);
+					\draw [link] (5) -- (6);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{align}
+				S &= \{(1, 2), (2, 3), (2, 4), (3, 5), (4, 6), (5, 6)\} \\
+				d &= \{\emptyset, \{(1, 2)\}, \{(2, 3)\}, ... , \{\text{other matching...}\}\}
+			\end{align}
+
+			\begin{example}
+				Let $G$ be a graph and let $S = V(G)$ define $X \subseteq S$ to be independent if no two member of $x$ are adjacent.
+			\end{example}
+
+			\begin{figure}
+				\centering
+				\begin{tikzpicture}
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, right of=1] {2};
+					\node (3) [circleNode, right of=2] {3};
+					\node (4) [circleNode, below of=2] {4};
+					\draw [link] (1) -- (2);
+					\draw [link] (2) -- (3);
+					\draw [link] (2) -- (4);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{align}
+				S &= \{1, 2, 3, 4\} \\
+				d &= \{\emptyset, 1, 2, 3, 4, (1, 3), (1, 4), (3, 4), (1, 3, 4)\}
+			\end{align}
+
+			\begin{example}
+				Let $G$ be a connected graph and let $S = E(G)$, define $X \subseteq S$ to be independent if $G[X]$ contains cycles.
+			\end{example}
+
+			Given any independent system, there is a natural combinatorial optimization problem of finding the maximum cardinality independent set. 
+
+			Let's try the following: \textbf{Greedy algorithm}
+
+			Step 1: Set $I=\emptyset$\\
+			Step 2: If there exists $e\in S \setminus I$ such that $I + e$ is independent, set $I \leftarrow I+e$ and go to Step 1, otherwise stop.
+
+			Those Independent systems for which the greedy algorithm guarantee to find a maximum cardinality independent set are very special called \textbf{matroids}
+
+			
