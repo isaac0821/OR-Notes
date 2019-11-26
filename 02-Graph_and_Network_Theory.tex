@@ -1586,33 +1586,33 @@
 			The following is an example of cycling
 			\begin{figure}[!ht]
 				\centering
-				\begin{tikzpicture}
+				\begin{tikzpicture}[node distance=2.5cm]
 					\node (1) [circleNode] {1};
-					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
-					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {1, a} (2);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {-1, b} (2);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {3, c} (2);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {1, h} (3);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {-1, i} (3);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {3, j} (3);
-					\draw [arrow] (2) to [out = 30, in = 150] node [above] {3, d} (3);
-					\draw [arrow] (2) to [out = 30, in = 150] node [above] {-3, e} (3);
-					\draw [arrow] (3) to [out = 30, in = 150] node [above] {3, f} (2);
-					\draw [arrow] (3) to [out = 30, in = 150] node [above] {-3, g} (2);
+					\node (2) [circleNode, below of=1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of=1, xshift=1.5cm] {3};
+					\draw [arrow] (1) to [out = 230, in = 70] node [right] {1, a} (2);
+					\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b} (2);
+					\draw [arrow] (1) to [out = 180, in = 110] node [left] {3, c} (2);
+					\draw [arrow] (1) to [out = 0, in = 70] node [right] {1, h} (3);
+					\draw [arrow] (1) to [out = -25, in = 90] node [above] {-1, i} (3);
+					\draw [arrow] (1) to [out = -50, in = 110] node [left] {3, j} (3);
+					\draw [arrow] (2) to [out = 15, in = 165] node [above] {3, d} (3);
+					\draw [arrow] (2) to [out = 45, in = 135] node [above] {-3, e} (3);
+					\draw [arrow] (3) to [out = -165, in = -15] node [below] {3, f} (2);
+					\draw [arrow] (3) to [out = -135, in = -45] node [below] {-3, g} (2);
 				\end{tikzpicture}
 			\end{figure}
 
 			Then for
 			\begin{figure}[!ht]
 				\centering
-				\begin{tikzpicture}
+				\begin{tikzpicture}[node distance=2.5cm]
 					\node (1) [circleNode] {1};
 					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
 					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {a} (2);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {i} (3);
-					\draw [arrow, dashed] (1) to [out = 30, in = 150] node [above] {j (to enter)} (3);
+					\draw [arrow] (1) to [out = 230, in = 70] node [right] {a} (2);
+					\draw [arrow] (1) to [out = -25, in = 90] node [above] {i} (3);
+					\draw [arrow, dashed] (1) to [out = -50, in = 110] node [left] {j (to enter)} (3);
 				\end{tikzpicture}
 			\end{figure}
 
@@ -1620,13 +1620,13 @@
 
 			\begin{figure}[!ht]
 				\centering
-				\begin{tikzpicture}
+				\begin{tikzpicture}[node distance=2.5cm]
 					\node (1) [circleNode] {1};
 					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
 					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {a} (2);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {j} (3);
-					\draw [arrow, dashed] (1) to [out = 30, in = 150] node [above] {h (to enter)} (3);
+					\draw [arrow] (1) to [out = 230, in = 70] node [right] {a} (2);
+					\draw [arrow] (1) to [out = -50, in = 110] node [left] {j} (3);
+					\draw [arrow, dashed] (1) to [out = 0, in = 70] node [right] {h (to enter)} (3);
 				\end{tikzpicture}
 			\end{figure}
 
@@ -1634,13 +1634,13 @@
 
 			\begin{figure}[!ht]
 				\centering
-				\begin{tikzpicture}
+				\begin{tikzpicture}[node distance=2.5cm]
 					\node (1) [circleNode] {1};
 					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
 					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
-					\draw [arrow, dashed] (1) to [out = 30, in = 150] node [above] {b (to enter)} (2);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {j} (3);
-					\draw [arrow] (1) to [out = 30, in = 150] node [above] {h} (3);
+					\draw [arrow, dashed] (1) to [out = 205, in = 90] node [above] {b (to enter)} (2);
+					\draw [arrow] (1) to [out = -50, in = 110] node [left] {j} (3);
+					\draw [arrow] (1) to [out = 0, in = 70] node [right] {h} (3);
 				\end{tikzpicture}
 			\end{figure}
 
@@ -2061,4 +2061,3 @@
 
 			Those Independent systems for which the greedy algorithm guarantee to find a maximum cardinality independent set are very special called \textbf{matroids}
 
-			

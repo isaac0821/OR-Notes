@@ -24,6 +24,7 @@
 	bottom=2cm]{geometry}
 	\setlength{\parindent}{0pt}
 
+\usepackage{subcaption}
 \usepackage{tikz}
 	\usetikzlibrary{chains, arrows,shapes,matrix}
 	\usetikzlibrary{decorations.pathmorphing} 
@@ -82,6 +83,11 @@
 	\tikzstyle{solidNode} = [
 		circle, 
 		minimum size = 0.1cm, 
+		fill=black
+	]
+	\tikzstyle{smallSolidNode} = [
+		circle, 
+		minimum size = 0.03cm, 
 		fill=black
 	]
 	\tikzstyle{rectangleCell} = [
@@ -175,11 +181,754 @@
 	\maketitle
 	\today
 	\tableofcontents
-	\include{00-Preliminary_Topics}
-	\include{01-Linear_Programming}
-	\include{02-Graph_and_Network_Theory}
-	\include{03-Integer_and_Combinatorial_Programming}
-	\include{04-Nonlinear_Programming}
+
+	\chapter{Minimum Weight Flow Problem}
+		\section{Transshipment Problem}
+			Transshipment Problem $(D, b, w)$ is a linear program of the form
+			\begin{align}
+				\min \quad & wx\\
+				\text{s.t.} \quad & Nx = b\\
+								  & x \ge 0
+			\end{align}
+			Where $N$ is a vertex-arc incident matrix. For a feasible solution to LP to exist, the sum of all $b$s must be zero. Since the summation of rows of $N$ is zero. The interpretation of the LP is as follows.
+
+			The variables are defined on the edges of the digraph and that $x_e$ denote the amount of flow of some commodity from the tail of $e$ to the head of $e$
+
+			Each constraints
+			\begin{equation}
+				\sum_{h(e) = i} x_e - \sum_{t(e) = i}x_e = b_i
+			\end{equation}
+			represents consequential of flow of all edges into $k$ vertex that have a demand of $b_i > 0$, or a supply of $b_i < 0$. If $b_i = 0$ we call that vertex a transshipment vertex.
+
+		\section{Network Simplex Method}
+			\begin{lemma}
+				Let $C_1$ and $C_2$ be distinct cycles in a graph $G$ and let $e\in C_1 \cup C_2$. Then $(C_1 \cup C_2) \setminus e$ contains a cycle.
+			\end{lemma}
+
+			\begin{proof}
+				Case 1: $C_1 \cap C_2 = \emptyset$. Trivia.\\
+				Case 2: $C_1 \cap C_2 \neq \emptyset$. Let $e\in C_2$ and $f=uv \in C_1 \setminus C_2$. Starting at $v$ traverse $C_1$ in the direction away from $u$ until the first vertex of $C_2$, say $x$. Denote the $(v, x)$-path as $P$. Starting at $u$ traverse $C_1$ in the direction away from $v$ until the first vertex of $C_2$, say $y$. Denote the $(u, y)$-path as $Q$. $C_2$ is a cycle, there are two $(x, y)$-path in $C_2$. Denote the $(x, y)$-path without $e$ as $R$. Then $vPxRyQ^{-1}uf$ is a cycle.
+			\end{proof}
+
+			\begin{theorem}
+				Let $T$ be a spanning tree of $G$. And let $e\in E\setminus T$ then $T+e$ contains a unique cycle $C$ and for any edge $f\in C$, $T+e-f$ is a spanning tree of $G$
+			\end{theorem}
+
+			Let $(D, b, w)$ be a transshipment problem. A feasible solutions $x$ is a \textbf{feasible tree solution} if there is a spanning tree $T$ such that $||x|| = \{e\in A, x_e\neq 0\} \subseteq T$.
+
+			The strategy of network simplex algorithm is to generate negative cycles, if negative cycle exists, it means the solution can be improved.
+
+			For any tree $T$ of $D$ and for $e\in A\setminus T$, it follows from above theorem that $T+e$ contains a unique cycle. Denote that cycle $C(T, e)$ and orient it in the direction of $e$, define 
+
+			\begin{eqnarray}
+				w(T, e) = \sum\{w_e: e \text{ forward in } C(T, e)\} \nonumber \\ 
+						- \sum\{w_e: e \text{ reverse in } C(T,e)\}
+			\end{eqnarray}
+
+			We think of $w(T, e)$ as the weight of $C(T,e)$.
+
+			The following is the Network Simplex Method Algorithm:
+
+			\begin{algorithm}
+				\caption{Network Simplex Method Algorithm}
+				\begin{algorithmic}
+					\ENSURE An optimal solution or the conclusion that $(D, b, w)$ is unbounded
+					\REQUIRE A transshipment problem $(D, b, w)$ and a feasible tree solution $x$ containing to a spanning tree $T$
+					\WHILE{$\exists e\in A\setminus T, w(T,e) < 0$}
+						\STATE let $e \in A \setminus T$ be such that $w(T, e) < 0$.
+						\IF {$C(T, e)$ has no reverse arcs}
+							\STATE Return unboundedness
+						\ELSE
+							\STATE Set $\theta = \min\{x_f: f \text{ reverse in } C(T, e)\}$ and set $f = \{f\in C(T, e): f \text{ reverse in } C(T, e), x_f = \theta\}$
+							\IF {$f$ forward in $C(T, e)$}
+								\STATE $x_f \gets x_f + \theta$
+							\ELSE
+								\STATE $x_f \gets x_f - \theta$
+							\ENDIF
+							\STATE Let $f \in F$ and $T \gets T+e-f$
+						\ENDIF
+					\ENDWHILE
+					\STATE Return $x$ as optimal					
+				\end{algorithmic}
+			\end{algorithm}
+
+			\notice{Similar to Simplex Method in LP, even though in worst case may be inefficient. In most cases it is simple and empirically efficient. Also, similarily, there will be cycling problems.}
+
+			The following is an example of cycling
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance=2.5cm]
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of=1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of=1, xshift=1.5cm] {3};
+					\draw [arrow] (1) to [out = 230, in = 70] node [right] {1, a} (2);
+					\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b} (2);
+					\draw [arrow] (1) to [out = 180, in = 110] node [left] {3, c} (2);
+					\draw [arrow] (1) to [out = 0, in = 70] node [right] {1, h} (3);
+					\draw [arrow] (1) to [out = -25, in = 90] node [above] {-1, i} (3);
+					\draw [arrow] (1) to [out = -50, in = 110] node [left] {3, j} (3);
+					\draw [arrow] (2) to [out = 15, in = 165] node [above] {3, d} (3);
+					\draw [arrow] (2) to [out = 45, in = 135] node [above] {-3, e} (3);
+					\draw [arrow] (3) to [out = -165, in = -15] node [below] {3, f} (2);
+					\draw [arrow] (3) to [out = -135, in = -45] node [below] {-3, g} (2);
+				\end{tikzpicture}
+			\end{figure}
+
+			Then for
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance=2.5cm]
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+					\draw [arrow] (1) to [out = 230, in = 70] node [above] {a} (2);
+					\draw [arrow] (1) to [out = -25, in = 90] node [above] {i} (3);
+					\draw [arrow, dashed] (1) to [out = -50, in = 110] node [below] {j (to enter)} (3);
+				\end{tikzpicture}
+			\end{figure}
+
+			$w(T, j) = w_j - w_i = -3-3 = -6$
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance=2.5cm]
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+					\draw [arrow] (1) to [out = 230, in = 70] node [right] {a} (2);
+					\draw [arrow] (1) to [out = -50, in = 110] node [left] {j} (3);
+					\draw [arrow, dashed] (1) to [out = 0, in = 70] node [right] {h (to enter)} (3);
+				\end{tikzpicture}
+			\end{figure}
+
+			$w(T, h) = w_h + w_j - w_i = 3-3-1=-1$
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance=2.5cm]
+					\node (1) [circleNode] {1};
+					\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
+					\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+					\draw [arrow, dashed] (1) to [out = 205, in = 90] node [above] {b (to enter)} (2);
+					\draw [arrow] (1) to [out = -50, in = 110] node [left] {j} (3);
+					\draw [arrow] (1) to [out = 0, in = 70] node [right] {h} (3);
+				\end{tikzpicture}
+			\end{figure}
+
+			Keep going and we will find cycling.
+
+			To Avoid cycling we will introduce the modified network Simplex Method. Let $T$ be a \textbf{rooted} spanning tree. Let $f$ be an arc in $T$, we say $f$ is \textbf{away} from the root $r$ if $t(f)$ is the component of $T-f$. Otherwise we say $f$ is \textbf{towards} $r$.
+
+			Let $x$ be a feasible tree solution associated with $T$, then we say $T$ is a \textbf{strong feasible tree} if for every arc $f \in T$ with $x_f = 0$ then $f$ is away from $r\in T$.
+
+			Modification to NSM:
+			\begin{itemize}
+				\item The algorithm is initialed with a strong feasible tree.
+				\item $f$ in pivot phase is chosen to be the first reverse arc of $C(T, e)$ having $x_f = \theta$. By ``first'', we mean the first arc encountered in traversing $C(T, e)$ in the direction of $e$, starting at the vertex $i$ of $C(T, e)$ that minimizes the number of arcs in the unique $(r, i)$-path in $T$.
+			\end{itemize}
+
+			\notice{In the second rule above, $r$ could also be in the cycle, in that case, $i$ is $r$.}
+
+			Finding initial strong feasible tree.
+
+			Pick a vertex in $D$ to be root $r$. The tree $T$ has an arc $e$ with the $t(e) = r$ and $h(e) = v$. For each $v\in V\setminus r$ with $b_v \ge 0$ and has an arc $e$ with $h(e) = r$ and $t(e) = v$ for each $v \in V\setminus r$ for which $b_v < 0$.
+			Wherever possible the arcs of $T$ are chosen from $A$, where an appropriate arc doesn't exist. We create an \textbf{artificial arc} and give its weight $|V|(\max\{w_e: e\in A\} + 1$. This is similar to Big-M method and if optimal solution contains artificial arcs ongoing arc problem is infeasible.
+
+			\notice{This algorithm can be really bad, its mimic of Simplex Method of LP, which means we can run into exponential operations}
+
+		\section{Transshipment Problem and Circulation Problem}
+			\begin{definition}
+				The minimum weight circulation problem is defined as follows:
+				\begin{align}
+					\min \quad & wx\\
+					\text{s.t.} \quad & Nx = 0\\
+						&l \le x \le u
+				\end{align}
+				It turns out that the circulation problem is equivalent with transshipment problem.
+			\end{definition}
+
+			We will show how to transform any transshipment into circulation.
+
+			Let $(D, b, w)$ be a transshipment problem and define two new vertices $s$ and $t$. 
+			\begin{itemize}
+				\item For each supply vertex $x$ add the arc $(s, x)$ to $D$ with $l_x = 0, u_x = -b_x, w_x = 0$. 
+				\item Similarly, for each demand vertex $x$, add the arc $(x, t)$ to $D$ with $l_x = 0, u_x = b_x, w_x = 0$. 
+				\item Finally, add an arc $(t, s)$ having $w_{ts} = 0, l_{ts} = u_{ts} = \sum\{b_x: \forall x, x \text{ is demand vertex}\}$. 
+				\item Each original arc is given a $l_x = 0, u_x = \sum\{b_x : \forall x, x \text{ is a demand vertex}\}$, $w_x$ remains unchanged.
+			\end{itemize}
+
+			The following is a graph for transshipment problem.
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (2) [circleNode, label=above:{-2}] {2};
+					\node (1) [circleNode, below of=2, label=above:{-1}] {1};
+					\node (3) [circleNode, right of=2, label=above:{2}] {3};
+					\node (4) [circleNode, below of=3, label=above:{1}] {4};
+					\draw (2) [arrow] -- node [above] {5} (3);
+					\draw (2) [arrow] -- node [below, xshift=-0.5cm] {11} (4);
+					\draw (1) [arrow] -- node [below, xshift=0.5cm] {7} (3);
+					\draw (1) [arrow] -- node [above] {12} (4);
+				\end{tikzpicture}
+			\end{figure}
+
+			After the above procedures, it is now transformed into a circulation problem.
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (2) [circleNode] {2};
+					\node (1) [circleNode, below of=2] {1};
+					\node (3) [circleNode, right of=2] {3};
+					\node (4) [circleNode, below of=3] {4};
+					\node (s) [circleNode, below of=1] {s};
+					\node (t) [circleNode, below of=4] {t};
+					\draw (2) [arrow] -- node [above] {0, 3, 5} (3);
+					\draw (2) [arrow] -- node [below, yshift=0.5cm, xshift=-1cm] {0, 3, 11} (4);
+					\draw (1) [arrow] -- node [below, yshift=0.5cm, xshift=1cm] {0, 3, 7} (3);
+					\draw (1) [arrow] -- node [above] {0, 3, 12} (4);
+					\draw (s) [arrow] to [out = 180, in = 180] node [right] {0, 1, 0} (1);
+					\draw (s) [arrow] to [out = 180, in = 180] node [left] {0, 2, 0} (2);
+					\draw (3) [arrow] to [out = 0, in = 0] node [right] {0, 2, 0} (t);
+					\draw (4) [arrow] to [out = 0, in = 0] node [left] {0, 1, 0} (t);
+					\draw (t) [arrow] -- node [below] {3, 3, 0} (s);
+				\end{tikzpicture}
+			\end{figure}
+
+			Then, we will show how to transform any circulation problem into transshipment problem.
+
+			If the lower bound of the arc is zero, i.e., $l_e = 0$, then for each such arc $(u, v)$, introduce a vertex in between $u$ and $v$, replace the arc $e = (u, v)$ by $e_1 = (u, x)$ and $e_2 = (x, v)$. Both arcs are uncapacitated. Let $w_1(u, x) = w(u, v)$ and $w_2(x, v) = 0$ be the new weights for the arcs. Let $u_e$ be the demands of newly added vertex $x$ and add $u_e$ to the supplies of vertex $v$ (in $v$ the supplies is the summation from all arcs that go to $v$).
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (u) [circleNode] {$u$};
+					\node (v) [circleNode, right of=u] {$v$};
+					\draw (u) [arrow] -- node [above] {0, $u_e$, $w_e$} (v);
+				\end{tikzpicture}
+			\end{figure}
+
+			Will be transform into
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (u) [circleNode, label=above:{0}] {$u$};
+					\node (x) [circleNode, label=above:{$u_e$}, right of=u] {$x$};
+					\node (v) [circleNode, label=above:{$u_e$}, right of=x] {$v$};
+					\draw (u) [arrow] -- node [above] {$w_e$} (x);
+					\draw (v) [arrow] -- node [above] {0} (x);
+				\end{tikzpicture}
+			\end{figure}
+
+			If the lower bound of the arc is not zero, i.e., $l_e \neq 0$, then for each such arc $(u, v)$, introduce two new vertices, one vertex is in between $u$ and $v$, similar to the previous case, the difference is the demands of this new vertex is $u_e - l_e$, the others stays the same. Then add the other vertex, this vertex, denoted as $x^\prime$ is added along with an arc between $u$ and $x^\prime$, the weight of this arc is $w(u, v)$, the demands on this new vertex is $l_e$.
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (u) [circleNode] {$u$};
+					\node (v) [circleNode, right of=u] {$v$};
+					\draw (u) [arrow] -- node [above] {$l_e$, $u_e$, $w_e$} (v);
+				\end{tikzpicture}
+			\end{figure}
+
+			Will be transform into\\
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (u) [circleNode, label=above:{0}] {$u$};
+					\node (x) [circleNode, label=above:{$u_e - l_e$}, right of=u] {$x$};
+					\node (v) [circleNode, label=above:{$u_e$}, right of=x] {$v$};
+					\node (xprime) [circleNode, label=below:{$l_e$}, below of=u] {$x^\prime$};
+					\draw (u) [arrow] -- node [above] {$w_e$} (x);
+					\draw (v) [arrow] -- node [above] {0} (x);
+					\draw (u) [arrow] -- node [left] {$w_e$} (xprime);
+				\end{tikzpicture}
+			\end{figure}
+
+			Perform the above procedures to all the arcs in a circulation problem. In $O(E)$ (polynomially times) transformation, such problem can be transformed into transshipment problem.
+
+		\section{Out-of-Kilter algorithm}
+			This algorithm is a Primal-dual method and is applied to the minimum weight circulation problem.
+
+			For LP optimality conditions we need primal feasibility, dual feasibility and complementary slackness, i.e., KKT conditions. Primal and dual feasibility are obvious so we need to show complementary slackness through following theorem.
+
+			\begin{theorem}
+				Let $x$ be a feasible circulation flow for $(D, l, u, w)$. And suppose there exists a real value vector $\{y_i: i \in V\}$ which we called \textbf{vertex-numbers}. For all edges $e\in A$
+				\begin{align}
+					y_{h(e)} - y_{t(e)} &> w_e \text{ implies } x_e = u_e\\
+					y_{h(e)} - y_{t(e)} &< w_e \text{ implies } x_e = l_e
+				\end{align}
+				Then $x$ is optimal to the circulation problem.
+			\end{theorem}
+
+			\begin{proof}
+				For each $e \in A$ define
+				\begin{align}
+					\gamma_e &= \max\{y_{h(e)} - y_{t(e)} - w_e, 0\} \\
+					\mu_e &= \max\{w_e - y_{h(e)} + y_{t(e)}, 0\}
+				\end{align}
+				Then
+				\begin{equation}
+					\gamma_e - \mu_e = y_{h(e)} - y_{t(e)} - w_e
+				\end{equation}
+				Furthermore
+				\begin{align}
+					&\sum_{e\in A} (\mu_el_e - \gamma_eu_e) \\
+					&= \sum_{e\in A} (\mu_el_e - \gamma_eu_e) + \sum_{i \in V}y_i(\sum_{h(e) = i} x_e - \sum_{t(e) = i} x_e)\\
+					&= \sum_{e\in A} (\mu_el_e - \gamma_eu_e + x_e(y_{h(e)} - y_{t(e)}))\\
+					&= \sum_{e\in A} (\mu_el_e - \gamma_eu_e + x_e(\gamma_e - \mu_e + w_e))\\
+					&= \sum_{e\in A} (\gamma_e(x_e - u_e) + \mu_e(l_e - x_e) + x_ew_e)\\
+					&\le \sum_{e\in A} x_ew_e 
+				\end{align}
+				The last inequality will be satisfied as equality iff the first two hold.
+			\end{proof}
+
+			The following is the formulation of circulation problem
+			\begin{align}
+				\text{(P)} \quad \min \quad & wx\\
+				\text{s.t.} \quad & Nx = 0 \quad y \\
+								  & x \ge l \quad z^l \\
+								  & -x \le -u \quad z^u\\
+				\text{(D)} \quad \max \quad & lz^l - uz^u \\
+				\text{(s.t.)} \quad & yN^{-1} + z^l-z^u \le w\\
+									& y \quad free\\
+									&z^l, z^u \ge 0 \\
+				\text{(CS)} \quad & y_{h(e)} - y_{t(e)} > w_e \Rightarrow x_e = u_e\\
+								  & y_{h(e)} - y_{t(e)} < w_e \Rightarrow x_e = l_e
+			\end{align}
+
+			There is an alternative way of circulation optimality for a circulation problem. We define a \textbf{kilter-diagram} as follows.
+
+			For every edge construct the following:
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\draw [arrow] (0, 0) -- (0, 3);
+					\draw [arrow] (0, 0) -- (3, 0);
+					\draw [link, line width=0.6mm] (1, -1) -- (1, 1) -- (2, 1) -- (2, 3);
+					\draw node at (0, 3) [above] {$y_{h(e)} - y_{t(e)}$};
+					\draw node at (3, 0) [above] {$x_e$};
+					\draw node at (1, -0.5) [left] {$l_e$};
+					\draw node at (2, 0) [above] {$u_e$};
+					\draw node at (0, 1) [left] {$w_e$};
+				\end{tikzpicture}
+			\end{figure}
+
+			For each point $(x_e, y_{h(e)} - y_{t(e)})$ we define a \textbf{kilter-number} $k_e$, be the minimum positive distance change in $x_e$ required to put in on the kilter line.
+			\begin{example}
+				For edge $e: w_e = 2, l_e = 0, u_e = 3$, assume $x_e = 2, y_{h(e)} - y_{t(e)} = 3$, then $k_e = 1$
+			\end{example}
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\draw [arrow] (0, 0) -- (0, 4);
+					\draw [arrow] (0, 0) -- (4, 0);
+					\draw [link, line width=0.6mm] (0, -1) -- (0, 2) -- (3, 2) -- (3, 4);
+					\draw node at (0, 4) [above] {$y_{h(e)} - y_{t(e)}$};
+					\draw node at (4, 0) [above] {$x_e$};
+					\draw node at (0, -0.5) [left] {0};
+					\draw node at (3, 0) [above] {3};
+					\draw node at (0, 2) [left] {2};
+					\fill (2, 3) circle [radius=2pt];
+					\draw node at (2, 3) [above, xshift=-0.6cm] {$(x_e, y_{h(e)} - y_{t(e)})$};
+					\draw node at (2, 3) [below] {(2, 3)};
+					\draw [link, dashed] (2, 3) -- (3, 3);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{lemma}
+				If for every circulation $x$ and vertex number $y$ we have $\sum_{e \in A} k_e = 0$, then $x$ is optimal.
+			\end{lemma}
+
+			\begin{proof}
+				Since $k_e$ is a nonnegative number, then the only way that $\sum_{e \in A} k_e = 0$ is $k_e = 0, \forall e\in A$, which means $\forall e\in A, l_e \le x_e \le u_e$. Furthermore, the complementary slackness are satisfied.
+			\end{proof}
+
+			General idea of algorithm follows. Suppose we are given a circulation $x$ and vertex-numbers $y$ (we do not require feasibility). Usually we pick $x=0, y=0$. If every edge is in kilter-line then we are optimal.
+
+			Otherwise there is at least one edge $e^*$ that is out-of kilter. The algorithm consist of two phases, one called \textbf{flow-change} phase (horizontally), then other \textbf{number-change} phase (vertically).
+
+			In the flow-change phase, we want to find a new circulation for an out-of-kilter edge $e^*$ say $\hat{e}$ such that we reduce the kilter number $k_{e^*}$, without increasing any other kilter number for other edges.
+
+			To do this, denote the edges of $e^*$ to be $s$ and $t$, where such that $k_{e^*}$ will be decreased by increasing the flow from $s$ to $t$ on $e^*$.
+
+			If $e^*=(s, t)$ this will accomplished by increasing $x_{e^*}$ and if $e=(t, s)$ it is accomplished by decreasing $x_{e^*}$. 
+
+			To do this we look for an $(s, t)$-path $p$ of the following edges.
+
+			\begin{itemize}
+				\item If $e$ is forward in $p$, then increasing $x_e$ does not increase $k_e$ and
+				\item If $e$ is reversed in $p$, then decreasing $x_e$ dose not increase $k_e$
+			\end{itemize}
+
+			In terms of kilter diagram, an arc satisfies "forward" if it is forward and in left side of kilter line, and it satisfies $reversed$ if it is reverse and in right side of kilter line.
+
+			Suppose we can not find such a path. From $s$ to $t$, let $x$ be the vertices that can decrease by an augmenting path. Then either we can change the vertex numbers $y$ so that $\sum_{e\in A} k_e$ does not increase but $x$ does, or we can show that problem is infeasible.
+
+			INPUT a minimum circulation problem $(D, l, u, w)$ a circulation $x$ and vertex-numbers $y$
+			OUTPUT conclusion that $(D, l, u, w)$ is infeasible or an minimum weighted flow.
+
+			Step 1: If every arc is in kilter $(k_e = 0, \forall e\in A)$. Stop with $x$ is optimal. Otherwise let $e^*$ be an out-of-kilter arc. If increasing $x_{e^*}$ decreases $k_{e^*}$ set $s=h(e^*)$ and $t(e^*)$ otherwise set $s=t(e^*)$ and $t=h(e^*)$
+
+			Step 2: If there exists an $(s, t)$ augmenting path $p$ then goto Step 3, otherwise goto Step 4.
+
+			STEP 3: Set $y_e = y_{h(e)} - y_{t(e)}, e\in A$
+			Set $\Delta_1 = \min\{u_e - x_e: e \text{ is forward and } y_e \ge w_e\}$
+			Set $\Delta_2 = \min\{l_e - x_e: e \text{ is forward and } y_e < w_e\}$
+			Set $\Delta_3 = \min\{x_e - l_e: e \text{ is reverse and } y_e \le w_e\}$
+			Set $\Delta_4 = \min\{x_e - u_e: e \text{ is reverse and } y_e > w_e\}$
+			$\Delta = \min\{\Delta_i, i = 1, 2, 3, 4\}$
+
+			Increase $x_e$ by $\Delta$ on each forward arc in $p$, decrease $x_e$ by $\Delta$ on each reverse arc in $p$.
+
+			If $e^* = (s, t)$ decrease $x_{e^*}$ by $\Delta$, otherwise increase $x_{e^*}$ by $\Delta$
+
+			If $k_{e^*} > 0$ goto Step 2. otherwise goto Step 1.
+
+			Step 4: Let $X$ be the set of vertices reachable from $s$ by augmenting paths, then $t \notin X$, if every arc $e$ with $h(e) \in X$ has $x_e \le l_e$ and every arc $e$ with $t(e) \in X$ has $x_e \ge u_e$, and at least one of the above inequality is strict, then Stop with problem infeasible
+
+			Otherwise set
+			$\delta_1 = \min\{w_e - y_e: t(e) \in X, y_e < w_e, x_e \le u_e \neq l_e\}$
+			$\delta_2 = \min\{y_e - w_e: h(e) \in X, y_e > w_e, x_e \ge u_e \neq l_e\}$
+			$\delta = \min\{\delta_1, \delta_2\}$
+
+			Set $y_i = y_i + \delta$ for $i \notin X$
+
+			If $k_{e^*} > 0$, goto Step 2, otherwise goto Step 1.
+
+			Out-of-kilter takes $O(|E||V|K)$ where $K = \sum_{e\in A} k_e$. However, there is an algorithm called \textbf{scaling algorithm} that uses out-of-kilter as subroutine that runs in $O(R|E|^2|V|)$ where $R = \lceil \max\{\log_2 u_e: e\in A\}\rceil$
+
+			The following is an example of Out-of-Kilter Algorithm.
+
+			Consider the following transshipment problem:
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 2cm]
+					\node (1) [solidNode, label=left:{$b = -1$}] {};
+					\node (2) [solidNode, label=left:{$b = -3$}, label=above:{$w = 1$}, below of = 1] {};
+					\node (3) [solidNode, label=left:{$b = -4$}, label=above:{$w = 3$}, label=right:{$w = 3$}, below of = 2] {};
+					\node (4) [solidNode, label=right:{$b = 2$}, right of = 1, xshift=1cm] {};
+					\node (5) [solidNode, label=right:{$b = 2$}, label=above:{$w = 1$}, right of = 2, xshift=1cm] {};
+					\node (6) [solidNode, label=right:{$b = 4$}, label=above:{$w = 3$}, label=left:{$w = 3$}, right of = 3, xshift=1cm] {};
+					\draw [arrow] (1) -- node [above] {$w = 0$} (4);
+					\draw [arrow] (1) -- (5);
+					\draw [arrow] (1) -- (6);
+					\draw [arrow] (2) -- (4);
+					\draw [arrow] (2) -- (6);
+					\draw [arrow] (3) -- (4);
+					\draw [arrow] (3) -- (5);
+				\end{tikzpicture} 
+			\end{figure}
+
+			First we transform it into a circulation problem. Let $x_e = 0$ for all edges, let $y_v = 0$ for all vertex
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 1.8cm]
+					\node (1) [circleNode] {0};
+					\node (2) [circleNode, below of = 1] {0};
+					\node (3) [circleNode, below of = 2] {0};
+					\node (4) [circleNode, right of = 1, xshift=1.8cm] {0};
+					\node (5) [circleNode, right of = 2, xshift=1.8cm] {0};
+					\node (6) [circleNode, right of = 3, xshift=1.8cm] {0};
+					\node (s) [circleNode, below of=3, label=below:{s}] {0};
+					\node (t) [circleNode, below of=6, label=below:{t}] {0};
+					\draw [arrow] (1) -- node [above] {$e_4: (0, 8, 0)$} (4);
+					\draw [arrow] (1) -- node [right, xshift=0.7cm, yshift=-0.3cm] {$e_5: (0, 8, 1)$} (5);
+					\draw [arrow] (1) -- node [right, xshift=-0.1cm, yshift=-0.1cm] {$e_6: (0, 8, 3)$} (6);
+					\draw [arrow] (2) -- node [left, xshift=-0.5cm, yshift=-0.3cm] {$e_7: (0, 8, 1)$} (4);
+					\draw [arrow] (2) -- node [below, xshift=0.3cm, yshift=-0.3cm] {$e_8: (0, 8, 3)$} (6);
+					\draw [arrow] (3) -- node [left, xshift=-0.6cm, yshift=-1cm] {$e_9: (0, 8, 3)$} (4);
+					\draw [arrow] (3) -- node [below, xshift=1.8cm, yshift=0.7cm] {$e_{10}: (0, 8, 3)$} (5);
+					\draw (s) [arrow] to [out = 180, in = 180] node [left, xshift=1cm] {$e_1: (0, 1, 0)$} (1);
+					\draw (s) [arrow] to [out = 180, in = 180] node [left, xshift=1cm] {$e_2: (0, 3, 0)$} (2);
+					\draw (s) [arrow] to [out = 180, in = 180] node [right] {$e_3: (0, 4, 0)$} (3);
+					\draw (4) [arrow] to [out = 0, in = 0] node [right, xshift=-1cm] {$e_{11}: (0, 2, 0)$} (t);
+					\draw (5) [arrow] to [out = 0, in = 0] node [right, xshift=-1cm] {$e_{12}: (0, 2, 0)$} (t);
+					\draw (6) [arrow] to [out = 0, in = 0] node [left] {$e_{13}: (0, 4, 0)$} (t);
+					\draw [arrow] (t) -- node [below] {$e_0: (8, 8, 0)$} (s);
+				\end{tikzpicture} 
+			\end{figure}
+
+			Iteration 1:
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (8, -1) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_0$}
+				\end{subfigure}
+				\qquad
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 0) -- (1, 0) -- (1, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (1, -0.5) [right] {1};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_1$}
+				\end{subfigure}
+			\end{figure}
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 0) -- (3, 0) -- (3, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (3, -0.5) [right] {3};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_2$}
+				\end{subfigure}
+				\qquad
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 0) -- (4, 0) -- (4, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (4, -0.5) [right] {4};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_3$}
+				\end{subfigure}
+			\end{figure}
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 0) -- (8, 0) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_4$}
+				\end{subfigure}
+				\qquad
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 1) -- (8, 1) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 1) [left] {1};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_5$}
+				\end{subfigure}
+			\end{figure}
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 3) -- (8, 3) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 3) [left] {3};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_6$}
+				\end{subfigure}
+				\qquad
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 1) -- (8, 1) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 1) [left] {1};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_7$}
+				\end{subfigure}
+			\end{figure}
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 3) -- (8, 3) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 3) [left] {3};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_8$}
+				\end{subfigure}
+				\qquad
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 3) -- (8, 3) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 3) [left] {3};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_9$}
+				\end{subfigure}
+			\end{figure}
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 3) -- (8, 3) -- (8, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (8, -0.5) [right] {8};
+						\draw node at (0, 3) [left] {3};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_{10}$}
+				\end{subfigure}
+				\qquad
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 0) -- (2, 0) -- (2, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (2, -0.5) [right] {2};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_{11}$}
+				\end{subfigure}
+			\end{figure}
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 0) -- (2, 0) -- (2, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (2, -0.5) [right] {2};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_{12}$}
+				\end{subfigure}
+				\qquad
+				\begin{subfigure}[c]{0.2\textwidth}
+					\centering
+					\begin{tikzpicture}[scale = 0.35]
+						\draw [arrow] (0, 0) -- (0, 4);
+						\draw [arrow] (0, 0) -- (10, 0);
+						\draw [link, line width=0.6mm] (0, -1) -- (0, 0) -- (4, 0) -- (4, 4);
+						\draw node at (0, 4) [above] {$\Delta y$};
+						\draw node at (10, 0) [above] {$x_e$};
+						\draw node at (4, -0.5) [right] {4};
+						\draw node at (0, 0) [left] {0};
+						\fill (0, 0) circle [radius=10pt];
+						\draw node at (0, 0) [below] {(0, 0)};
+					\end{tikzpicture}
+					\caption*{$e_{13}$}
+				\end{subfigure}
+			\end{figure}
+
+		\section{Complexity of Different Minimum Weighted Flow Algorithms}
+			Let arc capacities between 1 and $U$, costs between $-C$ and $C$
+			\begin{align}
+				\begin{tabular} {|c|c|c|c|}
+					\hline
+					Year & Discoverer & Method & Big $O$ \\
+					\hline
+					1951 & Dantzig & Network Simplex Method & $O(E^2V^2U)$ \\
+					1960 & Minty, Fulkerson & Out-of-Kilter & $O(EVU)$\\
+					1958 & Jewell & Successive Shortest Path & $O(EVU)$ \\
+					1962 & Ford-Fulkerson & Primal Dual & $O(EV^2U)$ \\
+					1967 & Klein & Cycle Canceling & $O(E^2CU)$ \\
+					1972 & Edmonds-Karp, Dinitz & Capacity Scaling & $O(E^2 \log U)$\\
+					1973 & Dinitz-Gabow & Improved Capacity Scaling & $O(EV\log U)$ \\
+					1980 & Rock, Bland-Jensen & Cost Scaling & $O(EV^2\log C)$\\
+					1985 & Tardos & $\epsilon$-optimality & poly($E,V$)\\
+					1988 & Orlin & Enhanced Capacity Scaling & $O(E^2)$ \\
+					\hline
+				\end{tabular}
+			\end{align}
+	% \include{00-Preliminary_Topics}
+	% \include{01-Linear_Programming}
+	% \include{02-Graph_and_Network_Theory}
+	% \include{03-Integer_and_Combinatorial_Programming}
+	% \include{04-Nonlinear_Programming}
 	% \include{05-Game_Theory}
 	% \include{06-Probability}
 	% \include{07-Queuing_Theory}
