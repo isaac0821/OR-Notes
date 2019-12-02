@@ -1,4 +1,4 @@
-\documentclass[10pt, twocolumn]{book}
+\documentclass[10pt, onecolumn]{book}
 \author{Lan Peng, PhD Student\\ \\Department of Industrial and Systems Engineering\\University at Buffalo, SUNY\\lanpeng@buffalo.edu}
 \title{Notes for Operations Research \& More}
 
@@ -73,6 +73,10 @@
 		thick, 
 		-
 	]
+	\tikzstyle{matchedLink} = [
+		decorate, 
+		decoration={snake}
+	]
 	\tikzstyle{circleNode} = [
 		circle, 
 		minimum size = 0.7cm, 
@@ -135,7 +139,7 @@
 	\noindent
 	\marginpar{\textsc{to do}}
 	\framebox{
-		\begin{minipage}[c]{0.45 \textwidth}
+		\begin{minipage}[c]{0.95 \textwidth}
 		\tt
 		\begin{center} 
 			#1
@@ -151,7 +155,8 @@
 	\par
 	\noindent
 	\colorbox{gray!15}{
-		\begin{minipage}[c]{0.46 \textwidth}
+		\centering
+		\begin{minipage}[c]{0.95 \textwidth}
 			\textbf{Notice:}~#1
 		\end{minipage}
 	}
@@ -181,12 +186,160 @@
 	\maketitle
 	\today
 	\tableofcontents
+
+	\chapter{Matchings}
+		\section{Maximum Matching}
+			\begin{definition}[Matching]
+				Let $G = (V, E)$ be a graph, a \textbf{matching} is a subset of edges $M \subseteq E$ such that no two elements of $M$ are adjacent. The two ends of an edge in $M$ are said to be \textbf{matched under} $M$. A matching $M$ saturates a vertex $v$, and $v$ is said to be \textbf{M-saturated} or \textbf{M-covered}, if some edge of $M$ is incident with $v$. Otherwise, $v$ is \textbf{M-unsaturated} or \textbf{M-exposed}.
+			\end{definition}
+
+			\begin{definition}[Perfect matching, Maximum matching]
+				If every vertex of $G$ is M-saturated, then the matching is said to be \textbf{perfect matching}. $M$ is a \textbf{maximum matching} if $G$ has no matching $M^\prime$ with $|M^\prime| > |M|$. Every perfect matching is maximum. The maximum matching does not necessarily to be perfect. Perfect matching and maximum matching may not be unique.
+			\end{definition}
+
+			\begin{definition}[M-alternating]
+				An \textbf{M-alternating} path in $G$ is a path whose edges are alternately in $E\setminus M$ and $M$.
+			\end{definition}
+
+			\begin{definition}[M-augmenting]
+				An \textbf{M-augmenting} path in $G$ is an $M$-alternating path whose origin and terminus are $M$-unsaturated.
+			\end{definition}
+
+			\begin{lemma}
+				Every augmenting path $P$ has property that let $M^\prime = P\Delta M (M \cup P) \setminus (M \cap P)$ then $M^\prime$ contains one more edge then $M$
+			\end{lemma}
+
+			The following path is an $M$-augmenting path
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\node (0) [solidNode] {};
+					\node (1) [solidNode, right of=0] {};
+					\node (2) [solidNode, right of=1] {};
+					\node (3) [solidNode, right of=2] {};
+					\node (4) [solidNode, right of=3] {};
+					\node (5) [solidNode, right of=4] {};
+					\draw (0) [link] -- (1);
+					\draw (1) [matchedLink] -- (2);
+					\draw (2) [link] -- (3);
+					\draw (3) [matchedLink] -- (4);
+					\draw (4) [link] -- (5);
+				\end{tikzpicture}
+			\end{figure}
+
+			The following path is $M^\prime = P\Delta M (M \cup P) \setminus (M \cap P)$ and all the vertices are $M$-saturated.
+
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}
+					\node (0) [solidNode] {};
+					\node (1) [solidNode, right of=0] {};
+					\node (2) [solidNode, right of=1] {};
+					\node (3) [solidNode, right of=2] {};
+					\node (4) [solidNode, right of=3] {};
+					\node (5) [solidNode, right of=4] {};
+					\draw (0) [matchedLink] -- (1);
+					\draw (1) [link] -- (2);
+					\draw (2) [matchedLink] -- (3);
+					\draw (3) [link] -- (4);
+					\draw (4) [matchedLink] -- (5);
+				\end{tikzpicture}
+			\end{figure}
+
+			\begin{theorem}[Berge, 1957]
+				A matching $M$ in a graph $G$ is maximum iff $G$ has no M-augmenting path.
+			\end{theorem}
+
+			\begin{proof}
+				($\Rightarrow$) It is clear that if $M$ is maximum, it has no augmenting paths since otherwise by problem claim we can increase by one.
+
+				($\Leftarrow$) Suppose $M$ is not maximum and let $M^\prime$ be a bigger matching. Let $A = M \delta M^\prime$ now no vertex of $G$ is incident to more than two members of $A$. For otherwise either two members of $M$ or two members of $M^\prime$ would be adjacent. Contradict the definition of matching. It follows that every component of the edges incident subgraph $G[A]$ is either an even cycle with edge augmenting in $M\Delta M^\prime$ or else $A$ path with edges alternating between $M$ and $M^\prime$.
+
+				Since $|M^\prime| \ge |M|$ then the even cycle cannot help because exchanging $M$ and $M^\prime$ will have same cardinality.
+
+				The path case implies that $p$ is alternating in $M$ and since $|M^\prime| > |M|$ the end arc exposed so that $p$ is augmenting.
+			\end{proof}
+
+			\begin{definition}[M-alternating tree]
+				An \textbf{M-alternating tree} $T$ is a rooted tree satisfied the following condition:
+				\begin{itemize}
+					\item The root $r$ is $M$-unsaturated
+					\item The unique path from $r$ to any vertex $T$ is $M$-alternating
+					\item Every vertex in $T$, except $r$ is incident to a matching edge of $T$
+				\end{itemize}
+				A vertex $x$ of $T$ is called \textbf{inner} if $(r, s)$-path in $T$ has an odd number of edges. Otherwise $x$ is called \textbf{outer}.
+			\end{definition}
+
+			\begin{lemma}
+				Let $M$ be a matching in $G$ and let $T$ be an $M$-alternating tree with root $r$, then the following conclusion hold
+				\begin{itemize}
+					\item If $v \neq r$ is an outer vertex and $p$ is the unique $(r,v)$-path in $T$ then the edge of $p$ incident to $v$ is in $M$
+					\item The number of inner vertices in $T$ equals the number of matching edges in $T$.
+				\end{itemize}
+			\end{lemma}
+
+		\section{Hungarian Algorithm?}
+			\begin{definition}[Alternating forest]
+				An \textbf{alternating forest} is a forest of $G$ where every components is an alternating tree. An alternating forest $(F, e)$ is an alternating forest to be then with an edge $e = M, V$ where $M$ and $V$ are outer vertices contained in two distinct components of $F$.
+			\end{definition}
+
+			\begin{example}[Hungarian forest]
+				A \textbf{Hungarian forest} $F$ is an alternating forest containing all exposed vertices of $G$ and such that the outer vertices of $F$ are adjacent in $G$ only to inner vertices of $F$
+			\end{example}
+
+			\begin{definition}[Augmenting forest]
+				An \textbf{augmenting forest} $(F, e)$ where $F$ is an augmenting forest and $e = uv$ connects two outer vertices in distinct components of $F$.
+			\end{definition}
+
+			The plan is to grow an alternating forest that eventually become augmenting or Hungarian. Augmenting forest will increase the cardinality of the match, Hungarian implies that you have found optimal maximum cardinality matching.
+
+			\begin{theorem}
+				Let $(F, e)$ be an augmenting forest. And let $T_1$ and $T_2$ be the two components of $F$ containing an end of $e$. Let $p_i$ be the unique path in $T_i$ from the root to the end of $e$, then $p_1ep_2^{-1}$ is an augmenting path.
+			\end{theorem}
+
+			\begin{theorem}
+				If $F$ is a Hungarian forest for some matching $M$ then $M$ is a maximum match.
+			\end{theorem}
+
+			The above theorems suggest a method for computing maximum matching. Let $M$ be a matching of $G$ and let $F$ be an alternating forest in $G$ made up of all M-exposing vertices. If $F$ happens to be Hungarian, stop with the max matching $M$. If $(F, e)$ for some $e$ is augmenting then we increase our matching by 1 and start process.
+
+			Suppose $F$ is neither Hungarian nor augmenting, by definition, there must be an edge $e$ incident to an outer vertex of $F$ to no inner vertex of $F$. But $e$ cannot be incident to two outer vertices of $F$ in distinct components, since $(F, e)$ is not augmenting. Hence there are only two cases:
+
+			Case 1: $e=uv$ where $u$ is outer in $F$ and $v$ is not outer in $F$. The only way its possible if $v$ is covered. Augmenting $F$ to $M$ will increase the matching. 
+
+			Case 2: $e=uv$ where $u$ and $v$ are outer vertices in $F$. Let $r$ be the root of the component of $F$ containing $u$ and $v$, let $p_u$ and $p_v$ be $(r,u)$-path and $(r, v)$-path in $F$. Let $b$ be the last vertex these two paths have in common and let $p$ be the $(u, v)$-path in $F$, let $p_u^\prime$ be $(b-u)$-path and $p_v^\prime$ be the $(b,v)$-path respectively. Let $n$ be the length of $p_u$, let $m$ be the length of $p_v$, let k be the length of $(r, b)$-path. Let $c$ be the cycle $(p_u^\prime e {p_v^{\prime}}^{-1})$. Number of vertices in $c$ is $n + m-2k + 1$, $n, m$ are even, so $c$ is always an odd length cycle. If $G$ has no odd cycles, we call those graph bipartite. To this case can not happen in bipartite graph so algorithm without case 2 will solve bipartite matching.
+
+			If a graph has no odd cycles, i.e., bipartite, then we have an algorithm using augmenting forest and Hungarian forest and case 1.
+
+			We now have to deal with odd cycles. The idea is to "shrink" add cycles to a super node
+
+			Let $S\subseteq E(G)$, denote by $G: S$ the subgraph with edge set $S$
+			\begin{equation}
+				G:S = G\setminus (E(G)-S)
+			\end{equation}
+			The contraction of $S$ to be the $G\setminus S$ with $E(G / S) = E(G) - S$. $V(G/S)$ to be the components of $G:S$ and if $e\in E(G/S)$ then the ends of $e$ in $G/S$ are in components of $G:S$ containing both ends in $G$
+
+			Let network to general case 2. $b$ is outer vertex. Let $B$ be the set of edges of cycle $C$, we call $B$ a \textbf{blossom}. We propose to replace $M$ by $M - B$, $G$ by $G/B$ and $F$ by $F/B$
+
+		\section{Edmonds's Blossom Algorithm}
+
+		
+			$O(|V|^4)$
+			- Non-bipartite matching is one of very few problems in $P$, for which LP relaxation will not provide optimal solution.
+
+		\section{Hall's Marriage Theorem}
+
+		\section{Transversal Theory}
+
+		\section{Menger's Theorem}
+
+		\section{The Hungarian Algorithm}
 	
-	\include{00-Preliminary_Topics}
-	\include{01-Linear_Programming}
-	\include{02-Graph_and_Network_Theory}
-	\include{03-Integer_and_Combinatorial_Programming}
-	\include{04-Nonlinear_Programming}
+	% \include{00-Preliminary_Topics}
+	% \include{01-Linear_Programming}
+	% \include{02-Graph_and_Network_Theory}
+	% \include{03-Integer_and_Combinatorial_Programming}
+	% \include{04-Nonlinear_Programming}
 	% \include{05-Game_Theory}
 	% \include{06-Probability}
 	% \include{07-Queuing_Theory}
