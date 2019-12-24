@@ -643,14 +643,14 @@
 				\end{equation}
 				Add this inequality to the LR, use the dual simplex method to do one pivot, we get a new solution. Use Gomory cutting plane iteratively and we can find the optimal solution for IP.
 
-	\chapter{Typical IP problems}
-		\section{Packing and Matching}
-			\subsection{Vertices Packing Formulation}
-				Given a graph $G=(V, E)$, with $|V|=n$. A vertices packing solution is that no two neighboring vertices can be chosen at the same time.
-				\begin{equation}
-					PACK(G) = \{x\in \mathbb{B}^n|x_i + x_j \le 1, \forall (i, j)\in E\} 
-				\end{equation}
-				\framebox{\textbf{Example:}}
+	\chapter{Packing and Matching}
+		\section{Vertices Packing and Matching Formulation}
+			Given a graph $G=(V, E)$, with $|V|=n$. A vertices packing solution is that no two neighboring vertices can be chosen at the same time.
+			\begin{equation}
+				PACK(G) = \{x\in \mathbb{B}^n|x_i + x_j \le 1, \forall (i, j)\in E\} 
+			\end{equation}
+			\begin{example}
+				The following is an example:\\
 				\begin{figure}[!ht]
 					\centering
 					\begin{tikzpicture}[node distance = 1.8cm]
@@ -676,407 +676,408 @@
 						\left(\begin{matrix}0 \\ 0 \\ 0 \\ 1\end{matrix}\right),
 						\left(\begin{matrix}0 \\ 1 \\ 1 \\ 0\end{matrix}\right)
 						\right)
-				\end{equation}
+				\end{equation}				
+			\end{example}
 
-			\subsection{Matching Formulation}
-				Given a graph $G=(V, E)$, denote $\delta(i)$ as the set of all the edges introduced to vertice $i\in V$. A matching solution is that no two edges introduced to the same vertice can be chosen at the same time.
-				\begin{equation}
-					MATCH(G) = \{\sum_{e\in \delta(i)}x_e \le 1|i\in V\}
-				\end{equation}
+			Given a graph $G=(V, E)$, denote $\delta(i)$ as the set of all the edges introduced to vertice $i\in V$. A matching solution is that no two edges introduced to the same vertice can be chosen at the same time.
+			\begin{equation}
+				MATCH(G) = \{\sum_{e\in \delta(i)}x_e \le 1|i\in V\}
+			\end{equation}
 
-			\subsection{Dimension of PACK(G)}
-				The dimension of PACK, i.e. $dim(PACK(G))$ is (full-dimensional)
+		\section{Dimension of PACK(G)}
+			The dimension of PACK, i.e. $dim(PACK(G))$ is (full-dimensional)
+			\begin{equation}
+				dim(PACK(G)) = |V| 
+			\end{equation}
+			To prove that $dim(PACK(G)) = |V|$, we need to find $|V| + 1$ affinely independent vectors.\\
+			\begin{proof}
 				\begin{equation}
-					dim(PACK(G)) = |V| 
+					rank\left(\left[\begin{matrix}0 & I_{|V|} \\ 1 & 1\end{matrix}\right]\right) = |V| + 1 
 				\end{equation}
-				To prove that $dim(PACK(G)) = |V|$, we need to find $|V| + 1$ affinely independent vectors.\\
-				\framebox{\textbf{Proof:}}\\
-					\begin{equation}
-						rank\left(\left[\begin{matrix}0 & I_{|V|} \\ 1 & 1\end{matrix}\right]\right) = |V| + 1 
-					\end{equation}
-				Therefore, in PACK, $rank(A^=,b^=)=0$ 
-			
-			\subsection{Clique}
-				- A \textbf{clique} is a subset of a graph that in the clique every two vertices linked with each other (complete sub-graph).
-				- A \textbf{maximum clique} is a clique that any other vertice can not form a clique with all the points in this clique.
+				Therefore, in PACK, $rank(A^=,b^=)=0$ 				
+			\end{proof}
+		
+		\section{Clique}
+			- A \textbf{clique} is a subset of a graph that in the clique every two vertices linked with each other (complete sub-graph).
+			- A \textbf{maximum clique} is a clique that any other vertice can not form a clique with all the points in this clique.
 
-			\subsection{Inequalities and Facets of conv(VP)}
-				\framebox{\textbf{Example:}}\\
-					\begin{figure}[!ht]
-						\centering
-						\begin{tikzpicture}[node distance = 1.2cm]
-							\node (1) [circleNode] {1};
-							\node (2) [circleNode, below of=1, xshift=-2cm] {2};
-							\node (3) [circleNode, below of=1, xshift=2cm] {3};
-							\node (4) [circleNode, below of=2, xshift=2cm] {4};
-							\node (5) [circleNode, below of=4, xshift=-0.9cm] {5};
-							\node (6) [circleNode, below of=4, xshift=0.9cm] {6};
-							\draw (1) -- (2);
-							\draw (1) -- (3);
-							\draw (1) -- (4);
-							\draw (3) -- (4);
-							\draw (2) -- (5);
-							\draw (5) -- (6);
-							\draw (6) -- (3);
-						\end{tikzpicture}
-						\caption{Example}
-					\end{figure}
-
-				\subsubsection{Type 1 (Nonnegative Constraints)}
-					$x_i \ge 0$ induce facets.\\
-					\framebox{\textbf{Proof:}}
-					\begin{equation}
-						rank\left(\left[\begin{matrix}0 & 0 \\ 0 & I_{|V|}\end{matrix}\right]\right) = |V| + 1 
-					\end{equation}
-
-				\subsubsection{Type 2 (Neighborhood Constraints)}
-					$x_i + x_j \le 1$ is a valid constraint, but it \textbf{DOES NOT} always induce facet.
-
-				\subsubsection{Type 3 (Odd Hole)}
-					$H$ is an odd hole if it contains circle of $k$ nodes, such that $k$ is odd and there is no cords. e.g. \{1, 2, 5, 6, 3\}. Then, the following inequality is valid,
-					\begin{equation}
-						\sum_{i\in H}x_i\le \frac{|H|-1}2 
-					\end{equation}
-					Odd Hole inequality \textbf{DOES NOT} always induce facets.\\
-					This inequality can be derived from Gomory cut.
-
-				\subsubsection{Type 4 (Maximum Clique)}
-					$C$ is a maximum clique, then the following inequality is valid and induce a facet,
-					\begin{equation}
-						\sum_{i\in C} x_i \le 1 
-					\end{equation}
-					\framebox{\textbf{Proof:}}\\
-						First, if $C=V$
-						\begin{equation}
-							rank\left(\left[I\right]\right) = |C| = |V| 			
-						\end{equation}
-						Second, if $C$ is a subset of $V$, for each vertice in $V \setminus C$, there should be at least one vertice in $C$ that is not linked with it. Therefore for each vertice in $C$ we can find a packing.
-
-			\subsection{Gomory Cut in Set Covering}
-				Consider a graph $G=(V, E)$, the covering problem is
-				\begin{equation}
-					\sum_{e\in \delta(i)}x_e \le 1, i\in V, x_e\in \{0, 1\}, e\in E
-				\end{equation}
-				For $T\subset V$, denote $\delta(i)$ as all edges induce to $i\in V$, denote $E(T) \subset E$ as all the edges linked between $(i, j), i\in T, j\in T$, therefore we have
-				\begin{equation}
-					\sum_{i\in T}\sum_{e\in \delta(i)}x_e \le |T| 
-				\end{equation}
-				For edges linking $i \in T, j \in T$, count them twice, for edges linking $i\in T, j\notin T$, count them once.We can have a new constraint
-				\begin{equation}
-					2\sum_{e\in E(T)}x_e + \sum_{e\in \delta(V\setminus T, T)}x_e \le |T| 
-				\end{equation}
-				Perform the Gomory Cut, the following constraint is a valid:
-				\begin{equation}
-					\sum_{e\in E(T)}x_e \le \lfloor \frac{|T|}2 \rfloor 
-				\end{equation}
-							
-		\section{Traveling Salesman Problem}
-			\subsection{TSP Formulation (Asymmetric)}
-				Consider a Graph $G=\{A, N\}$\\
-				Denote:\\
-				\begin{equation}
-					x_{ij} = \begin{cases}1, &\text{if goes from } i \text{ to } j\\ 0, & \text{otherwise}\end{cases}
-				\end{equation}
-				\textbf{Dantzig-Fulkerson-Johnson Formulation:}
-				\begin{align}
-					\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-					& \sum_{j \in N, (i,j)\in A} x_{ij} = 1 \\
-					& \sum_{i \in N, (i,j)\in A} x_{ij} = 1 \\
-					& \sum_{j\notin S, i\in S, (i,j)\in A} x_{ij} = 1\text{ or } \sum_{i, j \in S, (i, j) \in A} x_{ij} \le |S| - 1 \\
-					& \forall S \subset N, S\ne \emptyset, 2\le |S| \le n-1 
-				\end{align}
-				\textbf{Miller-Tucker-Zemlin Formulation:}
-				\begin{align}
-					\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-					& \sum_{j \in N, (i,j)\in A} x_ij = 1 \\
-					& \sum_{i \in N, (i,j)\in A} x_ij = 1 \\
-					& u_i - u_j +nx_{ij}\le n-1 \quad i, j\in{2, ... , n}, (i, j)\in A \\
-					& u_1 = 1 \\
-					& 2 \le u_i \le n, i\in N, i>1 
-				\end{align}
-
-			\subsection{Sub-tour Searching Algorithm}
-				In the graph $G=(N, A)$, let $\bar{G}=(N, \bar{A})$ be the connected components of graph, where
-				\begin{equation}\bar{G}=(G, \bar{A}), \bar{A}=\{(i, j) \in A | \bar{x_{ij}}=1\} \end{equation}
-				denote
-				\begin{equation}\bar{FS}(i) = \{(i,j)\in \bar{A}\} \end{equation}
-				Then the algorithm to find all sub-tour is the following:
-				\begin{algorithm}[!ht]
-					\caption{Sub-tour Searching Algorithm}
-					\begin{algorithmic}[1]
-						\STATE $K = \emptyset$
-						\STATE $d_i = 0, \forall i \in N$
-						\FOR {$i\in N$}
-							\STATE $C = \emptyset$
-							\STATE $Q = \emptyset$
-							\IF {$d_i == 0$}
-								\STATE $d_i = 1$
-								\STATE $C = C\cup \{i\}$
-								\STATE Q.append(i)
-								\WHILE {$Q\ne \emptyset$}
-									\STATE v = Q.pop()
-									\FOR {$u \in \bar{FS}(v)$}
-										\IF {$d_u == 0$}
-											\STATE $d_u = 1$
-											\STATE $C = C \cup \{u\}$
-											\STATE Q.append(u)
-										\ENDIF
-									\ENDFOR
-								\ENDWHILE
-							\ENDIF
-							\STATE $K=K\cup C$
-						\ENDFOR
-					\end{algorithmic}
-				\end{algorithm}
-			
-		\section{Knapsack Problem}
-			\subsection{Knapsack Problem Formulation}
-				Consider the knapsack set KNAP
-				\begin{equation}conv(KNAP)= conv(\{x\in \mathbb{B}^n|\sum_{j\in N}a_jx_j\le b\})\end{equation}
-				in where\\
-				- $N = \{1, 2, ..., n\}$\\
-				- With out lost of generality, assume that $a_j > 0, \forall j \in N$ and $a_j < b, \forall j \in N$
-
-			\subsection{Valid Inequalities for a Relaxation}
-				For $P=\{x\in \mathbb{B}^n | Ax\le b\}$, each row can be regard as a Knapsack problem, i.e. for row $i$
-				\begin{equation}
-					P_i = \{x\in \mathbb{B}^n | a_i^T x \le b_i\} 
-				\end{equation}
-				is a relaxation of $P$, therefore,
-				\begin{equation}
-					P\subseteq P_i, \forall i=1,2,...,m 
-				\end{equation}
-				\begin{equation}
-					P\subseteq \cap_{i=1}^m P_i 
-				\end{equation}
-				So any inequality valid for a relaxation of an IP is also valid for IP itself.
-				
-			\subsection{Cover and Extended Cover}
-				A set $C\subseteq N$ is a cover if $\sum_{j\in C} a_j > b$, a cover $C$ is minimal cover if
-				\begin{equation}
-					C\subseteq N | \sum_{j\in C}a_j>b, \sum_{j\in C\setminus k} a_j < b, \forall k \in C 
-				\end{equation}
-				For a cover $C$, we can have the cover inequality
-				\begin{equation}
-					\sum_{j\in C}x_j \le |C|-1
-				\end{equation}
-				The inequality is trivial considering the pigeonhole principle.\\
-				$C\subseteq N$ is a minimal cover, then $E(C)$ is defined as following:
-				\begin{equation}
-					E(C) = C\cup \{j \in N | a_j \ge a_i, \forall i \in C\}
-				\end{equation}
-				is called an extended cover. Then we have,
-				\begin{equation}
-					\sum_{i\in E(C)} x_i \le |C| - 1 \text{ dominates } \sum_{i\in C} x_i \le |C| - 1
-				\end{equation}
-				and
-				\begin{equation}
-					\sum_{i\in E(C)} x_i \le |C| - 1 \text{ dominates } \sum_{i\in E(C)} x_i \le |E(C)| - 1
-				\end{equation}
-				Hereby we need to prove that $\sum_{i\in E(C)} x_i \le |C| - 1$ is valid, by contradiction.\\
-				\framebox{\textbf{Proof:???}} Suppose $x^R \in KNAP$, $R$ is a feasible solution, Where
-				\begin{equation}
-					x^R_j = \begin{cases}1, \quad \text{if $j\in R$} \\ 0, \quad \text{otherwise}\end{cases} 
-				\end{equation}
-				Then
-				\begin{equation}
-					\sum_{j\in E(C)}x^R_j \ge |C| \Rightarrow |R \cap E(C)| \ge |C|  
-				\end{equation}
-				therefore
-				\begin{equation}
-					\sum_{j\in R}a_j \ge \sum_{j\in R \cap E(C)} a_j \ge \sum_{j\in C} a_j > b 
-				\end{equation}
-				which means $R$ is a cover, it is contradict to $\sum_{j\in E(C)}x^R_j \ge |C|$ so $x^R \notin KNAP$
-
-			\subsection{Dimension of KNAP}
-				$conv(KNAP)$ is full dimension, i.e. $dim(conv(KNAP))=n$.\\
-				\framebox{\textbf{Proof:}} $0, e_j, \forall j\in N$ are $n + 1$ affinely independent points in $conv(KNAP)$\\
-
-			\subsection{Inequalities and Facets of conv(KNAP)}
-				\subsubsection{Type 1 (Lower Bound and Upper Bound Constraints):}
-					- $x_k\ge 0$ is a facet of $conv(KNAP)$\\
-					\framebox{\textbf{Proof:}} $0, e_j, \forall j\in N\setminus k$ are $n$ affinely independent points that satisfied $x_k=0$\\
-					- $x_k\le 1$ is a facet iff $a_j + a_k \le b, \forall j\in N \setminus k$\\
-					\framebox{\textbf{Proof:}} $e_k, e_j+e_k, \forall j \in N\setminus k$ are $n$ affinely independent points that satisfied $x_k = 1$
-
-				\subsubsection{Type 2 (Extended Cover)}
-					Order the variables so that $a_1 \ge a_2 \ge \dots \ge a_n$, therefore $a_1 = a_{max}$\\
-					Let $C$ be a cover with $\{j_1, j_2, \dots, j_r\}$ where $j_1 < j_2 < \dots < j_r$ so that $a_{j_1} \ge a_{j_2} \ge \dots \ge a_{j_r}$\\
-					Let $p = \min\{j | j\in N \setminus E(C)\}$\\
-					Then
-					\begin{equation}
-						\sum_{j\in E(C)} x_j \le |C| - 1 
-					\end{equation}
-					is a facet of $conv(KNAP)$ if\\
-					- $C = N$\\
-					\framebox{\textbf{Proof:}}
-					\begin{equation}
-						R_k = C\setminus k, \forall k \in C = N \setminus k, \forall k \in N 
-					\end{equation}
-					have $|N|$ affinely independent vectors\\
-					- $E(C) = N$ and $\sum_{j\in C \setminus \{j_1, j_2\}} a_j + a_{max} \le b$\\
-					\framebox{\textbf{Proof:}} ($j_1, j_2$ are two heaviest elements in $C$)
-					\begin{equation}
-						S_k = C\setminus \{j_1, j_2\}\cup \{k\}, \forall k\in E(C)\setminus C 
-					\end{equation}
-					$R_k\cup S_k$ have $|C|+|E(C) \setminus C| = |E(C)| = |N|$ affinely independent vectors\\
-					- $C = E(C)$ and $\sum_{j\in C \setminus j_1} a_j + a_p \le b$)\\
-					\framebox{\textbf{Proof:}} ($j_1$ is the heaviest element in $C$, $k$ is the lightest element outside extended cover)
-					\begin{equation}
-						T_k = C \setminus j_i \cup \{k\}, \forall k\in N\setminus E(C) 
-					\end{equation}
-					$R_k \cup T_k$ have $|N \setminus E(C)| + |E(C)| = |N\setminus C| + |C| = |N|$ affinely independent vectors\\
-					- $C \subset E(C) \subset N$ and $\sum_{j\in C \setminus \{j_1, j_2\}} a_j + a_{max} \le b$ and $\sum_{j\in C \setminus j_1} a_j + a_p \le b$\\
-					\framebox{\textbf{Proof:}}$S_k \cup T_k$ have $|E(C) \setminus C| + |N \setminus E(C)| = |N|$ affinely independent vectors
-
-			\subsection{Lifting}
-				\subsubsection{Up Lifting}
-					For KNAP problem
-					\begin{equation}
-						KNAP = \{x\in \mathbb{B}^n | \sum_j a_jx_j \le b\} 
-					\end{equation}
-					For $P=conv(KNAP)$ denote\\
-					\begin{align}
-						&P_{k_1, k_2, ..., k_m} \\
-						&\quad =conv(KNAP\cap \{x\in \mathbb{B}^{n}|x_{k_1}=x_{k_2}=\dots=x_{k_m}=0\}) 
-					\end{align}
-					Therefore
-					\begin{align}
-						&P_{k_1, k_2, ..., k_m} \\
-						&\quad=conv(KNAP\cap \{x\in \mathbb{B}^{n}|\sum_{j\in N\setminus \{k_1, k_2, ..., k_m\}} a_j x_j \le b\}) 
-					\end{align}
-					The $C=N$ cover inequality for $P_{k_1, k_2, ..., k_m}$ implies
-					\begin{equation}
-						\sum_{j\in N\setminus \{k_1, k_2, ..., k_m\}} x_j \le n-m-1 
-					\end{equation}
-					is a facet of $P_{k_1, k_2, ..., k_m}$\\
-					The lifting process is to find a facet for $P_{k_1, k_2, ..., k_{m-1}}$ using facet of $P_{k_1, k_2, ..., k_m}$, i.e. find $\alpha_{m}$ for the following constraint to be a facet.
-					\begin{equation}
-						\alpha_m x_m + \sum_{j\in N\setminus \{k_1, k_2, ..., k_m\}} x_j \le n-m-1 
-					\end{equation}
-					If $x_m=0$, $\alpha_m \ge 0$,\\
-					If $x_m=1$, $\alpha_m \le (n-m+1) - \gamma$ where
-					\begin{align}
-						\gamma &= \max\{\sum_{j\in N\setminus\{k_1, k_2, ..., k_m\}}x_j|x\in P_{k_1, k_2, ..., k_{m-1}}, x_m=1\} \\
-						&= \max\{\sum_{j\in N\setminus\{k_1, k_2, ..., k_m\}}x_j|\sum_{j \in N \setminus \{k_1, k_2, ..., k_m\}}a_jx_j\le b-a_m\} 
-					\end{align}
-					Then let $\alpha_m = n-m+1-\gamma$, we uplifted a constraint. Repeat this procedure for $\{k_1, k_2, ..., k_m\}$ and finally we can find a family of facets for $conv(KNAP)$
-
-
-				\subsubsection{Down Lifting}
-					Similar to up lifting, we can perform the lifting in a different way.\\
-					Denote
-					\begin{align}
-						&P_{k_1, k_2, ..., k_m}^{'} \\
-						&\quad =conv(KNAP\cap \{x\in \mathbb{B}^{n}|x_{k_1}=x_{k_2}=\dots=x_{k_m}=1\}) 
-					\end{align}
-
-			\subsection{Separation of a Cover Inequality}
-				$C\in N$ is a cover if $\sum_{i\in C} a_i > b$, let $C$ be a minimal cover
-				\begin{align}
-					&\sum_{i\in C}x_i \le |C| - 1 \\
-					\Rightarrow \quad & |C| - \sum_{i\in C}x_i = \sum_{i \in C}(1-x_i)\ge 1 \\
-				\end{align}
-				let $\bar{x}$ be a fractional solution of $\{\sum_{i\in N} a_ix_i \le b, x_i \in [0, 1], i\in N\}$, find a cover $C$ of which $\sum_{i\in C}(1-\bar{x_i})<1$\\
-				Decision variable:
-				\begin{equation}
-					y_i = \begin{cases}1, \quad \text{if } i\in C\\ 0, \quad \text{otherwise}\end{cases}
-				\end{equation}
-				\begin{align}
-					\min \quad & \sum_{i\in N} (1-\bar{x_i})y_i = z \\
-					\text{s.t.} \quad & \sum_{i\in N}a_iy_i \ge b+1 \\
-					&y_i \in \{0, 1\}, i\in N
-				\end{align}
-				if $z<1$, then the cover cut associated with $y$ is violation by $\bar{x}$
-
-		\section{Network Flow Problem}
-			(Network Flow Problem is a special type of IP problem, its linear relaxation is the convex hull of the original problem.)
-			\subsection{Shortest Path Problem}
-				A graph $G=(A, N)$ is a directed graph\\
+		\section{Inequalities and Facets of conv(VP)}
+			\framebox{\textbf{Example:}}\\
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 1.8cm]
-						\node (1) [circleNode, label=above:start] {1};
-						\node (2) [circleNode, right of=1, yshift=1cm] {2};
-						\node (3) [circleNode, right of=1, yshift=-1cm] {3};
-						\node (4) [circleNode, right of=2] {4};
-						\node (5) [circleNode, right of=3] {5};
-						\node (6) [circleNode, label=above:end, right of=4, yshift=-1cm] {6};
-						\draw [arrow] (1) -- (2);
-						\draw [arrow] (1) -- (3);
-						\draw [arrow] (2) -- (3);
-						\draw [arrow] (2) -- (4);
-						\draw [arrow] (3) -- (5);
-						\draw [arrow] (4) -- (6);
-						\draw [arrow] (5) -- (6);
-						\draw [arrow] (5) -- (4);
-						\draw [arrow] (2) -- (5);
+					\begin{tikzpicture}[node distance = 1.2cm]
+						\node (1) [circleNode] {1};
+						\node (2) [circleNode, below of=1, xshift=-2cm] {2};
+						\node (3) [circleNode, below of=1, xshift=2cm] {3};
+						\node (4) [circleNode, below of=2, xshift=2cm] {4};
+						\node (5) [circleNode, below of=4, xshift=-0.9cm] {5};
+						\node (6) [circleNode, below of=4, xshift=0.9cm] {6};
+						\draw (1) -- (2);
+						\draw (1) -- (3);
+						\draw (1) -- (4);
+						\draw (3) -- (4);
+						\draw (2) -- (5);
+						\draw (5) -- (6);
+						\draw (6) -- (3);
 					\end{tikzpicture}
-					\caption{Example of directed graph}
+					\caption{Example}
 				\end{figure}
-				Denote:\\
+
+			\subsection{Type 1 (Nonnegative Constraints)}
+				$x_i \ge 0$ induce facets.\\
+				\framebox{\textbf{Proof:}}
 				\begin{equation}
-					x_{ij} = \begin{cases}1, &\text{if goes from } i \text{ to } j\\ 0, & \text{otherwise}\end{cases}
+					rank\left(\left[\begin{matrix}0 & 0 \\ 0 & I_{|V|}\end{matrix}\right]\right) = |V| + 1 
 				\end{equation}
-				The shortest path problem can be formulated as the following:\\
-				\begin{align}
-					\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-					& \sum_{i \in N\setminus(\{S\}\cup\{E\}), (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 0 \\
-					& \sum_{i=\{S\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 1 \\
-					& \sum_{i=\{E\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = -1 \\
-					& x_{ij} \in [0,1], (i,j)\in A 
-				\end{align}
-				Although initially $x_{ij} \in [0,1]$, in the optimized solution, $x\in \{0, 1\}$.
 
-			\subsection{Maximum Flow Problem}
-				\begin{align}
-					\min &\sum_{(i, j)\in A} F \\
-					& \sum_{i \in N\setminus(\{S\}\cup\{E\}), (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 0 \\
-					& \sum_{i=\{S\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = F \\
-					& \sum_{i=\{E\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = -F \\
-					& l_{ij} \le x_{ij} \le u_{ij}, (i,j)\in A 
-				\end{align}
-				In where $F$ means the flow from source to target.
+			\subsection{Type 2 (Neighborhood Constraints)}
+				$x_i + x_j \le 1$ is a valid constraint, but it \textbf{DOES NOT} always induce facet.
 
-			\subsection{Minimum Cost Flow}
-				The shortest path problem is a special case of Minimum Cost Flow Problem, which can be formulated as the following:\\
-				\begin{align}
-					\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-					& \sum_{i \in N\setminus(\{S\}\cup\{E\}), (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 0 \\
-					& \sum_{i=\{S\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 1 \\
-					& \sum_{i=\{E\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = -1 \\
-					& x_{ij} \in [0,1], (i,j)\in A 
-				\end{align}				
+			\subsection{Type 3 (Odd Hole)}
+				$H$ is an odd hole if it contains circle of $k$ nodes, such that $k$ is odd and there is no cords. e.g. \{1, 2, 5, 6, 3\}. Then, the following inequality is valid,
+				\begin{equation}
+					\sum_{i\in H}x_i\le \frac{|H|-1}2 
+				\end{equation}
+				Odd Hole inequality \textbf{DOES NOT} always induce facets.\\
+				This inequality can be derived from Gomory cut.
+
+			\subsection{Type 4 (Maximum Clique)}
+				$C$ is a maximum clique, then the following inequality is valid and induce a facet,
+				\begin{equation}
+					\sum_{i\in C} x_i \le 1 
+				\end{equation}
+				\framebox{\textbf{Proof:}}\\
+					First, if $C=V$
+					\begin{equation}
+						rank\left(\left[I\right]\right) = |C| = |V| 			
+					\end{equation}
+					Second, if $C$ is a subset of $V$, for each vertice in $V \setminus C$, there should be at least one vertice in $C$ that is not linked with it. Therefore for each vertice in $C$ we can find a packing.
+
+		\section{Gomory Cut in Set Covering}
+			Consider a graph $G=(V, E)$, the covering problem is
+			\begin{equation}
+				\sum_{e\in \delta(i)}x_e \le 1, i\in V, x_e\in \{0, 1\}, e\in E
+			\end{equation}
+			For $T\subset V$, denote $\delta(i)$ as all edges induce to $i\in V$, denote $E(T) \subset E$ as all the edges linked between $(i, j), i\in T, j\in T$, therefore we have
+			\begin{equation}
+				\sum_{i\in T}\sum_{e\in \delta(i)}x_e \le |T| 
+			\end{equation}
+			For edges linking $i \in T, j \in T$, count them twice, for edges linking $i\in T, j\notin T$, count them once.We can have a new constraint
+			\begin{equation}
+				2\sum_{e\in E(T)}x_e + \sum_{e\in \delta(V\setminus T, T)}x_e \le |T| 
+			\end{equation}
+			Perform the Gomory Cut, the following constraint is a valid:
+			\begin{equation}
+				\sum_{e\in E(T)}x_e \le \lfloor \frac{|T|}2 \rfloor 
+			\end{equation}
+						
+	\chapter{Traveling Salesman Problem}
+		\section{TSP Formulation (Asymmetric)}
+			Consider a Graph $G=\{A, N\}$\\
+			Denote:\\
+			\begin{equation}
+				x_{ij} = \begin{cases}1, &\text{if goes from } i \text{ to } j\\ 0, & \text{otherwise}\end{cases}
+			\end{equation}
+			\textbf{Dantzig-Fulkerson-Johnson Formulation:}
+			\begin{align}
+				\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
+				& \sum_{j \in N, (i,j)\in A} x_{ij} = 1 \\
+				& \sum_{i \in N, (i,j)\in A} x_{ij} = 1 \\
+				& \sum_{j\notin S, i\in S, (i,j)\in A} x_{ij} = 1\text{ or } \sum_{i, j \in S, (i, j) \in A} x_{ij} \le |S| - 1 \\
+				& \forall S \subset N, S\ne \emptyset, 2\le |S| \le n-1 
+			\end{align}
+			\textbf{Miller-Tucker-Zemlin Formulation:}
+			\begin{align}
+				\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
+				& \sum_{j \in N, (i,j)\in A} x_ij = 1 \\
+				& \sum_{i \in N, (i,j)\in A} x_ij = 1 \\
+				& u_i - u_j +nx_{ij}\le n-1 \quad i, j\in{2, ... , n}, (i, j)\in A \\
+				& u_1 = 1 \\
+				& 2 \le u_i \le n, i\in N, i>1 
+			\end{align}
+
+		\section{Sub-tour Searching Algorithm}
+			In the graph $G=(N, A)$, let $\bar{G}=(N, \bar{A})$ be the connected components of graph, where
+			\begin{equation}\bar{G}=(G, \bar{A}), \bar{A}=\{(i, j) \in A | \bar{x_{ij}}=1\} \end{equation}
+			denote
+			\begin{equation}\bar{FS}(i) = \{(i,j)\in \bar{A}\} \end{equation}
+			Then the algorithm to find all sub-tour is the following:
+			\begin{algorithm}[!ht]
+				\caption{Sub-tour Searching Algorithm}
+				\begin{algorithmic}[1]
+					\STATE $K = \emptyset$
+					\STATE $d_i = 0, \forall i \in N$
+					\FOR {$i\in N$}
+						\STATE $C = \emptyset$
+						\STATE $Q = \emptyset$
+						\IF {$d_i == 0$}
+							\STATE $d_i = 1$
+							\STATE $C = C\cup \{i\}$
+							\STATE Q.append(i)
+							\WHILE {$Q\ne \emptyset$}
+								\STATE v = Q.pop()
+								\FOR {$u \in \bar{FS}(v)$}
+									\IF {$d_u == 0$}
+										\STATE $d_u = 1$
+										\STATE $C = C \cup \{u\}$
+										\STATE Q.append(u)
+									\ENDIF
+								\ENDFOR
+							\ENDWHILE
+						\ENDIF
+						\STATE $K=K\cup C$
+					\ENDFOR
+				\end{algorithmic}
+			\end{algorithm}
+		
+	\chapter{Knapsack Problem}
+		\section{Knapsack Problem Formulation}
+			Consider the knapsack set KNAP
+			\begin{equation}conv(KNAP)= conv(\{x\in \mathbb{B}^n|\sum_{j\in N}a_jx_j\le b\})\end{equation}
+			in where\\
+			- $N = \{1, 2, ..., n\}$\\
+			- With out lost of generality, assume that $a_j > 0, \forall j \in N$ and $a_j < b, \forall j \in N$
+
+		\section{Valid Inequalities for a Relaxation}
+			For $P=\{x\in \mathbb{B}^n | Ax\le b\}$, each row can be regard as a Knapsack problem, i.e. for row $i$
+			\begin{equation}
+				P_i = \{x\in \mathbb{B}^n | a_i^T x \le b_i\} 
+			\end{equation}
+			is a relaxation of $P$, therefore,
+			\begin{equation}
+				P\subseteq P_i, \forall i=1,2,...,m 
+			\end{equation}
+			\begin{equation}
+				P\subseteq \cap_{i=1}^m P_i 
+			\end{equation}
+			So any inequality valid for a relaxation of an IP is also valid for IP itself.
 			
-			\subsection{Unimodularity}
-				\subsubsection{Unimodular Matrix and Total Unimodular Matrix}
-					- A unimodular matrix $M$ is a squared matrix, where $det(M)=1$ or $-1$.\\
-					- Total unimodular matrix is a matrix where all its sub-matrices are unimodular matrix.
+		\section{Cover and Extended Cover}
+			A set $C\subseteq N$ is a cover if $\sum_{j\in C} a_j > b$, a cover $C$ is minimal cover if
+			\begin{equation}
+				C\subseteq N | \sum_{j\in C}a_j>b, \sum_{j\in C\setminus k} a_j < b, \forall k \in C 
+			\end{equation}
+			For a cover $C$, we can have the cover inequality
+			\begin{equation}
+				\sum_{j\in C}x_j \le |C|-1
+			\end{equation}
+			The inequality is trivial considering the pigeonhole principle.\\
+			$C\subseteq N$ is a minimal cover, then $E(C)$ is defined as following:
+			\begin{equation}
+				E(C) = C\cup \{j \in N | a_j \ge a_i, \forall i \in C\}
+			\end{equation}
+			is called an extended cover. Then we have,
+			\begin{equation}
+				\sum_{i\in E(C)} x_i \le |C| - 1 \text{ dominates } \sum_{i\in C} x_i \le |C| - 1
+			\end{equation}
+			and
+			\begin{equation}
+				\sum_{i\in E(C)} x_i \le |C| - 1 \text{ dominates } \sum_{i\in E(C)} x_i \le |E(C)| - 1
+			\end{equation}
+			Hereby we need to prove that $\sum_{i\in E(C)} x_i \le |C| - 1$ is valid, by contradiction.\\
+			\framebox{\textbf{Proof:???}} Suppose $x^R \in KNAP$, $R$ is a feasible solution, Where
+			\begin{equation}
+				x^R_j = \begin{cases}1, \quad \text{if $j\in R$} \\ 0, \quad \text{otherwise}\end{cases} 
+			\end{equation}
+			Then
+			\begin{equation}
+				\sum_{j\in E(C)}x^R_j \ge |C| \Rightarrow |R \cap E(C)| \ge |C|  
+			\end{equation}
+			therefore
+			\begin{equation}
+				\sum_{j\in R}a_j \ge \sum_{j\in R \cap E(C)} a_j \ge \sum_{j\in C} a_j > b 
+			\end{equation}
+			which means $R$ is a cover, it is contradict to $\sum_{j\in E(C)}x^R_j \ge |C|$ so $x^R \notin KNAP$
 
-				\subsubsection{Importance of Unimodular Matrix}
-					Let $M_{m\times m}$ be a unimodular matrix, if $b\in \mathbb{Z}^m$, the solution for $Mx=b$ is always integer.\\
-					\framebox{\textbf{Proof:}} By Cramer's Rule
-					\begin{equation}
-						x_i = \frac{det{M_i}}{det{M}} 
-					\end{equation}
-					in which $M_i$ is matrix $M$ replace $i$th column with $b$. Therefore $det(M_i)$ is integer. Also, $det(M)\ne 0$, so $det(M)=1$ or $det(M)=-1$. Proved.
+		\section{Dimension of KNAP}
+			$conv(KNAP)$ is full dimension, i.e. $dim(conv(KNAP))=n$.\\
+			\framebox{\textbf{Proof:}} $0, e_j, \forall j\in N$ are $n + 1$ affinely independent points in $conv(KNAP)$\\
 
-				\subsubsection{Structures of Total Unimodular Matrix}
-					\textbf{Structure 1:}
-						Matrix $M$ that has only 1, -1, 0 enters and each column has at most 2 non-zeros is a TU matrix if it satisfies the following conditions:\\
-						We can split the rows in to tops and bottoms, such that for all columns $j$ having 2 non-zeros\\
-						- If the non-zeros have the same sign, then one value should be in top and the other should be in bottom\\
-						- If the non-zeros have the different sign, then both of them should be in top or both of them should be in bottom\\
-					\textbf{Structure 2:}
-						If all the columns in matrix $M$ has only 0 or consecutive 1s (or -1s), matrix $M$ is a TU matrix
+		\section{Inequalities and Facets of conv(KNAP)}
+			\subsection{Type 1 (Lower Bound and Upper Bound Constraints):}
+				- $x_k\ge 0$ is a facet of $conv(KNAP)$\\
+				\framebox{\textbf{Proof:}} $0, e_j, \forall j\in N\setminus k$ are $n$ affinely independent points that satisfied $x_k=0$\\
+				- $x_k\le 1$ is a facet iff $a_j + a_k \le b, \forall j\in N \setminus k$\\
+				\framebox{\textbf{Proof:}} $e_k, e_j+e_k, \forall j \in N\setminus k$ are $n$ affinely independent points that satisfied $x_k = 1$
 
-				\subsubsection{Construct a New Unimodular Matrix}
-					Let $F$ be a unimodular matrix, then
-					\begin{equation}
-						\left[\begin{matrix}F \\ I\end{matrix}\right] 
-					\end{equation}
-					is a unimodular matrix, also
-					\begin{equation}
-						\left[\begin{matrix}F & 0 \\ I & I\end{matrix}\right] 
-					\end{equation}
-					is a unimodular matrix.
+			\subsection{Type 2 (Extended Cover)}
+				Order the variables so that $a_1 \ge a_2 \ge \dots \ge a_n$, therefore $a_1 = a_{max}$\\
+				Let $C$ be a cover with $\{j_1, j_2, \dots, j_r\}$ where $j_1 < j_2 < \dots < j_r$ so that $a_{j_1} \ge a_{j_2} \ge \dots \ge a_{j_r}$\\
+				Let $p = \min\{j | j\in N \setminus E(C)\}$\\
+				Then
+				\begin{equation}
+					\sum_{j\in E(C)} x_j \le |C| - 1 
+				\end{equation}
+				is a facet of $conv(KNAP)$ if\\
+				- $C = N$\\
+				\framebox{\textbf{Proof:}}
+				\begin{equation}
+					R_k = C\setminus k, \forall k \in C = N \setminus k, \forall k \in N 
+				\end{equation}
+				have $|N|$ affinely independent vectors\\
+				- $E(C) = N$ and $\sum_{j\in C \setminus \{j_1, j_2\}} a_j + a_{max} \le b$\\
+				\framebox{\textbf{Proof:}} ($j_1, j_2$ are two heaviest elements in $C$)
+				\begin{equation}
+					S_k = C\setminus \{j_1, j_2\}\cup \{k\}, \forall k\in E(C)\setminus C 
+				\end{equation}
+				$R_k\cup S_k$ have $|C|+|E(C) \setminus C| = |E(C)| = |N|$ affinely independent vectors\\
+				- $C = E(C)$ and $\sum_{j\in C \setminus j_1} a_j + a_p \le b$)\\
+				\framebox{\textbf{Proof:}} ($j_1$ is the heaviest element in $C$, $k$ is the lightest element outside extended cover)
+				\begin{equation}
+					T_k = C \setminus j_i \cup \{k\}, \forall k\in N\setminus E(C) 
+				\end{equation}
+				$R_k \cup T_k$ have $|N \setminus E(C)| + |E(C)| = |N\setminus C| + |C| = |N|$ affinely independent vectors\\
+				- $C \subset E(C) \subset N$ and $\sum_{j\in C \setminus \{j_1, j_2\}} a_j + a_{max} \le b$ and $\sum_{j\in C \setminus j_1} a_j + a_p \le b$\\
+				\framebox{\textbf{Proof:}}$S_k \cup T_k$ have $|E(C) \setminus C| + |N \setminus E(C)| = |N|$ affinely independent vectors
+
+		\section{Lifting}
+			\subsection{Up Lifting}
+				For KNAP problem
+				\begin{equation}
+					KNAP = \{x\in \mathbb{B}^n | \sum_j a_jx_j \le b\} 
+				\end{equation}
+				For $P=conv(KNAP)$ denote\\
+				\begin{align}
+					&P_{k_1, k_2, ..., k_m} \\
+					&\quad =conv(KNAP\cap \{x\in \mathbb{B}^{n}|x_{k_1}=x_{k_2}=\dots=x_{k_m}=0\}) 
+				\end{align}
+				Therefore
+				\begin{align}
+					&P_{k_1, k_2, ..., k_m} \\
+					&\quad=conv(KNAP\cap \{x\in \mathbb{B}^{n}|\sum_{j\in N\setminus \{k_1, k_2, ..., k_m\}} a_j x_j \le b\}) 
+				\end{align}
+				The $C=N$ cover inequality for $P_{k_1, k_2, ..., k_m}$ implies
+				\begin{equation}
+					\sum_{j\in N\setminus \{k_1, k_2, ..., k_m\}} x_j \le n-m-1 
+				\end{equation}
+				is a facet of $P_{k_1, k_2, ..., k_m}$\\
+				The lifting process is to find a facet for $P_{k_1, k_2, ..., k_{m-1}}$ using facet of $P_{k_1, k_2, ..., k_m}$, i.e. find $\alpha_{m}$ for the following constraint to be a facet.
+				\begin{equation}
+					\alpha_m x_m + \sum_{j\in N\setminus \{k_1, k_2, ..., k_m\}} x_j \le n-m-1 
+				\end{equation}
+				If $x_m=0$, $\alpha_m \ge 0$,\\
+				If $x_m=1$, $\alpha_m \le (n-m+1) - \gamma$ where
+				\begin{align}
+					\gamma &= \max\{\sum_{j\in N\setminus\{k_1, k_2, ..., k_m\}}x_j|x\in P_{k_1, k_2, ..., k_{m-1}}, x_m=1\} \\
+					&= \max\{\sum_{j\in N\setminus\{k_1, k_2, ..., k_m\}}x_j|\sum_{j \in N \setminus \{k_1, k_2, ..., k_m\}}a_jx_j\le b-a_m\} 
+				\end{align}
+				Then let $\alpha_m = n-m+1-\gamma$, we uplifted a constraint. Repeat this procedure for $\{k_1, k_2, ..., k_m\}$ and finally we can find a family of facets for $conv(KNAP)$
+
+
+			\subsection{Down Lifting}
+				Similar to up lifting, we can perform the lifting in a different way.\\
+				Denote
+				\begin{align}
+					&P_{k_1, k_2, ..., k_m}^{'} \\
+					&\quad =conv(KNAP\cap \{x\in \mathbb{B}^{n}|x_{k_1}=x_{k_2}=\dots=x_{k_m}=1\}) 
+				\end{align}
+
+		\section{Separation of a Cover Inequality}
+			$C\in N$ is a cover if $\sum_{i\in C} a_i > b$, let $C$ be a minimal cover
+			\begin{align}
+				&\sum_{i\in C}x_i \le |C| - 1 \\
+				\Rightarrow \quad & |C| - \sum_{i\in C}x_i = \sum_{i \in C}(1-x_i)\ge 1 \\
+			\end{align}
+			let $\bar{x}$ be a fractional solution of $\{\sum_{i\in N} a_ix_i \le b, x_i \in [0, 1], i\in N\}$, find a cover $C$ of which $\sum_{i\in C}(1-\bar{x_i})<1$\\
+			Decision variable:
+			\begin{equation}
+				y_i = \begin{cases}1, \quad \text{if } i\in C\\ 0, \quad \text{otherwise}\end{cases}
+			\end{equation}
+			\begin{align}
+				\min \quad & \sum_{i\in N} (1-\bar{x_i})y_i = z \\
+				\text{s.t.} \quad & \sum_{i\in N}a_iy_i \ge b+1 \\
+				&y_i \in \{0, 1\}, i\in N
+			\end{align}
+			if $z<1$, then the cover cut associated with $y$ is violation by $\bar{x}$
+
+	\chapter{Network Flow Problem}
+		(Network Flow Problem is a special type of IP problem, its linear relaxation is the convex hull of the original problem.)
+		\section{Shortest Path Problem}
+			A graph $G=(A, N)$ is a directed graph\\
+			\begin{figure}[!ht]
+				\centering
+				\begin{tikzpicture}[node distance = 1.8cm]
+					\node (1) [circleNode, label=above:start] {1};
+					\node (2) [circleNode, right of=1, yshift=1cm] {2};
+					\node (3) [circleNode, right of=1, yshift=-1cm] {3};
+					\node (4) [circleNode, right of=2] {4};
+					\node (5) [circleNode, right of=3] {5};
+					\node (6) [circleNode, label=above:end, right of=4, yshift=-1cm] {6};
+					\draw [arrow] (1) -- (2);
+					\draw [arrow] (1) -- (3);
+					\draw [arrow] (2) -- (3);
+					\draw [arrow] (2) -- (4);
+					\draw [arrow] (3) -- (5);
+					\draw [arrow] (4) -- (6);
+					\draw [arrow] (5) -- (6);
+					\draw [arrow] (5) -- (4);
+					\draw [arrow] (2) -- (5);
+				\end{tikzpicture}
+				\caption{Example of directed graph}
+			\end{figure}
+			Denote:\\
+			\begin{equation}
+				x_{ij} = \begin{cases}1, &\text{if goes from } i \text{ to } j\\ 0, & \text{otherwise}\end{cases}
+			\end{equation}
+			The shortest path problem can be formulated as the following:\\
+			\begin{align}
+				\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
+				& \sum_{i \in N\setminus(\{S\}\cup\{E\}), (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 0 \\
+				& \sum_{i=\{S\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 1 \\
+				& \sum_{i=\{E\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = -1 \\
+				& x_{ij} \in [0,1], (i,j)\in A 
+			\end{align}
+			Although initially $x_{ij} \in [0,1]$, in the optimized solution, $x\in \{0, 1\}$.
+
+		\section{Maximum Flow Problem}
+			\begin{align}
+				\min &\sum_{(i, j)\in A} F \\
+				& \sum_{i \in N\setminus(\{S\}\cup\{E\}), (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 0 \\
+				& \sum_{i=\{S\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = F \\
+				& \sum_{i=\{E\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = -F \\
+				& l_{ij} \le x_{ij} \le u_{ij}, (i,j)\in A 
+			\end{align}
+			In where $F$ means the flow from source to target.
+
+		\section{Minimum Cost Flow}
+			The shortest path problem is a special case of Minimum Cost Flow Problem, which can be formulated as the following:\\
+			\begin{align}
+				\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
+				& \sum_{i \in N\setminus(\{S\}\cup\{E\}), (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 0 \\
+				& \sum_{i=\{S\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = 1 \\
+				& \sum_{i=\{E\}, (i,j)\in A} x_{ij} - \sum_{j \in N, (i,j)\in A} x_{ji} = -1 \\
+				& x_{ij} \in [0,1], (i,j)\in A 
+			\end{align}				
+		
+		\section{Unimodularity}
+			\subsection{Unimodular Matrix and Total Unimodular Matrix}
+				- A unimodular matrix $M$ is a squared matrix, where $det(M)=1$ or $-1$.\\
+				- Total unimodular matrix is a matrix where all its sub-matrices are unimodular matrix.
+
+			\subsection{Importance of Unimodular Matrix}
+				Let $M_{m\times m}$ be a unimodular matrix, if $b\in \mathbb{Z}^m$, the solution for $Mx=b$ is always integer.\\
+				\framebox{\textbf{Proof:}} By Cramer's Rule
+				\begin{equation}
+					x_i = \frac{det{M_i}}{det{M}} 
+				\end{equation}
+				in which $M_i$ is matrix $M$ replace $i$th column with $b$. Therefore $det(M_i)$ is integer. Also, $det(M)\ne 0$, so $det(M)=1$ or $det(M)=-1$. Proved.
+
+			\subsection{Structures of Total Unimodular Matrix}
+				\textbf{Structure 1:}
+					Matrix $M$ that has only 1, -1, 0 enters and each column has at most 2 non-zeros is a TU matrix if it satisfies the following conditions:\\
+					We can split the rows in to tops and bottoms, such that for all columns $j$ having 2 non-zeros\\
+					- If the non-zeros have the same sign, then one value should be in top and the other should be in bottom\\
+					- If the non-zeros have the different sign, then both of them should be in top or both of them should be in bottom\\
+				\textbf{Structure 2:}
+					If all the columns in matrix $M$ has only 0 or consecutive 1s (or -1s), matrix $M$ is a TU matrix
+
+			\subsection{Construct a New Unimodular Matrix}
+				Let $F$ be a unimodular matrix, then
+				\begin{equation}
+					\left[\begin{matrix}F \\ I\end{matrix}\right] 
+				\end{equation}
+				is a unimodular matrix, also
+				\begin{equation}
+					\left[\begin{matrix}F & 0 \\ I & I\end{matrix}\right] 
+				\end{equation}
+				is a unimodular matrix.
