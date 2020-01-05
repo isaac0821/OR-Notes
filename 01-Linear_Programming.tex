@@ -30,14 +30,14 @@
 				Standard Form
 				\begin{align}
 					\min \quad & \sum_{j=1}^nc_jx_j \\
-					\text{s.t.} \quad & Ax = b \\
-									  & x \ge 0 
+					\text{s.t.} \quad & \mathbf{Ax} = \mathbf{b} \\
+									  & \mathbf{x} \ge \mathbf{0} 
 				\end{align}
 				Canonical Form
 				\begin{align}
 					\min \quad & \sum_{j=1}^nc_jx_j \\
-					\text{s.t.} \quad & Ax \le b \\
-									  & x \ge 0 
+					\text{s.t.} \quad & \mathbf{Ax} \le \mathbf{b} \\
+									  & \mathbf{x} \ge \mathbf{0}
 				\end{align}
 
 		\section{Typical Problems}
@@ -71,7 +71,7 @@
 									  & \sum_{j\in J}c_{kj}x_j \le z, \quad \forall k\in K \\
 					                  & x_j \ge 0, \quad \forall j\in J 
 				\end{align}
-			\subsection{A fractional Objective}
+			\subsection{A Fractional Objective}
 				Consider the following model statement:
 				\begin{align}
 					\min \quad & \frac{\sum_{j\in J}c_{j}x_j + \alpha}{\sum_{j\in J}d_{j}x_j + \beta} \\
@@ -104,7 +104,7 @@
 									  & z \ge 0
 				\end{align}
 
-			\subsection{A range Constraint}
+			\subsection{A Range Constraint}
 				Consider the following model statement:
 				\begin{align}
 					\min \quad & \sum_{j\in J}c_jx_j \\
@@ -121,31 +121,28 @@
 
 	\chapter{Simplex Method}
 		\section{Basic Feasible Solutions and Extreme Points}
-			\begin{definition}
-				Consider the system $\{A_{m\times n}x=b_m, x\ge 0\}$, suppose $rank(A, b) = rank(A) =m$, we can arrange $A$ and have a partition of $A$. Let $A=[B, N]$ where $B$ is $m\times m$ invertible matrix, and $N$ is a $m\times (n-m)$ matrix. The solution $x=\left[\begin{matrix}x_B\\x_N\end{matrix}\right]$ to the equation $Ax=b$, where
-				\begin{equation}
-					x_B = B^{-1}b 
-				\end{equation}
-				and
-				\begin{equation}
-					x_N = 0 
-				\end{equation}
-				is called \textbf{basic solution} of system. If $x_B \ge 0$, it is called \textbf{basic feasible solution}. If $x_B > 0$ it is called \textbf{non-degenerate basic feasible solution}. For $x_B \ge 0$, if some $x_j = 0$, those components are called \textbf{degenerated basic feasible solution}.\\
-				$B$ is called the \textbf{basic matrix}, $N$ is called \textbf{nonbasic matrix}				
+			\begin{definition}[Basic Feasible Solutions]
+				Consider the system $\{\mathbf{A_{m\times n}x} = \mathbf{b_m}, \mathbf{b_m}\ge \mathbf{0}\}$, suppose $rank(\mathbf{A}, \mathbf{b}) = rank(\mathbf{A}) = m$, we can rearrange the columns of $\mathbf{A}$ so that we have a partition of $\mathbf{A}$. Let $\mathbf{A} = \left[\begin{matrix}\mathbf{B} & \mathbf{N}\end{matrix}\right]$ where $\mathbf{B}$ is an $m\times m$ invertible matrix, and $\mathbf{N}$ is an $m\times (n-m)$ matrix. The solution $\mathbf{x}=\left[\begin{matrix}\mathbf{x_B}\\\mathbf{x_N}\end{matrix}\right]$ to the equation $\mathbf{Ax} = \mathbf{b}$, where $\mathbf{x_B} = \mathbf{B}^{-1} \mathbf{b}$ and $\mathbf{x_N} = \mathbf{0}$ is called \textbf{basic solution} of system. If $\mathbf{x_B} \ge \mathbf{0}$, it is called \textbf{basic feasible solution} or \textbf{B.F.S.}. If $\mathbf{x_B} > \mathbf{0}$ it is called \textbf{non-degenerate basic feasible solution}. For $\mathbf{x_B} \ge \mathbf{0}$, if some $x_j = 0$, those components are called \textbf{degenerated basic feasible solution}. $\mathbf{B}$ is called the \textbf{basic matrix}, $\mathbf{N}$ is called \textbf{nonbasic matrix}		
 			\end{definition}
 
 			\begin{theorem}
-				$x$ is an E.P. $\iff$ $x$ is a B.F.S
+				$\mathbf{x}$ is an extreme point $\iff$ $\mathbf{x}$ is a basic feasible solution.
 			\end{theorem}
 			
 			\begin{proof}
-				First, Let $x$ be a B.F.S., Suppose $x=\lambda u + (1 - \lambda) v$, for $u, v \in S, \lambda \in (0, 1)$\\
-				Let $I = \{i: x_i > 0\}$ Then\\
+				\fixme{This proof is lack of details.}
+				Denote $\mathcal{S}$ as feasible region. 
+
+				($\Rightarrow$) First, Let $\mathbf{x}$ be a B.F.S., Suppose $\mathbf{x} =\lambda \mathbf{u} + (1 - \lambda) \mathbf{v}$, for $\mathbf{u}, \mathbf{v} \in \mathcal{S}, \lambda \in (0, 1)$. Let $I = \{i: x_i > 0\}$ be the set of index where the inequality constraint are not tight. Then for $i \notin I$, $x_i = 0$, which implies $u_i = v_i = 0$. $\mathbf{u}, \mathbf{v} \in \mathcal{S} \Rightarrow \mathbf{Au} = \mathbf{Av} = \mathbf{b} \Rightarrow \mathbf{A (u - v)} = \mathbf{0} \Rightarrow \sum_{i = 1}^n (u_i - v_i)a_i = 0$.
+				\begin{itemize}
+					\item 
+				\end{itemize}
 				- if $i \notin I$ then $x_i = 0$, which implies $u_i = v_i = 0$
-				- $\because Au = Av = b$, $\therefore A(u-v) = 0 \Rightarrow \sum_{i=1}^n(u_i - v_i)a_i = 0$, $\because u_i = v_i = 0$, for $i\notin I$, it implies $u_i = v_i$ for $i\in I$, Hence $u=v$, $x$ is E.P.\\
-				Second, suppose $x$ is not B.F.S., i.e. $\{a_i: i \in I\}$ are linearly dependent.\\
-				Then there $\exists u\ne 0, u_i =0 , i\notin I$ such that $Au=0$.\\
-				Hence, for a small $\epsilon$, $x=\frac12(x + \epsilon u) + \frac12(x - \epsilon u)$, $x$ is not E.P.					
+				- $\because \mathbf{Au} = \mathbf{Av} = \mathbf{b}$, $\therefore \mathbf{A(u-v)} = \textbf{0} \Rightarrow \sum_{i=1}^n(u_i - v_i)a_i = 0$, $\because u_i = v_i = 0$, for $i\notin I$, it implies $u_i = v_i$ for $i\in I$, Hence $u=v$, $x$ is E.P.\\
+				
+				($\Leftarrow$) Second, suppose $\mathbf{x}$ is not B.F.S., i.e. $\{a_i: i \in I\}$ are linearly dependent.\\
+				Then there $\exists \mathbf{u}\ne \mathbf{0}, u_i =0 , i\notin I$ such that $\mathbf{Au}=\mathbf{0}$.\\
+				Hence, for a small $\epsilon$, $\mathbf{x}=\frac12(\mathbf{x} + \epsilon \mathbf{u}) + \frac12(\mathbf{x} - \epsilon \mathbf{u})$, $\mathbf{x}$ is not E.P.					
 			\end{proof}
 
 		\section{Simplex Method}
@@ -216,7 +213,8 @@
 					\end{algorithmic}
 				\end{algorithm}
 
-		\section{Find Elements in Tableau}
+		\section{Tableau Method for Simplex Method}
+			The followin is an example of using tableau to solve simplex method.
 				Initial tableau:\\
 				\begin{align}
 					\begin{tabular} {|c|c|c|c|c|c|c|c|}
@@ -390,24 +388,24 @@
 				- More accurate because round up errors will not be accumulated 
 
 				\subsubsection{Disadvantage of Revised Simplex}
-				- Need to calculate $wa_j$ for all $j \in N$ (in fact don\rq{}t need to calculated it for the variable just left the basis) 
+					- Need to calculate $wa_j$ for all $j \in N$ (in fact don\rq{}t need to calculated it for the variable just left the basis) 
 
 				\subsubsection{Computation Complexity}
-				\begin{align}
-					\begin{tabular}{|c|c|c|}
-						\hline Method & Type & Operations\\
-						\hline Simplex & $\times$ & $(m+1)(n-m+1)$\\
-						\cline{2-3} & $+$ & $m(n-m+1)$\\
-						\hline Revised Simplex & $\times$ & $(m+1)^2+m(n-m)$ \\
-						\cline{2-3} & $+$ & $m(m+1)+m(n-m)$ \\
-						\hline
-					\end{tabular} 
-				\end{align}
+					\begin{align}
+						\begin{tabular}{|c|c|c|}
+							\hline Method & Type & Operations\\
+							\hline Simplex & $\times$ & $(m+1)(n-m+1)$\\
+							\cline{2-3} & $+$ & $m(n-m+1)$\\
+							\hline Revised Simplex & $\times$ & $(m+1)^2+m(n-m)$ \\
+							\cline{2-3} & $+$ & $m(m+1)+m(n-m)$ \\
+							\hline
+						\end{tabular} 
+					\end{align}
 
 				\subsubsection{When to use?}
-				- When $m >> n$, do revise simplex method on the dual problem \\
-				- When $m \simeq n$, revise simplex method is not as good as simplex method \\
-				- When $m << n$ perfect for revise simplex method.
+					- When $m >> n$, do revise simplex method on the dual problem \\
+					- When $m \simeq n$, revise simplex method is not as good as simplex method \\
+					- When $m << n$ perfect for revise simplex method.
 				
 			\subsection{Decomposition of B inverse}
 				Let $B=\{ a_{B_1}, a_{B_2}, ..., a_{B_r}, ..., a_{B_m}\}$ and $B^{-1}$ is known.
@@ -639,6 +637,7 @@
 				If $y_k \le 0$, we can have $x_k$ as large as infinite, which means unboundedness. \\
 				If $y_k > 0$ now we can use the minimum ratio to guarantee non-negativity.\\
 				\textbf{Remember} hit the bound, basic variable leave the basis and become non-basic variable.
+
 			\subsection{Simplex Method Algorithm}
 
 			\subsection{Simplex Method Tableau}
