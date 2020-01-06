@@ -37,6 +37,271 @@
 				\end{itemize}
 			\end{itemize}
 
+		\section{Problem Manipulation}
+			\subsection{Inequalities and Equalities}
+				An inequality can be transformed into an equation by adding or subtracting the nonnegative slack or surplus variable
+				\begin{equation}
+					\sum_{j=1}^na_{ij}x_j \ge b_i \Rightarrow \sum_{j=1}^na_{ij}x_j - x_{n+1} = b_i 
+				\end{equation}
+				or
+				\begin{equation}
+					\sum_{j=1}^na_{ij}x_j \le b_i \Rightarrow \sum_{j=1}^na_{ij}x_j + x_{n+1} = b_i 
+				\end{equation}
+				Although it is not the practice, equality can be transformed into inequality too
+				\begin{equation}
+					\sum_{j=1}^na_{ij}x_j = b_i \Rightarrow \begin{cases}\sum_{j=1}^na_{ij}x_j \le b_i \\ \sum_{j=1}^na_{ij}x_j \ge b_i \end{cases} 
+				\end{equation}
+				Also, in linear programming, we only care about close set, so we will not have $<$, $>$ in the formulation, we can use the following
+				\begin{equation}
+					\sum_{j=1}^na_{ij}x_j > b_i \Rightarrow \sum_{j=1}^na_{ij}x_j \ge b_i + \epsilon 
+				\end{equation}
+				where $\epsilon$ is a small number.
+
+			\subsection{Minimization and Maximization}
+				To convert a minimization problem into a maximization problem, we can use the following to define a new objective function
+				\begin{equation}
+					\min \sum_{j=1}^nc_jx_j = -\max \sum_{j=1}^n c_jx_j 
+				\end{equation}
+
+			\subsection{Standard Form and Canonical Form}
+				Standard Form
+				\begin{align}
+					\min \quad & \sum_{j=1}^nc_jx_j \\
+					\text{s.t.} \quad & \mathbf{Ax} = \mathbf{b} \\
+									  & \mathbf{x} \ge \mathbf{0} 
+				\end{align}
+				Canonical Form
+				\begin{align}
+					\min \quad & \sum_{j=1}^nc_jx_j \\
+					\text{s.t.} \quad & \mathbf{Ax} \le \mathbf{b} \\
+									  & \mathbf{x} \ge \mathbf{0}
+				\end{align}
+
+		\section{Typical Linear Programming Problems}
+
+		\section{Linear Programming Formulation Skills}
+			\subsection{Absolute Value}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_j|x_j|, \quad c_j > 0 \\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \\
+					                  & x_j \quad \text{unrestricted}, \quad \forall j\in J 
+				\end{align}
+				Modeling:
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_j(x_j^+ + x_j^-), \quad c_j > 0 \\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}(x_j^+ - x_j^-) \gtreqless b_i, \quad \forall i\in I \\
+					                  & x_j^+, x_j^- \ge 0, \quad \forall j\in J 
+				\end{align}
+
+			\subsection{A Minimax Objective}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \max_{k\in K}\sum_{j\in J}c_{kj}x_j \\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \\
+					                  & x_j \ge 0, \quad \forall j\in J 
+				\end{align}
+				Modeling:
+				\begin{align}
+					\min \quad & z \\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \\
+									  & \sum_{j\in J}c_{kj}x_j \le z, \quad \forall k\in K \\
+					                  & x_j \ge 0, \quad \forall j\in J 
+				\end{align}
+			\subsection{A Fractional Objective}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \frac{\sum_{j\in J}c_{j}x_j + \alpha}{\sum_{j\in J}d_{j}x_j + \beta} \\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in I \\
+					                  & x_j \ge 0, \quad \forall j\in J 
+				\end{align}
+				Modeling:
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_{j}x_jt + \alpha t \\
+					\text{s.t.} \quad & \sum_{j\in J}a_{ij}x_j \gtreqless b_i, \quad \forall i\in J \\
+									  & \sum_{j\in J}d_jx_jt + \beta t = 1\\
+									  & t > 0 \\
+					                  & x_j \ge 0, \quad \forall j\in J \\
+					                  & (t = \frac1{\sum_{j\in J}d_jx_j + \beta}) 
+				\end{align}
+
+				For the following statement:
+				\begin{align}
+					\min \quad & z^P = \frac{\mathbf{c^\top x} + d}{\mathbf{e^\top x} + f}\\
+					\text{s.t.} \quad & \mathbf{Gx} \le \mathbf{h}\\
+					                  & \mathbf{Ax} = \mathbf{b}
+				\end{align}
+
+				Modeling
+				\begin{align}
+					\min \quad & z^R = \mathbf{c^\top y} + dz\\
+					\text{s.t.} \quad & \mathbf{Gy} - \mathbf{h}z \le 0\\
+									  & \mathbf{Ay} - \mathbf{b}z = 0\\
+									  & \mathbf{e^\top y} + fz = 1\\
+									  & z \ge 0
+				\end{align}
+
+			\subsection{A Range Constraint}
+				Consider the following model statement:
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_jx_j \\
+					\text{s.t.} \quad & d_i\le \sum_{j\in J}a_{ij}x_j \le e_i, \quad \forall i\in I \\
+					                  & x_j \ge 0, \quad \forall j\in J 
+				\end{align}
+				Modeling:
+				\begin{align}
+					\min \quad & \sum_{j\in J}c_jx_j, \quad c_j > 0 \\
+					\text{s.t.} \quad & u_i + \sum_{j\in J}a_{ij}x_j = e_i, \quad \forall i\in I \\
+					                  & x_j \ge 0, \quad \forall j\in J \\
+					                  & 0\le u_i \le e_i-d_i, \quad \forall i\in I 
+				\end{align}
+
+		\section{Typical Integer Programming Problems}
+
+		\section{Integer Programming Formulation Skills}
+			\subsection{A Variable Taking Discontinuous Values}
+				In algebraic notation: 
+				\begin{equation}
+					x = 0,\quad \text{or} \quad l\le x \le u 
+				\end{equation}
+				Modeling:
+				\begin{align}
+					& x \le uy \\
+					& x \ge ly  \\
+					& y \in \{0, 1\} 
+				\end{align}
+				where
+				\begin{equation}y=\begin{cases}0, & \text{if }x=0 \\ 1, & \text{if } l\le x \le u\end{cases} \end{equation}
+
+			\subsection{Fixed Costs}
+				In algebraic notation: 
+				\begin{equation}
+					C(x) = \begin{cases} 0 & \text{for } x=0 \\ k + cx & \text{for } x > 0 \end{cases} 
+				\end{equation}
+				Modeling:
+				\begin{align}
+					& C^*(x, y) = ky+cx\\
+					& x \le My  \\
+					& x \ge 0 \\
+					& y \in \{0, 1\} 
+				\end{align}
+				where
+				\begin{equation}y=\begin{cases}0, & \text{if }x=0 \\ 1, & \text{if }x\ge 0\end{cases} \end{equation}
+
+			\subsection{Either-or Constraints}
+				In algebraic notation: 
+				\begin{equation}
+					\sum_{j\in J} a_{1j} x_j \le b_1 \text{ or } \sum_{j\in J} a_{2j} x_j \le b_2 
+				\end{equation}
+				Modeling:
+				\begin{align}
+					& \sum_{j\in J} a_{1j} x_j \le b_1 + M_1y  \\
+					& \sum_{j\in J} a_{2j} x_j \le b_2 + M_1(1-y)  \\
+					& y \in \{0, 1\} 
+				\end{align}
+				where
+				\begin{equation}y=\begin{cases}0, & \text{if }\sum_{j\in J} a_{1j} x_j \le b_1 \\ 1, & \text{if } \sum_{j\in J} a_{2j} x_j \le b_2\end{cases} \end{equation}
+				Notice that the sign before $M$ is determined by the inequality $\ge$ or $\le$, if it is \lq\lq{}$\ge$\rq\rq{}, use \lq\lq{}$-$\rq\rq{}, if it \lq\lq{}$\le$\rq\rq{}, use \lq\lq{}+\rq\rq{}.
+
+			\subsection{Conditional Constraints}
+				If constraint A is satisfied, then constraint B must also be satisfied
+				\begin{equation}
+					\text{If} \quad \sum_{j\in J} a_{1j} x_j \le b_1 \text{ then } \sum_{j\in J} a_{2j} x_j \le b_2 
+				\end{equation}
+				The key part is to find the opposite of the first condition. We are using $A\Rightarrow B \Leftrightarrow \neg B \Rightarrow \neg A$\\
+				Therefore it is equivalent to
+				\begin{equation}
+					\sum_{j\in J} a_{1j} x_j > b_1 \text{ or } \sum_{j\in J} a_{2j} x_j \le b_2 
+				\end{equation}
+				Furthermore, it is equivalent to
+				\begin{equation}
+					\sum_{j\in J} a_{1j} x_j \ge b_1 + \epsilon \text{ or } \sum_{j\in J} a_{2j} x_j \le b_2 
+				\end{equation}
+				Where $\epsilon$ is a very small positive number.\\
+				Modeling:
+				\begin{align}
+					& \sum_{j\in J} a_{1j} x_j \ge b_1 + \epsilon -  M_2y  \\
+					& \sum_{j\in J} a_{2j} x_j \le b_2 + M_2(1-y)  \\
+					& y \in \{0, 1\} 
+				\end{align}
+
+			\subsection{Special Ordered Sets}
+				Out of a set of yes-no decisions, at most one decision variable can be yes. Also known as SOS1.
+				\begin{align}
+					x_1=1,x_2=x_3&=\dots=x_n=0  \\
+					&\text{or}  \\
+					x_2=1, x_1=x_3&=\dots=x_n=0  \\
+					&\text{or ...} 
+				\end{align} 
+				Modeling:
+				\begin{equation} \sum_{i} x_i = 1, \quad i \in N \end{equation}
+				Out of a set of binary variables, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list. Also known as SOS2.
+				Modeling:
+				If $x_1, x_2, ... , x_n$ is a SOS2, then
+				\begin{align}
+					& \sum_{i=1}^{n} x_i \le 2  \\
+					& x_i + x_j \le 1, \forall i \in \{1, 2,..., n\}, j \in \{i+2, i+3, ..., n\}  \\
+					&x_i \in \{0, 1\}
+				\end{align}
+				There is another type of definition, that is out of a set of nonnegative variables \textbf{not binary here}, at most two variables can be nonzero. In addition, the two variables must be adjacent to each other in a fixed order list. All variables summing to 1.\\
+				This definition of SOS2 is used in Piecewise Linear Formulations.
+
+			\subsection{Piecewise Linear Formulations}
+				The objective function is a sequence of line segments, e.g. $y=f(x), $ consists $k-1$ linear segments going through $k$ given points $(x_1, y_1), (x_2, y_2), ... ,(x_k, y_k)$.\\
+				Denote 
+				\begin{equation}d_i=\begin{cases}1, & x\in (x_i, x_{i+1})\\0, & \text{otherwise} \end{cases}\end{equation}
+				Then the objective function is
+				\begin{equation}\sum_{i \in \{1, 2, ..., k-1\}} y = d_if_i(x) \end{equation} 
+				Modeling: Given that objective function as a piecewise linear formulation, we can have these constraints\\
+				\begin{align}
+					&\sum_{i \in \{1, 2, ..., k-1\}} d_i =1  \\
+					&d_i \in \{0, 1\}, i \in \{1, 2, ..., k-1\}  \\
+					& x = \sum_{i \in \{1, 2, ..., k\}} w_i x_i  \\
+					& y = \sum_{i \in \{1, 2, ..., k\}} w_i y_i  \\
+					& w_1 \le d_1  \\
+					& w_i \le d_{i-1} + d{i}, i \in \{2, 3, ..., k-1\}  \\
+					& w_k \le d_{k-1} 
+				\end{align}
+				In this case, $ w_i \in SOS2$ (second definition)
+
+			\subsection{Conditional Binary Variables}
+				Choose at most $n$ binary variable to be 1 out of  $x_1, x_2, ... x_m, m\ge n$. If $n=1$ then it is SOS1.\\
+				Modeling:
+				\begin{equation}
+					\sum_{k\in \{1,2,...,m\}} x_k \le n
+				\end{equation}
+				Choose exactly $n$ binary variable to be 1 out of  $x_1, x_2, ... x_m, m\ge n$\\
+				Modeling:
+				\begin{equation}
+					\sum_{k\in \{1,2,...,m\}} x_k = n
+				\end{equation}
+				Choose $x_j$ only if $x_k = 1$\\
+				Modeling:
+				\begin{equation}x_j = x_k  \end{equation}
+				\lq\lq{}and\rq\rq{} condition, iff $x_1, x_2, ... , x_m =1$ then $y=1$\\
+				Modeling:
+				\begin{align}
+					& y \le x_i, i\in \{1, 2, ..., m\}  \\
+					& y \ge \sum_{i \in \{1, 2, ..., m\}} x_i - (m - 1) 
+				\end{align}
+
+			\subsection{Elimination of Products of Variables}
+				For variables $x_1$ and $x_2$,
+				\begin{equation}y = x_1 x_2\end{equation}
+				Modeling: If $x_1, x_2$ are binary, it is the same as \lq\lq{}and\rq\rq{} condition of binary variables.\\
+				If $x_1$ is binary, while $x_2$ is continuous and $0 \le x_2 \le u$, then
+				\begin{align}
+					y &\le ux_1  \\
+					y &\le x_2  \\
+					y &\ge x_2 - u(1- x_1)  \\
+					y &\ge 0 
+				\end{align}
+				If both $x_1$ and $x_2$ are continuous, it is non-linear, we can use Piecewise linear formulation to simulate.
+
+		\section{Typical Nonlinear Programming Problems}
+
+		\section{Nonlinear Programming Formulation Skills}
+
 	\chapter{Review of Linear Algebra}
 		\section{Field}
 			\begin{definition}[Field]
@@ -127,7 +392,7 @@
 					<\mathbf{A}|\mathbf{B}> = trace(\mathbf{B}^T \mathbf{A}) = \sum_j (AB^T)_{jj} = \sum_j\sum_k A_{jk}B_{jk}
 				\end{equation}
 			\end{example}
-			
+
 		\section{Norms}
 			\begin{definition}[Norms]
 				A \textbf{norm} on a vector space $\mathcal{V}$ is a function $\|\cdot\|:\mathcal{V} \rightarrow \mathbb{R}$ for which the following three properties hold for all point $\mathbf{x}, \mathbf{y} \in \mathcal{V}$ and scalars $\lambda \in \mathbb{R}$
@@ -301,8 +566,177 @@
 				The empty set is open and closed, the whole space $X$ is open and closed.
 			\end{remark}
 
+	\chapter{Review of Discrete Math}
+
 	\chapter{Review of Real Analysis}
 
+	\chapter{Review of Calculus}
+
 	\chapter{Review of Probability Theory}
+		\section{Relationship between Some Random Variables}
+			\begin{figure}[h]
+				\centering
+				\begin{tikzpicture}[node distance = 1.8cm]
+					\node (Pascal) [roundedRectangle] {Pascal($n$, $p$)};
+					\node (Poisson) [roundedRectangle, xshift = 6cm] {Poisson($\lambda$)};
+					\node (Geometric) [roundedRectangle, below of = Pascal] {Geometric($p$)};
+					\node (Binomial) [roundedRectangle, below of = Poisson, xshift = 2cm] {Binomial($n$, $p$)};
+					\node (Bernoulli) [roundedRectangle, below of = Poisson, xshift = 7cm] {Bernoulli($p$)};
+					\node (Lognormal) [roundedRectangle, below of = Geometric, xshift = 2.5cm] {Lognormal};
+					\node (Normal) [roundedRectangle, below of = Geometric, xshift = 7.5cm] {Normal($\mu$, $\sigma^2$)};
+					\node (Hypergeometric) [roundedRectangle, below of = Geometric, xshift = 12.5cm] {Hypergeometric($M$, $N$, $K$)};
+					\node (SNormal) [roundedRectangle, below of = Lognormal, xshift=2cm] {Normal(0, 1)};
+					\node (Beta) [roundedRectangle, below of = Lognormal, xshift = 7cm] {Beta($\alpha$, $\beta$)};
+					\node (DExponential) [roundedRectangle, below of = Beta, xshift = 3.8cm] {Double-Exponential($0$, $\lambda$, $\lambda$)};
+					\node (Cauchy) [roundedRectangle, below of = SNormal, xshift = -6cm] {Cauchy};
+					\node (Gamma) [roundedRectangle, below of = SNormal, xshift = 2cm] {Gamma($r$,$\lambda$)};
+					\node (tv) [roundedRectangle, below of = Cauchy, xshift = 1cm] {$t_{(v)}$};
+					\node (Chi-squared) [roundedRectangle, below of = Gamma, xshift = -2cm] {Chi-squared($n$)};
+					\node (Exponential) [roundedRectangle, below of = Gamma, xshift = 3cm] {Exponential($\lambda$)};
+					\node (Fvv) [roundedRectangle, below of = tv, xshift = 1cm] {$F_{(V_{1},V_{2})}$};
+					\node (Weibull) [roundedRectangle, below of = Exponential, xshift = -3cm] {Weibull($a$, $b$)};
+					\node (SUniform) [roundedRectangle, below of = Exponential, xshift = 3cm] {Uniform($0$, $1$)};
+					\node (Uniform) [roundedRectangle, below of = SUniform, xshift = -2cm] {Uniform($a$, $b$)};
+					\draw [arrow] (Pascal) to [out = -30, in = 30] node [right] {$n=1$} (Geometric);
+					\draw [arrow] (Pascal) -- node [above, align=center, text width=2.5cm] {$\lambda=\frac{n}{p}$ \\ $n\rightarrow \infty$} (Poisson);
+					\draw [arrow] (Pascal) to [out = -15, in = 170] node [below, align=center, text width=2.5cm, yshift=0.1cm, xshift=-1.1cm] {$\mu = n(1-p)$ \\ $n\rightarrow \infty$} (Normal);
+					\draw [arrow] (Geometric) to [out = 150, in = -150] node [left] {$\sum X_i$} (Pascal);
+					\draw [arrow] (Geometric) to [out = -160, in = 180, looseness=6] node [below, yshift = -0.2cm] {$\min(X_i)$} (Geometric);
+					\draw [arrow] (Poisson) to [out = 70, in = 110, looseness=4] node [above] {$\sum X_i$} (Poisson);
+					\draw [arrow] (Poisson) to [out = -90, in = 145] node [left] {$X|\sum X_i$} (Binomial);
+					\draw [arrow] (Poisson) to [out = -150,in = 160] node [left, align=center, yshift=0.6cm] {$\lambda=\sigma^2$ \\ $n\rightarrow \infty$} (Normal);
+					\draw [arrow] (Binomial) to [out = 75, in = -40] node [right, align=center] {$\lambda=np$ \\ $n\rightarrow \infty$} (Poisson);
+					\draw [arrow] (Binomial) -- node [below] {$n=1$} (Bernoulli);
+					\draw [arrow] (Bernoulli) to [out = 165, in = 15] node [above] {$\sum X_i$} (Binomial);
+					\draw [arrow] (Binomial) to [out = -70, in = 30, align=center] node [left] {$\sigma^2=np(1-p)$ \\ $\mu=np, n\rightarrow \infty$} (Normal);
+					\draw [arrow] (Hypergeometric) to [out = 170, in = -45] node [right] {$p=\frac{M}{N}, n=k, N\rightarrow \infty$} (Binomial);
+					\draw [arrow] (Normal) to [out = 0, in = -45, looseness=3] node [right] {$\sum X_i$} (Normal);
+					\draw [arrow] (Normal) to [out = 175, in = 5] node [above, xshift=-0.3cm] {$e^{X}$} (Lognormal);
+					\draw [arrow] (Normal) to [out = -155, in = 30] node [right, xshift=0.2cm] {$\frac{X-\mu}{\sigma^2}$} (SNormal); 
+					\draw [arrow] (Lognormal) to [out = -5, in = -175] node [below] {$\ln X$} (Normal);
+					\draw [arrow] (Lognormal) to [out = 160, in = -160, looseness = 3] node [left] {$\prod X_i$} (Lognormal);
+					\draw [arrow] (SNormal) to [out = 90, in = -165] node [left, yshift = -0.4cm, xshift = -0.3cm] {$\mu + \sigma X$} (Normal);
+					\draw [arrow] (Beta) to [out = 120, in = -90] node [right, yshift=-0.3cm, xshift=0.9cm] {$\alpha, \beta \rightarrow \infty$} (Normal);
+					\draw [arrow] (Beta) to [out = 0, in = 30, looseness=2.4] node [right, yshift=1cm, xshift=-3cm] {$\alpha=\beta=1$} (SUniform);
+					\draw [arrow] (Gamma) to [out = 100, in = -110] node [right, align = center, yshift=-0.8cm, xshift = -0.1cm] {$\mu=r\lambda$\\$\sigma^2=r\lambda^2$\\$r\rightarrow \infty$} (Normal); 
+					\draw [arrow] (Gamma) to [out = 15, in = -90] node [right] {$\frac{X_1}{X_1 + X_2}$} (Beta);
+					\draw [arrow] (Gamma) to [out = -165, in = 75] node [right] {$r=\frac{n}{2}, \lambda=2$} (Chi-squared);
+					\draw [arrow] (Gamma) to [out = -40, in = 160] node [left] {$r=1$} (Exponential);
+					\draw [arrow] (SNormal) to [out = 180, in = 30] node [right] {$\frac{X_1}{X_2}$} (Cauchy);
+					\draw [arrow] (SNormal) to [out = -120, in =90] node [left] {$\sum X_i^2$} (Chi-squared);
+					\draw [arrow] (Cauchy) to [out = 80, in = 120, looseness = 4] node [above] {$\frac{1}{X}$} (Cauchy);
+					\draw [arrow] (Cauchy) to [out = -120, in = -140, looseness = 3] node [below] {$\sum X_i$} (Cauchy);
+					\draw [arrow] (tv) to [out = 90, in = -90] node [right, yshift = 0.2cm] {$v=1$} (Cauchy);
+					\draw [arrow] (tv) to [out = 60, in = -130] node [left] {$v\rightarrow \infty$} (SNormal);
+					\draw [arrow] (tv) to [out = -90, in = 120] node [left] {$X^2$} (Fvv);
+					\draw [arrow] (Fvv) to [out = 30, in = -120] node [below] {$V_1X, V_2\rightarrow \infty$} (Chi-squared);
+					\draw [arrow] (Chi-squared) to [out = -165, in = 60] node [above] {$\frac{X_1V_2}{X_2V_1}$} (Fvv);
+					\draw [arrow] (Chi-squared) to [out = 125, in = 175, looseness = 3] node [above] {$\sum X_i$} (Chi-squared);
+					\draw [arrow] (Chi-squared) -- node [below] {$n=2$} (Exponential);
+					\draw [arrow] (Exponential) to [out = 140, in = 0] node [right] {$\sum X_i$} (Gamma);
+					\draw [arrow] (Exponential) to [out = 50, in = -120] node [below] {$X_1 - X_2$} (DExponential);
+					\draw [arrow] (Exponential) to [out = 10, in = -20, looseness = 3] node [right] {$\min X_i$} (Exponential);
+					\draw [arrow] (Exponential) to [out = -40, in = 180] node [right] {$e^{-\frac{X}{\lambda}}$} (SUniform);
+					\draw [arrow] (Exponential) to [out = -100, in = 0] node[right] {$X^{\frac{1}{b}}$} (Weibull);
+					\draw [arrow] (DExponential) to [out = -170, in = 80] node [above] {$|X|$} (Exponential);
+					\draw [arrow] (Uniform) to [out = 0, in = -80] node [right] {$a=0, b=1$} (SUniform);
+					\draw [arrow] (SUniform) to [out = 50, in = -30] node [below] {$-\lambda \ln X$} (Exponential);
+					\draw [arrow] (SUniform) to [out = -110, in = 30] node [left] {$a+(b-a)X$} (Uniform);
+					\draw [arrow] (Weibull) to [out = 70, in = -160] node [left] {$b=1$} (Exponential);
+				\end{tikzpicture}
+				\caption{Relationship between Some Random Variables}
+			\end{figure}
 
+		\section{Discrete Random Variables}
+			\begin{align}
+				\centering
+				\begin{tabular}[c]{|c|c|c|c|c|c|}
+					\hline
+					Distribution & PMF & CDF & Exp. & Var. & MGF \\
+					\hline
+					Uniform$(a, b)$ & 
+					\makecell{$\frac1{b-a+1}$ \\ $x=a, a+1, ..., b$} & 
+					\makecell{$\frac{x-a+1}{b-a+1}$ \\ $x=a, a+1, ..., b$} & 
+					$\frac{b-a}{2}$ & 
+					$\frac{(b-a+1)^2-1}{12}$ & 
+					\makecell{$\frac{e^{at}-e^{(b+1)t}}{(b-a+1)(1-e^t)}$ \\ $t \in \mathbb{R}$} \\
+					\hline
+					Bernoulli$(p)$ & 
+					\makecell{$p^x(1-p)^{1-x}$ \\ $x \in \{0,1\}$} &
+					$\begin{cases}0, \quad x<0 \\ 
+										1-p, \quad 0\le x \le 1 \\
+										1, \quad x>1\end{cases}$ & 
+					$p$ & 
+					$p(1-p)$ & 
+					\makecell{$1-p+pe^{t}$ \\ $t\in \mathbb{R}$}\\
+					\hline
+					Binomial$(n, p)$ &
+					\makecell{$\left(\begin{matrix}n\\x\end{matrix}\right)p^x(1-p)^{n-x}$ \\ $x=0,1,...,n$} &
+					\makecell{$\sum_{k=0}^{x}\left(\begin{matrix}n\\k\end{matrix}\right)p^k(1-p)^{n-k}$ \\ $x=0,1,...,n$} &
+					$np$ &
+					$np(1-p)$ &
+					\makecell{$(1-p+pe^{t})^n$ \\ $t\in \mathbb{R}$}\\
+					\hline
+					Poisson$(\mu)$ &
+					\makecell{$\frac{\mu^xe^\mu}{x!}$ \\ $x = 0,1,...,n,...$} &
+					\makecell{$\frac{\Gamma(x+1, \mu)}{\Gamma(x+1)}$ \\ $x=0,1,...,n,...$} &
+					$\mu$ &
+					$\mu$ &
+					\makecell{$e^{\mu(e^t-1)}$ \\ $t\in \mathbb{R}$} \\
+					\hline
+					Geometric$(p)$ &
+					\makecell{$p(1-p)^x$ \\ $x=0,1,...,n,...$} &
+					\makecell{$1-(1-p)^{x+1}$ \\ $x=0,1,...,n,...$} &
+					$\frac{1-p}p$ &
+					$\frac{1-p}{p^2}$ &
+					\makecell{$\frac{p}{1-(1-p)e^t}$ \\ $t < -\ln(1-p)$}\\
+					\hline
+					Pascal$(n, p)$ &
+					\makecell{$\left(\begin{matrix}n-1+x\\x\end{matrix}\right)p^n(1-p)^x$ \\ $x=0,1,2,...,n,...$} &
+					\makecell{$1-I_p(k+1,n)$ \\ $x=0,1,2,...,n,...$} &
+					$\frac{n(1-p)}{p}$&
+					$\frac{n(1-p)}{p^2}$ &
+					\makecell{$(\frac{p}{1-(1-p)e^t})^n$ \\ $t < -\ln(1-p)$}\\
+					\hline
+				\end{tabular}
+			\end{align}
 
+		\section{Continuous Random Variables}
+			\begin{align}
+				\centering
+				\begin{tabular}[c]{|c|c|c|c|c|c|}
+					\hline
+					Distribution & PDF & CDF & Exp. & Var. & MGF \\
+					\hline
+					Uniform$(a, b)$ & 
+					\makecell{$\frac1{b-a}$ \\ $x=[a,b]$} & 
+					\makecell{$\frac{x-a}{b-a}$ \\ $x=[a,b]$} & 
+					$\frac{b-a}{2}$ & 
+					$\frac{(b-a)^2}{12}$ & 
+					$\begin{cases}1, \quad t=0 \\ \frac{e^{bt}-e^{at}}{t(b-a)}, \quad t\ne 0\end{cases}$\\
+					\hline
+					Normal$(\mu, \sigma)$ &
+					\makecell{$\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ \\ $x\in \mathbb{R}$} &
+					\makecell{$\int_{-\infty}^{x}\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$ \\ $x\in \mathbb{R}$} &
+					$\mu$ &
+					$\sigma^2$ &
+					\makecell{$e^{\frac{t(t\sigma^2+2\mu)}{2}}$ \\ $t\in \mathbb{R}$}\\
+					\hline
+					Exponential$(\lambda)$ &
+					\makecell{$\lambda e^{-\lambda x}$ \\ $x>0$} &
+					\makecell{$1-e^{\lambda x}$ \\ $x>0$} &
+					$\frac{1}{\lambda}$ &
+					$\frac{1}{\lambda^2}$ &
+					\makecell{$\frac{1}{1-\frac{t}{\lambda}}$ \\ $t<\lambda$}\\
+					\hline
+					Erlang$(n, \lambda)$ &
+					\makecell{$\frac{\lambda^n x^{n-1} e^{-\lambda x}}{(n-1)!}$ \\ $x>0$} &
+					\makecell{$1-\sum_{i=0}^{n-1}\frac{\lambda^n x^n e^{-\lambda x}}{n!}$ \\ $x>0$} &
+					$\frac{n}{\lambda}$ &
+					$\frac{n}{\lambda^2}$ &
+					\makecell{$\frac{1}{(1-\frac{t}{\lambda})^n}$ \\ $t<\lambda$} \\
+					\hline
+				\end{tabular}
+			\end{align}
+
+	\chapter{Review of Statistics}

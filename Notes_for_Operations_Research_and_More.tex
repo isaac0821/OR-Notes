@@ -156,7 +156,7 @@
 	\noindent
 	\colorbox{gray!15}{
 		\centering
-		\begin{minipage}[c]{0.95 \textwidth}
+		\begin{minipage}[c]{1 \textwidth}
 			\textbf{Notice:}~#1
 		\end{minipage}
 	}
@@ -182,20 +182,23 @@
 	}
 }
 
+
+
 \begin{document}
 	\maketitle
 	\today
 	\tableofcontents
 
-	% \include{00-Preliminary_Topics}
+	\include{00-Preliminary_Topics}
 	\include{01-Linear_Programming}
-	\include{02-Graph_and_Network_Theory}
-	\include{03-Integer_and_Combinatorial_Programming}
+	\include{02-Integer_and_Combinatorial_Programming}
+	\include{03-Graph_and_Network_Theory}
 	\include{04-Nonlinear_Programming}
-	\include{05-Heuristic and Meta-heuristic Methods}
-	% \include{06-Game_Theory}
-	% \include{07-Stochastic Processes}
-	% \include{08-Queuing_Theory}
-	% \include{09-Statistic}
-	% \include{XX-Fun_Facts}
+	\include{05-Dynamic_Programming_and_Heuristic_Methods}
+	\include{Special_Topic_VRP_and_the_Variants}
+	\include{06-Algorithms_and_Computational_Complexity}
+	\include{07-Decision_Analysis_and_Game_Theory}
+	\include{08-Markov_Chains_and_Inventory_Theory}
+	\include{09-Reliability_Theory}
+	\include{10-Simulation}
 \end{document}
