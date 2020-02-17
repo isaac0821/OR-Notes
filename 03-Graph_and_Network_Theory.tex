@@ -682,7 +682,94 @@
 
 		\section{Cayley's Formula}
 
-		\section{Connectivity}
+		\section{Connectivity, DFS, BFS}
+			\subsection{Connectivity}
+
+			\subsection{DFS}
+
+			\subsection{BFS}
+
+			\subsection{Cycle detection}
+				The following algorithm is for connected graph, if the graph is not connected, run the algorithm for each component until cycle is detected or all the components have been calculated. Since the complexity for running in connected graph is $O(n + m)$, $n$ as the number of vertices/nodes, and $m$ as the number of edges/arcs, the running time of disconnected graph is the \textbf{summation} of running time in each component, where each component is connected. Therefore the complexity is the same in disconnected graph as in connected graph.
+
+				The main idea is starting with arbitrary vertex/node, using DFS or BFS to search on the graph try to revisit the vertex/node we start with. If succeed, a cycle is detected, otherwise if all the vertices/nodes has been visited, then no cycle exists. And in linked-list representation, the complexity is $O(|V| + |E|)$, i.e. $O(n + m)$. However, there is slightly different in undirected graph and directed graph, for undirected graph needs at least three vertices to form a cycle while directed graph needs at least two.
+
+				Here is the detail algorithm (DFS) for undirected graph:
+				\begin{algorithm}[H]
+					\caption{Main algorithm}
+					\begin{algorithmic}[1]
+						\State For all nodes, labeled as ``unvisited''
+						\State Arbitrary choose a vertex $v$, add a dummy vertex $w$, add a dummy edge $(w, v)$, label $w$ as ``visited''
+						\State run $DFS(w, v)$
+						\State Remove dummy vertex $w$ and dummy edge $(w, v)$
+						\If {$DFS(w, v)$ returns ``Cycle is found''}
+							\State \Return ``Cycle is found''
+						\Else
+							\State \Return ``No cycle detected''
+						\EndIf
+					\end{algorithmic}
+				\end{algorithm}
+
+				\begin{algorithm}[H]
+					\caption{DFS(w, v)}
+					\begin{algorithmic}[1]
+						\State Label $v$ as ``visited''
+						\If {number of $v$ 's neighbor is 1}
+							\State \Return null
+						\Else
+							\For {all neighbor $u$ in linked-list of $v$ excepts $w$}
+								\If {$u$ is labeled as ``visited''} 
+									\State \Return ``Cycle is found'' 
+								\Else
+									\State run $DFS(v, u)$
+								\EndIf
+							\EndFor
+						\EndIf
+					\end{algorithmic}
+				\end{algorithm}
+
+				Now check the complexity. Denote $v\in N$ as a node in graph $G$, total number of nodes denoted by $n$, denote $d_v$ as number of neighbors of node $v$. The complexity of $DFS(w, v)$ is $O(d_v)$ for each node $v$ it visited (it should be $O(v)$ because we need $O(1)$ to check if a node is $w$), each node can only be visited, by ``visited'' it means $DFS(w, v)$ is executed, at most once, which is controlled by the ``visited'' label. The total complexity is $O(n + \sum_{v\in N} d_v) = O(n + m)$
+
+
+				For directed graph, we assume in the linked-list of each node, 1) it only contains the vertices where the node leading out to, or 2) we can distinguish the vertices it leading out to in $O(1)$. Here is the detail algorithm (DFS) for directed graph:
+				\begin{algorithm}[H]
+					\caption{Main algorithm}
+					\begin{algorithmic}[1]
+						\State For all nodes, labeled as ``unvisited''
+						\State Arbitrary choose a node $v$, run $DFS(v)$
+						\If {$DFS(v)$ returns ``Cycle is found''}
+							\State \Return ``Cycle is found''
+						\Else
+							\State \Return ``No cycle detected''
+						\EndIf
+					\end{algorithmic}
+				\end{algorithm}
+
+				\begin{algorithm}[H]
+					\caption{DFS(v)}
+					\begin{algorithmic}[1]
+						\State Label $v$ as ``visited''
+						\If {number of vertices $v$ leading out to is 0}
+							\State \Return null
+						\Else
+							\For {all leading out vertices $u$ in linked-list of $v$}
+								\If {$u$ is labeled as ``visited''} 
+									\State \Return ``Cycle is found'' 
+								\Else
+									\State run $DFS(u)$
+								\EndIf
+							\EndFor
+						\EndIf
+					\end{algorithmic}
+				\end{algorithm}
+
+				Now check the complexity. Similar to undirected case, denote $v\in N$ as a node in graph $G$, total number of nodes denoted by $n$, denote $d_v$ as number of edges leading out from node $v$. The complexity of $DFS(v)$ is $O(d_v)$ for each node $v$ it visited, each node can only be visited, by ``visited'' it means $DFS(v)$ is executed, at most once, which is controlled by the ``visited'' label. The total complexity is $O(n + \sum_{v\in N} d_v) = O(n + m)$
+
+				Also, for undirected (connected) graph, if we don't need to find the cycle and only need to decide if there is a cycle or not, we can just check the number of vertices, $n$, and number of edges, $m$. If $n \le m$ then $G$ contains a cycle, otherwise no cycle, the complexity is $O(1)$.
+
+			\subsection{Testing Bipartiteness}
+
+			\subsection{Topological Ordering}
 
 		\section{Blocks}
 
