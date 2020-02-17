@@ -281,35 +281,3 @@
 		\section{van Emde Boas Trees}
 
 	\chapter{NP and PSPACE}
-
-
-				\begin{algorithm}[h!]
-					\caption{Simplex Method}
-					\begin{algorithmic}[1]
-						\REQUIRE Given a basic feasible solution with basis $B$
-						\ENSURE Optimal objective value $\min z= cx$
-						\STATE Set $\mathbf{B}$ for basic variables, $\mathbf{N}$ for nonbasic variables
-						\STATE $\mathbf{B} \gets \text{all slack variables}$
-						\STATE $\mathbf{N} \gets \text{all variables excepts slack variables}$
-						\FOR{$\forall j$}
-							\STATE $z_j=c_BB^{-1}a_j=0$
-						\ENDFOR
-						\WHILE{$\exists z_j-c_j > 0$}
-							\STATE $z_j=wa_j-c_j=c_BB^{-1}a_j-c_j$
-							\STATE $z_k-c_k=\max\limits_{j \in \mathbf{N}}\{z_j-c_j\}$
-							\STATE $y_k=B^{-1}a_k$
-							\IF{$\exists y_{ik} >0$}
-								\STATE $\theta_r=\min\limits_{i \in \mathbf{B}}\{\theta_i=\frac{\bar{b}_i}{y_{ik}}:y_{ik}>0\}$
-								\STATE $\mathbf{B} \gets \mathbf{B} \backslash \{k\}$
-								\STATE $\mathbf{N} \gets \mathbf{N} \cup \{k\}$
-								\STATE $\mathbf{B} \gets \mathbf{B} \cup \{r\}$
-								\STATE $\mathbf{N} \gets \mathbf{N} \backslash \{r\}$
-							\ELSE
-								\STATE Unbounded
-							\ENDIF
-						\ENDWHILE
-						\STATE $x_B^*=B^{-1}b=\bar{b}$
-						\STATE $x_N=0$
-						\STATE $z^*=c_BB^{-1}b=c_B\bar{b}\mathbf{a_{B_k}}$
-					\end{algorithmic}
-				\end{algorithm}
