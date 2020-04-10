@@ -311,6 +311,74 @@
 			\subsection{Gnome Sort}
 
 			\subsection{Quicksort}
+				The idea of quicksort is to recursively divide an array into two subarrays, one with smaller number and one with large number, and concatenate  the subarrays after all subarrays are singletons.
+
+				The most idea way is to divide the subarrays equally, which requires an algorithm to find the median of an array of size $n$ in $O(n)$ time.
+
+				The quicksort algorithm is as following
+				\begin{algorithm}[h]
+					\caption{Quicksort(A, n)}
+					\begin{algorithmic}[1]
+						\If {$n = 1$}
+							\Return A
+						\EndIf
+						\State Initial, $A_L \gets \emptyset, A_H \gets \emptyset$
+						\State $x \gets$ \texttt{Median(A)}
+						\For {$element \in A$}
+							\If {$element \le x$}
+								\State $A_L \gets A_L \cup \{element\}$
+							\Else
+								\State $A_H \gets A_H \cup \{element\}$
+							\EndIf
+						\EndFor
+						\State $B_L \gets$ \texttt{Quicksort($A_L$, $A_L$.size)}
+						\State $B_H \gets$ \texttt{Quicksort($A_H$, $A_H$.size)}
+						\State $t \gets$ number of times $element$ appear in $A$
+						\Return $B_L + element^t + B_H$
+					\end{algorithmic}
+				\end{algorithm}
+
+				Running time $T(n) = 2T(n/2) + O(n)$, $T(n) = O(n\lg n)$
+
+				For the median finding algorithm
+				\begin{algorithm}[h]
+					\caption{Median(A)}
+					\begin{algorithmic}[1]
+						\State (To be finished)
+					\end{algorithmic}
+				\end{algorithm}
+
+				If we don't use the median finding algorithm, we can modify the \texttt{Quicksort(A, n)} to be a random algorithm by replacing line 3 by $x \gets$ \texttt{RandomElement(A)}. This modified algorithm has an expected running time of $O(n\lg n)$. The worse case running time is $O(n^2)$.
+
+				Based on Quicksort algorithm, we can define an $O(n)$ algorithm to find the $i$th smallest number in $A$, given that we have an $O(n)$ algorithm to find median of array.
+
+				The selection algorithm is as follows
+				\begin{algorithm}[h]
+					\caption{Selection(A, n, i)}
+					\begin{algorithmic}[1]
+						\If {$n = 1$}
+							\State \Return A
+						\Else
+							\State $x \gets$ \texttt{Median(A)}
+							\For {$element \in A$}
+								\If {$element \le x$}
+									\State $A_L \gets A_L \cup \{element\}$
+								\Else
+									\State $A_H \gets A_H \cup \{element\}$
+								\EndIf
+							\EndFor
+							\If {$i \le A_L.size$}
+								\State \Return \texttt{Selection($A_L, A_L.size, i$)}
+							\ElsIf {$i > n - A_R.size$}
+								\State \Return \texttt{Selection($A_R, A_R.size, i - (n - A_R.size)$)}
+							\Else
+								\State \Return $x$
+							\EndIf
+						\EndIf
+					\end{algorithmic}
+				\end{algorithm}
+
+				Similarly, without \texttt{Median(A)}, we can replace line 4 by $x \gets$ \texttt{RandomElement(A)}. Then the expected running time will be $O(n)$
 
 		\section{Selection Sorts}
 			\subsection{Selection Sort}
@@ -342,6 +410,20 @@
 
 		\section{Merge Sorts}
 			\subsection{Merge Sort}
+				Merge sort is a typical divide and conquer algorithm. It recursively separate an array into two subarrays, and sort while merging them. The algorithm is as following
+
+				\begin{algorithm}[h]
+					\caption{MergeSort(A, n)}
+					\begin{algorithmic}[1]
+						\If {$n = 1$}
+							\Return A
+						\Else
+							\State $B \gets$ \texttt{MergeSort($A[0 .. \lfloor n/2 \rfloor], \lfloor n/2 \rfloor$)}
+							\State $C \gets$ \texttt{MergeSort($A[\lceil n/2 \rceil .. n], \lceil n/2 \rceil$)}
+						\EndIf
+						\Return \texttt{Merge($B, C, \lfloor n/2 \rfloor, \lceil n/2 \rceil$}
+					\end{algorithmic}
+				\end{algorithm}
 
 			\subsection{Cascade Merge Sort}
 
