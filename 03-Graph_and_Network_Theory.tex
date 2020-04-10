@@ -1,3 +1,5 @@
+\include{templete}
+\begin{document}
 \part{Graph and Network Theory}
 	\chapter{Graphs and Subgraphs}
 		\section{Graph}
@@ -41,10 +43,29 @@
 			\begin{definition}[Adjacent]
 				Two edges of a graph are \textbf{adjacent} if they have a common end, two vertices are \textbf{adjacent} if they are jointed by an edge.
 			\end{definition}
-
 		\section{Graph Isomorphism}
 
 		\section{The Adjacency and Incidence Matrices}
+			Saving a graph in computer program can be implemented in the following ways:
+			\begin{itemize}
+				\item Adjacency matrix: $m \times n$ matrix, for $A[u, v] = 1$ if $(u, v) \in E$ and $A[u, v] = 0$ otherwise
+				\item Linked list: For every vertex $v$, there is a linked list containing all neighbors of $v$.
+			\end{itemize}
+			Assuming we are dealing with undirected graphs, $n$ is the number of vertices, $m$ is the number of edges, $n - 1 \le m \le n(n-1)/2$, $d_v$ is the number of neighbors of $v$ then
+			\begin{table}[h]
+				\centering
+				\begin{tabular}{|c|c|c|}
+					\hline
+					 & Matrix & Linked lists\\
+					\hline
+					memory usage & $O(n^2)$ & $O(m)$\\
+					\hline
+					time to check $(u, v) \in E$ & $O(1)$ & $O(d_u)$\\
+					\hline
+					time to list all neighbors of $v$ & $O(n)$ & $O(d_v)$\\
+					\hline
+				\end{tabular}
+			\end{table}
 
 		\section{Subgraph}
 			\begin{definition}[Subgraph]
@@ -455,22 +476,22 @@
 				\begin{algorithm}[!ht]
 					\caption{Find $K_1, K_2, ... K_m$ by constructing $E(C_1)\Delta E(C_2)$}
 					\begin{algorithmic}[1]
-						\REQUIRE Graph $G$, cycle $C_1$ and $C_2$
-						\ENSURE $K_1, K_2, ... K_m$
-						\STATE Initial, $K \gets \emptyset$, $j = 1$
-						\STATE Set temporary storage units, $v_o \gets v_{11}$, $v_t \gets \emptyset$
-						\FOR {$i = 1, 2, ..., n$}
-							\IF {$e_{1i} \in C_2$}
-								\IF {$v_o \ne v_{1i}$}
-									\STATE $v_t \gets v_{1i}$
-									\STATE concate $(v_o, v_t)$-path $\subset C_1$ and $(v_o, v_t)$-path $\subset C_2$ to create a new $K_j$
-									\STATE Append $K$ with $K_j$, $K \gets K \cup K_j$
-									\STATE Reset temporary storage unit. $v_o \gets v_{1(i+1)}$ (or $v_{11}$ if $i = n$), $v_t \gets \emptyset$
-								\ELSE
-									\STATE $v_o \gets v_{1(i+1)}$ (or $v_{11}$ if $i = n$)
-								\ENDIF
-							\ENDIF
-						\ENDFOR
+						\Require Graph $G$, cycle $C_1$ and $C_2$
+						\Ensure $K_1, K_2, ... K_m$
+						\State Initial, $K \gets \emptyset$, $j = 1$
+						\State Set temporary storage units, $v_o \gets v_{11}$, $v_t \gets \emptyset$
+						\For {$i = 1, 2, ..., n$}
+							\If {$e_{1i} \in C_2$}
+								\If {$v_o \ne v_{1i}$}
+									\State $v_t \gets v_{1i}$
+									\State concate $(v_o, v_t)$-path $\subset C_1$ and $(v_o, v_t)$-path $\subset C_2$ to create a new $K_j$
+									\State Append $K$ with $K_j$, $K \gets K \cup K_j$
+									\State Reset temporary storage unit. $v_o \gets v_{1(i+1)}$ (or $v_{11}$ if $i = n$), $v_t \gets \emptyset$
+								\Else
+									\State $v_o \gets v_{1(i+1)}$ (or $v_{11}$ if $i = n$)
+								\EndIf
+							\EndIf
+						\EndFor
 					\end{algorithmic}
 				\end{algorithm}
 				Now we prove that $K_i\cap K_j = \emptyset, \forall i \ne j$. For each $K_j$, it is defined by two $(v_o, v_t)$-paths in the algorithm. From the algorithm we know that all the edges in $(v_o, v_t)$-path in $C_1$ are not intersecting with $C_2$, because if the edge in $C_1$ is intersected with $C_2$, either we closed the cycle $K_j$ before the edge, or we updated $v_o$ after the edge (start a new $K_j$ after that edge). By definition of cycle, all the $(v_o, v_t)$-path that are subset of $C_1$ are not intersecting with each other, as well as all the $(v_o, v_t)$-path that are subset of $C_2$. Therefore, $K_i\cap K_j = \emptyset, \forall i \ne j$.
@@ -519,18 +540,18 @@
 						\begin{algorithm}[!ht]
 							\caption{Find one leaf in a tree}
 							\begin{algorithmic}[1]
-								\REQUIRE $d(u)=1$
-								\ENSURE A tree $T$ has at least one vertex
-								\STATE Let $u$ and $v$ be any distinct vertex in a tree $T$
-								\STATE Let $p$ be the path between $u$ and $v$
-								\WHILE {$d(u) \neq 1$}
-									\IF {$d(u) > 1$}
-										\STATE Let $n(u)$ be the set of neighboring vertices of $u$
-										\STATE In $n(u)$, find a $u^\prime$ that the edge between $u$ and $u^\prime$, denoted by $e$, $e \notin p$
-										\STATE $u \gets u^\prime$
-										\STATE $p \gets p \cup e$
-									\ENDIF
-								\ENDWHILE
+								\Require $d(u)=1$
+								\Ensure A tree $T$ has at least one vertex
+								\State Let $u$ and $v$ be any distinct vertex in a tree $T$
+								\State Let $p$ be the path between $u$ and $v$
+								\While {$d(u) \neq 1$}
+									\If {$d(u) > 1$}
+										\State Let $n(u)$ be the set of neighboring vertices of $u$
+										\State In $n(u)$, find a $u^\prime$ that the edge between $u$ and $u^\prime$, denoted by $e$, $e \notin p$
+										\State $u \gets u^\prime$
+										\State $p \gets p \cup e$
+									\EndIf
+								\EndWhile
 							\end{algorithmic}
 						\end{algorithm}
 						The above algorithm is guaranteed to have an end because a tree is acyclic by definition
@@ -625,16 +646,16 @@
 				\begin{algorithm}[!ht]
 					\caption{Find a spanning tree for connected graph (Prim's Algorithm in unweighted graph)}
 					\begin{algorithmic}[1]
-						\REQUIRE a connected graph G and an enumeration $e_1,...e_m$ of the edges of G
-						\ENSURE a spanning tree T of G
-						\STATE Let T be the spanning subgraph of $G$ with $V(T)=V(G)$ and $E(T)=\emptyset$
-						\STATE $i \gets 1$
-						\WHILE {$i \le |E|$}
-							\IF {$T + e_i$ is acyclic}
-								\STATE $T \gets T + e_i$
-								\STATE $i \gets i + 1$
-							\ENDIF
-						\ENDWHILE
+						\Require a connected graph G and an enumeration $e_1,...e_m$ of the edges of G
+						\Ensure a spanning tree T of G
+						\State Let T be the spanning subgraph of $G$ with $V(T)=V(G)$ and $E(T)=\emptyset$
+						\State $i \gets 1$
+						\While {$i \le |E|$}
+							\If {$T + e_i$ is acyclic}
+								\State $T \gets T + e_i$
+								\State $i \gets i + 1$
+							\EndIf
+						\EndWhile
 					\end{algorithmic}
 				\end{algorithm}
 			\end{proof}
@@ -683,11 +704,62 @@
 		\section{Cayley's Formula}
 
 		\section{Connectivity, DFS, BFS}
-			\subsection{Connectivity}
+			\subsection{Connectivity Problem}
+				For connectivity problem, the input is a graph $G = (V, E)$, with linked list representation, and two vertices $s, t\in V$. The problem is to find whether there is a path connecting $s$ to $t$ in $G$
 
-			\subsection{DFS}
+				There are two commonly use methods to solve connectivity problem: depth-first search and breath-first search.
+			\subsection{Depth-First Search (DFS)}
+				The idea of DFS is enumerating children before siblings when search in the graph/tree. It is a recursive algorithm. First, start with $s$, then travel through the fist edge leading out of the current vertex, when reached a ``visited'' vertex, go back and travel through next edge. If tried all edges leading out of the current vertex, go back.
 
-			\subsection{BFS}
+				The algorithm is as following
+				\begin{algorithm}[h]
+					\caption{Depth-First Search}
+					\begin{algorithmic}[1]
+						\State Initialize, make all vertices as ``unvisited''
+						\State \texttt{RecursiveDFS(s)}
+					\end{algorithmic}
+				\end{algorithm}
+
+				\begin{algorithm}[h]
+					\caption{RecursiveDFS(v)}
+					\begin{algorithmic}[1]
+						\State Mark $v$ as ``visited''
+						\For {$\forall u \in d_s$}:
+							\If {$u$ is ``unvisited''}
+								\State \texttt{RecursiveDFS(u)}
+							\EndIf
+						\EndFor
+					\end{algorithmic}
+				\end{algorithm}
+
+				The running time of DFS is $O(n + m)$.
+
+				If we only want to know if $s$ and $t$ are connected, the algorithm can be terminated if $u = t$.
+
+			\subsection{Breadth-First Search (BFS)}
+				The idea of BFS is enumerating siblings before children when search in the graph/tree. The general steps of BFS is as following: First, build layers $L_0, L_1, \cdots$; Next, set $L_0 = \{s\}$, where $s$ is the starting vertex; Then, $L_{j + 1}$ contains all nodes that are not in $\cup_{i = 0}^j L_i$ and have an edge to a vertex in $L_j$
+
+				The algorithm is as following
+				\begin{algorithm}[h]
+					\caption{Breadth-First Search}
+					\begin{algorithmic}[1]
+						\State Initialize, $head \gets 1$, $tail \gets 1$, $queue[1] \gets s$, mark all vertices as ``unvisited''
+						\State Mark $s$ as ``visited''
+						\While {$head \ge tail$}
+							\State $v \gets queue[tail]$, $tail \gets tail + 1$
+							\For {$\forall u \in d_v$}
+								\If {$u$ is ``unvisited''}
+									\State $head \gets head + 1$, $queue[head] = u$
+									\State Mark $u$ as ``visited''
+								\EndIf
+							\EndFor
+						\EndWhile
+					\end{algorithmic}
+				\end{algorithm}
+
+				The running time of BFS is $O(n + m)$
+
+				If we only want to know if $s$ and $t$ are connected, the algorithm can be terminated if $u = t$.
 
 			\subsection{Cycle detection}
 				The following algorithm is for connected graph, if the graph is not connected, run the algorithm for each component until cycle is detected or all the components have been calculated. Since the complexity for running in connected graph is $O(n + m)$, $n$ as the number of vertices/nodes, and $m$ as the number of edges/arcs, the running time of disconnected graph is the \textbf{summation} of running time in each component, where each component is connected. Therefore the complexity is the same in disconnected graph as in connected graph.
@@ -730,7 +802,6 @@
 
 				Now check the complexity. Denote $v\in N$ as a node in graph $G$, total number of nodes denoted by $n$, denote $d_v$ as number of neighbors of node $v$. The complexity of $DFS(w, v)$ is $O(d_v)$ for each node $v$ it visited (it should be $O(v)$ because we need $O(1)$ to check if a node is $w$), each node can only be visited, by ``visited'' it means $DFS(w, v)$ is executed, at most once, which is controlled by the ``visited'' label. The total complexity is $O(n + \sum_{v\in N} d_v) = O(n + m)$
 
-
 				For directed graph, we assume in the linked-list of each node, 1) it only contains the vertices where the node leading out to, or 2) we can distinguish the vertices it leading out to in $O(1)$. Here is the detail algorithm (DFS) for directed graph:
 				\begin{algorithm}[H]
 					\caption{Main algorithm}
@@ -767,10 +838,146 @@
 
 				Also, for undirected (connected) graph, if we don't need to find the cycle and only need to decide if there is a cycle or not, we can just check the number of vertices, $n$, and number of edges, $m$. If $n \le m$ then $G$ contains a cycle, otherwise no cycle, the complexity is $O(1)$.
 
-			\subsection{Testing Bipartiteness}
+			\subsection{Test Bipartiteness}
+				We have proved that a bipartite graph only has even cycles, and the graph with only even cycles are bipartite graph, however, that is not very continent to test if a graph is bipartite because it needs to enumerate all cycles.
+
+				The other idea to test bipartiteness is try to color the vertices of the graph, if it can be 2-colored, then the graph is bipartite, otherwise it is not.
+
+				The following is the algorithm (using BFS)
+				\begin{algorithm}[h]
+					\caption{Test Bipartiteness}
+					\begin{algorithmic}[1]
+						\State Initialize, $head \gets 1$, $tail \gets 1$, $queue[1] \gets s$, mark all vertices as ``unvisited''
+						\State Mark $s$ as ``visited''
+						\State $color[s] \gets 0$
+						\While {$head \ge tail$}
+							\State $v \gets queue[tail]$, $tail \gets tail + 1$
+							\For {$\forall u \in d_v$}
+								\If {$u$ is ``unvisited''}
+									\State $head \gets head + 1$, $queue[head] = u$
+									\State Mark $u$ as ``visited''
+									\State $color[u] \gets 1 - color[v]$
+								\Else
+									\If {$color[u] == color[v]$}
+										\Return False
+									\EndIf
+								\EndIf
+							\EndFor
+						\EndWhile
+						\Return True
+					\end{algorithmic}
+				\end{algorithm}
 
 			\subsection{Topological Ordering}
+				The topological ordering problem is given a directed acyclic graph $G = (V, E)$, output a 1-to-1 function $\pi: V\rightarrow\{1, 2, \cdots, n\}$ so that if $(u, v) \in E$, $\pi(u) < \pi(v)$
 
+				The idea is each time take a vertex without incoming edges, then remove the vertex and all its outgoing edges. To make the algorithm efficient, we can 1) use linked lists of outgoing edges; 2) maintain the in degree $d_v$ of vertices; 3) maintain a queue (or stack) of vertices $v$ with $d_v = 0$
+
+				The following is the algorithm
+				\begin{algorithm}[h]
+					\caption{topological-sort(G)}
+					\begin{algorithmic}[1]
+						\State Initialize, let $\forall v\in V, d_v = 0$
+						\For {$v \in V$}
+							\For {$u, (u, v) \in E$}
+								\State $d_u \gets d_u + 1$
+							\EndFor
+						\EndFor
+						\State $S \gets \{v: d_v = 0\}, i\gets 0$
+						\While {$S\neq \emptyset$}
+							\State $v \gets v \in S$, $S \gets S \setminus \{v\}$
+							\State $i \gets i + 1, \pi(v) \gets i$
+							\For {$u, (u, v) \in E$}
+								\State $d_u \gets d_u - 1$
+								\If {$d_u = 0$}
+									\State $S \gets S \cup \{u\}$
+								\EndIf
+							\EndFor
+						\EndWhile
+						\If {$i < n$}
+							\Return Not directed acyclic graph
+						\EndIf
+					\end{algorithmic}
+				\end{algorithm}
+
+				Running time $O(n + m)$
+			\subsection{Bridge}
+				\begin{definition}[Tree Edge, Cross Edge, Vertical Edge]
+					Given a graph $G = (V, E)$ and a rooted tree $T$ in $G$, edge in $G$ can be classified by three types:
+					\begin{itemize}
+						\item Tree edges: edge in $T$
+						\item Cross edges: $(u, v)$, $u$ and $v$ do not have an ancestor-descendant relation
+						\item Vertical edges: $(u, v)$, $u$ is an ancestor of $v$, or $v$ is an ancestor of $u$
+					\end{itemize}
+					\begin{figure}[h]
+						\centering
+						\begin{tikzpicture}[node distance=2cm]
+							\node (1) [circleNode] {1};
+							\node (2) [circleNode, below of=1, xshift = -2cm] {2};
+							\node (3) [circleNode, below of=1] {3};
+							\node (4) [circleNode, below of=1, xshift = 2cm] {4};
+							\node (5) [circleNode, below of=2, xshift = -1cm] {5};
+							\node (6) [circleNode, below of=2, xshift = 1cm] {6};
+							\node (7) [circleNode, below of=4] {7};
+							\draw [link] (1) -- node [left] {tree edge} (2);
+							\draw [link] (1) -- (3);
+							\draw [link] (1) -- (4);
+							\draw [link] (2) -- (5);
+							\draw [link] (2) -- (6);
+							\draw [link] (4) -- (7);
+							\draw [link] (3) -- node [right] {cross edge} (6);
+							\draw [link] (1) to [out = 150, in = 150] node [left] {vertical edge} (5);
+						\end{tikzpicture}
+					\end{figure}
+				\end{definition}
+
+				In a BFS tree $T$ of a graph $G$, there can not be vertical edges, there cannot be cross edges $(u, v)$ with $u$ and $v$ 2 levels apart. (Cross edge at most 1 level apart)
+
+				In a DFS tree $T$ of a graph $G$, there can not be cross edges, there can only be tree edges and vertical edges.
+
+				\begin{definition}[bridge]
+					Given a connected graph $G=(V, E)$, an edge $e \in E$ is called a \textbf{bridge} if the graph $G=(V, E\setminus \{e\})$ is disconnected.
+				\end{definition}
+
+				The idea to find bridge is through a DFS tree. Notice that there are only tree edges and vertical edges in DFS tree. Vertical edges are not bridges, a tree edge $(u, v)$ is not a bridge if some vertical edge jumping from below $u$ to above $v$. Other tree edges are bridges.
+
+				Define $level(v)$ as the level of vertex $v$ in DFS tree. $T_v$ as the sub tree rooted at $v$, $h(v)$ as the smallest level that can be reached using a vertical edge from vertices in $T_v$. $(parent(u), u)$ is a bridge if $h(u) \ge level(u)$. The algorithm is as following:
+				\begin{algorithm}[h]
+					\caption{FindBridge(G)}
+					\begin{algorithmic}[1]
+						\State Mark all vertices as ``unvisited''
+						\For {$v \in V$}
+							\If {$v$ is ``unvisited''}
+								\State $level(v) \gets 0$
+								\State \texttt{RecursiveDFS(v)}
+							\EndIf
+						\EndFor
+					\end{algorithmic}
+				\end{algorithm}
+
+				\begin{algorithm}[h]
+					\caption{RecursiveDFS(v)}
+					\begin{algorithmic}[1]
+						\State mark $v$ as ``visited''
+						\State $h(v) \gets \infty$
+						\For {$u \in d_v$}
+							\If {$u$ is ``unvisited''}
+								\State $level(u) \gets level(v) + 1$
+								\State \texttt{RecursiveDFS(u)}
+								\If {$h(u) \ge level(u)$}
+									\State $(u, v)$ is a bridge
+								\EndIf
+								\If {$h(u) < h(v)$}
+									\State $h(v) \gets h(u)$
+								\EndIf
+							\Else
+								\If {$level(u) < h(v)$}
+									\State $h(v) \gets level(u)$
+								\EndIf
+							\EndIf
+						\EndFor
+					\end{algorithmic}
+				\end{algorithm}
 		\section{Blocks}
 
 	\chapter{Euler Tours and Hamilton Cycles}
@@ -904,12 +1111,12 @@
 			\begin{algorithm}
 				\caption{Kroskal's Algorithm, $O(m \log m)$}
 				\begin{algorithmic}
-					\REQUIRE A connected graph
-					\ENSURE A MST
-					\STATE Keep a spanning forest $H=(V, F)$ of $G$, with $F=\emptyset$
-					\WHILE {$|F| < |V| - 1$}
-						\STATE add to $F$ a least-cost edge $e\notin F$ such that $H$ remains a forest.
-					\ENDWHILE
+					\Require A connected graph
+					\Ensure A MST
+					\State Keep a spanning forest $H=(V, F)$ of $G$, with $F=\emptyset$
+					\While {$|F| < |V| - 1$}
+						\State add to $F$ a least-cost edge $e\notin F$ such that $H$ remains a forest.
+					\EndWhile
 				\end{algorithmic}
 			\end{algorithm}
 
@@ -917,12 +1124,12 @@
 			\begin{algorithm}
 				\caption{Prim's Algorithm, $O(nm)$}
 				\begin{algorithmic}
-					\REQUIRE A connected graph
-					\ENSURE A MST
-					\STATE Keep $H = (V(H), T)$ with $V(H) = \{v\}$, where $r\in V(G)$ and $T=\emptyset$
-					\WHILE {$|V(T)| < |V|$}
-						\STATE Add to $T$ a least-cost edge $e \notin T$ such that $H$ remains a tree.
-					\ENDWHILE
+					\Require A connected graph
+					\Ensure A MST
+					\State Keep $H = (V(H), T)$ with $V(H) = \{v\}$, where $r\in V(G)$ and $T=\emptyset$
+					\While {$|V(T)| < |V|$}
+						\State Add to $T$ a least-cost edge $e \notin T$ such that $H$ remains a tree.
+					\EndWhile
 				\end{algorithmic}
 			\end{algorithm}
 
@@ -1002,17 +1209,17 @@
 			\begin{algorithm}
 				\caption{Ford's Method}
 				\begin{algorithmic}
-					\ENSURE Shortest Paths from $r$ to all other nodes in $V$
-					\REQUIRE A digraph with arc costs,starting node $r$
-					\STATE Initialize, $y_r = 0$ and $y_v = \infty, v\in V\setminus r$
-					\STATE Initialize, $P(r) = 0, P(v) = -1, \forall v \in V \setminus r$
-					\WHILE {$\mathbf{y}$ is not a feasible potential}
-						\STATE Let $e = (v, w)\in E$ (this could be problematic)
-						\IF {$y_v + c_{vw} < y_w$ (incorrect)}
-							\STATE $y_w \gets y_v + c_{vw}$ (correct it)
-							\STATE $P(w) = v$ (set $v$ as predecessor)
-						\ENDIF
-					\ENDWHILE
+					\Ensure Shortest Paths from $r$ to all other nodes in $V$
+					\Require A digraph with arc costs,starting node $r$
+					\State Initialize, $y_r = 0$ and $y_v = \infty, v\in V\setminus r$
+					\State Initialize, $P(r) = 0, P(v) = -1, \forall v \in V \setminus r$
+					\While {$\mathbf{y}$ is not a feasible potential}
+						\State Let $e = (v, w)\in E$ (this could be problematic)
+						\If {$y_v + c_{vw} < y_w$ (incorrect)}
+							\State $y_w \gets y_v + c_{vw}$ (correct it)
+							\State $P(w) = v$ (set $v$ as predecessor)
+						\EndIf
+					\EndWhile
 				\end{algorithmic}
 			\end{algorithm}
 
@@ -1045,22 +1252,22 @@
 			\begin{algorithm}
 				\caption{Ford-Bellman Algorithm}
 				\begin{algorithmic}
-					\ENSURE Shortest Paths from $r$ to all other nodes in $V$
-					\REQUIRE A digraph with arc costs,starting node $r$
-					\STATE Initialize $y$ and $p$
-					\FOR {$i = 0; i < N; i++$}
-						\FOR {$\forall e = (v, w) \in E$}
-							\IF {$y_v + c_{vw} < y_w$ (incorrect)}
-								\STATE $y_w \gets y_v + c_{vw}$ (correct it)
-								\STATE $P(w) = v$ (set $v$ as predecessor)
-							\ENDIF
-						\ENDFOR
-					\ENDFOR
-					\FOR {$\forall e = (v, w) \in E$}
-						\IF {$y_v + c_{vw} < y_w$ (incorrect)}
-							\STATE Return error, negative cycle
-						\ENDIF
-					\ENDFOR
+					\Ensure Shortest Paths from $r$ to all other nodes in $V$
+					\Require A digraph with arc costs,starting node $r$
+					\State Initialize $y$ and $p$
+					\For {$i = 0; i < N; i++$}
+						\For {$\forall e = (v, w) \in E$}
+							\If {$y_v + c_{vw} < y_w$ (incorrect)}
+								\State $y_w \gets y_v + c_{vw}$ (correct it)
+								\State $P(w) = v$ (set $v$ as predecessor)
+							\EndIf
+						\EndFor
+					\EndFor
+					\For {$\forall e = (v, w) \in E$}
+						\If {$y_v + c_{vw} < y_w$ (incorrect)}
+							\State Return error, negative cycle
+						\EndIf
+					\EndFor
 				\end{algorithmic}
 			\end{algorithm}
 			\notice{Only correct the node that comes from a node that has been corrected.}
@@ -1084,20 +1291,20 @@
 			\begin{algorithm}
 				\caption{Dijkstra Algorithm}
 				\begin{algorithmic}
-					\ENSURE Shortest Paths from $r$ to all other nodes in $V$
-					\REQUIRE A digraph with arc costs,starting node $r$
-					\STATE Initialize $y$ and $p$
-					\STATE $S \gets V$
-					\WHILE {$S \ne \emptyset$}
-						\STATE Choose $v \in S$ with minimum $y_v$
-						\STATE $S \gets S\setminus v$
-						\FOR {$\forall w, (v, w) \in E$}
-							\IF {$y_v + c_{vw} < y_w$ (incorrect)}
-								\STATE $y_w \gets y_v + c_{vw}$ (correct it)
-								\STATE $P(w) = v$ (set $v$ as predecessor)
-							\ENDIF
-						\ENDFOR
-					\ENDWHILE
+					\Ensure Shortest Paths from $r$ to all other nodes in $V$
+					\Require A digraph with arc costs,starting node $r$
+					\State Initialize $y$ and $p$
+					\State $S \gets V$
+					\While {$S \ne \emptyset$}
+						\State Choose $v \in S$ with minimum $y_v$
+						\State $S \gets S\setminus v$
+						\For {$\forall w, (v, w) \in E$}
+							\If {$y_v + c_{vw} < y_w$ (incorrect)}
+								\State $y_w \gets y_v + c_{vw}$ (correct it)
+								\State $P(w) = v$ (set $v$ as predecessor)
+							\EndIf
+						\EndFor
+					\EndWhile
 				\end{algorithmic}
 			\end{algorithm}
 
@@ -1539,34 +1746,34 @@
 			\begin{algorithm}
 				\caption{Labeling algorithm}
 				\begin{algorithmic}
-					\ENSURE Max-flow $x$ with value $v$
-					\REQUIRE Digraph with source $s$ and sink $t$, a capacity function $u$ and a feasible flow (could be $x_e = 0$)
-					\STATE Initialize, $v \gets x$
-					\STATE Designate all vertices as unlabeled and unscanned
-					\STATE Label $s$
-					\WHILE {There exists vertex unlabeled or unscanned}
-						\STATE Let $i$ be such a vertex, for each arc $e$ with $t(e) = i, x_e < u_e$ and $h(e)$ unlabeled, label $h(e)$
-						\STATE For each arc $e$ with $h(e) = i, x_e > 0$ and $t(e)$ unlabeled, label $t(e)$, designate $i$ as scanned.
-						\STATE If $t$ is not label
-					\ENDWHILE
-					\STATE $x$ is the maximum.
+					\Ensure Max-flow $x$ with value $v$
+					\Require Digraph with source $s$ and sink $t$, a capacity function $u$ and a feasible flow (could be $x_e = 0$)
+					\State Initialize, $v \gets x$
+					\State Designate all vertices as unlabeled and unscanned
+					\State Label $s$
+					\While {There exists vertex unlabeled or unscanned}
+						\State Let $i$ be such a vertex, for each arc $e$ with $t(e) = i, x_e < u_e$ and $h(e)$ unlabeled, label $h(e)$
+						\State For each arc $e$ with $h(e) = i, x_e > 0$ and $t(e)$ unlabeled, label $t(e)$, designate $i$ as scanned.
+						\State If $t$ is not label
+					\EndWhile
+					\State $x$ is the maximum.
 				\end{algorithmic}
 			\end{algorithm}
 
 			\begin{algorithm}
 				\caption{Ford-Fulkerson algorithm}
 				\begin{algorithmic}
-					\ENSURE Max-flow $x$ with value $v$
-					\REQUIRE Digraph with source $s$ and sink $t$, a capacity function $u$ and a feasible flow (could be $x_e = 0$)
-					\STATE Initialize, $v \gets x$
-					\STATE Designate all vertices as unlabeled and unscanned
-					\STATE Label $s$
-					\WHILE {There exists vertex unlabeled or unscanned}
-						\STATE Let $i$ be such a vertex, for each arc $e$ with $t(e) = i, x_e < u_e$ and $h(e)$ unlabeled, label $h(e)$
-						\STATE For each arc $e$ with $h(e) = i, x_e > 0$ and $t(e)$ unlabeled, label $t(e)$, designate $i$ as scanned.
-						\STATE If $t$ is not label
-					\ENDWHILE
-					\STATE $x$ is the maximum.
+					\Ensure Max-flow $x$ with value $v$
+					\Require Digraph with source $s$ and sink $t$, a capacity function $u$ and a feasible flow (could be $x_e = 0$)
+					\State Initialize, $v \gets x$
+					\State Designate all vertices as unlabeled and unscanned
+					\State Label $s$
+					\While {There exists vertex unlabeled or unscanned}
+						\State Let $i$ be such a vertex, for each arc $e$ with $t(e) = i, x_e < u_e$ and $h(e)$ unlabeled, label $h(e)$
+						\State For each arc $e$ with $h(e) = i, x_e > 0$ and $t(e)$ unlabeled, label $t(e)$, designate $i$ as scanned.
+						\State If $t$ is not label
+					\EndWhile
+					\State $x$ is the maximum.
 				\end{algorithmic}
 			\end{algorithm}
 
@@ -1683,10 +1890,10 @@
 			\begin{algorithm}
 				\caption{Dinic Algorithm}
 				\begin{algorithmic}
-					\ENSURE A maximal flow $\hat{x}$ from $D_x$
-					\REQUIRE A layered network $(D_x, s, t, \hat{u})$ and a feasible flow x
+					\Ensure A maximal flow $\hat{x}$ from $D_x$
+					\Require A layered network $(D_x, s, t, \hat{u})$ and a feasible flow x
 
-					\STATE Initialize $H\gets D_x$ and $i\gets S$
+					\State Initialize $H\gets D_x$ and $i\gets S$
 				\end{algorithmic}
 			\end{algorithm}
 
@@ -1748,23 +1955,23 @@
 				\begin{algorithm}
 					\caption{Network Simplex Method Algorithm}
 					\begin{algorithmic}
-						\ENSURE An optimal solution or the conclusion that $(D, b, w)$ is unbounded
-						\REQUIRE A transshipment problem $(D, b, w)$ and a feasible tree solution $x$ containing to a spanning tree $T$
-						\WHILE{$\exists e\in A\setminus T, w(T,e) < 0$}
-							\STATE let $e \in A \setminus T$ be such that $w(T, e) < 0$.
-							\IF {$C(T, e)$ has no reverse arcs}
-								\STATE Return unboundedness
-							\ELSE
-								\STATE Set $\theta = \min\{x_f: f \text{ reverse in } C(T, e)\}$ and set $f = \{f\in C(T, e): f \text{ reverse in } C(T, e), x_f = \theta\}$
-								\IF {$f$ forward in $C(T, e)$}
-									\STATE $x_f \gets x_f + \theta$
-								\ELSE
-									\STATE $x_f \gets x_f - \theta$
-								\ENDIF
-								\STATE Let $f \in F$ and $T \gets T+e-f$
-							\ENDIF
-						\ENDWHILE
-						\STATE Return $x$ as optimal
+						\Ensure An optimal solution or the conclusion that $(D, b, w)$ is unbounded
+						\Require A transshipment problem $(D, b, w)$ and a feasible tree solution $x$ containing to a spanning tree $T$
+						\While{$\exists e\in A\setminus T, w(T,e) < 0$}
+							\State let $e \in A \setminus T$ be such that $w(T, e) < 0$.
+							\If {$C(T, e)$ has no reverse arcs}
+								\State Return unboundedness
+							\Else
+								\State Set $\theta = \min\{x_f: f \text{ reverse in } C(T, e)\}$ and set $f = \{f\in C(T, e): f \text{ reverse in } C(T, e), x_f = \theta\}$
+								\If {$f$ forward in $C(T, e)$}
+									\State $x_f \gets x_f + \theta$
+								\Else
+									\State $x_f \gets x_f - \theta$
+								\EndIf
+								\State Let $f \in F$ and $T \gets T+e-f$
+							\EndIf
+						\EndWhile
+						\State Return $x$ as optimal
 					\end{algorithmic}
 				\end{algorithm}
 
@@ -2627,3 +2834,4 @@
 
 		\section{Girth and Chromatic Number}
 
+\end{document}

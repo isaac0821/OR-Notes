@@ -1,3 +1,5 @@
+\include{templete}
+\begin{document}
 \part{Algorithms}
 	\chapter{Computational Complexity}
 		\section{Asymptotic Notation}
@@ -8,26 +10,41 @@
 
 			\subsection{\texorpdfstring{$O$}{O}-Notation, \texorpdfstring{$\Omega$}{Omega}-Notation and \texorpdfstring{$\Theta$}{Theta}-Notation}
 				\begin{definition}[$O$-Notation]
-					For a function $g(n)$, $O(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \le cg(n), \forall n\ge n_0\}$
-				\end{definition}
-				$O$-Notation also known as asymptotic upper bound. 
+					For a function $g(n)$, 
+					\begin{equation*}
+						O(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \le cg(n), \forall n\ge n_0\}
+					\end{equation*}
+					$O$-Notation also known as asymptotic upper bound. 
+				\end{definition}				
 
 				\begin{definition}[$\Omega$-Notation]
-					For a function $g(n)$, $\Omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \ge cg(n), \forall n\ge n_0\}$
+					For a function $g(n)$, 
+					\begin{equation*}
+						\Omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \ge cg(n), \forall n\ge n_0\}
+					\end{equation*}
+					$\Omega$-Notation also known as asymptotic lower bound.
 				\end{definition}
-				$\Omega$-Notation also known as asymptotic lower bound.
-
+				
 				\begin{definition}[$\Theta$-Notation]
-					For a function $g(n)$, $\Theta(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that }  c_1g(n) \le f(n) \le c_2g(n), \forall n\ge n_0\}$
+					For a function $g(n)$, 
+					\begin{equation*}
+						\Theta(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that }  c_1g(n) \le f(n) \le c_2g(n), \forall n\ge n_0\}
+					\end{equation*}
+					$\Omega$-Notation and $\Theta$-Notation are not used very often when we talk about running times.
 				\end{definition}
-				$\Omega$-Notation and $\Theta$-Notation are not used very often when we talk about running times.
-
+				
 				\begin{definition}[$o$-Notation]
-					For a function $g(n)$, $o(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) <\le> cg(n), \forall n\ge n_0\}$
+					For a function $g(n)$, 
+					\begin{equation*}
+						o(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) < cg(n), \forall n\ge n_0\}
+					\end{equation*}					
 				\end{definition}
 
 				\begin{definition}[$\omega$-Notation]
-					For a function $g(n)$, $\omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) > cg(n), \forall n\ge n_0\}$
+					For a function $g(n)$, 
+					\begin{equation*}
+						\omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) > cg(n), \forall n\ge n_0\}
+					\end{equation*}					
 				\end{definition}
 
 				\notice{$O(g)$, $\Omega(g)$ and $\Theta(g)$ are sets, we use ``$=$'' to represent ``$\in$''. In here ``$=$'' is asymmetric. Equality such as $O(n^3) = n^3 + n$ is incorrect.}
@@ -60,9 +77,9 @@
 
 				\begin{theorem}
 					Let $f$ and $g$ be two functions that
-					\begin{equation}
+					\begin{equation*}
 						\lim_{n\rightarrow \infty} \frac{f(n)}{g(n)} = c > 0
-					\end{equation}
+					\end{equation*}
 					Then $f(n) = \Theta(g(n))$
 				\end{theorem}
 
@@ -96,72 +113,354 @@
 				\notice{Function $f$ and $g$ not necessarily have relation $f=O(g)$ or $g=O(f)$. E.g., for $f = \sqrt{n}$ and $g = n^{\sin n}$, $f \notin O(g)$ and $g \notin O(f)$ }
 
 		\section{Common Running Times}
-			\subsection{\texorpdfstring{$O(n)$}{O(n)}}
-				\begin{example}
-					Scan through a list to find a element matching with input
-				\end{example}
-
-			\subsection{\texorpdfstring{$O(\lg n)$}{O(lgn)}}
-				\begin{example}
-					Binary-search
-				\end{example}
-
-			\subsection{\texorpdfstring{$O(n^2)$}{O(n2)}}
-				\begin{example}
-					Scan through every pair of elements, $\binom{n}{2}$
-				\end{example}
-
-			\subsection{\texorpdfstring{$O(n^3)$}{O(n3)}}
-				\begin{example}
-					Matrix-multiplication by definition
-				\end{example}
-
-			\subsection{\texorpdfstring{$O(n\lg n)$}{O(nlgn)}}
-				\begin{example}
-					Many divide and conquer algorithm which in each step iteratively divide the problem into two part and solve the sub-problem, for example merge-sort.
-				\end{example}
-
-			\subsection{\texorpdfstring{$O(n!)$}{O(n!)}}
-				\begin{example}
-					Enumerate all permutation, for example Hamiltonian Cycle Problem
-				\end{example}
-
-			\subsection{\texorpdfstring{$O(c^n)$}{O(cn)}}
-				\begin{example}
-					Enumerate all elements in power set. ($O(2^n)$)
-				\end{example}
-
-			\subsection{\texorpdfstring{$O(n^n)$}{O(nn)}}
-				\begin{example}
-					Enumerate all combinations. (Can't find good example yet)
-				\end{example}
-
-			\subsection{Comparison between Running Times}
-				$\lg n < n < n\lg n < n^2 < n^{\sqrt{n}} < 2^n < e^n < n! < n^n$
+			The following are examples of common running times.
+			\begin{align*}
+				\centering
+				\begin{tabular}{|c|p{10cm}|}
+					\hline
+					Running Time & Examples\\
+					\hline
+					$O(n)$ & Scan through a list to find a element matching with input\\
+					\hline
+					$O(\lg n)$ & Binary search\\
+					\hline
+					$O(n^2)$ & Scan through every pair of elements, $\binom{n}{2}$\\
+					\hline
+					$O(n^3)$ & Matrix multiplication by definition\\
+					\hline
+					$O(n\lg n)$ & Many divide and conquer algorithm which in each step iteratively divide the problem into two part and solve the subproblem, for example mergesort.\\
+					\hline
+					$O(n!)$ & Enumerate all permutation, for example Hamiltonian Cycle Problem\\
+					\hline
+					$O(c^n)$ & Enumerate all elements in power set. ($O(2^n)$)\\
+					\hline
+					$O(n^n)$ & Enumerate all combinations. (Can't find good example yet)\\
+					\hline
+				\end{tabular}
+			\end{align*}
+			Here is a comparison between running times: $\lg n < n < n\lg n < n^2 < n^{\sqrt{n}} < 2^n < e^n < n! < n^n$
 
 	\chapter{General Strategies}
 		\section{Greedy Algorithms}
+			\subsection{Introduction}
+				Greedy algorithm solve the problem incrementally. Its often for optimization problems. Solving optimization problem typically requires a sequences of steps, at each step, an irrevocable decision will be made, and makes the choice looks the best at the moment. Based on that, a small instance will be added to the problem and we solve it again.
+
+				Greedy algorithm do not always yield optimal solution, but it usually can provide a relatively acceptable computational complexity. They often run in polynomial time due to the incrementally of instances. Sometimes even if we cannot guarantee the solution is optimal, we still use it in optimization, because of its cheap computation burden. One of the examples will be the constructive heuristic of VRP problems.
+
+				Greedy algorithm usually gives polynomial time complexity, but that is not all the cases. In simplex method, each pivot is greedily searching through for the extreme point. Although simplex method usually gives us traceable computation running time, however, it is not a polynomial algorithm.
+
+				The following is a very rough sketch of generic greedy algorithm
+				\begin{algorithm}[!ht]
+					\caption{Generic Greedy Algorithm}
+					\begin{algorithmic}[1]
+						\While {The instance is non-trivial}
+							\State Make the choice using the greedy strategy
+							\State Reduce the instance
+						\EndWhile
+					\end{algorithmic}
+				\end{algorithm}
+
+				If we can prove the following, we can claim the greedy algorithm. First, it need to prove that for ``current moment'', the strategy is safe, i.e., there is always an optimum solution that agrees with the decision made according to the strategy, this is usually difficult. Then, it need to show that the remaining task after applying the strategy is to solve a/many smaller instance(s) of the same problem.
+			\subsection{Examples}
+				\subsubsection{Interval Scheduling}
+					For $n$ jobs, job $i$ starts at time $s_i$, and finishes at time $f_i$. $i$ and $j$ are compatible if $[s_i, f_i)$ and $[s_j, f_j)$ are disjoint. Find the maximum-size of mutually compatible jobs.
+
+					The following is the greedy algorithm to solve this problem
+					\begin{algorithm}[!ht]
+						\caption{Interval Scheduling, $S(s, f, n)$}
+						\begin{algorithmic}[1]
+							\State Sort jobs by $f$
+							\State $t \gets 0$, $S\gets \emptyset$
+							\For {every $j\in[n]$ according to non-decreasing order of $f_j$}
+								\If {$s_j \ge t$}
+									\State $S \gets S \cup \{j\}$
+									\State $t \gets f_j$
+								\EndIf
+							\EndFor
+							\Return S
+						\end{algorithmic}
+					\end{algorithm}
+
+					Now we proof the that it is safe to schedule the job $j$ with the earliest finish time, i.e., there is an optimum solution where the job $j$ with the earliest finish time is scheduled.
+
+					\begin{proof}
+						For arbitary optimum solution $S$, one of the following cases will happen:\\
+						\textbf{Case 1: } $S$ contains $j$, done\\
+						\textbf{Case 2: } $S$ does not contain $j$. Then the first job in $S$ can be replaced by $j$ to obtain another optimum schedule $S^\prime$.
+					\end{proof}
+
+				\subsubsection{Unit-length interval covering}
+					Given a set of $n$ points $X = \{x_1, x_2, \cdots, x_n\}$ on the real line, WLOG, assuming the points have already been sorted. We want to use the smallest number of unit-length closed intervals to cover all the points in $X$. 
+
+					The following is a greedy algorithm to find the set of unit-length intervals that cover all the points in real line.
+					\begin{algorithm}[!ht]
+						\caption{Cover points with unit-length intervals}
+						\begin{algorithmic}[1]
+							\State Initial, $S \gets \emptyset$
+							\For {$i = 1, 2, ..., n$}
+								\If {$x_i$ is not covered by any unit-length intervals}
+									\State Add one unit-length interval starting from $x_i$, i.e., $S \gets S \cup \{x_i\}$
+								\EndIf
+							\EndFor
+						\end{algorithmic}
+					\end{algorithm}
+
+					This strategy (algorithm) is a greedy algorithm because it build up the solution in steps, in each iteration it considers one more point to be covered, i.e., it is optimal for each step in the iteration. Now we prove this algorithm is ``safe''.
+
+					\begin{proof}
+						First we consider the case where there is only one point on the real line. Then the optimal number of unit-length interval will be 1, according to the algorithm, that interval will be started at that point.
+
+						Then assuming for the case where there are $k$ points from left to right, i.e., $X = \{x_1, x_2, \cdots, x_k\}$, and $p$ unit-intervals is already the minimal number and placed by the algorithm, then the $(k+1)^{th}$ point can only be one of the following cases:
+
+						\textbf{Case 1:} The $(k+1)^{th}$ point is covered by the $p^{th}$ unit-length interval. According to the strategy, no new unit-length interval will be needed, the number of unit-length interval for $k+1$ points will be the same as when there are $k$ points. Therefore in this case for $k+1$ points, $p$ is the minimal (optimal) number. So the strategy is ``safe'' in this case.
+
+						\textbf{Case 2:} The $(k+1)^{th}$ point is not covered by the $p^{th}$ unit-length interval. According to the strategy, there will be one new unit-length interval added. Notice that $p$ unit-length intervals will not be feasible to cover $k+1$ points in this case, because if we move the $p^{th}$ unit-length interval to the right, it will not be able to cover at least one point which overlapped with the starting point of that unit-length interval. Since $p$ is infeasible and $p+1$ unit-length interval is feasible, then $p+1$ is the minimal (optimal) number. So the strategy is ``safe'' in this case.
+
+						Notice that for the $k$ we have mentioned above, $k$ can start from 1 to infinite number of integer. So this strategy is ``safe'' in every cases.
+					\end{proof}
 
 		\section{Divide and Conquer}
+			\subsection{Introduction}
+				The divide-and-conquer algorithm contains three steps: divide, conquer and combine. Step one, divide instances into many smaller instances. Step two, conquer small instance by solving each of smaller instances recursively and separately. Step three, combine solutions to small instances to obtain a solution for the origin large instance.
+
+			\subsection{Master Theorem}
+				\begin{theorem}[Master Theorem]
+					For running time in forms of $T(n) = aT(n/b) + O(n^c)$, where $a \ge 1$, $b > 1$, $c \ge 0$ are constants. Then
+					\begin{equation}
+						T(n) = \begin{cases}
+							O(n^{\lg_b a}), \quad & c < \lg_b a\\
+							O(n^c\lg n), \quad & c = \lg_b a\\
+							O(n^c), \quad & c > \lg_b a
+						\end{cases}
+					\end{equation}
+				\end{theorem}
+
+				Proof of Master theorem using recursion tree
+				\begin{figure}[h]
+					\centering
+					\begin{tikzpicture}[iv/.style={draw,rectangle,minimum size=20pt,inner sep=0pt,text=black}]
+						\node[iv]{$n^c$}
+							child{
+								node[iv]{$(n/b)^c$}
+								child{
+									node[iv]{$(n/b^2)^c$}
+								}
+								child{
+									node[iv]{$(n/b^2)^c$}
+								}
+							}
+							child [missing]
+							child{
+								node[iv]{$(n/b)^c$}
+								child{
+									node[iv]{$(n/b^2)^c$}
+								}
+								child{
+									node[iv]{$(n/b^2)^c$}
+								}
+							};
+					\end{tikzpicture}
+				\end{figure}
+				\begin{proof}
+					The $i^{th}$ level has $a^{i - 1}$ nodes. For the following cases, we can derive the time complexity:\\
+					\textbf{Case 1: } $c < \lg_b a$ bottom-level dominates $(\frac{a}{b^c}^{\lg_b n})n^c = O(n^{\lg_b a})$\\
+					\textbf{Case 2: } $c = \lg_b a$ all levels have same time $n^c \lg_b n = O(n^c \lg n)$\\
+					\textbf{Case 3: } $c > \lg_b a$ top-level dominates $O(n^c)$
+				\end{proof}
+			\subsection{Examples}
+				\subsubsection{Counting Inversions}
 
 		\section{Dynamic Programming}
+			\subsection{Introduction}
+
+
+		\section{Compare between three paradigms}
+			Greedy algorithm
+			\begin{itemize}
+				\item Make a greedy choice
+				\item Prove that the greedy choice is safe
+				\item Reduce the problem to a sub-problem and solve it iteratively
+				\item Usually for optimization problems.
+			\end{itemize}
+
+			Divide-and-Conquer
+			\begin{itemize}
+				\item Break a problem into many independent sub-problems
+				\item Solve each sub-problem separately
+				\item Combine solutions for sub-problems to form a solution for the origin one
+				\item Usually used to design more efficient algorithm
+			\end{itemize}
+
+			Dynamic Programming
+			\begin{itemize}
+				\item Break up a problem into many overlapping sub-problems
+				\item Build solutions for larger and larger sub-problems
+				\item Use a table to store solutions for sub-problems for reuse
+			\end{itemize}
 
 	\chapter{Sorting}
-		\section{Bubble Sort}
+		\section{Exchange Sorts}
+			\subsection{Bubble Sort}
 
-		\section{Insertion Sort}
+			\subsection{Cocktail Shaker Sort}
 
-		\section{Selection Sort}
+			\subsection{Odd-even Sort}
 
-		\section{Heap-sort}
+			\subsection{Comb Sort}
 
-		\section{Quick-sort}
+			\subsection{Gnome Sort}
 
-		\section{Merge-sort}
+			\subsection{Quicksort}
 
-		\section{Sorting in Linear Time}
+		\section{Selection Sorts}
+			\subsection{Selection Sort}
+
+			\subsection{Heapsort}
+
+			\subsection{Smoothsort}
+
+			\subsection{Cartesian Tree Sort}
+
+			\subsection{Tournament Sort}
+
+			\subsection{Cycle Sort}
+
+			\subsection{Weak-heap Sort}
+
+		\section{Insertion Sorts}
+			\subsection{Insertion Sort}
+
+			\subsection{Shell Sort}
+
+			\subsection{Splaysort}
+
+			\subsection{Tree Sort}
+
+			\subsection{Library Sort}
+
+			\subsection{Patience Sorting}
+
+		\section{Merge Sorts}
+			\subsection{Merge Sort}
+
+			\subsection{Cascade Merge Sort}
+
+			\subsection{Oscillating Merge Sort}
+
+			\subsection{Polyphase Merge Sort}
+
+		\section{Distribution Sorts}
+			\subsection{American Flag Sort}
+
+			\subsection{Bead Sort}
+
+			\subsection{Bucket Sort}
+
+			\subsection{Burstsort}
+
+			\subsection{Counting Sort}
+
+			\subsection{interpolation Sort}
+
+			\subsection{Pigenhole Sort}
+
+			\subsection{Proxmap Sort}
+
+			\subsection{Radix Sort}
+
+			\subsection{Flashsort}
+
+		\section{Concurrent Sorts}
+			\subsection{Bitonic Sorter}
+
+			\subsection{Batcher Odd-even Mergesort}
+
+			\subsection{Pairwise Sorting Network}
+
+			\subsection{Samplesort}
+
+		\section{Hybird Sorts}
+			\subsection{Block Merge Sort}
+
+			\subsection{Timsort}
+
+			\subsection{Spreadsort}
+
+			\subsection{Merge-insertion Sort}
+
+		\section{Please Don't Do that Sorts}
+			\subsection{Slowsort}
+
+			\subsection{Bogosort}
+
+			\subsection{Stooge Sort}
 
 	\chapter{Mathematical Algorithm}
+		\section{Polynomial Multiplication}
+			For given two polynomials of degree $n - 1$, the algorithm outputs the product of two polynomials.
+			\begin{example}
+				\begin{align}
+					&(3x^3 + 2x^2 - 6x + 9) \times (-2x^3 + 7x^2 - 8x + 4)\\
+					=& -6x^6 + 17x^5 + 24x^4 -60x^3 +119x^2 -96x +36
+				\end{align}
+				Then for input as (3, 2, -6, 9) and (-2, 7, -8, 4), the output will be (-6, 17, 2, -60, 119, -96, 36)
+			\end{example}
+
+			A naive algorithm to solve this problem will be $O(n^2)$
+			\begin{algorithm}[h]
+				\caption{PolyMultNaive(A, B, n)}
+				\begin{algorithmic}[1]
+					\State Let $C[k] = 0$ for every $k = 0, 1, \cdots, 2n - 2$
+					\For {$i \gets 0$ to $n - 1$}
+						\For {$j \gets 0$ to $n - 1$}
+							\State $C[i + j] \gets C[i + j] + A[i] \times B[j]$
+						\EndFor
+					\EndFor
+					\Return $C$
+				\end{algorithmic}
+			\end{algorithm}
+
+			Use divide and conquer can reduce the running time. The idea is to divide the polynomial with degree of $n - 1$ (WLOG, let $n$ be even number) by two polynomials, i.e.
+			\begin{equation}
+				p(x) = p_H(x)x^{\frac{n}{2}} + p_L(x)
+			\end{equation}
+			Both $p_H$ and $p_L$ are polynomials with degree of $\frac{n}{2} - 1$, then
+			\begin{align}
+				p(x)q(x) &= (p_H(x)x^{\frac{n}{2}} + p_L(x)) \times (q_H(x)x^{\frac{n}{2}} + q_L(x))\\
+						 &= p_Hq_H x^n + (p_Hq_L + p_Lq_H) x^{\frac{n}{2}} + p_Lq_L
+			\end{align}
+			Therefore
+			\begin{align}
+				multiply(p, q) &= multiply(p_H, q_H) x^n\\
+							   &+ (multiply(p_H, q_L) + multiply(p_L, q_H)) x^{\frac{n}{2}} + multiply(p_L, q_L)\\
+							   &= multiply(p_H, q_H) x^n\\
+							   &+ (multiply(p_H + p_L, q_H + q_L) - multiply(p_H, q_H) - multiply(p_L, q_L)) x^{\frac{n}{2}} \\
+							   &+ multiply(p_L, q_L)\\
+			\end{align}
+
+			The algorithm is as following
+			\begin{algorithm}[h]
+				\caption{PolyMultiDC(A, B, n)}
+				\begin{algorithmic}[1]
+					\If {$n = 1$}
+						\Return $A[0]B[0]$
+					\EndIf
+					\State $A_L \gets A[0 .. n/2 - 1]$, $A_H \gets A[n/2 .. n - 1]$
+					\State $B_L \gets B[0 .. n/2 - 1]$, $B_H \gets B[n/2 .. n - 1]$
+					\State $C_L \gets $ \texttt{PolyMultiDC($A_L$, $B_L$, n/2)}
+					\State $C_H \gets $ \texttt{PolyMultiDC($A_H$, $B_H$, n/2)}\
+					\State $C_M \gets $ \texttt{PolyMultiDC($A_H$ + $A_L$, $B_H$ + $B_L$, n/2)}
+					\State $C \gets $ 0 array of length $2n-1$
+					\For {$i \gets 0$ to $n - 2$}
+						\State $C[i] \gets C[i] + C_L[i]$
+						\State $C[i + n] \gets C[i + n] + C_H[i]$
+						\State $C[i + n/2] \gets C[i + n/2] + C_M[i] - C_L[i] - C_H[i]$
+					\EndFor
+					\Return $C$
+				\end{algorithmic}
+			\end{algorithm}
+
+			The running time $T(n) = 3T(n/2) + O(n)$, $T(n) = O(n^{\lg_2 3})$
 		\section{Matrices Multiplication}
 
 		\section{Gaussian Elimination}
@@ -169,8 +468,6 @@
 		\section{Curve Fitting}
 
 		\section{Integration}
-
-		\section{}
 
 	\chapter{Searching}
 
@@ -181,89 +478,15 @@
 
 		\section{Parse}
 
+		\section{Optimal Caching}			
+			\subsection{Offline Caching}
+				\begin{definition}[Furthest-in-Future]
+					(Les Belady, 1960s) When 
+				\end{definition}
+
 		\section{File Compression}
 
 		\section{Cryptology}
-
-	\chapter{Geometric Algorithm}
-		\section{Convex Hull}
-
-		\section{Geometric Intersection}
-
-		\section{Closest Point}
-
-		\section{Polygon Triangulation}
-			\subsection{Types of Polygons}
-				\begin{definition}[simple polygon]
-					A \textbf{simple polygon} is a closed polygonal curve without self-intersection.
-				\end{definition}
-
-				\begin{figure}[h!]
-					\centering
-					\begin{tikzpicture}[scale=0.6]
-						\draw (0, 0) -- (3, -1) -- (4, 3) -- (2, 4) -- (0, 0);
-						\draw (6, 3) -- (8, -1) -- (9, 2) -- (5.5, 0) -- (6, 3);
-						\node at (2, -1.5) [below] {Simple Polygon};
-						\node at (7.5, -1.5) [below] {Non-simple Polygon};
-					\end{tikzpicture}
-				\end{figure}
-
-				Polygons are basic building blocks in most geometric applications. It can model arbitrarily complex shapes, and apply simple algorithms and algebraic representation/manipulation.
-
-			\subsection{Triangulation}
-				\begin{definition}[Triangulation]
-					\textbf{Triangulation} is to partition polygon $P$ into non-overlapping triangles using diagonals only. It reduces complex shapes to collection of simpler shapes. Every simple $n$-gon admits a triangulation which has $n-2$ triangles.				
-				\end{definition}
-
-				\begin{figure}[h!]
-					\centering
-					\begin{tikzpicture}[scale=0.6]
-						\draw [thick] (0, 0) -- (3, 4) -- (2, 5) -- (3.5, 5.5) -- (1, 6.4) -- (-1, 5) -- (-2, 4.5) -- (-1.3, 2.4) -- (-2, 1) -- (0, 0);
-						\draw (-2, 1) -- (3, 4);
-						\draw (-1.3, 2.4) -- (3, 4);
-						\draw (-2, 4.5) -- (3, 4);
-						\draw (-1, 5) -- (3, 4);
-						\draw (-1, 5) -- (2, 5);
-						\draw (2, 5) -- (1, 6.4);
-						\node at (0, 0) [below] {Triangulation};
-					\end{tikzpicture}
-				\end{figure}
-
-				\begin{theorem}
-					Every polygon has a triangulation				
-				\end{theorem}
-
-				\begin{lemma}
-					Every polygon with more than three vertices has a diagonal.
-				\end{lemma}
-
-				\begin{proof}
-					(by Meisters, 1975) Let $P$ be a polygon with more than three vertices. Every vertex of a $P$ is either \textit{convex} or \textit{concave}. W.L.O.G.(any polygon must has convex corner) Assume $p$ is a convex vertex. Denote the neighbors of $p$ as $q$ and $r$. If $\bar{qr}$ is a diagonal, done, and we call $\triangle{pqr}$ is an \textit{ear}. If $\triangle{pqr}$ is not an ear, it means at least one vertex is inside $\triangle{pqr}$, assume among those vertexes inside $\triangle{pqr}$, $s$ is a vertex closest to $p$, then $\bar{ps}$ is a diagonal.
-				\end{proof}
-
-			\subsection{Art Gallery Theorem}
-				\begin{theorem}
-					Every $n$-gon can be guarded with $\lfloor \frac{n}{3} \rfloor$ vertex guards
-				\end{theorem}
-
-				\begin{lemma}
-					Triangulation graph can be 3-colored.
-				\end{lemma}
-
-				\begin{problem}
-					The floor plan of an art gallery modeled as a simple polygon with $n$ vertices, there are guards which is stationed at fixed positions with 360 degree vision but cannot see through the walls. How many guards does the art gallery need for the security? (Fun fact: This problem was posted to Vasek Chvatal by Victor Klee in 1973).				
-				\end{problem}
-
-				\begin{proof}
-					- $P$ plus triangulation is a planar graph\\
-					- 3-coloring means there exist a 3-partition for vertices that no edge or diagonal has both endpoints within the same set of vertices.\\
-					- Proof by Induction:\\
-					\indent - Remove an ear (there will always exist ear) \\
-					\indent - Inductively 3-color the rest\\
-					\indent - Put ear back, coloring new vertex with the label not used by the boundary diagonal.
-				\end{proof}
-
-			\subsection{Triangulation Algorithms}
 
 	\chapter{Data Structures}
 		\section{Elementary Data Structures}
@@ -281,3 +504,4 @@
 		\section{van Emde Boas Trees}
 
 	\chapter{NP and PSPACE}
+\end{document}
