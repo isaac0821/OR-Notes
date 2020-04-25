@@ -138,7 +138,7 @@
 					\hline
 				\end{tabular}
 			\end{align*}
-			Here is a comparison between running times: $\lg n < n < n\lg n < n^2 < n^{\sqrt{n}} < 2^n < e^n < n! < n^n$
+			Here is a comparison between running times: $\lg n < \sqrt{n} < n < n\lg n < n^2 < n^{\sqrt{n}} < 2^n < e^n < n! < n^n$
 
 	\chapter{General Strategies}
 		\section{Greedy Algorithms}
@@ -161,6 +161,8 @@
 				\end{algorithm}
 
 				If we can prove the following, we can claim the greedy algorithm. First, it need to prove that for ``current moment'', the strategy is safe, i.e., there is always an optimum solution that agrees with the decision made according to the strategy, this is usually difficult. Then, it need to show that the remaining task after applying the strategy is to solve a/many smaller instance(s) of the same problem.
+
+				Although greedy algorithm is intuitive and usually leads to satisfactory complexity, however, for most of the problems there is \textbf{no} natural greedy algortihm that works.
 			\subsection{Examples}
 				\subsubsection{Interval Scheduling}
 					For $n$ jobs, job $i$ starts at time $s_i$, and finishes at time $f_i$. $i$ and $j$ are compatible if $[s_i, f_i)$ and $[s_j, f_j)$ are disjoint. Find the maximum-size of mutually compatible jobs.
@@ -223,7 +225,11 @@
 			\subsection{Introduction}
 				The divide-and-conquer algorithm contains three steps: divide, conquer and combine. Step one, divide instances into many smaller instances. Step two, conquer small instance by solving each of smaller instances recursively and separately. Step three, combine solutions to small instances to obtain a solution for the origin large instance.
 
+				Divide and conquer can sometimes solve the problems that greedy algorithm cannot solve, but they often not strong enough to reduce exponential brute-force search down to polynomial time. What usually happen is that they reduce a running time that unnecessarily large, but already polynomial, down to a faster running time.
+
 			\subsection{Master Theorem}
+				The Master Theorem is useful in analyzing the running time of divide and conquer algorithm. Assume at each step we divide the origin problem of size $n$ into subproblems of size $n / b$, run for $a$ times of ``itself'' to conquer those subproblems with a combine operation of $O(n^c)$, then the total running time can be derived by the Master Theorem as following:
+
 				\begin{theorem}[Master Theorem]
 					For running time in forms of $T(n) = aT(n/b) + O(n^c)$, where $a \ge 1$, $b > 1$, $c \ge 0$ are constants. Then
 					\begin{equation}
@@ -272,7 +278,174 @@
 
 		\section{Dynamic Programming}
 			\subsection{Introduction}
+				The principal of dynamic programming is essentially opposite of the greedy algorithm. Dynamic programming implicitly explores the space of all possible solutions, by carefully decomposing the origin problem into subproblems, and store the solution of those subproblems. Base on those subproblems, then build up larger and larger problem until the origin problem is solved.
 
+			\subsection{Examples}
+				\subsubsection{Weighted Interval Scheduling}
+					Consider $n$ jobs, job $i$ starts at time $s_i$ and finishes at time $f_i$, each job has a weight of $v_i > 0$. Job $i$ and job $j$ are compatible if $[s_i, f_i)$ and $[s_j, f_j)$ are disjoint. Find the maximum-size subset of mutually compatible jobs. A special case of this problem is when the values of all jobs are equal, which will be the interval scheduling problem as discussed in the greedy algorithm examples.
+
+					Define $p(j)$ as for a job $j$, the largest index $i < j$ such that job $j$ is disjoint with job $i$. Define $opt(i)$ as the optimal value for instance only containing jobs $\{1, 2, \cdots, i\}$.
+
+					Before the algorithm for weighted interval scheduling, sort the jobs by non-decreasing order of finishing time first, in $O(n \lg n)$ The dynamic programming algorithm is as following:
+					\begin{algorithm}[h]
+						\caption{ComputeOpt(i)}
+						\begin{algorithmic}[1]
+							\If {$i == 0$}
+								\State \Return 0
+							\Else
+								\State \Return $\max\{v_i + ComputeOpt(p(i)), ComputeOpt(i - 1)\}$
+							\EndIf
+						\end{algorithmic}
+					\end{algorithm}
+
+					For finding $p(i)$ for one job, it takes $O(\lg n)$ by binary search. For $n$ jobs the complexity will be $O(n\lg n)$.
+
+					The running time of this algorithm can be exponential in $n$, if each time $ComputeOpt(i)$ is computed repeatedly. However, if we store the value of each $ComputeOpt(i)$ and reuse it, we can reduce the running time to $O(n)$.
+
+					We can recover the set of jobs for given (valid) $opt(i)$ by the following algorithm, assuming the jobs has been sorted by non-decreasing order of finishing time.
+					\begin{algorithm}[h]
+						\caption{RecoverJobs()}
+						\begin{algorithmic}[1]
+							\State Compute $p_1, p_2, \cdots, p_n$
+							\State $opt(0) \gets 0$
+							\For {$i \gets 1$ to $n$}
+								\If {$opt(i - 1) \ge v_i + opt(p_i)$}
+									\State $opt(i) \gets opt(i - 1)$
+									\State $b[i] \gets N$								
+								\Else
+									\State $opt(i) \gets v_i + opt(p_i)$
+									\State $b[i] \gets Y$
+								\EndIf
+							\EndFor
+							\State $i \gets n, S\gets \emptyset$
+							\While {$i \ne 0$}
+								\If {$b[i] == N$}
+									\State $i \gets i - 1$
+								\Else
+									\State $S \gets S \cup \{i\}$
+									\State $i \gets p_i$
+								\EndIf
+							\EndWhile
+							\State \Return S
+						\end{algorithmic}
+					\end{algorithm}
+
+					The above algorithm is using memorized recursion to solve the problem, there is a second efficient algorithm to solve the Weighted Interval Scheduling Problem.
+
+				\subsubsection{Subset Sum Problem}
+					Given an interger bound $W > 0$ and a set of $n$ items, each with an integer weight $w_i > 0$, find a subset $S$ of items that
+					\begin{align}
+						\max \quad &\sum_{i \in S} w_i\\
+						\text{s.t.} \quad & \sum_{i \in S} w_i \le W
+					\end{align}
+
+					Consider this instance, $i$ items, $(w_1, w_2, \cdots, w_i)$, budget is $W^\prime$. For $opt[i, W^\prime]$ there can only be one of the following cases:
+
+					\textbf{Case 1: }The value of optimum solution does not contain $w_i$, then $opt[i, W^\prime] = opt[i - 1, W^\prime]$, else
+
+					\textbf{Case 2: }The value of optimum solution contains $w_i$, then $opt[i, W^\prime] = opt[i - 1, W^\prime - w_i] + w_i$
+
+					The algorithm is as following
+					\begin{algorithm}[h]
+						\caption{Optimum Subset}
+						\begin{algorithmic}[1]
+							\For {$W^\prime \gets 0$ to $W$}
+								\State $opt[0, W^\prime] \gets 0$
+							\EndFor
+							\For {$i \gets 1$ to $n$}
+								\For {$W^\prime \gets 0$ to $W$}
+									\State $opt[i, W^\prime] \gets opt[i - 1, W^\prime]$
+									\State $b[i, W^\prime] \gets N$
+									\If {$w_i \le W^\prime$ and $opt[i - 1, W^\prime - w_i] + w_i \ge opt[i, W^\prime]$}
+										\State $opt[i, W^\prime] \gets opt[i - 1, W^\prime - w_i] + w_i$
+										\State $b[i, W^\prime] \gets Y$
+									\EndIf
+								\EndFor
+							\EndFor
+							\State \Return $opt[n, W]$
+						\end{algorithmic}
+					\end{algorithm}
+
+					\begin{algorithm}[h]
+						\caption{Recover the Optimum Set}
+						\begin{algorithmic}[1]
+							\State $i \gets n, W^\prime \gets W, S \gets 0$
+							\While {$i > 0$}
+								\If {$b[i, W^\prime] == Y$}
+									\State $W^\prime \gets W^\prime - w_i$
+									\State $S \gets \cup \{i\}$
+								\EndIf
+								\State $i \gets i - 1$
+							\EndWhile
+							\State \Return S
+						\end{algorithmic}
+					\end{algorithm}
+
+				\subsubsection{Optimum Binary Search Tree}
+					Given $n$ elements $e_1 < e_2 < \cdots < e_n$, $e_i$ has frequency $f_i$, the goal is to build a binary search tree for $\{e_1, e_2, \cdots, e_n\}$ with the minimum accessing cost
+					\begin{equation}
+						\sum_{i = 1}^n f_i d_i
+					\end{equation}
+					Where $d_i$ is the depth of $e_i$ in the tree.
+
+					Suppose we choose $e_k$ to be the root, than $e_1, e_2, \cdots, e_{k-1}$ are in left-sub tree, and $e_{k+1}, \cdots, e_n$ will be in right-sub tree, then, denote the cost for the tree and subtrees to be $C, C_L, C_R$ respectively
+					\begin{align}
+						C &= \sum_{j = 1}^n f_j d_j\\
+						&= \sum_{j = 1}^n f_j + \sum_{j = 1}^n f_j(d_j - 1)\\
+						&= \sum_{j = 1}^n f_j + \sum_{j = 1}^{k - 1} f_j(d_j - 1) + \sum_{j = k + 1}^n f_j(d_j - 1)\\
+						&= \sum_{j = 1}^n f_j + C_L + C_R
+					\end{align}
+
+					Denote $opt(i, j)$ to be the optimal value for the instance of $(e_i, e_{i + 1}, \cdots, e_j)$, then, for every $i, j$ such that $1 \le i \le j \le n$
+					\begin{equation}
+						opt(i, j) = \sum_{k = i}^j f_k + \min_{k:i \le k \le j}\{opt(i, k - 1) + opt(k + 1, j)\}
+					\end{equation}
+
+					Here is an example
+					\begin{example}
+						Consider the following optimum binary search tree instance. We have 5 elements $e_1, e_2, e_3, e_4$ and $e_5$ with $e_1 < e_2 < e_3 < e_4 < e_5$ and their frequencies are $f_1 = 5, f_2 = 25, f_3 = 15, f_4 = 10$ and $f_5 = 30$.  Recall that the goal is to find a binary search tree for the 5 elements so as to minimize $\sum_{i=1}^5 \textrm{depth}(e_i) f_i$, where $\textrm{depth}(e_i)$ is the depth of the element $e_i$ in the tree.  You need to output the best tree as well as its cost. You can try to complete the following tables and show the steps.  In the two tables, $opt(i,j)$ is the cost of the best tree for the instance containing $e_i, e_{i+1}, ..., e_j$ and $\pi(i, j)$ is the root of the best tree.
+						\begin{table}[H]
+							\centering
+							\begin{tabular}{|c|c|c|c|c|c|}
+								\hline
+								\backslashbox{$i$}{$opt(i, j)$}{$j$} &  1 & 2  & 3 & 4 & 5 \\ \hline
+								1 & 5 & 35 & 65 & 95 & 170\\\hline
+								2&  & 25 & 55 & 85 & 155 \\\cline{1-1}\cline{3-6}
+								3& \multicolumn{2}{c|}{} & 15 & 35 & 90\\\cline{1-1}\cline{4-6}
+								4& \multicolumn{3}{c|}{} & 10 & 50 \\\cline{1-1}\cline{5-6}
+								5& \multicolumn{4}{c|}{} & 30 \\\cline{1-1}\cline{6-6}
+							\end{tabular}\qquad\qquad
+							\begin{tabular}{|c|c|c|c|c|c|}
+								\hline
+								\backslashbox{$i$}{$\pi(i, j)$}{$j$} &  1 & 2  & 3 & 4 & 5 \\ \hline
+								1 & 1 & 2 & 2 & 2 & 3\\\hline
+								2&  & 2 & 2 & 2 (or 3)& 3 \\\cline{1-1}\cline{3-6}
+								3& \multicolumn{2}{c|}{} & 3 & 3& 5\\\cline{1-1}\cline{4-6}
+								4& \multicolumn{3}{c|}{} & 4 & 5\\\cline{1-1}\cline{5-6}
+								5& \multicolumn{4}{c|}{} & 5 \\\cline{1-1}\cline{6-6}
+							\end{tabular}
+							\caption{$opt$ and $\pi$ tables for the optimum binary search tree instance. For cleanness of the table, we assume $opt(i, j) = 0$ if $j < i$ and there are not shown in the left table.}
+						\end{table}
+						\vspace*{-30pt}
+						\begin{align*}
+							opt(1, 2) &= \min\{0 + opt(2, 2), opt(1, 1) + 0\} + (f_1 + f_2) = \min\{25, 5\} + 5 + 25 = 35\\
+							opt(2, 3) &= \min\{0 + opt(3, 3), opt(2, 2) + 0\} + (f_2 + f_3) = \min\{15, 25\} + 25 + 15 = 55\\
+							opt(3, 4) &= \min\{0 + opt(4, 4), opt(3, 3) + 0\} + (f_3 + f_4) = \min\{10, 15\} + 15 + 10 = 35\\
+							opt(4, 5) &= \min\{0 + opt(5, 5), opt(4, 4) + 0\} + (f_4 + f_5) = \min\{30, 10\} + 10 + 30 = 50\\
+							opt(1, 3) &= \min\{0 + f(2, 3), f(1, 1) + f(3, 3), f(1, 2) + 0\} + (f_1 + f_2 + f_3) \\
+							&= \min\{55, 20, 35\} + 5 + 25 + 15 = 65 \\
+						    opt(2, 4) &= \min\{0 + f(3, 4), f(2, 2) + f(4, 4), f(2, 3) + 0\} + (f_2 + f_3 + f_4) \\ 
+						    &= \min\{35, 35, 55\} + 25 + 15 + 10 = 85 \\
+							opt(3, 5) &= \min\{0 + f(4, 5), f(3, 3) + f(5, 5), f(3, 4) + 0\} + (f_3 + f_4 + f_5) \\
+							&= \min\{50, 45, 35\} + 15 + 10 + 30 = 90 \\
+							opt(1, 4) &= \min\{0 + f(2, 4), f(1, 1) + f(3, 4), f(1, 2) + f(4, 4), f(1, 3) + 0\} \\ & \qquad + (f_1 + f_2 + f_3 + f_4) = 95\\
+							&= \min\{85, 40, 45, 65\} + 5 + 25 + 15 + 10\\
+							opt(2, 5) &= \min\{0 + f(3, 5), f(2, 2) + f(4, 5), f(2, 3) + f(5, 5), f(2, 4) + 0\} \\ & \qquad + (f_2 + f_3 + f_4 + f_5) = 155\\
+							&= \min\{90, 75, 85, 85\} + 25 + 15 + 10 + 30 \\
+							opt(1, 5) &= \min\{0 + f(2, 5), f(1, 1) + f(3, 5), f(1, 2) + f(4, 5), f(1, 3) + f(5, 5) + f(1, 4) + 0\} \\ & \qquad + (f_1 + f_2 + f_3 + f_4 + f_5) \\
+							&= \min\{155, 95, 85, 95, 95\} + 5 + 25 + 15 + 10 + 30 = 170
+						\end{align*}
+					\end{example}
 
 		\section{Compare between three paradigms}
 			Greedy algorithm
@@ -313,7 +486,7 @@
 			\subsection{Quicksort}
 				The idea of quicksort is to recursively divide an array into two subarrays, one with smaller number and one with large number, and concatenate  the subarrays after all subarrays are singletons.
 
-				The most idea way is to divide the subarrays equally, which requires an algorithm to find the median of an array of size $n$ in $O(n)$ time.
+				The most ideal way is to divide the subarrays equally, which requires an algorithm to find the median of an array of size $n$ in $O(n)$ time.
 
 				The quicksort algorithm is as following
 				\begin{algorithm}[h]

@@ -167,33 +167,33 @@
 			\begin{algorithm}[!ht]
 				\caption{Branch and Bound}
 				\begin{algorithmic}[1]
-					\STATE find a feasible solution as the initial Lower bound $L$
-					\STATE put the original LP relaxation in candidate list $S$
-					\WHILE {$S \ne \emptyset$}
-						\STATE select a problem $\hat{S}$ from $S$
-						\STATE solve the LP relaxation of $\hat{S}$ to obtain $u(\hat{S})$
-						\IF {LP is infeasible}
-							\STATE $\hat{S}$ pruned by infeasibility
-						\ELSIF {LP is unbounded}
-							\STATE $\hat{S}$ pruned by unboundness or infeasibility
-						\ELSIF{LP $u(\hat{S}) \le L$}
-							\STATE $\hat{S}$ pruned by bound
-						\ELSIF{LP $u(\hat{S}) > L$}
-							\IF {$\hat{x}\in S$}
-								\STATE $u(\hat{S})$ becomes new $L$, $L=u(\hat{S})$
-							\ELSIF {$\hat{x}\notin S$}
-								\STATE branch and add the new sub-problems to $S$
-								\IF {LP $u(\hat{S})$ is at current best upper bound}
-									\STATE set $U=u(\hat{S})$
-								\ENDIF
-							\ENDIF
-						\ENDIF
-					\ENDWHILE
-					\IF {Lower bound exists}
-						\STATE find the optimal at $L$
-					\ELSE
-						\STATE Infeasible
-					\ENDIF
+					\State find a feasible solution as the initial Lower bound $L$
+					\State put the original LP relaxation in candidate list $S$
+					\While {$S \ne \emptyset$}
+						\State select a problem $\hat{S}$ from $S$
+						\State solve the LP relaxation of $\hat{S}$ to obtain $u(\hat{S})$
+						\If {LP is infeasible}
+							\State $\hat{S}$ pruned by infeasibility
+						\ElsIf {LP is unbounded}
+							\State $\hat{S}$ pruned by unboundness or infeasibility
+						\ElsIf{LP $u(\hat{S}) \le L$}
+							\State $\hat{S}$ pruned by bound
+						\ElsIf{LP $u(\hat{S}) > L$}
+							\If {$\hat{x}\in S$}
+								\State $u(\hat{S})$ becomes new $L$, $L=u(\hat{S})$
+							\ElsIf {$\hat{x}\notin S$}
+								\State branch and add the new sub-problems to $S$
+								\If {LP $u(\hat{S})$ is at current best upper bound}
+									\State set $U=u(\hat{S})$
+								\EndIf
+							\EndIf
+						\EndIf
+					\EndWhile
+					\If {Lower bound exists}
+						\State find the optimal at $L$
+					\Else
+						\State Infeasible
+					\EndIf
 				\end{algorithmic}
 			\end{algorithm}
 
@@ -386,11 +386,11 @@
 				\begin{algorithm}[!ht]
 					\caption{Heuristic method to find a clique}
 					\begin{algorithmic}[1]
-						\STATE find $v=\text{argmax}_{i\in V} \{\bar{x_i}\}, C=\{v\}$
-						\WHILE {$u\in \text{argmax}_{i \in \cap_{i \notin C}N_{(i, j)}\notin C} \{\bar {x_1}\}$ exists}
-							\STATE C.add(u)
-						\ENDWHILE
-						\STATE return C
+						\State find $v=\text{argmax}_{i\in V} \{\bar{x_i}\}, C=\{v\}$
+						\While {$u\in \text{argmax}_{i \in \cap_{i \notin C}N_{(i, j)}\notin C} \{\bar {x_1}\}$ exists}
+							\State C.add(u)
+						\EndWhile
+						\State return C
 					\end{algorithmic}
 				\end{algorithm}\\
 				If $\sum_{i\in C} \bar{x_i} > 1$ then add cut $\sum_{i\in C} x_i \le 1$
@@ -664,28 +664,28 @@
 			\begin{algorithm}[!ht]
 				\caption{Sub-tour Searching Algorithm}
 				\begin{algorithmic}[1]
-					\STATE $K = \emptyset$
-					\STATE $d_i = 0, \forall i \in N$
-					\FOR {$i\in N$}
-						\STATE $C = \emptyset$
-						\STATE $Q = \emptyset$
-						\IF {$d_i == 0$}
-							\STATE $d_i = 1$
-							\STATE $C = C\cup \{i\}$
-							\STATE Q.append(i)
-							\WHILE {$Q\ne \emptyset$}
-								\STATE v = Q.pop()
-								\FOR {$u \in \bar{FS}(v)$}
-									\IF {$d_u == 0$}
-										\STATE $d_u = 1$
-										\STATE $C = C \cup \{u\}$
-										\STATE Q.append(u)
-									\ENDIF
-								\ENDFOR
-							\ENDWHILE
-						\ENDIF
-						\STATE $K=K\cup C$
-					\ENDFOR
+					\State $K = \emptyset$
+					\State $d_i = 0, \forall i \in N$
+					\For {$i\in N$}
+						\State $C = \emptyset$
+						\State $Q = \emptyset$
+						\If {$d_i == 0$}
+							\State $d_i = 1$
+							\State $C = C\cup \{i\}$
+							\State Q.append(i)
+							\While {$Q\ne \emptyset$}
+								\State v = Q.pop()
+								\For {$u \in \bar{FS}(v)$}
+									\If {$d_u == 0$}
+										\State $d_u = 1$
+										\State $C = C \cup \{u\}$
+										\State Q.append(u)
+									\EndIf
+								\EndFor
+							\EndWhile
+						\EndIf
+						\State $K=K\cup C$
+					\EndFor
 				\end{algorithmic}
 			\end{algorithm}
 

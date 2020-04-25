@@ -971,7 +971,7 @@
 									\State $h(v) \gets h(u)$
 								\EndIf
 							\Else
-								\If {$level(u) < h(v)$}
+								\If {$level(u) < level(v) - 1$ and $level(u) < h(v)$}
 									\State $h(v) \gets level(u)$
 								\EndIf
 							\EndIf
