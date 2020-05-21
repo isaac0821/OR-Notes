@@ -141,6 +141,30 @@
 			Here is a comparison between running times: $\lg n < \sqrt{n} < n < n\lg n < n^2 < n^{\sqrt{n}} < 2^n < e^n < n! < n^n$
 
 	\chapter{General Strategies}
+		This chapter we are going to discussion three types of strategies for algorithm design, greedy algorithm, divide-and-conquer, and dynamic programming.
+		\begin{itemize}
+			\item Greedy algorithm
+			\begin{itemize}
+				\item Make a greedy choice
+				\item Prove that the greedy choice is safe
+				\item Reduce the problem to a sub-problem and solve it iteratively
+				\item Usually for optimization problems.
+			\end{itemize}
+			\item Divide-and-Conquer
+			\begin{itemize}
+				\item Break a problem into many independent sub-problems
+				\item Solve each sub-problem separately
+				\item Combine solutions for sub-problems to form a solution for the origin one
+				\item Usually used to design more efficient algorithm
+			\end{itemize}
+			\item Dynamic Programming
+			\begin{itemize}
+				\item Break up a problem into many overlapping sub-problems
+				\item Build solutions for larger and larger sub-problems
+				\item Use a table to store solutions for sub-problems for reuse
+			\end{itemize}
+		\end{itemize}
+
 		\section{Greedy Algorithms}
 			\subsection{Introduction}
 				Greedy algorithm solve the problem incrementally. Its often for optimization problems. Solving optimization problem typically requires a sequences of steps, at each step, an irrevocable decision will be made, and makes the choice looks the best at the moment. Based on that, a small instance will be added to the problem and we solve it again.
@@ -333,7 +357,7 @@
 					The above algorithm is using memorized recursion to solve the problem, there is a second efficient algorithm to solve the Weighted Interval Scheduling Problem.
 
 				\subsubsection{Subset Sum Problem}
-					Given an interger bound $W > 0$ and a set of $n$ items, each with an integer weight $w_i > 0$, find a subset $S$ of items that
+					Given an integer bound $W > 0$ and a set of $n$ items, each with an integer weight $w_i > 0$, find a subset $S$ of items that
 					\begin{align}
 						\max \quad &\sum_{i \in S} w_i\\
 						\text{s.t.} \quad & \sum_{i \in S} w_i \le W
@@ -447,29 +471,57 @@
 						\end{align*}
 					\end{example}
 
+				\subsubsection{Matrix Chain Multiplication}
+					Given $n$ matrices $A_1, A_2, \cdots, A_n$ of sizes $r_1 \times c_1, r_2 \times c_2, \cdots, r_n \times c_n$ where $c_i = r_{i + 1}$ for every $i = 1, 2, \cdots, n - 1$. The Matrix Chain Multiplication finds the order of computing $A_1A_1\cdots A_n$ with the minimum number of multiplications.
+
+					The idea is as following. Assume the last step in the multiplication is $(A_1A_2\cdots A_i)(A_{i + 1}A_{i + 2}\cdots A_n)$. The cost of this step will be $r_i \times c_i \times c_n$. So we need to optimally solve two sub-instances, i.e., $(A_1A_2\cdots A_i)$ and $(A_{i + 1}A_{i + 2}\cdots A_n)$.
+
+					Denote $opt[i, j]$ as the minimum cost of computing $A_i A_{i+1} \cdots A_j$, then
+					\begin{equation}
+						opt[i, j] = \begin{cases}
+							0, & \quad i = j\\
+							\min_{k: i \le k < j} (opt[i, k] + opt[k + 1, j] + r_i \times c_k \times c_j), & \quad j < j
+						\end{cases}
+					\end{equation}
+
+					The algorithm is as following
+					\begin{algorithm}[h]
+						\caption{MatrixChainMultiplication}
+						\begin{algorithmic}[1]
+							\State $opt[i, i] \gets 0 \quad \forall ~ i = 1, 2, \cdots, n$
+							\For {$l \gets  2$ to $n$}
+								\For {$i \gets 1$ to $n - l + 1$}
+									\State $j \gets i + l - 1$
+									\State $opt[i, j] \gets \infty$
+									\For {$k \gets i$ to $j - 1$}
+										\If {$opt[i, k] + opt[k + 1, j + r_ic_kc_j < opt[i, j]$}
+											\State $opt[i, j] \gets opt[i, k] + opt[k + 1, j] + r_i c_k c_j$
+											\State $\pi[i, j] \gets k$
+										\EndIf
+									\EndFor
+								\EndFor
+							\EndFor
+							\State \Return $opt[1, n]$
+						\end{algorithmic}
+					\end{algorithm}
+
+					With above algorithm, to construct the optimal solution, the follow algorithm is needed
+					\begin{algorithm}[h]
+						\caption{PrintOptimalOrder(i, j)}
+						\begin{algorithmic}[1]
+							\If {$i == j$}
+								\State Print($A_i$)
+							\Else
+								\State Print("(")
+								\State \texttt{PrintOptimalOrder($i, \pi[i, j]$)}
+								\State \texttt{PrintOptimalOrder($\pi[i, j] + 1, j$)}
+								\State Print(")")
+							\EndIf
+						\end{algorithmic}
+					\end{algorithm}
+				
 		\section{Compare between three paradigms}
-			Greedy algorithm
-			\begin{itemize}
-				\item Make a greedy choice
-				\item Prove that the greedy choice is safe
-				\item Reduce the problem to a sub-problem and solve it iteratively
-				\item Usually for optimization problems.
-			\end{itemize}
 
-			Divide-and-Conquer
-			\begin{itemize}
-				\item Break a problem into many independent sub-problems
-				\item Solve each sub-problem separately
-				\item Combine solutions for sub-problems to form a solution for the origin one
-				\item Usually used to design more efficient algorithm
-			\end{itemize}
-
-			Dynamic Programming
-			\begin{itemize}
-				\item Break up a problem into many overlapping sub-problems
-				\item Build solutions for larger and larger sub-problems
-				\item Use a table to store solutions for sub-problems for reuse
-			\end{itemize}
 
 	\chapter{Sorting}
 		\section{Exchange Sorts}
@@ -716,6 +768,7 @@
 			\end{algorithm}
 
 			The running time $T(n) = 3T(n/2) + O(n)$, $T(n) = O(n^{\lg_2 3})$
+
 		\section{Matrices Multiplication}
 
 		\section{Gaussian Elimination}
@@ -731,13 +784,11 @@
 
 		\section{Pattern Matching}
 
+		\section{Longest Common Subsequence}
+
 		\section{Parse}
 
-		\section{Optimal Caching}			
-			\subsection{Offline Caching}
-				\begin{definition}[Furthest-in-Future]
-					(Les Belady, 1960s) When 
-				\end{definition}
+		\section{Optimal Caching}
 
 		\section{File Compression}
 
@@ -758,5 +809,208 @@
 
 		\section{van Emde Boas Trees}
 
-	\chapter{NP and PSPACE}
+	\chapter{NP and Computational Intractability}
+		\section{P, NP and Co-NP}
+			\begin{definition}[Decision Problem]
+				A problem $X$ is a \textbf{decision problem} if the output is either 0 or 1 (yes/no). Further, a 
+			\end{definition}
+
+			The input of a problem can always be encoded into a binary string. The size of an input is the length of the encoded string $s$ for the input.
+
+			\notice{For optimization problem $X$, we can always define a decision version $X^\prime$, by giving a threshold and ask if the objective function can satisfy that threshold or not. If that decision version $X^\prime$ can be solved in polynomial time, we can solve the original problem $X$ in polynomial time.}
+
+			\begin{definition}[Polynomial running time]
+				An algorithm $A$ has a \textbf{polynomial running time} if there is a polynomial function $p(\cdot)$ such that $\forall s$, the algorithm $A$ terminates on $s$ in at most $p(|\cdot|)$ steps.
+			\end{definition}
+
+			\begin{definition}[P]
+				The complexity class $P$ is the set of decision problems $X$ that can be solved in polynomial time.
+			\end{definition}
+
+			\begin{example}
+				Shortest path, minimum spanning tree, determine if an integer is prime number, those are in P.
+			\end{example}
+
+			\begin{definition}[Certificate, Certifier]
+				In order to check the an algorithm $A$, for a binary string $s$, such that $s \in A$, there is another separated algorithm $B$ uses $s$ and $t$, a separated string that contains the evidence that $s$ is a ``yes'' instance of $X$, as input string and output (another) ``yes''. Then this string $t$ is called \textbf{certificate}, this separated algorithm $B(s, t)$ is called \textbf{certifier}. 
+			\end{definition}
+
+			\notice{Certificate is like a solution, and certifier is the algorithm to prove solution is correct. But both with fancy terminology}
+
+			\begin{example}
+				For Independent set problem. The input ($s$) is a graph, the certificate ($t$) will be a set of size $k$, and the certifier will be an algorithm to check the given set is an independent set.
+			\end{example}
+
+			\begin{example}
+				For 3-SAT problem. The input $s$ will be the 3-CNF (conjunctive normal form), the certificate $t$ will be the assignment of true values for each terms in the 3-CNF. The certifier will be the algorithm calculates the true value of the clause given the true values in $t$.
+			\end{example}
+
+			\begin{definition}[Efficient Certifier]
+				$B$ is an efficient certifier for problem $X$ if
+				\begin{itemize}
+					\item $B$ runs in polynomial time with input $s$ and $t$. ($s$ is the input of origin algorithm and $t$ is the certificate)
+					\item There is a polynomial function $p(|\cdot|)$ such that for every string $s$, we have $s \in X$ ($s$ is a ``yes'' solution for $X$) and $B(s, t) = yes$ (the certifier returns ``yes'')
+				\end{itemize}
+			\end{definition}
+
+			\begin{definition}[NP]
+				The complexity class $NP$ is the set of all problems for which there exists an efficient certifier.
+			\end{definition}
+
+			From the definition of NP we can immediately know that $P \subseteq NP$. Because all the problems in P can satisfy the definition of NP. But is there a problem that $X \in NP$ and $X \notin P$? Solve that problem and you will win 100 million dollars and the chance to be remember forever.
+
+			\notice{NP stands for \textbf{Non-deterministic Polynomial} time}
+
+			To prove if a problem is NP, we need to have a certifier that can output ``yes'' given the certificate in polynomial time. Otherwise it is not in NP
+
+			\begin{example}
+				Given a graph $G = (V, E)$ and an integer $t > 0$, whether the minimum vertex cover of $G$ has size at least t. This problem is \textbf{unlikely} in NP. Reason is, the ``yes'' instance is ``all minimum vertex cover has size at least $t$'', that is not \textbf{likely to be} solvable in polynomial time for it need to find all minimum vertex covers.
+			\end{example}
+
+			\begin{definition}[Co-NP]
+				For a problem $X$, the problem $\bar{X}$ is the problem such that $s \in \bar{X} \iff s \notin X$. Then \textbf{Co-NP} is the set of decision problems $X$ such that $\bar{X} \in NP$.
+			\end{definition}
+
+			\begin{example}[Tautology Problem]
+				Given a boolean formula, determine wither the formula is always evaluates to 1. This is a problem in Co-NP. Because we can have a polynomial time certifier to confirm that an instance is not a tautology.
+			\end{example}
+
+			\begin{example}
+				Given two boolean formulas, to determine whether or not they are equivalent. This is a problem in Co-NP. Because if we have one instance such that the output is ``no'', then we can easily prove there are counter examples in origin algorithm.
+			\end{example}
+
+			\notice{If the instance is ``easy'' to prove to be true, then it is in NP, if the counter instance is ``easy'' to prove to be the algorithm it be false, then it is in Co-NP}
+
+			Relation between $P$, $NP$ and $Co-NP$ is as following
+			\begin{itemize}
+				\item $P \subseteq NP$
+				\item $P \subseteq Co-NP$
+				\item $P = NP?$ is not known
+				\item $P = Co-NP?$ is not known
+				\item $NP = Co-NP?$ is not known
+				\item If $P = NP$ then $P = Co-NP$
+			\end{itemize}
+
+		\section{Polynomial-Time Reductions}
+			\begin{definition}[Polynomial-time reducible]
+				Given an algorithm $A$ that solves problem $Y$, if any instance of problem $X$ can be solved using a polynomial number of standard computational steps, plus a polynomial number of calls to algorithm $A$, then we say $X$ is \textbf{polynomial-time reducible} to $Y$, denoted as 
+				\begin{equation}
+					X \le_P Y
+				\end{equation}
+			\end{definition}
+
+			In a more intuitive way, $X \le_P Y$ means $X$ can't be more difficult than $Y$. Solving $X$ can be ``transforming'' $X$ into an equivalent $Y$ in polynomial number of steps and then solve it by calling $Y$ polynomial number of times, usually one time. Thus, if $X \le_P Y$,
+			\begin{itemize}
+				\item If $Y$ can be efficiently solved, $X$ can be efficiently solved.
+				\item If $X$ cannot be efficiently solve, $Y$ cannot be efficiently solved.
+			\end{itemize}
+
+			\notice{To prove $X \le_P Y$, usually we already have an algorithm for $Y$, could be polynomial or not.}
+
+			\begin{lemma}
+				Hamiltonian-Path $\le_P$ Hamiltonian-Cycle
+			\end{lemma}
+			\begin{proof}
+				For graph $G = (V, E)$, $s$ and $t$ are two vertices that in $V$, define a new graph $G^\prime = (V \cup \{v\}, E \cup \{(u, s)\} \cup \{(t, u)\}$. To solve the Hamilton-Path from $s$ to $t$ in graph $G$, say $p_{st}$, is equivalent to solving Hamilton-Cycle problem in $G^\prime$, i.e., find $sp_{st}te_{tu}ue_{us}$.
+			\end{proof}
+
+			\begin{lemma}
+				Hamiltonian-Cycle $\le_P$ Hamiltonian-Path
+			\end{lemma}
+
+			\begin{proof}
+				For vertex $s$, make a copy and denote it as $s^\prime$, $s^\prime$ is connected to all the vertices that $s$ connected. Solving the Hamiltonian-Cycle problem is equivalent to solving the Hamiltonian-Path problem from $s$ to $s^\prime$
+			\end{proof}
+
+			\begin{lemma}
+				Hamiltonian-Path $\le_P$ degree-3 spanning tree
+			\end{lemma}
+
+			\begin{proof}
+				In graph $G$, for vertex $s$ and $t$, add vertices $s^\prime$, $s^{\prime\prime}$, $t^\prime$, $t^{\prime\prime}$ and edges $(s, s^\prime)$, $(s, s^{\prime\prime})$, $(t, t^\prime)$, $(t, t^{\prime\prime})$. For all the other vertex $u \in V\setminus \{s\} \setminus \{t\}$, add vertices $u^\prime$ and edge $(u, u^\prime)$ to the graph. Then solving Hamiltonian-Path problem is equivalent to solve the degree spanning tree problem in this new $G$.
+			\end{proof}
+
+			\begin{lemma}
+				Vertex Cover $\le_P$ Set Cover
+			\end{lemma}
+
+			\begin{proof}
+				
+			\end{proof}
+
+			\begin{lemma}
+				Set Cover $\le_P$ Vertex Cover
+			\end{lemma}
+
+			\begin{proof}
+				
+			\end{proof}
+
+			\begin{lemma}
+				Clique $\le_P$ Independent Set
+			\end{lemma}
+
+			\begin{proof}
+				$S$ is a clique in $G = (V, E)$ iff $S$ is an independent set in $\bar{G} = (V, \bar{E})$
+			\end{proof}
+
+			\begin{lemma}
+				Independent Set $\le_P$ Clique
+			\end{lemma}
+
+			\begin{proof}
+				$S$ is an independent set in $G = (V, E)$ iff $S$ is a clique in $\bar{G} = (V, \bar{E})$
+			\end{proof}
+
+			\begin{lemma}
+				Vertex-Cover $\le_P$ Independent Set
+			\end{lemma}
+
+			\begin{proof}
+				$S$ is a vertex-cover of $G = (V, E)$ iff $V \setminus S$ is an independent set of $G$
+			\end{proof}
+
+			\begin{lemma}
+				3-Coloring $\le_P$ 4-Coloring
+			\end{lemma}
+
+			\begin{proof}
+				For a graph $G = (V, E)$, define a new graph $G^\prime = (V \cup \{u\}, E \cup \{(u, v) | \forall ~ v \in V\})$. Solving the 3-Coloring problem is equivalent to solving the 4-Coloring problem in $G^\prime$
+			\end{proof}
+
+			\begin{lemma}
+				Independent Set $\le_P$ Set Packing
+			\end{lemma}
+
+		\section{NP-Completeness}
+			\begin{definition}[NP-Completeness]
+				A problem $X$ is called \textbf{NP-Complete} if
+				\begin{itemize}
+					\item $X \in NP$, and
+					\item $Y \le_P X, \forall ~ Y \in NP$
+				\end{itemize}
+			\end{definition}
+
+			An intuitive explanation will be, we can regard problems that is NP-Complete to be the most difficult problems in NP. If any of those can be solved in polynomial time, then all problems in NP can be solved in polynomial time.
+
+			\begin{theorem}[Cook's Theorem]
+				Circuit Satisfiability is NP-Complete.
+			\end{theorem}
+
+			\begin{proof}
+				
+			\end{proof}
+
+			\begin{theorem}
+				If $X$ is NP-Complete and $X \in P$, then $P = NP$
+			\end{theorem}
+
+			\begin{proof}
+				Direct result from Cook's theorem.
+			\end{proof}
+
+
+		\section{NP-Complete Problems}
+			
+
 \end{document}

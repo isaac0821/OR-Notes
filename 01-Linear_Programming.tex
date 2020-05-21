@@ -1,7 +1,7 @@
 \include{templete}
 \begin{document}
 \part{Linear Programming}
-	\chapter{Simplex Method}
+	\chapter{The Simplex Method - Basic}
 		\section{Basic Feasible Solutions and Extreme Points}
 			\begin{definition}[Basic Feasible Solutions]
 				Consider the system $\{\mathbf{A_{m\times n}x} = \mathbf{b_m}, \mathbf{b_m}\ge \mathbf{0}\}$, suppose $rank(\mathbf{A}, \mathbf{b}) = rank(\mathbf{A}) = m$, we can rearrange the columns of $\mathbf{A}$ so that we have a partition of $\mathbf{A}$. Let $\mathbf{A} = \left[\begin{matrix}\mathbf{B} & \mathbf{N}\end{matrix}\right]$ where $\mathbf{B}$ is an $m\times m$ invertible matrix, and $\mathbf{N}$ is an $m\times (n-m)$ matrix. The solution $\mathbf{x}=\left[\begin{matrix}\mathbf{x_B}\\\mathbf{x_N}\end{matrix}\right]$ to the equation $\mathbf{Ax} = \mathbf{b}$, where $\mathbf{x_B} = \mathbf{B}^{-1} \mathbf{b}$ and $\mathbf{x_N} = \mathbf{0}$ is called \textbf{basic solution} of system. If $\mathbf{x_B} \ge \mathbf{0}$, it is called \textbf{basic feasible solution} or \textbf{B.F.S.}. If $\mathbf{x_B} > \mathbf{0}$ it is called \textbf{non-degenerate basic feasible solution}. For $\mathbf{x_B} \ge \mathbf{0}$, if some $x_j = 0$, those components are called \textbf{degenerated basic feasible solution}. $\mathbf{B}$ is called the \textbf{basic matrix}, $\mathbf{N}$ is called \textbf{nonbasic matrix}
@@ -212,6 +212,86 @@
 
 			\subsection{Single Artificial Variable}
 
+		\section{Degeneracy and Cycling}
+			\subsection{Degeneracy}
+				\subsubsection{Degeneracy in Simplex Method}
+					If the basic variable $x_B$ is not strictly $> 0$, i.e. if some basic variable equals to 0, we call it degenerate.
+
+				\subsubsection{Degeneracy for Bounded Variables}
+					If some basic variables are at their upper bound or lower bound, we call it degenerate.
+
+			\subsection{Cycling}
+				In the degenerate case, pivoting by the simplex rule does not always give a strict decrease in the objective function value, because it may have $b_r = 0$. It is possible that the tableau may repeat if we use the simplex rule.\\
+				Geometrically speaking, it means that at the same point - extreme point - it corresponds to more than one feasible solutions, so when we are pivoting, we stays at the same place.\\
+				In computer algorithm, we rarely care about cycling because the data in computer is not precise, it is very hard to get into cycling.
+
+			\subsection{Cycling Prevent}
+				\subsubsection{Lexicographic Rule}
+					- For entering variable, same as simplex rule\\
+					- For leaving variable, if there is a tie, choose the variable with the smallest $\frac{y_{r1}}{y_{rk}}$.
+
+				\subsubsection{Bland's Rule}
+					- For entering variable, choose the variable with smallest index where $z_j - c_j \le 0$\\
+					- For leaving variable, if there is a tie, choose the variable with smallest index.
+
+				\subsubsection{Successive Ratio Rule}
+					- Select the pivot column as any column $k$ where $z_k - c_k \le 0$\\
+					- Given $k$, select the pivot row $r$ as the minimum successive ratio row associated with column $k$.\\
+					In other words, for pivot columns where there is no tie in the usual minimum ratio, the successive ratio rule reduces to the simplex rule
+
+		\section{As a Search Algorithm}
+			\subsection{Improving Search Algorithm}
+				A simplex method is a search algorithm, for each iteration it finds a not-worse solution, which can be represented as:\\
+				\begin{equation}x^t = x^{t-1}+\lambda_{t-1}d^{t-1}  \end{equation}
+				Where\\
+				- $x^t$ is the solution of the $t$th iteration\\
+				- $\lambda_t$ is the step length of $t$th iteration\\
+				- $d^t$ is the direction of the $t$th iteration\\
+				For each iteration, it contains three steps:\\
+				- Optimality test\\
+				- Find direction\\
+				- Find the step length
+
+			\subsection{Optimality Test}
+				\begin{align}
+					z &= cx \\
+					& = \left[\begin{matrix}c_B & c_N\end{matrix} \right] \left [ \begin{matrix}x_B \\ x_N \end{matrix} \right]  \\
+					& = c_B x_B + c_N x_N  \\
+				\text{and} \because &Ax=b  \\
+					\therefore & Bx_B + Nx_N = b, x_B\ge 0, x_N\ge 0 \\
+					\therefore & x_B = B^{-1}b-B^{-1}Nx_N \\
+					z &= c_BB^{-1}b-c_BB^{-1}Nx_N+c_Nx_N
+				\end{align}
+				for current solution $\hat{x}=\left [\begin{matrix}\hat{x_B} \\ 0\end{matrix}\right]$, $\hat{z} = c_BB^{-1}b$, then
+				\begin{equation}
+					z - \hat{z} = \left[\begin{matrix}0 & c_N - c_BB^{-1}N \end{matrix} \right] \left[ \begin{matrix}x_B \\ x_N \end{matrix}\right] 
+				\end{equation}
+				The $c_N - c_BB^{-1}N$ is the reduced cost, for a minimized problem, if $c_N - c_BB^{-1}N > 0$ means $z - \hat{z} \ge 0$, it reaches the optimality because we cannot find a solution less than $\hat{z}$.\\
+
+			\subsection{Find Direction}
+				Suppose we choose $x_k$ as a candidate to pivot into Basis\\
+				\begin{equation}
+					x = \left[ \begin{matrix}B^{-1}b-B^{-1}a_kx_k \\ 0+e_kx_k\end{matrix}\right]=\left[ \begin{matrix}B^{-1}b \\ 0\end{matrix} \right] + \left[ \begin{matrix} -B^{-1}a_k \\ e_k \end{matrix} \right]x_k 
+				\end{equation}
+				In this form, we can see: $x$ is the result after $t$th iteration, $\left[ \begin{matrix}B^{-1}b \\ 0\end{matrix} \right]$ is the result after $(t-1)$th iteration. $ \left[ \begin{matrix} -B^{-1}a_k \\ e_k \end{matrix} \right]$ is the iteration direction, $x_k$ is the step length.\\
+				The only requirement of $x_k$ is $r_k < 0$ where $r_k=c_k - z_k$ is reduce cost, which is the $k$th entry of $c_N - c_BB^{-1}N$. \\
+				Generally speaking, we usually take $r_k = \min\{c_j - z_j\}$ (which in fact can not guarantee the efficient of the algorithm.)
+
+			\subsection{Find the Step Length}
+				We need to guarantee the non-negativity, so for each iteration, we need to make sure $x\ge 0$. Which means\\
+				\begin{equation}B^{-1}b-B^{-1}a_kx_k \ge 0  \end{equation}
+				Denote $B^{-1}b$ as $\bar{b}$, denote $B^{-1}a_k$ as $y_k$\\
+				If $y_k \le 0$, we can have $x_k$ as large as infinite, which means unboundedness. \\
+				If $y_k > 0$ now we can use the minimum ratio to guarantee non-negativity.\\
+				\textbf{Remember} hit the bound, basic variable leave the basis and become non-basic variable.
+
+			\subsection{Simplex Method Algorithm}
+
+			\subsection{Simplex Method Tableau}
+
+			\subsection{Simplex Method as a Search Algorithm}
+
+	\chapter{The Simplex Method - Improved}
 		\section{Revised Simplex Method}
 			\subsection{Key to Revised Simplex Method}
 				The procedure of Simplex Method is (almost) exactly the same as original simplex method. However, notice that we don't need to use $N$ so for the revised simplex method, we don't calculate any matrix related to $N$\\
@@ -441,90 +521,11 @@
 								\end{cases} 
 				\end{align}
 				\framebox{\textbf{Tip:}}\\
-				Use $l \le x+\Delta \le u$ to test the range of $\delta$, if it hits lower bound, it is called $\gamma_1$, if it hits upper bound, it is called $\gamma_2$.
-
-		\section{Degeneracy and Cycling}
-			\subsection{Degeneracy}
-				\subsubsection{Degeneracy in Simplex Method}
-					If the basic variable $x_B$ is not strictly $> 0$, i.e. if some basic variable equals to 0, we call it degenerate.
-
-				\subsubsection{Degeneracy for Bounded Variables}
-					If some basic variables are at their upper bound or lower bound, we call it degenerate.
-
-			\subsection{Cycling}
-				In the degenerate case, pivoting by the simplex rule does not always give a strict decrease in the objective function value, because it may have $b_r = 0$. It is possible that the tableau may repeat if we use the simplex rule.\\
-				Geometrically speaking, it means that at the same point - extreme point - it corresponds to more than one feasible solutions, so when we are pivoting, we stays at the same place.\\
-				In computer algorithm, we rarely care about cycling because the data in computer is not precise, it is very hard to get into cycling.
-
-			\subsection{Cycling Prevent}
-				\subsubsection{Lexicographic Rule}
-					- For entering variable, same as simplex rule\\
-					- For leaving variable, if there is a tie, choose the variable with the smallest $\frac{y_{r1}}{y_{rk}}$.
-
-				\subsubsection{Bland's Rule}
-					- For entering variable, choose the variable with smallest index where $z_j - c_j \le 0$\\
-					- For leaving variable, if there is a tie, choose the variable with smallest index.
-
-				\subsubsection{Successive Ratio Rule}
-					- Select the pivot column as any column $k$ where $z_k - c_k \le 0$\\
-					- Given $k$, select the pivot row $r$ as the minimum successive ratio row associated with column $k$.\\
-					In other words, for pivot columns where there is no tie in the usual minimum ratio, the successive ratio rule reduces to the simplex rule
+				Use $l \le x+\Delta \le u$ to test the range of $\delta$, if it hits lower bound, it is called $\gamma_1$, if it hits upper bound, it is called $\gamma_2$.		
 
 		\section{Dual Simplex Method}
 			Maintain dual feasibility, i.e. primal optimality, and complementary slackness and work towards primal feasibility.
 			\framebox{\textbf{Tip:}}The RHS become new $z_j - c_j$, the old $z_j - c_j$ become new RHS. We are actually solving the dual problem.
-
-		\section{As a Search Algorithm}
-			\subsection{Improving Search Algorithm}
-				A simplex method is a search algorithm, for each iteration it finds a not-worse solution, which can be represented as:\\
-				\begin{equation}x^t = x^{t-1}+\lambda_{t-1}d^{t-1}  \end{equation}
-				Where\\
-				- $x^t$ is the solution of the $t$th iteration\\
-				- $\lambda_t$ is the step length of $t$th iteration\\
-				- $d^t$ is the direction of the $t$th iteration\\
-				For each iteration, it contains three steps:\\
-				- Optimality test\\
-				- Find direction\\
-				- Find the step length
-
-			\subsection{Optimality Test}
-				\begin{align}
-					z &= cx \\
-					& = \left[\begin{matrix}c_B & c_N\end{matrix} \right] \left [ \begin{matrix}x_B \\ x_N \end{matrix} \right]  \\
-					& = c_B x_B + c_N x_N  \\
-				\text{and} \because &Ax=b  \\
-					\therefore & Bx_B + Nx_N = b, x_B\ge 0, x_N\ge 0 \\
-					\therefore & x_B = B^{-1}b-B^{-1}Nx_N \\
-					z &= c_BB^{-1}b-c_BB^{-1}Nx_N+c_Nx_N
-				\end{align}
-				for current solution $\hat{x}=\left [\begin{matrix}\hat{x_B} \\ 0\end{matrix}\right]$, $\hat{z} = c_BB^{-1}b$, then
-				\begin{equation}
-					z - \hat{z} = \left[\begin{matrix}0 & c_N - c_BB^{-1}N \end{matrix} \right] \left[ \begin{matrix}x_B \\ x_N \end{matrix}\right] 
-				\end{equation}
-				The $c_N - c_BB^{-1}N$ is the reduced cost, for a minimized problem, if $c_N - c_BB^{-1}N > 0$ means $z - \hat{z} \ge 0$, it reaches the optimality because we cannot find a solution less than $\hat{z}$.\\
-
-			\subsection{Find Direction}
-				Suppose we choose $x_k$ as a candidate to pivot into Basis\\
-				\begin{equation}
-					x = \left[ \begin{matrix}B^{-1}b-B^{-1}a_kx_k \\ 0+e_kx_k\end{matrix}\right]=\left[ \begin{matrix}B^{-1}b \\ 0\end{matrix} \right] + \left[ \begin{matrix} -B^{-1}a_k \\ e_k \end{matrix} \right]x_k 
-				\end{equation}
-				In this form, we can see: $x$ is the result after $t$th iteration, $\left[ \begin{matrix}B^{-1}b \\ 0\end{matrix} \right]$ is the result after $(t-1)$th iteration. $ \left[ \begin{matrix} -B^{-1}a_k \\ e_k \end{matrix} \right]$ is the iteration direction, $x_k$ is the step length.\\
-				The only requirement of $x_k$ is $r_k < 0$ where $r_k=c_k - z_k$ is reduce cost, which is the $k$th entry of $c_N - c_BB^{-1}N$. \\
-				Generally speaking, we usually take $r_k = \min\{c_j - z_j\}$ (which in fact can not guarantee the efficient of the algorithm.)
-
-			\subsection{Find the Step Length}
-				We need to guarantee the non-negativity, so for each iteration, we need to make sure $x\ge 0$. Which means\\
-				\begin{equation}B^{-1}b-B^{-1}a_kx_k \ge 0  \end{equation}
-				Denote $B^{-1}b$ as $\bar{b}$, denote $B^{-1}a_k$ as $y_k$\\
-				If $y_k \le 0$, we can have $x_k$ as large as infinite, which means unboundedness. \\
-				If $y_k > 0$ now we can use the minimum ratio to guarantee non-negativity.\\
-				\textbf{Remember} hit the bound, basic variable leave the basis and become non-basic variable.
-
-			\subsection{Simplex Method Algorithm}
-
-			\subsection{Simplex Method Tableau}
-
-			\subsection{Simplex Method as a Search Algorithm}
 
 	\chapter{Duality, Sensitivity and Relaxation}
 		\section{Duality}
