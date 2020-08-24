@@ -9,30 +9,30 @@
 
 	\tableofcontents
 
-	\part{Preliminary Topics}
+	\part{Preliminary Topics}\label{PT}
 		\chapter{Introduction to Optimization}
 			\section{Optimization Model}
 				The following is the basic forms of terminology:
-					\begin{align}
-						\text{(P)} \quad \text{min} \quad & f(x)  \\
-									\text{s.t.} \quad & g_i(x)\le 0, \quad i=1,2,...,m \\
-												& h_j(x)=0, \quad j=1,2,...,l \\
-												& x \in X 
-					\end{align}
-					We have
+				\begin{align}
+					\text{(P)} \quad \min \quad & f(x)  \\
+								\text{s.t.} \quad & g_i(x)\le 0, \quad i=1,2,...,m \\
+											& h_j(x)=0, \quad j=1,2,...,l \\
+											& x \in X 
+				\end{align}
+				We have
+				\begin{itemize}
+					\item - $x\in R^n \rightarrow X \subseteq R^m$
+					\item $g_i(x)$ are called inequality constraints
+					\item $h_j(x)$ are called equality constraints
+					\item $X$ is the domain of the variables (e.g. cone, polygon, $\{0, 1\}^n$, etc.)
+					\item Let $F$ be the feasible region of $(P)$:
 					\begin{itemize}
-						\item - $x\in R^n \rightarrow X \subseteq R^m$
-						\item $g_i(x)$ are called inequality constraints
-						\item $h_j(x)$ are called equality constraints
-						\item $X$ is the domain of the variables (e.g. cone, polygon, $\{0, 1\}^n$, etc.)
-						\item Let $F$ be the feasible region of $(P)$:
-						\begin{itemize}
-							\item $x^0$ is a feasible solution iff $x^0\in F$
-							\item $x^*$ is an optimized solution iff $x^* \in F$ and $f(x^*)\le f(x^0), \forall x^0 \in F$ (for minimized problem)
-						\end{itemize}
+						\item $x^0$ is a feasible solution iff $x^0\in F$
+						\item $x^*$ is an optimized solution iff $x^* \in F$ and $f(x^*)\le f(x^0), \forall x^0 \in F$ (for minimized problem)
 					\end{itemize}
+				\end{itemize}
 
-				\notice{Not every $(P)$ has a feasible region, we can have $F=\emptyset$. Even if $F \ne \emptyset$, there might not be an solution to $P$, e.g. unbounded. If $(P)$ has optimized solution(s), it could be 1) Unique 2) Infinite number of solution 3) Finite number of solution}
+				\notice{Not every $(P)$ has a feasible region, we can have $F = \emptyset$. Even if $F \neq \emptyset$, there might not be an solution to $P$, e.g. unbounded. If $(P)$ has optimized solution(s), it could be 1) Unique, or 2) Infinite number of solution, or 3) Finite number of solution}
 
 				Types of Optimization Problem
 				\begin{itemize}
@@ -47,48 +47,6 @@
 						\item If $X\in Z^n \times R^m$, Mixed Integer Programming
 					\end{itemize}
 				\end{itemize}
-
-			\section{Problem Manipulation}
-				\subsection{Inequalities and Equalities}
-					An inequality can be transformed into an equation by adding or subtracting the nonnegative slack or surplus variable
-					\begin{equation}
-						\sum_{j=1}^na_{ij}x_j \ge b_i \Rightarrow \sum_{j=1}^na_{ij}x_j - x_{n+1} = b_i 
-					\end{equation}
-					or
-					\begin{equation}
-						\sum_{j=1}^na_{ij}x_j \le b_i \Rightarrow \sum_{j=1}^na_{ij}x_j + x_{n+1} = b_i 
-					\end{equation}
-					Although it is not the practice, equality can be transformed into inequality too
-					\begin{equation}
-						\sum_{j=1}^na_{ij}x_j = b_i \Rightarrow \begin{cases}\sum_{j=1}^na_{ij}x_j \le b_i \\ \sum_{j=1}^na_{ij}x_j \ge b_i \end{cases} 
-					\end{equation}
-					Also, in linear programming, we only care about close set, so we will not have $<$, $>$ in the formulation, we can use the following
-					\begin{equation}
-						\sum_{j=1}^na_{ij}x_j > b_i \Rightarrow \sum_{j=1}^na_{ij}x_j \ge b_i + \epsilon 
-					\end{equation}
-					where $\epsilon$ is a small number.
-
-				\subsection{Minimization and Maximization}
-					To convert a minimization problem into a maximization problem, we can use the following to define a new objective function
-					\begin{equation}
-						\min \sum_{j=1}^nc_jx_j = -\max \sum_{j=1}^n c_jx_j 
-					\end{equation}
-
-				\subsection{Standard Form and Canonical Form}
-					Standard Form
-					\begin{align}
-						\min \quad & \sum_{j=1}^nc_jx_j \\
-						\text{s.t.} \quad & \mathbf{Ax} = \mathbf{b} \\
-										  & \mathbf{x} \ge \mathbf{0} 
-					\end{align}
-					Canonical Form
-					\begin{align}
-						\min \quad & \sum_{j=1}^nc_jx_j \\
-						\text{s.t.} \quad & \mathbf{Ax} \le \mathbf{b} \\
-										  & \mathbf{x} \ge \mathbf{0}
-					\end{align}
-
-			\section{Typical Linear Programming Problems}
 
 			\section{Linear Programming Formulation Skills}
 				\subsection{Absolute Value}
@@ -166,8 +124,6 @@
 						                  & x_j \ge 0, \quad \forall j\in J \\
 						                  & 0\le u_i \le e_i-d_i, \quad \forall i\in I 
 					\end{align}
-
-			\section{Typical Integer Programming Problems}
 
 			\section{Integer Programming Formulation Skills}
 				\subsection{A Variable Taking Discontinuous Values}
@@ -309,11 +265,7 @@
 					\end{align}
 					If both $x_1$ and $x_2$ are continuous, it is non-linear, we can use Piecewise linear formulation to simulate.
 
-			\section{Typical Nonlinear Programming Problems}
-
-			\section{Nonlinear Programming Formulation Skills}
-
-		\chapter{Review of Linear Algebra}
+		\chapter{Basic Concepts of Linear Algebra}
 			\section{Vector Spaces}
 				\subsection{Field}
 					\begin{definition}[Field]
@@ -532,7 +484,338 @@
 
 			\section{Decompositions}
 
-		\chapter{Review of Real Analysis}
+		\chapter{Basic Concepts of Convex Analysis}
+			\section{Convex Sets}
+				\begin{definition}[convex set, convex combination]
+					A set $X$ in $\mathbb{R}^n$ is called a \textbf{convex set} if given any two points $\mathbf{x}_1 \in X$ and $\mathbf{x}_2 \in X$, then $\lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2 \in X, \forall \lambda \in [0, 1]$. Any point of the form $\lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2$ where $0 \le \lambda \le 1$ is called a \textbf{convex combination} of $\mathbf{x}_1$ and $\mathbf{x}_2$. If $\lambda \in (0, 1)$, then the convex combination is called \textbf{strict}.
+				\end{definition}
+
+				\begin{example}
+					$S = \{(x_1, x_2) | 3x_1^2 + 4x_2^2 \le 1\}$
+				\end{example}
+
+				\begin{example}
+					$X = \{\mathbf{x} | \mathbf{A}_{m\times n} \mathbf{x} = \mathbf{b}_m\}$
+				\end{example}
+
+				The following are some families of convex sets.
+
+				\begin{example}
+					Empty set is by convention considered as convex.
+				\end{example}
+
+				\begin{example}
+					Polyhedrons are convex sets.
+				\end{example}
+
+				\begin{example}
+					Let $P = \{\mathbf{x}\in \mathbb{R}^n | \mathbf{x}^\top \mathbf{Ax} \le \mathbf{b}\}$ where $\mathbf{A} \in \mathbb{S}_+^{n\times n}$ and $\mathbf{b} \in \mathbb{R}_+$. The set $P$ is a convex subset of $\mathbb{R}^n$.
+				\end{example}
+
+				\begin{example}
+					Let $\|.\|$ be any norm in $\mathbb{R}^n$. Then, the unit ball $B = \{\mathbf{x} \in \mathbb{R}^n | \|\mathbf{x}\| \le b, b > 0\}$ is convex.
+				\end{example}
+
+				Let	$S_1, S_2$ be convex set, then:
+				\begin{itemize}
+					\item $S_1 \cap S_2$ is convex set
+					\item $S_1 \oplus S_2$ (Minkowski addition) is convex set, where
+						\begin{equation}
+							S_1 \oplus S_2 = \{\mathbf{x} \in \mathbb{R}^n| \mathbf{x} = \mathbf{x_1} + \mathbf{x_2}, \mathbf{x_1} \in S_1, \mathbf{x_2} \in S_2\}
+						\end{equation}
+					\item $S_1 \ominus S_2$ is convex set, where
+						\begin{equation}
+							S_1 \oplus S_2 = \{\mathbf{x} \in \mathbb{R}^n| \mathbf{x} = \mathbf{x_1} - \mathbf{x_2}, \mathbf{x_1} \in S_1, \mathbf{x_2} \in S_2\}
+						\end{equation}
+					\item $f(S_1)$ is convex iff $f(\mathbf{x}) = \mathbf{Ax} + \mathbf{b}, \mathbf{A} \in \mathbb{R}^{m\times n}, \mathbf{b} \in \mathbb{R}^m$
+				\end{itemize}
+
+				\begin{definition}[convex hull]
+					Let $S$ be an arbitrary set in $\mathbb{R}^n$. The \textbf{convex hull} of $S$, denoted by $conv(S)$ is the collection of all convex combinations of elements in $S$\
+					\begin{align}
+						\mathbf{x} \in conv(S) \iff & \mathbf{x} = \sum_{j = 1}^k \lambda_j \mathbf{x}_j \\
+						& \sum_{j = 1}^k \lambda_j = 1\\
+						& \lambda_j \le 0, \quad j = 1, \cdots, k \\
+						& \mathbf{x}_1, \mathbf{x_2}, \cdots, \mathbf{x_k} \in S
+					\end{align}
+					
+				\end{definition}
+
+				\begin{lemma}
+					Let $S$ be arbitrary set in $\mathbb{R}^n$. Then $conv(S)$ is the smallest convex set containing $S$, which means $conv(S)$ is the intersection of all convex sets containing $S$.
+				\end{lemma}
+
+				\begin{theorem}[Carath\'{e}odory's Theorem]
+					Let $S \subseteq \mathbb{R}^n$. Then $\forall \mathbf{x} \in conv(S)$, there exists $\mathbf{x}^1, \mathbf{x}^2, ..., \mathbf{x}^p \in S$, where $p\le n+1$ such that $\mathbf{x} \in conv\{\mathbf{x}^1, \mathbf{x}^2, ... \mathbf{x}^p\}$.
+				\end{theorem}
+
+				\notice{This theorem means, any point $\mathbf{x} \in \mathbb{R}^n$ in a convex hull of $S$, i.e., $conv(S)$, can be included in a convex subset $S^\prime \subseteq conv(S)$ that has $n+1$ extreme points.}
+
+				\begin{theorem}
+					Let $S$ be a convex set with nonempty interior. Let $\mathbf{x}_1 \in cl(S)$ and $\mathbf{x}_2 \in int(S)$, then $\mathbf{y} = \lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2 \in int(S), \forall \lambda \in (0, 1)$
+				\end{theorem}
+
+			\section{Convex Functions}
+				\begin{definition}
+					Let $C \in \mathbb{R}^n$ be a convex set. A function $f: C \rightarrow \mathbf{R}$ is (resp. strictly) convex if
+					\begin{align}
+						f(\lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2) &\le \lambda f(\mathbf{x}_1) + (1 - \lambda) f(\mathbf{x}_2) \\ \forall \mathbf{x}_1, \mathbf{x}_2 &\in C, \forall \lambda \in (0, 1)
+					\end{align}
+					(resp.)
+					\begin{align}
+						f(\lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2) &< \lambda f(\mathbf{x}_1) + (1 - \lambda) f(\mathbf{x}_2) \\ \forall \mathbf{x_1} \neq \mathbf{x}_2 &\in C, \forall \lambda \in (0, 1)
+					\end{align}
+				\end{definition}
+
+				\notice{When calling a function convex, we imply that its domain is convex.}
+
+				\begin{example}
+					Given any norm $\|.\|$ on $\mathbb{R}^n$, the function $f(x) = \|x\|$ is convex over $\mathbb{R}^n$.
+				\end{example}
+
+				\begin{definition}
+					Let $S$ be a nonempty convex subset of $\mathbb{R}^n$, $f: S \rightarrow \mathbb{R}$ is (resp. strictly) \textbf{concave} if $-f(x)$ is (resp. strictly) convex.
+				\end{definition}
+
+				\notice{A function may be neither convex nor concave.}
+
+				\begin{theorem}
+					Consider $f: \mathbb{R}^n\rightarrow \mathbb{R}$. $\forall \bar{\mathbf{x}} \in \mathbb{R}^n$ and a nonzero direction $\mathbf{d} \in \mathbb{R}^n$. Define $F_{\bar{\mathbf{x}}, d}(\lambda) = f(\bar{\mathbf{x}} + \lambda \mathbf{d}$. Then $f$ is (resp. strictly) convex iff $F_{\bar{\mathbf{x}}, d}(\lambda)$ is (resp. strictly) convex for all $\bar{\mathbf{x}} \in \mathbb{R}^n, \forall \mathbf{d} \in \mathbb{R}^n \setminus \{0\}$.
+				\end{theorem}
+
+				\begin{definition}[Level-set]
+					Given a function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ and a scalar $\alpha \in \mathbb{R}$, we refer to the set $S_\alpha = \{\mathbf{x} \in S|f(\mathbf{x}) \le \alpha\} \subseteq \mathbb{R}^n$ as the \textbf{$\alpha$-level-set} of $f$.
+				\end{definition}
+
+				\begin{lemma}
+					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}^n$ be a convex function, then the \textbf{$\alpha$-level-set} of $f$ is a convex set for each value of $\alpha \in \mathbb{R}$.
+				\end{lemma}
+
+				\notice{The converse is not necessarily true.}
+
+				\begin{definition}[Epigraphs, Hypographs]
+					Let $S \in \mathbb{R}^n$ be such that $S \neq \emptyset$. The \textbf{epigraph} of $f$, denoted by $epi(f)$ is
+					\begin{equation}
+						epi(f) = \{(\mathbf{x}, y) \in S|\mathbf{x} \in S, y \in \mathbb{R}, y \ge f(x)\} \in \mathbb{R}^{n+1}
+					\end{equation}
+					The \textbf{hypograph} of $f$, denoted by $hypo(f)$ is
+					\begin{equation}
+						hypo(f) = \{(\mathbf{x}, y) \in S|\mathbf{x} \in S, y \in \mathbb{R}, y \le f(x)\} \in \mathbb{R}^{n+1}
+					\end{equation}
+				\end{definition}
+
+				\begin{theorem}
+					Let $S$ be a nonempty convex subset in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$. Then $f$ is convex iff $epi(f)$ is convex.
+				\end{theorem}
+
+				\begin{theorem}
+					Let $S$ be a nonempty convex subset in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function on $S$. Then $f$ is continuous in $int(S)$.
+				\end{theorem}
+
+			\section{Subgradients and Subdifferentials}
+				\begin{definition}[Subgradient]
+					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function, then $\xi$ is a \textbf{subgradient} of $f$ at $\bar{\mathbf{x}}$ if
+					\begin{equation}
+						f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
+					\end{equation}
+				\end{definition}
+
+				\begin{definition}[Subdifferential]
+					The set of all subgradients of $f$ at $\bar{\mathbf{x}}$ is called \textbf{subdifferential} of $f$ at $\bar{\mathbf{x}}$, denoted as $\partial f(\bar{\mathbf{x}})$
+				\end{definition}
+
+				\begin{theorem}
+					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function. Then for $\bar{\mathbf{x}} \in int(S)$, there exists a vector $\xi$ such that
+					\begin{equation}
+						f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
+					\end{equation}
+					In particular, the hyperplane
+					\begin{equation}
+						\mathcal{H} = \{(\mathbf{x}, y)|y = f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}})\}
+					\end{equation}
+					is a supporting plane of $epi(f)$ at $(\bar{\mathbf{x}}, f(\bar{\mathbf{x}}))$
+				\end{theorem}
+
+				\begin{theorem}
+					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function. Suppose that for each $\bar{\mathbf{x}} \in S$, there exists $\xi$ such that
+					\begin{equation}
+					 	f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
+					\end{equation} 
+					Then $f$ is convex on $int(S)$
+				\end{theorem}
+
+				\notice{Not all convex functions are continuous, it has to be continuous in its interior, but it may not be continuous at the boundary.}
+
+			\section{Differentiable Functions}
+				\begin{definition}[Differentiable Functions]
+				 	Let $S$ be a nonempty subset of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$.Then $f$ is said to be \textbf{differentiable} at $\bar{\mathbf{x}} \in int(S)$ if there exists a vector $\nabla f(\bar{\mathbf{x}})$ and a function $\alpha: \mathbb{R}^n \rightarrow \mathbb{R}$ such that
+				 	\begin{equation}
+				 		f(\mathbf{x}) = f(\bar{\mathbf{x}}) + \nabla f(\bar{\mathbf{x}})^\top (\mathbf{x} - \bar{\mathbf{x}}) + \alpha(\bar{\mathbf{x}}, \mathbf{x} - \bar{\mathbf{x}})\|\mathbf{x} - \bar{\mathbf{x}}\|
+				 	\end{equation}
+				 	for all $\mathbf{x} \in S$ where $\lim_{\mathbf{x} - \bar{\mathbf{x}}}\alpha (\bar{\mathbf{x}}, \mathbf{x} - \bar{\mathbf{x}}) = 0$
+				\end{definition}
+
+				\begin{remark}
+				 	If function $f$ is differentiable, then $\nabla f(\bar{\mathbf{x}}) = (\frac{\partial f(\bar{\mathbf{x}})}{\partial \mathbf{x}_1}, \frac{\partial f(\bar{\mathbf{x}})}{\partial \mathbf{x}_2}, \cdots, \frac{\partial f(\bar{\mathbf{x}})}{\partial \mathbf{x}_n})$, and the gradient is unique.
+				\end{remark}
+
+				\begin{lemma}
+					Let $S\neq \emptyset$ be a convex set of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be convex. If $f$ is differentiable at $\bar{\mathbf{x}} \in int(S)$, then the subdifferential of $f$ at $\bar{\mathbf{x}}$ is the singleton, $\{\nabla f(\bar{\mathbf{x}})\}$
+				\end{lemma}
+
+				\begin{theorem}
+					Let $S$ be a nonempty subset of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be differentiable on $S$. Then $f$ is (resp. strictly) convex on $S$ iff $\forall \bar{\mathbf{x}} \in S$
+					\begin{equation}
+						f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \nabla f(\bar{\mathbf{x}}) (\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
+					\end{equation}
+					(resp.)
+					\begin{equation}
+						f(\mathbf{x}) > f(\bar{\mathbf{x}}) + \nabla f(\bar{\mathbf{x}}) (\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x}\neq \bar{\mathbf{x}} \in S
+					\end{equation}
+				\end{theorem}
+
+				\begin{theorem}[Mean-value Theorem]
+					Let $S$ be a nonempty subset of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be differentiable on $S$. Then for all $\mathbf{x}_1, \mathbf{x}_2 \in S$, there exists $\lambda \in (0, 1)$ such that
+					\begin{equation}
+						f(\mathbf{x}_2) = f(\mathbf{x}_2) + \nabla f(\hat{\mathbf{x}})(\mathbf{x}_2 - \mathbf{x}_1)
+					\end{equation}
+					where
+					\begin{equation}
+						\hat{\mathbf{x}} = \lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2
+					\end{equation}
+				\end{theorem}
+
+			\section{Convex and Affine Hulls}
+
+			\section{Interior and Closure}
+
+			\section{Cones}
+
+			\section{Hyperplanes}
+
+		\chapter{Basic Concepts of Polyhedral Theory}
+			\section{Extreme Points}
+				\begin{definition}[extreme points]
+					Let $S \subseteq \mathbb{R}^n$, an \textbf{extreme point} of $S$ is a point $x \in S$ such that
+					\begin{align}
+						\begin{cases}
+						 	x = \sum_{i = 1}^m \lambda_ix^i &\\
+							\sum_{i = 1}^m \lambda_i = 1&\\
+							\lambda_i > 0, i = 1, \cdots, m&\\
+							x^i \in S, i = 1, \cdots, m&
+						\end{cases} \quad & \quad \text{implies} \quad  x^i = x, i = 1, \cdots, m
+					\end{align}
+					which means, if $x$ is an extreme point, it cannot be written as a convex combination of points in $S$ except the copies of $x$ itself.
+				\end{definition}
+
+				\begin{theorem}
+					Let $P$ be a polyhedron in $\mathbb{R}^n$ and $v \in P$. Then $v$ is an extreme point of $P$ iff $dim(span\{a^i | (a^i)^top v = b_i\}) = n$
+				\end{theorem}
+
+				This theorem means, at an extreme point of a $n$-dimensional polyhedron, there will be $n$ active inequalities. A direct result will be the equivalence between basic feasible solutions and extreme points in Linear Programming.
+
+			\section{Polar Cones}
+
+			\section{Polyhedral and Dimension}
+				\subsection{Polyhedral}
+					\begin{definition}[polyhedron]
+						A \textbf{polyhedron} is a set of the form $\{x\in \mathbb{R}^n | Ax \le b\}=\{x \in \mathbb{R}^n | a^ix\le b^i, \forall i \in M\}$, where $A \in \mathbb{R}^{m\times n}$ and $b \in \mathbb{R}^m$
+					\end{definition}
+
+					\begin{proposition}
+						A polyhedron is a convex set.
+					\end{proposition}
+
+					\begin{definition}[polytope]
+						A polyhedron $P \subset \mathbb{R}^n$ is \textbf{bounded} if there exists a constant $K$ such that $|x_i|<K, \forall x \in P, \forall i \in [1, n]$, in this case the polyhedron is call \textbf{polytope}. The lower-bound of $K$ is called \textbf{diagonal} denoted by $d$
+					\end{definition}
+
+					\begin{definition}[cone]
+						$C \subseteq \mathbb{R}^n$ is a \textbf{cone} if $x \in C$ implies $\lambda x\in C, \forall \lambda \in \mathbf{R}_{+}$
+					\end{definition}
+
+				\subsection{Dimension of Polyhedral}
+					\begin{definition}[dimension]
+						A polyhedron $P$ is \textbf{dimension} $k$, denoted $dim(P)=k$, if the maximum number of affinely independent points in $P$ is $k+1$
+					\end{definition}
+
+					\begin{definition}[full-dimensional]
+						A polyhedron $P\subseteq \mathbb{R}^n$ is \textbf{full-dimensional} if $dim(P) = n$
+					\end{definition}
+
+					\begin{proposition}
+						If $P\subseteq \mathbb{R}^n$, then $dim(P) = n - rank(A^=, b^=)$
+					\end{proposition}
+
+					To proof a constraint $(A^=, b^=)$ is an equality constraint, we need to proof all point in the closure of $P$ satisfied the constraint, to proof it is not an equality constraint, we need to find one point that is not in the hyperplane.
+
+					\begin{definition}[inner point, interior point]
+						$x\in P$ is called an \textbf{inner point} of $P$ if $a^ix < b_i, \forall i \in M^\le$, $x\in P$ is called an \textbf{interior point} of $P$ if $a^ix<b_i, \forall i \in M$
+					\end{definition}
+
+					\begin{corollary}
+						Every nonempty polyhedron has at least one inner point.
+					\end{corollary}
+
+					\begin{corollary}
+						A polyhedron has an interior point iff $P$ is full-dimensional, i.e., there is no equality constraint.
+					\end{corollary}
+
+			\section{Face and Facet}
+				\subsection{Valid Inequalities and Faces}
+					The inequality denoted by $(\pi, \pi_o)$ is called a \textbf{valid inequality} for $P$ if $\pi x \le \pi_0, \forall x \in P$. Note that $(\pi, \pi_0)$ is a valid inequality iff $P$ lies in the half-space $\{x\in \mathbb{R}^n|Ax\le b\}$\\
+					\begin{figure}[!ht]
+					\centering
+					\begin{tikzpicture}[scale=0.4]
+						\draw (0,0) -- (3, -0.4) -- (3.3, 4.1) -- (-0.2, 4.1) -- (0, 0);
+						\draw (-2, 2) -- (2, -2);
+						\draw (4.9, 4.1) -- (-1.8, 4.1);
+						\draw (4, 1) -- (2, 6);
+						\draw [arrow] (-1.8, 4.1) -> (-1.8, 3.3);
+						\draw [arrow] (4.9, 4.1) -> (4.9, 3.3);
+						\draw [arrow] (-2, 2) -> (-1, 3);
+						\draw [arrow] (2, -2) -> (3, -1);
+						\draw [arrow] (4, 1) -> (3, 0.6);
+						\draw [arrow] (2, 6) -> (1, 5.6);
+						\node at (1, -1) [left] {valid inequality};
+						\node at (4.9, 4) [right] {valid inequality (induce a facet)};
+						\node at (2, 6) [right] {invalid inequality};
+					\end{tikzpicture}
+					\caption{Example of valid/invalid inequality}
+					\end{figure}
+					- If $(\pi, \pi_0)$ is a valid inequality for $P$ and $F=\{x\in P|\pi x=x_0\}$, $F$ is called a \textbf{facet} of $P$ and we say that $(\pi, \pi_0)$ \textbf{represents} or \textbf{defines} $F$\\
+					- A face is said to be \textbf{proper} if $F\ne \emptyset$ and $F\ne P$\\
+					- The face represented by $(\pi, \pi_0)$ is nonempty iff $\max \{\pi x |x\in P\}=\pi_0\}$\\
+					- If the face $F$ is nonempty, we say it \textbf{supports} $P$\\
+					- Let $P$ be a polyhedron with equality set $M^=$. If 
+					\begin{equation}F=\{x\in P | \pi^T x = \pi_0\}  \end{equation}
+					is not empty, then $F$ is a polyhedron. Let 
+					\begin{equation}M^= \subseteq M_F^=, M_F^{\le}=M \setminus M_F^= \end{equation}
+					then 
+					\begin{equation}F=\{x | a_i^T x=b_i, \forall i \in M_F^=, a_i^T x \le b_i, \forall i \in M_f^{\le}\} \end{equation}
+
+				\subsection{Facet}
+					- A face $F$ is said to be a \textbf{facet} of $P$ if $dim(F) = dim(P)-1$\\
+					- Facets are all we need to describe polyhedral\\
+					- If $F$ is a facet of $P$, then in any description of $P$, there exists some inequality representing $F$\\
+					- Every inequality that represents a face that is not a facet is unnecessary in the description of $P$
+					- Every full-dimensional polyhedron $P$ has a unique (up to scalar multiplication) representation that consists of one inequality representing each facet of $P$\\
+					- If $dim(P) = n-k$ with $k>0$, then $P$ is described by a maximal set of linearly independent rows of $(A^=, b^=)$, as well as one inequality representing each facet of $P$
+
+				\subsection{Proving Facet}
+					To prove an inequality $\sum_i a_i x_i \le b_i$ is facet inducing for a $D$ dimensional polyhedral, we need to prove there are $D$ affinely independent vectors in $\sum_i a_i x_i = b_i$
+
+				\subsection{Domination}
+					$\Pi x\le \Pi_0$ dominates $Mx\le M_0$ if
+					\begin{equation}
+						\begin{cases}
+							\Pi \ge \mu M, \mu > 0\\
+							\Pi_0 \le \mu M_0, \mu > 0\\
+							(\Pi, \Pi_0) \ne (M, M_0)
+						\end{cases}
+					\end{equation}
+
+		\chapter{Basic Concepts of Real Analysis}
 			\section{The Real Number System}
 
 			\section{Open Sets and Closed Sets}
@@ -670,53 +953,53 @@
 
 			\section{Fourier Series}
 
-		\chapter{Review of Probability Theory}
+		\chapter{Basic Concepts of Probability Theory}
 			\section{Relationship between Some Random Variables}
 				\begin{figure}[h]
 					\centering
-					\begin{tikzpicture}[node distance = 1.8cm]
+					\begin{tikzpicture}[node distance = 1.8 cm]
 						\node (Pascal) [roundedRectangle] {Pascal($n$, $p$)};
-						\node (Poisson) [roundedRectangle, xshift = 6cm] {Poisson($\lambda$)};
+						\node (Poisson) [roundedRectangle, xshift = 6 cm] {Poisson($\lambda$)};
 						\node (Geometric) [roundedRectangle, below of = Pascal] {Geometric($p$)};
-						\node (Binomial) [roundedRectangle, below of = Poisson, xshift = 2cm] {Binomial($n$, $p$)};
-						\node (Bernoulli) [roundedRectangle, below of = Poisson, xshift = 7cm] {Bernoulli($p$)};
-						\node (Lognormal) [roundedRectangle, below of = Geometric, xshift = 2.5cm] {Lognormal};
-						\node (Normal) [roundedRectangle, below of = Geometric, xshift = 7.5cm] {Normal($\mu$, $\sigma^2$)};
-						\node (Hypergeometric) [roundedRectangle, below of = Geometric, xshift = 12.5cm] {Hypergeometric($M$, $N$, $K$)};
-						\node (SNormal) [roundedRectangle, below of = Lognormal, xshift=2cm] {Normal(0, 1)};
-						\node (Beta) [roundedRectangle, below of = Lognormal, xshift = 7cm] {Beta($\alpha$, $\beta$)};
-						\node (DExponential) [roundedRectangle, below of = Beta, xshift = 3.8cm] {Double-Exponential($0$, $\lambda$, $\lambda$)};
-						\node (Cauchy) [roundedRectangle, below of = SNormal, xshift = -6cm] {Cauchy};
-						\node (Gamma) [roundedRectangle, below of = SNormal, xshift = 2cm] {Gamma($r$,$\lambda$)};
-						\node (tv) [roundedRectangle, below of = Cauchy, xshift = 1cm] {$t_{(v)}$};
-						\node (Chi-squared) [roundedRectangle, below of = Gamma, xshift = -2cm] {Chi-squared($n$)};
-						\node (Exponential) [roundedRectangle, below of = Gamma, xshift = 3cm] {Exponential($\lambda$)};
-						\node (Fvv) [roundedRectangle, below of = tv, xshift = 1cm] {$F_{(V_{1},V_{2})}$};
-						\node (Weibull) [roundedRectangle, below of = Exponential, xshift = -3cm] {Weibull($a$, $b$)};
-						\node (SUniform) [roundedRectangle, below of = Exponential, xshift = 3cm] {Uniform($0$, $1$)};
-						\node (Uniform) [roundedRectangle, below of = SUniform, xshift = -2cm] {Uniform($a$, $b$)};
+						\node (Binomial) [roundedRectangle, below of = Poisson, xshift = 2 cm] {Binomial($n$, $p$)};
+						\node (Bernoulli) [roundedRectangle, below of = Poisson, xshift = 7 cm] {Bernoulli($p$)};
+						\node (Lognormal) [roundedRectangle, below of = Geometric, xshift = 2.5 cm] {Lognormal};
+						\node (Normal) [roundedRectangle, below of = Geometric, xshift = 7.5 cm] {Normal($\mu$, $\sigma^2$)};
+						\node (Hypergeometric) [roundedRectangle, below of = Geometric, xshift = 12.5 cm] {Hypergeometric($M$, $N$, $K$)};
+						\node (SNormal) [roundedRectangle, below of = Lognormal, xshift=2 cm] {Normal(0, 1)};
+						\node (Beta) [roundedRectangle, below of = Lognormal, xshift = 7 cm] {Beta($\alpha$, $\beta$)};
+						\node (DExponential) [roundedRectangle, below of = Beta, xshift = 3.8 cm] {Double-Exponential($0$, $\lambda$, $\lambda$)};
+						\node (Cauchy) [roundedRectangle, below of = SNormal, xshift = -6 cm] {Cauchy};
+						\node (Gamma) [roundedRectangle, below of = SNormal, xshift = 2 cm] {Gamma($r$,$\lambda$)};
+						\node (tv) [roundedRectangle, below of = Cauchy, xshift = 1 cm] {$t_{(v)}$};
+						\node (Chi-squared) [roundedRectangle, below of = Gamma, xshift = -2 cm] {Chi-squared($n$)};
+						\node (Exponential) [roundedRectangle, below of = Gamma, xshift = 3 cm] {Exponential($\lambda$)};
+						\node (Fvv) [roundedRectangle, below of = tv, xshift = 1 cm] {$F_{(V_{1},V_{2})}$};
+						\node (Weibull) [roundedRectangle, below of = Exponential, xshift = -3 cm] {Weibull($a$, $b$)};
+						\node (SUniform) [roundedRectangle, below of = Exponential, xshift = 3 cm] {Uniform($0$, $1$)};
+						\node (Uniform) [roundedRectangle, below of = SUniform, xshift = -2 cm] {Uniform($a$, $b$)};
 						\draw [arrow] (Pascal) to [out = -30, in = 30] node [right] {$n=1$} (Geometric);
-						\draw [arrow] (Pascal) -- node [above, align=center, text width=2.5cm] {$\lambda=\frac{n}{p}$ \\ $n\rightarrow \infty$} (Poisson);
-						\draw [arrow] (Pascal) to [out = -15, in = 170] node [below, align=center, text width=2.5cm, yshift=0.1cm, xshift=-1.1cm] {$\mu = n(1-p)$ \\ $n\rightarrow \infty$} (Normal);
+						\draw [arrow] (Pascal) -- node [above, align=center, text width=2.5 cm] {$\lambda=\frac{n}{p}$ \\ $n\rightarrow \infty$} (Poisson);
+						\draw [arrow] (Pascal) to [out = -15, in = 170] node [below, align=center, text width=2.5 cm, yshift=0.1 cm, xshift=-1.1 cm] {$\mu = n(1-p)$ \\ $n\rightarrow \infty$} (Normal);
 						\draw [arrow] (Geometric) to [out = 150, in = -150] node [left] {$\sum X_i$} (Pascal);
-						\draw [arrow] (Geometric) to [out = -160, in = 180, looseness=6] node [below, yshift = -0.2cm] {$\min(X_i)$} (Geometric);
+						\draw [arrow] (Geometric) to [out = -160, in = 180, looseness=6] node [below, yshift = -0.2 cm] {$\min(X_i)$} (Geometric);
 						\draw [arrow] (Poisson) to [out = 70, in = 110, looseness=4] node [above] {$\sum X_i$} (Poisson);
 						\draw [arrow] (Poisson) to [out = -90, in = 145] node [left] {$X|\sum X_i$} (Binomial);
-						\draw [arrow] (Poisson) to [out = -150,in = 160] node [left, align=center, yshift=0.6cm] {$\lambda=\sigma^2$ \\ $n\rightarrow \infty$} (Normal);
+						\draw [arrow] (Poisson) to [out = -150,in = 160] node [left, align=center, yshift=0.6 cm] {$\lambda=\sigma^2$ \\ $n\rightarrow \infty$} (Normal);
 						\draw [arrow] (Binomial) to [out = 75, in = -40] node [right, align=center] {$\lambda=np$ \\ $n\rightarrow \infty$} (Poisson);
 						\draw [arrow] (Binomial) -- node [below] {$n=1$} (Bernoulli);
 						\draw [arrow] (Bernoulli) to [out = 165, in = 15] node [above] {$\sum X_i$} (Binomial);
 						\draw [arrow] (Binomial) to [out = -70, in = 30, align=center] node [left] {$\sigma^2=np(1-p)$ \\ $\mu=np, n\rightarrow \infty$} (Normal);
 						\draw [arrow] (Hypergeometric) to [out = 170, in = -45] node [right] {$p=\frac{M}{N}, n=k, N\rightarrow \infty$} (Binomial);
 						\draw [arrow] (Normal) to [out = 0, in = -45, looseness=3] node [right] {$\sum X_i$} (Normal);
-						\draw [arrow] (Normal) to [out = 175, in = 5] node [above, xshift=-0.3cm] {$e^{X}$} (Lognormal);
-						\draw [arrow] (Normal) to [out = -155, in = 30] node [right, xshift=0.2cm] {$\frac{X-\mu}{\sigma^2}$} (SNormal); 
+						\draw [arrow] (Normal) to [out = 175, in = 5] node [above, xshift=-0.3 cm] {$e^{X}$} (Lognormal);
+						\draw [arrow] (Normal) to [out = -155, in = 30] node [right, xshift=0.2 cm] {$\frac{X-\mu}{\sigma^2}$} (SNormal); 
 						\draw [arrow] (Lognormal) to [out = -5, in = -175] node [below] {$\ln X$} (Normal);
 						\draw [arrow] (Lognormal) to [out = 160, in = -160, looseness = 3] node [left] {$\prod X_i$} (Lognormal);
-						\draw [arrow] (SNormal) to [out = 90, in = -165] node [left, yshift = -0.4cm, xshift = -0.3cm] {$\mu + \sigma X$} (Normal);
-						\draw [arrow] (Beta) to [out = 120, in = -90] node [right, yshift=-0.3cm, xshift=0.9cm] {$\alpha, \beta \rightarrow \infty$} (Normal);
-						\draw [arrow] (Beta) to [out = 0, in = 30, looseness=2.4] node [right, yshift=1cm, xshift=-3cm] {$\alpha=\beta=1$} (SUniform);
-						\draw [arrow] (Gamma) to [out = 100, in = -110] node [right, align = center, yshift=-0.8cm, xshift = -0.1cm] {$\mu=r\lambda$\\$\sigma^2=r\lambda^2$\\$r\rightarrow \infty$} (Normal); 
+						\draw [arrow] (SNormal) to [out = 90, in = -165] node [left, yshift = -0.4 cm, xshift = -0.3 cm] {$\mu + \sigma X$} (Normal);
+						\draw [arrow] (Beta) to [out = 120, in = -90] node [right, yshift=-0.3 cm, xshift=0.9 cm] {$\alpha, \beta \rightarrow \infty$} (Normal);
+						\draw [arrow] (Beta) to [out = 0, in = 30, looseness=2.4] node [right, yshift=1 cm, xshift=-3 cm] {$\alpha=\beta=1$} (SUniform);
+						\draw [arrow] (Gamma) to [out = 100, in = -110] node [right, align = center, yshift=-0.8 cm, xshift = -0.1 cm] {$\mu=r\lambda$\\$\sigma^2=r\lambda^2$\\$r\rightarrow \infty$} (Normal); 
 						\draw [arrow] (Gamma) to [out = 15, in = -90] node [right] {$\frac{X_1}{X_1 + X_2}$} (Beta);
 						\draw [arrow] (Gamma) to [out = -165, in = 75] node [right] {$r=\frac{n}{2}, \lambda=2$} (Chi-squared);
 						\draw [arrow] (Gamma) to [out = -40, in = 160] node [left] {$r=1$} (Exponential);
@@ -724,7 +1007,7 @@
 						\draw [arrow] (SNormal) to [out = -120, in =90] node [left] {$\sum X_i^2$} (Chi-squared);
 						\draw [arrow] (Cauchy) to [out = 80, in = 120, looseness = 4] node [above] {$\frac{1}{X}$} (Cauchy);
 						\draw [arrow] (Cauchy) to [out = -120, in = -140, looseness = 3] node [below] {$\sum X_i$} (Cauchy);
-						\draw [arrow] (tv) to [out = 90, in = -90] node [right, yshift = 0.2cm] {$v=1$} (Cauchy);
+						\draw [arrow] (tv) to [out = 90, in = -90] node [right, yshift = 0.2 cm] {$v=1$} (Cauchy);
 						\draw [arrow] (tv) to [out = 60, in = -130] node [left] {$v\rightarrow \infty$} (SNormal);
 						\draw [arrow] (tv) to [out = -90, in = 120] node [left] {$X^2$} (Fvv);
 						\draw [arrow] (Fvv) to [out = 30, in = -120] node [below] {$V_1X, V_2\rightarrow \infty$} (Chi-squared);
@@ -837,7 +1120,7 @@
 					\end{tabular}
 				\end{align}
 
-	\part{Linear Programming}
+	\part{Linear Programming}\label{LP}
 		\chapter{The Simplex Method - Basic}
 			\section{Basic Feasible Solutions and Extreme Points}
 				\begin{definition}[Basic Feasible Solutions]
@@ -995,7 +1278,7 @@
 						\end{matrix}\right) 
 					\end{equation}
 
-			\section{Artificial Variable}
+			\section{Initial Basis}
 				If some of the constraint is not in $\sum_{i=1}^na_ix_i \le 0$ form, we cannot add a positive slack variable. In this case, we add an artificial variable other than slack variable.
 				\begin{equation}
 					\sum_{i=1}^n a_ix_i \ge (or =) 0 \Rightarrow \sum_{j=1}^n a_ix_i + x_a = 0 
@@ -1007,12 +1290,12 @@
 						For \textbf{Phase I:}\\
 							Solve the following program start with a basic feasible solution $x=0, x_a=b$, i.e., the artificial variable forms the basis.
 							\begin{align}
-								\min \quad & 1x_a \\
+								\min \quad & \mathbf{1}x_a \\
 								\text{s.t.} \quad & Ax + x_a = b \\
 												  & x \ge 0 \\
 												  & x_a \ge 0 
 							\end{align}
-							If the optimal $1x_a \ne 0$, infeasible, stop. Otherwise proceed Phase II.
+							If the optimal $\mathbf{1}x_a \ne 0$, infeasible, stop. Otherwise proceed Phase II.
 						For \textbf{Phase II:}\\
 							Remove the columns of artificial variables, replace the objective function with the original objective function, proceed to solve simplex method.
 					\subsubsection{Discussion}
@@ -1121,12 +1404,6 @@
 					If $y_k \le 0$, we can have $x_k$ as large as infinite, which means unboundedness. \\
 					If $y_k > 0$ now we can use the minimum ratio to guarantee non-negativity.\\
 					\textbf{Remember} hit the bound, basic variable leave the basis and become non-basic variable.
-
-				\subsection{Simplex Method Algorithm}
-
-				\subsection{Simplex Method Tableau}
-
-				\subsection{Simplex Method as a Search Algorithm}
 
 		\chapter{The Simplex Method - Improved}
 			\section{Revised Simplex Method}
@@ -1299,7 +1576,13 @@
 						\bar{b}&=B^{-1}_{t+1}b=E_tE_{t-1}E_{t-2}...E_2E_1b 
 					\end{align}
 
-			\section{Simplex for Bounded Variables}
+			\section{Dual Simplex Method}
+				Maintain dual feasibility, i.e. primal optimality, and complementary slackness and work towards primal feasibility.
+				\framebox{\textbf{Tip:}}The RHS become new $z_j - c_j$, the old $z_j - c_j$ become new RHS. We are actually solving the dual problem.
+
+			\section{Simplex with Equations}
+
+			\section{Simplex with Bounded Variables}
 				\subsection{Bounded Variable Formulation}
 					\begin{align}
 						\min \quad & cx \\
@@ -1360,22 +1643,20 @@
 					\framebox{\textbf{Tip:}}\\
 					Use $l \le x+\Delta \le u$ to test the range of $\delta$, if it hits lower bound, it is called $\gamma_1$, if it hits upper bound, it is called $\gamma_2$.		
 
-			\section{Dual Simplex Method}
-				Maintain dual feasibility, i.e. primal optimality, and complementary slackness and work towards primal feasibility.
-				\framebox{\textbf{Tip:}}The RHS become new $z_j - c_j$, the old $z_j - c_j$ become new RHS. We are actually solving the dual problem.
+			\section{Simplex with Unrestricted Variables}
 
-		\chapter{Duality, Sensitivity and Relaxation}
+		\chapter{Duality and Sensitivity}
 			\section{Duality}
 				\subsection{Dual Formulation}
 					For any prime problem
 					\begin{align}
-						\text{min} \quad & cx \\
+						\min \quad & cx \\
 						\text{s.t.} \quad & Ax\ge b \\
 									& x\ge 0 
 					\end{align}
 					we can have a dual problem
 					\begin{align}
-						\text{max} \quad & wb  \\
+						\max \quad & wb  \\
 						\text{s.t.} \quad & wA\le c\\
 									& w \ge 0
 					\end{align}
@@ -1428,15 +1709,15 @@
 					\end{align}
 					Rewrite the dual
 					\begin{align}
-						\min \quad & -b^Tw^T \\
-						\text{s.t.} \quad & -A^Tw^T \ge -c^T \\
-										  & w^T \ge 0 
+						\min \quad & -b^\top w^\top  \\
+						\text{s.t.} \quad & -A^\top w^\top  \ge -c^\top  \\
+										  & w^\top  \ge 0 
 					\end{align}
 					Find the dual of this problem
 					\begin{align}
-						\max \quad & x^T(-c^T)\\
-						\text{s.t.} \quad & x^T(-A^T) \le (-b^T) \\
-										  & x^T \ge 0 \\
+						\max \quad & x^\top (-c^\top )\\
+						\text{s.t.} \quad & x^\top (-A^\top ) \le (-b^\top ) \\
+										  & x^\top  \ge 0 \\
 					\end{align}
 					Rewrite the dual of the dual
 					\begin{align}
@@ -1463,24 +1744,29 @@
 						Therefore, any feasible solution in the maximization problem gives the lower bound of its dual problem, which is a minimization problem, vice versa. We use this to give the bounds in using linear relaxation to solve IP problem.
 
 					\subsubsection{Fundamental Theorem of Duality}
-						With regard to the primal and dual LP problems, one and only one of the following can be true. \\
-						- Both primal and dual has optimal solution $x^*$ and $w^*$, where $cx^* = w^*b$\\
-						- One problem has an unbounded optimal objective value, the other problem must be infeasible\\
-						- Both problems are infeasible.
+						With regard to the primal and dual LP problems, one and only one of the following can be true.
+						\begin{itemize}
+							\item Both primal and dual has optimal solution $x^*$ and $w^*$, where $cx^* = w^*b$
+							\item One problem has an unbounded optimal objective value, the other problem must be infeasible
+							\item Both problems are infeasible.
+						\end{itemize}
 
 					\subsubsection{Strong Duality Property}
-						From KKT condition, we know that in order to make $x^*$ the optimal solution, the following condition should be met.\\
-						- Primal Optimal: $Ax^* \ge b$, $x^*\ge 0$\\
-						- Dual Optimal: $w^*A \le c$, $w^*\ge 0$\\
-						- Complementary Slackness:
-						\begin{equation}
-							\begin{cases}
-								w^*(Ax^*-b) = 0\\
-								(c-w^*A)x^* = 0
-							\end{cases} 
-						\end{equation}
+						From KKT condition, we know that in order to make $x^*$ the optimal solution, the following condition should be met.
+						\begin{itemize}
+							\item Primal Optimal: $Ax^* \ge b$, $x^*\ge 0$
+							\item Dual Optimal: $w^*A \le c$, $w^*\ge 0$
+							\item Complementary Slackness
+							\begin{equation}
+								\begin{cases}
+									w^*(Ax^*-b) = 0\\
+									(c-w^*A)x^* = 0
+								\end{cases} 
+							\end{equation}
+						\end{itemize}
+						
 						The first condition means the primal has an optimal solution, the second condition means the dual has an optimal solution. The third condition means $cx^*=w^*b$, which is also called \textbf{strong duality property}\\
-						\framebox{\textbf{Tip:}} $w$ in the dual problem is the same as the $w=c_BB^{-1}$ in primal problem.
+						\notice{$w$ in the dual problem is the same as the $w=c_BB^{-1}$ in primal problem.}
 
 					\subsubsection{Complementary Slackness Theorem}
 						Let $\bm{x^*}$ and $\bm{w^*}$ be any feasible solutions, they are optimal iff
@@ -1497,8 +1783,7 @@
 						\end{align}
 						It means, if in optimal solution a variable is positive (has to be in the basis), the correspond constraint in the other problem is tight. If the constraint in one problem is not tight, the correspond variable in the other problem is zero.
 
-					\subsubsection{Use Dual to Solve the Primal}
-						in the dual problem, we solved some $w$ which is positive, we can know that the correspond constraint in primal is tight, furthermore we can solve the basic variables from those tight constraints, which becomes equality and we can solve it using Gaussian-Elimination.
+						In the dual problem, we solved some $w$ which is positive, we can know that the correspond constraint in primal is tight, furthermore we can solve the basic variables from those tight constraints, which becomes equality and we can solve it using Gaussian-Elimination.
 
 				\subsection{Shadow Price}
 					\subsubsection{Shadow Price under Non-degeneracy}
@@ -1517,226 +1802,34 @@
 						In this case, the partial differentiation may not be valid, for component $b_i$, if $x_i = 0$ and $x_i$ is a basic variable, we can't find the differentiation.
 
 			\section{Sensitivity}
-				\subsection{Change in the Cost Vector}
-					\subsubsection{Case 1: Nonbasic Variable}
-						$c_B$ is not affected, $z_j = c_BB^{-1}a_j$ is not changed, say nonbasic variable cost coefficient $c_k$ changed into $c_k^{'}$. For now $z_k - c_k \le 0$, if $z_k - c_k^{'}$ is positive, $x_k$ must into the basis, the optimal value changed.Otherwise stays at the same.
-					\subsubsection{Case 2: Basic Variable}
-						If $c_{B_t}$ is replaced by $c_{B_t}^{'}$, then $z_j^{'}-c_j$ is
+				\begin{itemize}
+					\item Change in the Cost Vector
+					\begin{itemize}
+						\item Nonbasic Variable: $c_B$ is not affected, $z_j = c_BB^{-1}a_j$ is not changed, say nonbasic variable cost coefficient $c_k$ changed into $c_k^\prime$. For now $z_k - c_k \le 0$, if $z_k - c_k^\prime$ is positive, $x_k$ must into the basis, the optimal value changed. Otherwise stays at the same.
+						\item Basic Variable: If $c_{B_t}$ is replaced by $c_{B_t}^\prime$, then $z_j^\prime -c_j$ is
 						\begin{equation}
-							z_j^{'} - c_j = c_B^{'}B^{-1}a_j - c_j = (z_j - c_j) - (c_{B_t}^{'}-c_{B_t})B^{-1}a_{B_t} 
+							z_j^\prime  - c_j = c_B^\prime B^{-1}a_j - c_j = (z_j - c_j) - (c_{B_t}^\prime -c_{B_t})B^{-1}a_{B_t} 
 						\end{equation}
-						for $j=k$, it is a basic variable, therefore original $z_k - c_k = 0$, $B^{-1}a_k=1$. Hence $z_k^{'}-c_k = c_k^{'} - c_k \Rightarrow z_k^{'} - c_k^{'} = 0$. The basis stays the same. The optimal solution updated as $c_B^{'}B^{-1}b=c_BB^{-1}b + (c_{B_t}^{'} - c_{B_t})B^{-1}b_{B_t}$.
+						for $j=k$, it is a basic variable, therefore original $z_k - c_k = 0$, $B^{-1}a_k=1$. Hence $z_k^\prime -c_k = c_k^\prime  - c_k \Rightarrow z_k^\prime  - c_k^\prime  = 0$. The basis stays the same. The optimal solution updated as $c_B^\prime B^{-1}b=c_BB^{-1}b + (c_{B_t}^\prime  - c_{B_t})B^{-1}b_{B_t}$.
+					\end{itemize}
+					\item Change in the Right-Hand-Side: If $b$ is replaced by $b^\prime$, then $B^{-1}b$ is replaced by $B^{-1}b^\prime$. If $B^{-1}b^\prime  \ge 0$, the basis remains optimal. Otherwise, we perform dual simplex method to continue.
+					\item Change in the Matrix
+					\begin{itemize}
+						\item Changes in Activity(Variable) Vectors for Nonbasic Columns: If a nonbasic column $a_j$ is replaced by $a_j^\prime$, then $z_j=c_BB^{-1}a_j$ is replaced by $z_j^\prime =c_BB^{-1}a_j^\prime$, if new $z_j^\prime  - c_j \le 0$, the basis stays optimal basis, the optimal value is the same because $c_B$ stays the same.
+						\item Changes in Activity(Variable) Vectors for Basic Columns: If a basic columns changed, it means $B$ and $B^{-1}$ changed, and every column changed. We can do this in two steps:
+						\begin{itemize}
+							\item step I: add a new column with $a_j^\prime$
+							\item step II: remove the original column $a_j$
+						\end{itemize}
+						If in step I the new variable can enter basis, i.e. $z_j^\prime  - c_j \le 0$, let it enter the basis and eliminate the original column directly (because at this time the original column leave the basis the nonbasic variable is 0); otherwise, if the new column can not form a new basis, treat $x_j$, the original variable as an artificial variable.
+						\item Add a New Activity(Variable): Suppose we add a new variable $x_{n+1}$ and $c_{n+1}$ and $a_{n+1}$ respectively. Calculate $z_{n+1} - c_{n+1}$ to determine if the new variable enters the basis, if not, remains the same optimal solution, otherwise, continue on to find a new optimal solution.
+						\item Add a New Constraint: This is the basic of Branch-and-Cut/Bound, also, we can perform dual simplex method after we add a new constraint(cut).
+					\end{itemize}
+				\end{itemize}			
 
-				\subsection{Change in the Right-Hand-Side}
-					If $b$ is replaced by $b^{'}$, then $B^{-1}b$ is replaced by $B^{-1}b^{'}$. If $B^{-1}b^{'} \ge 0$, the basis remains optimal. Otherwise, we perform dual simplex method to continue.
+		\chapter{Interior Point Methods}
 
-				\subsection{Change in the Matrix}
-					\subsubsection{Case 1: Changes in Activity(Variable) Vectors for Nonbasic Columns}
-						If a nonbasic column $a_j$ is replaced by $a_j^{'}$, then $z_j=c_BB^{-1}a_j$ is replaced by $z_j^{'}=c_BB^{-1}a_j^{'}$, if new $z_j^{'} - c_j \le 0$, the basis stays optimal basis, the optimal value is the same because $c_B$ stays the same.
-
-					\subsubsection{Case 2: Changes in Activity(Variable) Vectors for Basic Columns}
-						If a basic columns changed, it means $B$ and $B^{-1}$ changed, and every column changed. We can do this in two steps:\\
-						- step I: add a new column with $a_j^{'}$\\
-						- step II: remove the original column $a_j$\\
-						If in step I the new variable can enter basis, i.e. $z_j^{'} - c_j \le 0$, let it enter the basis and eliminate the original column directly (because at this time the original column leave the basis the nonbasic variable is 0); otherwise, if the new column can not form a new basis, treat $x_j$, the original variable as an artificial variable.
-
-					\subsubsection{Add a New Activity(Variable)}
-						Suppose we add a new variable $x_{n+1}$ and $c_{n+1}$ and $a_{n+1}$ respectively. Calculate $z_{n+1} - c_{n+1}$ to determine if the new variable enters the basis, if not, remains the same optimal solution, otherwise, continue on to find a new optimal solution.
-
-					\subsubsection{Add a New Constraint}
-						This is the basic of Branch-and-Cut/Bound, also, we can perform dual simplex method after we add a new constraint(cut)\\
-
-			\section{Relaxation}
-				\subsection{Why Rounding Can be Bad - IP Example}
-					Rounding can be bad because the optimal of IP can be far away from optimal of LP. For example,
-					\begin{align}
-						\text{max} \quad & z=x_1 +0.64x_2  \\
-						\text{s.t.} \quad & 50x_1 +31x_2 \le 250  \\
-									& 3x_1-2x_2\ge -4  \\
-									& x_1,x_2\ge 0 \quad \text{(for LP)}\\
-									& x_1,x_2 \in Z^+ \quad \text{(for IP)} 
-					\end{align}
-					\begin{figure}[h!]
-						\centering
-						\begin{tikzpicture}[scale=0.7]
-							\draw [->] (1,1) -- (1, 7);
-							\draw [->] (1,1) -- (7, 1);
-							\draw (1,3) -- (2.948, 5.922);
-							\draw (2.948, 5.922) -- (6, 1);
-							\draw [->] (1,1) -- (2, 1.64);
-							\node [right] at (2, 1.64) {z};
-							\node [above] at (2.984, 5.922) {(1.948, 4.922)};
-							\node [above] at (2.984, 6.422) {Optimal for LP};
-							\node [below] at (6,1) {(5, 0)};
-							\node [below] at (6, 0.5) {Optimal for IP};
-						\end{tikzpicture}
-						\caption{Optimal solution for LP / IP}
-					\end{figure}
-
-				\subsection{Why Rounding Can be Bad - QAP example}
-					Rounding can make the LP useless. For example, for QAP problem, the IP model is
-					\begin{align}
-						\text{min} \quad z &= \sum_{i\in D} \sum_{s\in O} c_is x_is + \sum_{i\in D} \sum_{j \in D} \sum_{s \in O} \sum_{t\in O} w_{ij}^{st}y_{ij}^{st}  \\
-						\text{s.t.} \quad & \sum_{i \in D} x_{is} =1, \quad s\in D  \\
-									&\sum_{s \in O} x_{is} = 1, \quad i \in D  \\
-									&x_{is} \in \{0, 1\}, \quad i \in D, s\in O  \\
-									& y_{ij}^{st} \ge x_{is} + x_{jt} - 1, \quad i\in D, j\in D, s\in O, t \in O  \\
-									& y_{ij}^{st} \ge 0, \quad i\in D, j\in D, s\in O, t \in O  \\
-									& y_{ij}^{st} \le x_{is}, \quad i\in D, j\in D, s\in O, t \in O  \\
-									& y_{ij}^{st} \le x_{jt}, \quad i\in D, j\in D, s\in O, t \in O  
-					\end{align}
-					We can get the optimal solution for LP supposing $\forall i, s \quad x_{is}\in [0, 1]$
-					\begin{align}
-						x_{is} &= \frac{1}{|D|}, \quad i \in D, s\in O   \\
-						y_{ij}^{st} & = 0, \quad i\in D, j\in D, s\in O, t \in O 
-					\end{align}
-
-				\subsection{IP and Convex Hull}
-					For IP problem
-					\begin{align}
-						Z_{IP} \quad \text{max} \quad &z = cx  \\
-								\text{s.t.} &Ax \le b \\
-										&x\in {Z^n} 
-					\end{align}
-					In feasible region $S = \{x\in Z^n, Ax\le b\}$ , the optimal solution $Z_{IP} = \text{max}\{cx: x\in S\}$.\\
-					Denote $conv(S)$ as the convex hull of $S$ then\\
-					\begin{equation}Z_{IP}(S) = Z_{IP}(conv(S))  \end{equation}
-
-				\subsection{Local Optimal and Global Optimal}
-					Let 
-					\begin{align}
-						Z_s &= \text{min} \{f(x):x\in S\} \\
-						Z_t &= \text{min} \{f(x):x\in T\}  \\
-						& S \subset T 
-					\end{align}
-					then\\
-					\begin{equation}Z_t \le Z_s  \end{equation}
-					\textbf{Notice} that if $x_T^* \in S$ then $x_S^*=x_T^*$, to generalized it, \\
-					We have
-					\begin{align}
-						\begin{cases}x_T^* \in \text{arg min} \{f(x): x\in T\} \\ x_T^* \in S\end{cases} \\ \Rightarrow x_T^*\in \text{arg min} \{f(x): x\in S\} 
-					\end{align}
-					Especially for IP, we can take the LP relaxation as $T$ and the original feasible region of IP as $S$, therefore, if we find an optimal solution from LP relaxation $T$ which is also a feasible solution of $S$, then it is the optimal solution for IP ($S$)
-
-				\subsection{LP Relaxation}
-					To perform the LP relaxation, we expand the feasible region
-					\begin{align}
-						x \in \{0,1\} & \rightarrow x\in [0, 1]  \\
-						y\in Z^+ & \rightarrow y \ge 0 
-					\end{align}
-					If we have $Z_LP(s) = conv(s)$ then
-					\begin{equation} LP(s): {x\in R_+^n: Ax\le b}\end{equation}
-					The closer $LP(s)$ is to $conv(s)$ the better. Interestingly, we only need to know the convex in the direction of $c$.\\
-					There are several formulation problem have the property of $Z_{LP}(s) = conv(s)$, such as:\\
-					\indent- Assignment Problem\\
-					\indent- Spawning Tree Problem\\
-					\indent- Max Flow Problem\\
-					\indent- Matching Problem
-
-		\chapter{Polynomial-Time Algorithm for Linear Programming}
-
-	\part{Integer and Combinatorial Programming}
-		\chapter{Polyhedral Theory}
-			\section{Polyhedral and Dimension}
-				\subsection{Polyhedral}
-					\begin{definition}[polyhedron]
-						A \textbf{polyhedron} is a set of the form $\{x\in \mathbb{R}^n | Ax \le b\}=\{x \in \mathbb{R}^n | a^ix\le b^i, \forall i \in M\}$, where $A \in \mathbb{R}^{m\times n}$ and $b \in \mathbb{R}^m$
-					\end{definition}
-
-					\begin{proposition}
-						A polyhedron is a convex set.
-					\end{proposition}
-
-					\begin{definition}[polytope]
-						A polyhedron $P \subset \mathbb{R}^n$ is \textbf{bounded} if there exists a constant $K$ such that $|x_i|<K, \forall x \in P, \forall i \in [1, n]$, in this case the polyhedron is call \textbf{polytope}. The lower-bound of $K$ is called \textbf{diagonal} denoted by $d$
-					\end{definition}
-
-					\begin{definition}[cone]
-						$C \subseteq \mathbb{R}^n$ is a \textbf{cone} if $x \in C$ implies $\lambda x\in C, \forall \lambda \in \mathbf{R}_{+}$
-					\end{definition}
-
-				\subsection{Dimension of Polyhedral}
-					\begin{definition}[dimension]
-						A polyhedron $P$ is \textbf{dimension} $k$, denoted $dim(P)=k$, if the maximum number of affinely independent points in $P$ is $k+1$
-					\end{definition}
-
-					\begin{definition}[full-dimensional]
-						A polyhedron $P\subseteq \mathbb{R}^n$ is \textbf{full-dimensional} if $dim(P) = n$
-					\end{definition}
-
-					\begin{proposition}
-						If $P\subseteq \mathbb{R}^n$, then $dim(P) = n - rank(A^=, b^=)$
-					\end{proposition}
-
-					To proof a constraint $(A^=, b^=)$ is an equality constraint, we need to proof all point in the closure of $P$ satisfied the constraint, to proof it is not an equality constraint, we need to find one point that is not in the hyperplane.
-
-					\begin{definition}[inner point, interior point]
-						$x\in P$ is called an \textbf{inner point} of $P$ if $a^ix < b_i, \forall i \in M^\le$, $x\in P$ is called an \textbf{interior point} of $P$ if $a^ix<b_i, \forall i \in M$
-					\end{definition}
-
-					\begin{corollary}
-						Every nonempty polyhedron has at least one inner point.
-					\end{corollary}
-
-					\begin{corollary}
-						A polyhedron has an interior point iff $P$ is full-dimensional, i.e., there is no equality constraint.
-					\end{corollary}
-
-			\section{Face and Facet}
-				\subsection{Valid Inequalities and Faces}
-					- The inequality denoted by $(\pi, \pi_o)$ is called a \textbf{valid inequality} for $P$ if $\pi x \le \pi_0, \forall x \in P$\\
-					- Note that $(\pi, \pi_0)$ is a valid inequality iff $P$ lies in the half-space $\{x\in \mathbb{R}^n|Ax\le b\}$\\
-					\begin{figure}[!ht]
-					\centering
-					\begin{tikzpicture}[scale=0.4]
-						\draw (0,0) -- (3, -0.4) -- (3.3, 4.1) -- (-0.2, 4.1) -- (0, 0);
-						\draw (-2, 2) -- (2, -2);
-						\draw (4.9, 4.1) -- (-1.8, 4.1);
-						\draw (4, 1) -- (2, 6);
-						\draw [arrow] (-1.8, 4.1) -> (-1.8, 3.3);
-						\draw [arrow] (4.9, 4.1) -> (4.9, 3.3);
-						\draw [arrow] (-2, 2) -> (-1, 3);
-						\draw [arrow] (2, -2) -> (3, -1);
-						\draw [arrow] (4, 1) -> (3, 0.6);
-						\draw [arrow] (2, 6) -> (1, 5.6);
-						\node at (1, -1) [left] {valid inequality};
-						\node at (4.9, 4) [right] {valid inequality (induce a facet)};
-						\node at (2, 6) [right] {invalid inequality};
-					\end{tikzpicture}
-					\caption{Example of valid/invalid inequality}
-					\end{figure}
-					- If $(\pi, \pi_0)$ is a valid inequality for $P$ and $F=\{x\in P|\pi x=x_0\}$, $F$ is called a \textbf{facet} of $P$ and we say that $(\pi, \pi_0)$ \textbf{represents} or \textbf{defines} $F$\\
-					- A face is said to be \textbf{proper} if $F\ne \emptyset$ and $F\ne P$\\
-					- The face represented by $(\pi, \pi_0)$ is nonempty iff $\max \{\pi x |x\in P\}=\pi_0\}$\\
-					- If the face $F$ is nonempty, we say it \textbf{supports} $P$\\
-					- Let $P$ be a polyhedron with equality set $M^=$. If 
-					\begin{equation}F=\{x\in P | \pi^T x = \pi_0\}  \end{equation}
-					is not empty, then $F$ is a polyhedron. Let 
-					\begin{equation}M^= \subseteq M_F^=, M_F^{\le}=M \setminus M_F^= \end{equation}
-					then 
-					\begin{equation}F=\{x | a_i^T x=b_i, \forall i \in M_F^=, a_i^T x \le b_i, \forall i \in M_f^{\le}\} \end{equation}
-
-				\subsection{Facet}
-					- A face $F$ is said to be a \textbf{facet} of $P$ if $dim(F) = dim(P)-1$\\
-					- Facets are all we need to describe polyhedral\\
-					- If $F$ is a facet of $P$, then in any description of $P$, there exists some inequality representing $F$\\
-					- Every inequality that represents a face that is not a facet is unnecessary in the description of $P$
-					- Every full-dimensional polyhedron $P$ has a unique (up to scalar multiplication) representation that consists of one inequality representing each facet of $P$\\
-					- If $dim(P) = n-k$ with $k>0$, then $P$ is described by a maximal set of linearly independent rows of $(A^=, b^=)$, as well as one inequality representing each facet of $P$
-
-				\subsection{Proving Facet}
-					To prove an inequality $\sum_i a_i x_i \le b_i$ is facet inducing for a $D$ dimensional polyhedral, we need to prove there are $D$ affinely independent vectors in $\sum_i a_i x_i = b_i$
-
-				\subsection{Domination}
-					$\Pi x\le \Pi_0$ dominates $Mx\le M_0$ if
-					\begin{equation}
-						\begin{cases}
-							\Pi \ge \mu M, \mu > 0\\
-							\Pi_0 \le \mu M_0, \mu > 0\\
-							(\Pi, \Pi_0) \ne (M, M_0)
-						\end{cases}
-					\end{equation}
-
+	\part{Integer Programming}\label{IP}
 		\chapter{Branch and Bound}
 			\section{LP based Branch and Bound}
 				\subsection{Idea of Divide and Conquer}
@@ -1987,7 +2080,7 @@
 				\subsection{Ryan-Foster}
 					Ryan-Foster is for Set covering problem. The typical model is
 					\begin{align}
-						\text{min} \quad & \sum_{i \in C} x_i \\
+						\min \quad & \sum_{i \in C} x_i \\
 						\text{s.t.} \quad & \sum_{i \in C} a_{ij}x_{i} \ge 1, \quad \forall j \in U \\
 								& x_i \in \{0, 1\}, \quad \forall i \in C 
 					\end{align}
@@ -2047,14 +2140,14 @@
 					See Figure \ref{OptInq}
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance = 2cm]
+						\begin{tikzpicture}[node distance = 2 cm]
 							\node (LR) [circleNode] {LR};
 							\node (CG) [process, below of=LR] {Cut Generation};
 							\node (CLimit) [decision, below of=CG] {Generated?};
-							\node (Cont) [process, below of=CG, xshift=4cm] {Continue};
+							\node (Cont) [process, below of=CG, xshift=4 cm] {Continue};
 							\node (NLR) [circleNode, below of=CLimit] {New LR};
-							\node (LNLR) [circleNode, below of=NLR, xshift=-2cm] {Branch 1};
-							\node (RNLR) [circleNode, below of=NLR, xshift=2cm] {Branch 2};
+							\node (LNLR) [circleNode, below of=NLR, xshift=-2 cm] {Branch 1};
+							\node (RNLR) [circleNode, below of=NLR, xshift=2 cm] {Branch 2};
 							\draw [arrow] (LR) -- (CG);
 							\draw [arrow] (CG) -- (CLimit);
 							\draw [arrow] (CLimit) -- node [right] {yes} (NLR);
@@ -2070,17 +2163,17 @@
 					See Figure \ref{EssInq}
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance = 1.8cm]
+						\begin{tikzpicture}[node distance = 1.8 cm]
 							\node (IS) [circleNode, label = above:integer solution] {IS};
 							\node (CG) [process, below of=IS] {Cut Generation};
 							\node (CLimit) [decision, below of=CG] {Generated?};
 							\node (FI) [circleNode, below of=CLimit, label = below:feasible integer solution] {FI};
-							\node (LP) [process, below of=CG, xshift = 3.5cm] {Solve Linear Relaxation};
+							\node (LP) [process, below of=CG, xshift = 3.5 cm] {Solve Linear Relaxation};
 							\node (LPF) [decision, below of=LP] {Feasible?};
 							\node (NLR) [circleNode, below of=LPF] {New LR};
-							\node (LNLR) [circleNode, below of=NLR, xshift=-2cm] {Branch 1};
-							\node (RNLR) [circleNode, below of=NLR, xshift=2cm] {Branch 2};
-							\node (Cont) [process, below of=LP, xshift=2.5cm] {Continue};
+							\node (LNLR) [circleNode, below of=NLR, xshift=-2 cm] {Branch 1};
+							\node (RNLR) [circleNode, below of=NLR, xshift=2 cm] {Branch 2};
+							\node (Cont) [process, below of=LP, xshift=2.5 cm] {Continue};
 							\draw [arrow] (IS) -- (CG);
 							\draw [arrow] (CG) -- (CLimit);
 							\draw [arrow] (CLimit) -- node [right] {no} (FI);
@@ -2156,11 +2249,11 @@
 					The following is an example:\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance = 1.8cm]
+						\begin{tikzpicture}[node distance = 1.8 cm]
 							\node (1) [circleNode] {1};
 							\node (2) [circleNode, below of=1] {2};
-							\node (3) [circleNode, below of=2, xshift=-2cm] {3};
-							\node (4) [circleNode, below of=2, xshift=2cm] {4};
+							\node (3) [circleNode, below of=2, xshift=-2 cm] {3};
+							\node (4) [circleNode, below of=2, xshift=2 cm] {4};
 							\draw (1) -- (2);
 							\draw (1) -- (3);
 							\draw (1) -- (4);
@@ -2208,13 +2301,13 @@
 				\framebox{\textbf{Example:}}\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance = 1.2cm]
+						\begin{tikzpicture}[node distance = 1.2 cm]
 							\node (1) [circleNode] {1};
-							\node (2) [circleNode, below of=1, xshift=-2cm] {2};
-							\node (3) [circleNode, below of=1, xshift=2cm] {3};
-							\node (4) [circleNode, below of=2, xshift=2cm] {4};
-							\node (5) [circleNode, below of=4, xshift=-0.9cm] {5};
-							\node (6) [circleNode, below of=4, xshift=0.9cm] {6};
+							\node (2) [circleNode, below of=1, xshift=-2 cm] {2};
+							\node (3) [circleNode, below of=1, xshift=2 cm] {3};
+							\node (4) [circleNode, below of=2, xshift=2 cm] {4};
+							\node (5) [circleNode, below of=4, xshift=-0.9 cm] {5};
+							\node (6) [circleNode, below of=4, xshift=0.9 cm] {6};
 							\draw (1) -- (2);
 							\draw (1) -- (3);
 							\draw (1) -- (4);
@@ -2412,7 +2505,7 @@
 					Similar to up lifting, we can perform the lifting in a different way.\\
 					Denote
 					\begin{align}
-						&P_{k_1, k_2, ..., k_m}^{'} \\
+						&P_{k_1, k_2, ..., k_m}^\prime  \\
 						&\quad =conv(KNAP\cap \{x\in \mathbb{B}^{n}|x_{k_1}=x_{k_2}=\dots=x_{k_m}=1\}) 
 					\end{align}
 
@@ -2435,18 +2528,17 @@
 				if $z<1$, then the cover cut associated with $y$ is violation by $\bar{x}$
 
 		\chapter{Network Flow Problem}
-			(Network Flow Problem is a special type of IP problem, its linear relaxation is the convex hull of the original problem.)
 			\section{Shortest Path Problem}
 				A graph $G=(A, N)$ is a directed graph\\
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 1.8cm]
+					\begin{tikzpicture}[node distance = 1.8 cm]
 						\node (1) [circleNode, label=above:start] {1};
-						\node (2) [circleNode, right of=1, yshift=1cm] {2};
-						\node (3) [circleNode, right of=1, yshift=-1cm] {3};
+						\node (2) [circleNode, right of=1, yshift=1 cm] {2};
+						\node (3) [circleNode, right of=1, yshift=-1 cm] {3};
 						\node (4) [circleNode, right of=2] {4};
 						\node (5) [circleNode, right of=3] {5};
-						\node (6) [circleNode, label=above:end, right of=4, yshift=-1cm] {6};
+						\node (6) [circleNode, label=above:end, right of=4, yshift=-1 cm] {6};
 						\draw [arrow] (1) -- (2);
 						\draw [arrow] (1) -- (3);
 						\draw [arrow] (2) -- (3);
@@ -2526,7 +2618,97 @@
 					\end{equation}
 					is a unimodular matrix.
 
-	\part{Graph and Network Theory}
+		\chapter{Duality and Relaxation}
+
+
+			\section{Relaxation}
+				\subsection{Why Rounding Can be Bad - IP Example}
+					Rounding can be bad because the optimal of IP can be far away from optimal of LP. For example,
+					\begin{align}
+						\max \quad & z=x_1 +0.64x_2  \\
+						\text{s.t.} \quad & 50x_1 +31x_2 \le 250  \\
+									& 3x_1-2x_2\ge -4  \\
+									& x_1,x_2\ge 0 \quad \text{(for LP)}\\
+									& x_1,x_2 \in Z^+ \quad \text{(for IP)} 
+					\end{align}
+					\begin{figure}[h!]
+						\centering
+						\begin{tikzpicture}[scale=0.7]
+							\draw [->] (1,1) -- (1, 7);
+							\draw [->] (1,1) -- (7, 1);
+							\draw (1,3) -- (2.948, 5.922);
+							\draw (2.948, 5.922) -- (6, 1);
+							\draw [->] (1,1) -- (2, 1.64);
+							\node [right] at (2, 1.64) {z};
+							\node [above] at (2.984, 5.922) {(1.948, 4.922)};
+							\node [above] at (2.984, 6.422) {Optimal for LP};
+							\node [below] at (6,1) {(5, 0)};
+							\node [below] at (6, 0.5) {Optimal for IP};
+						\end{tikzpicture}
+						\caption{Optimal solution for LP / IP}
+					\end{figure}
+
+				\subsection{Why Rounding Can be Bad - QAP example}
+					Rounding can make the LP useless. For example, for QAP problem, the IP model is
+					\begin{align}
+						\min \quad z &= \sum_{i\in D} \sum_{s\in O} c_is x_is + \sum_{i\in D} \sum_{j \in D} \sum_{s \in O} \sum_{t\in O} w_{ij}^{st}y_{ij}^{st}  \\
+						\text{s.t.} \quad & \sum_{i \in D} x_{is} =1, \quad s\in D  \\
+									&\sum_{s \in O} x_{is} = 1, \quad i \in D  \\
+									&x_{is} \in \{0, 1\}, \quad i \in D, s\in O  \\
+									& y_{ij}^{st} \ge x_{is} + x_{jt} - 1, \quad i\in D, j\in D, s\in O, t \in O  \\
+									& y_{ij}^{st} \ge 0, \quad i\in D, j\in D, s\in O, t \in O  \\
+									& y_{ij}^{st} \le x_{is}, \quad i\in D, j\in D, s\in O, t \in O  \\
+									& y_{ij}^{st} \le x_{jt}, \quad i\in D, j\in D, s\in O, t \in O  
+					\end{align}
+					We can get the optimal solution for LP supposing $\forall i, s \quad x_{is}\in [0, 1]$
+					\begin{align}
+						x_{is} &= \frac{1}{|D|}, \quad i \in D, s\in O   \\
+						y_{ij}^{st} & = 0, \quad i\in D, j\in D, s\in O, t \in O 
+					\end{align}
+
+				\subsection{IP and Convex Hull}
+					For IP problem
+					\begin{align}
+						Z_{IP} \quad \max \quad &z = cx  \\
+								\text{s.t.} \quad &Ax \le b \\
+										&x\in {Z^n} 
+					\end{align}
+					In feasible region $S = \{x\in Z^n, Ax\le b\}$ , the optimal solution $Z_{IP} = \max\{cx: x\in S\}$.\\
+					Denote $conv(S)$ as the convex hull of $S$ then\\
+					\begin{equation}Z_{IP}(S) = Z_{IP}(conv(S))  \end{equation}
+
+				\subsection{Local Optimal and Global Optimal}
+					Let 
+					\begin{align}
+						Z_s &= \min \{f(x):x\in S\} \\
+						Z_t &= \min \{f(x):x\in T\}  \\
+						& S \subset T 
+					\end{align}
+					then\\
+					\begin{equation}Z_t \le Z_s  \end{equation}
+					\textbf{Notice} that if $x_T^* \in S$ then $x_S^*=x_T^*$, to generalized it, \\
+					We have
+					\begin{align}
+						\begin{cases}x_T^* \in \text{arg min} \{f(x): x\in T\} \\ x_T^* \in S\end{cases} \\ \Rightarrow x_T^*\in \text{arg min} \{f(x): x\in S\} 
+					\end{align}
+					Especially for IP, we can take the LP relaxation as $T$ and the original feasible region of IP as $S$, therefore, if we find an optimal solution from LP relaxation $T$ which is also a feasible solution of $S$, then it is the optimal solution for IP ($S$)
+
+				\subsection{LP Relaxation}
+					To perform the LP relaxation, we expand the feasible region
+					\begin{align}
+						x \in \{0,1\} & \rightarrow x\in [0, 1]  \\
+						y\in Z^+ & \rightarrow y \ge 0 
+					\end{align}
+					If we have $Z_LP(s) = conv(s)$ then
+					\begin{equation} LP(s): {x\in R_+^n: Ax\le b}\end{equation}
+					The closer $LP(s)$ is to $conv(s)$ the better. Interestingly, we only need to know the convex in the direction of $c$.\\
+					There are several formulation problem have the property of $Z_{LP}(s) = conv(s)$, such as:\\
+					\indent- Assignment Problem\\
+					\indent- Spawning Tree Problem\\
+					\indent- Max Flow Problem\\
+					\indent- Matching Problem
+
+	\part{Graph and Network Theory}\label{Graph}
 		\chapter{Basic Structures}
 			\section{Graph}
 				\begin{definition}[Graph]
@@ -2543,7 +2725,7 @@
 
 					\begin{figure}[!h]
 						\centering
-						\begin{tikzpicture}[node distance = 1.3cm]
+						\begin{tikzpicture}[node distance = 1.3 cm]
 							\node (v_2) [solidNode, label=above:{$v_2$}] {};
 							\node (v_3) [solidNode, label=above:{$v_3$}, right of = v_2] {};
 							\node (v_1) [solidNode, label=below:{$v_1$}, below of = v_2] {};
@@ -2600,10 +2782,10 @@
 				\end{definition}
 
 				\begin{definition}[Vertex-induced, Edge-induced]
-					For a subset $V^{'}\subseteq V(G)$ we define an \textbf{vertex-induced} subgraph $G[V^{'}]$ to be the subgraph with vertices $V^{'}$ and those edges of $G$ having both ends in $V^{'}$. The \textbf{edge-induced} subgraph $G[E^{'}]$ has edges $E^{'}$ and those vertices of $G$ that are ends to edges in $E^{'}$.
+					For a subset $V^\prime \subseteq V(G)$ we define an \textbf{vertex-induced} subgraph $G[V^\prime ]$ to be the subgraph with vertices $V^\prime$ and those edges of $G$ having both ends in $V^\prime$. The \textbf{edge-induced} subgraph $G[E^\prime ]$ has edges $E^\prime$ and those vertices of $G$ that are ends to edges in $E^\prime$.
 				\end{definition}
 
-				\notice{If we combine node-induced or edge-induced subgraphs $G(V^{'})$ and $G(V - V^{'})$, we cannot always get the entire graph.}
+				\notice{If we combine node-induced or edge-induced subgraphs $G(V^\prime )$ and $G(V - V^\prime )$, we cannot always get the entire graph.}
 
 			\section{Degree}
 				\begin{definition}[Degree]
@@ -2635,19 +2817,19 @@
 						\item The following graph contains 12 vertices and 18 edges, each vertex has a degree of 3.\\
 							\begin{figure}[!ht]
 								\centering
-								\begin{tikzpicture}[node distance=0.5cm]
+								\begin{tikzpicture}[node distance=0.5 cm]
 									\node (1) [solidNode] {};
 									\node (2) [solidNode, below of=1] {};
 									\node (3) [solidNode, below of=2] {};
 									\node (4) [solidNode, below of=3] {};
 									\node (5) [solidNode, below of=4] {};
 									\node (6) [solidNode, below of=5] {};
-									\node (7) [solidNode, right of=1, xshift=1cm] {};
-									\node (8) [solidNode, right of=2, xshift=1cm] {};
-									\node (9) [solidNode, right of=3, xshift=1cm] {};
-									\node (10) [solidNode, right of=4, xshift=1cm] {};
-									\node (11) [solidNode, right of=5, xshift=1cm] {};
-									\node (12) [solidNode, right of=6, xshift=1cm] {};
+									\node (7) [solidNode, right of=1, xshift=1 cm] {};
+									\node (8) [solidNode, right of=2, xshift=1 cm] {};
+									\node (9) [solidNode, right of=3, xshift=1 cm] {};
+									\node (10) [solidNode, right of=4, xshift=1 cm] {};
+									\node (11) [solidNode, right of=5, xshift=1 cm] {};
+									\node (12) [solidNode, right of=6, xshift=1 cm] {};
 									\draw [link] (1) -- (7);
 									\draw [link] (1) -- (8);
 									\draw [link] (1) -- (9);
@@ -2708,7 +2890,7 @@
 					Here is an example for bipartite graph
 					\begin{figure}[!h]
 						\centering
-						\begin{tikzpicture}[node distance = 0.7cm]
+						\begin{tikzpicture}[node distance = 0.7 cm]
 							\node (A) [solidNode] {};
 							\node (B) [solidNode, right of = A] {};
 							\node (C) [solidNode, below of = A] {};
@@ -2734,7 +2916,7 @@
 					Here is an example for $K_{53}$
 					\begin{figure}[!h]
 						\centering
-						\begin{tikzpicture}[node distance = 0.7cm]
+						\begin{tikzpicture}[node distance = 0.7 cm]
 							\node (A) [solidNode] {};
 							\node (B) [solidNode, below of = A] {};
 							\node (C) [solidNode, below of = B] {};
@@ -2780,7 +2962,7 @@
 					The following graph is bipartite, it only contains even cycles.\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance=0.7cm]
+						\begin{tikzpicture}[node distance=0.7 cm]
 							\node (a) [solidNode, label=above:{a}] {};
 							\node (b) [solidNode, label=above:{b}, right of = a] {};
 							\node (c) [solidNode, label=above:{c}, right of = b] {};
@@ -2806,7 +2988,7 @@
 					We can rearrange the graph to be more clear as following\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance=0.7cm]
+						\begin{tikzpicture}[node distance=0.7 cm]
 							\node (a) [solidNode, label=right:{a}] {};
 							\node (b) [solidNode, label=left:{b}, left of=a] {};
 							\node (c) [solidNode, label=right:{c}, below of=a] {};
@@ -2836,20 +3018,20 @@
 					The following graph is not bipartite\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance=0.5cm]
+						\begin{tikzpicture}[node distance=0.5 cm]
 							\node (11) [solidNode, label=left:{11}] {};
-							\node (4) [solidNode, label=below:{4}, below of=11, yshift=-0.205cm] {};
-							\node (3) [solidNode, label=below:{3}, below of=4, xshift=-0.5cm] {};
-							\node (5) [solidNode, label=below:{5}, below of=4, xshift=0.5cm] {};
-							\node (1) [solidNode, label=below:{1}, below of=3, xshift=-1.205cm] {};
-							\node (2) [solidNode, label=below:{2}, below of=3, xshift=-0.5cm] {};
-							\node (6) [solidNode, label=below:{6}, below of=3, xshift=0.5cm] {};
-							\node (10) [solidNode, label=below:{10}, below of=5, xshift=0.5cm] {};
-							\node (12) [solidNode, label=below:{12}, below of=5, xshift=1.205cm] {};
-							\node (7) [solidNode, label=below:{7}, below of=2, xshift=0.5cm] {};
-							\node (8) [solidNode, label=left:{8}, below of=7, xshift=0.5cm] {};
-							\node (9) [solidNode, label=below:{9}, below of=6, xshift=0.5cm] {};
-							\node (13) [solidNode, label=below:{13}, below of=8, yshift=-0.205cm] {};
+							\node (4) [solidNode, label=below:{4}, below of=11, yshift=-0.205 cm] {};
+							\node (3) [solidNode, label=below:{3}, below of=4, xshift=-0.5 cm] {};
+							\node (5) [solidNode, label=below:{5}, below of=4, xshift=0.5 cm] {};
+							\node (1) [solidNode, label=below:{1}, below of=3, xshift=-1.205 cm] {};
+							\node (2) [solidNode, label=below:{2}, below of=3, xshift=-0.5 cm] {};
+							\node (6) [solidNode, label=below:{6}, below of=3, xshift=0.5 cm] {};
+							\node (10) [solidNode, label=below:{10}, below of=5, xshift=0.5 cm] {};
+							\node (12) [solidNode, label=below:{12}, below of=5, xshift=1.205 cm] {};
+							\node (7) [solidNode, label=below:{7}, below of=2, xshift=0.5 cm] {};
+							\node (8) [solidNode, label=left:{8}, below of=7, xshift=0.5 cm] {};
+							\node (9) [solidNode, label=below:{9}, below of=6, xshift=0.5 cm] {};
+							\node (13) [solidNode, label=below:{13}, below of=8, yshift=-0.205 cm] {};
 							\draw [link] (11) -- (1);
 							\draw [link] (11) -- (12);
 							\draw [link] (11) -- (4);
@@ -2882,7 +3064,7 @@
 
 				\begin{figure}
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (1) [circleNode] {u};
 						\node (2) [circleNode, right of = 1] {w};
 						\node (3) [circleNode, below of = 1] {v};
@@ -3081,9 +3263,9 @@
 						\item Then, if we remove one leaf in the tree, i.e., we remove an edge and a vertex, where that vertex only connects to the edge we removed. One of the following situations will happen:
 						\begin{enumerate}
 							\item Situation 1: The remaining of $T$ is one vertex. In this case, $T$ has two vertices an one edge. (Exactly one more vertex than it has edges)
-							\item Situation 2: The remaining of $T$ is another tree $T^{'}$ (removal of edges will not change acyclic and connectivity), where $|V(T)| = |V(T^{'})| + 1$ and $|E(T)| = |E(V^{'}| + 1$. (one edge and one vertex has been removed)
+							\item Situation 2: The remaining of $T$ is another tree $T^\prime$ (removal of edges will not change acyclic and connectivity), where $|V(T)| = |V(T^\prime )| + 1$ and $|E(T)| = |E(V^\prime | + 1$. (one edge and one vertex has been removed)
 						\end{enumerate}
-						\item Do the leaf removal process recursively to $T^{'}$ if Situation 2 happens until Situation 1 happens. 
+						\item Do the leaf removal process recursively to $T^\prime$ if Situation 2 happens until Situation 1 happens. 
 					\end{enumerate}
 				\end{proof}
 
@@ -3096,7 +3278,7 @@
 					In the following graph\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[scale=0.6, node distance = 1.2cm]
+						\begin{tikzpicture}[scale=0.6, node distance = 1.2 cm]
 							\node (v_2) [circleNode] {$v_2$};
 							\node (v_3) [circleNode, right of = v_2] {$v_3$};
 							\node (v_1) [circleNode, below of = v_2] {$v_1$};
@@ -3114,7 +3296,7 @@
 					This is a spanning tree\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[scale=0.6, node distance = 1.2cm]
+						\begin{tikzpicture}[scale=0.6, node distance = 1.2 cm]
 							\node (v_2) [circleNode] {$v_2$};
 							\node (v_3) [circleNode, right of = v_2] {$v_3$};
 							\node (v_1) [circleNode, below of = v_2] {$v_1$};
@@ -3434,13 +3616,13 @@
 						\end{itemize}
 						\begin{figure}[h]
 							\centering
-							\begin{tikzpicture}[node distance=2cm]
+							\begin{tikzpicture}[node distance=2 cm]
 								\node (1) [circleNode] {1};
-								\node (2) [circleNode, below of=1, xshift = -2cm] {2};
+								\node (2) [circleNode, below of=1, xshift = -2 cm] {2};
 								\node (3) [circleNode, below of=1] {3};
-								\node (4) [circleNode, below of=1, xshift = 2cm] {4};
-								\node (5) [circleNode, below of=2, xshift = -1cm] {5};
-								\node (6) [circleNode, below of=2, xshift = 1cm] {6};
+								\node (4) [circleNode, below of=1, xshift = 2 cm] {4};
+								\node (5) [circleNode, below of=2, xshift = -1 cm] {5};
+								\node (6) [circleNode, below of=2, xshift = 1 cm] {6};
 								\node (7) [circleNode, below of=4] {7};
 								\draw [link] (1) -- node [left] {tree edge} (2);
 								\draw [link] (1) -- (3);
@@ -3510,7 +3692,7 @@
 
 			\section{The Chinese Postman Problem}
 
-			\section{The Travelling Salesman Problem}
+			\section{The Traveling Salesman Problem}
 
 		\chapter{Matriod, Planarity}
 			\section{Plane and Planar Graphs}
@@ -3719,7 +3901,7 @@
 						\node (7) [solidNode, right of = 6, label=above:{7}] {};
 						\node (8) [solidNode, right of = 7, label=above:{8}] {};
 						\node (9) [solidNode, right of = 8, label=above:{9}] {};
-						\node (a) [solidNode, below of = 3, yshift=-2cm, label=below:{a}] {};
+						\node (a) [solidNode, below of = 3, yshift=-2 cm, label=below:{a}] {};
 						\node (b) [solidNode, right of = a, label=below:{b}] {};
 						\node (c) [solidNode, right of = b, label=below:{c}] {};
 						\node (d) [solidNode, right of = c, label=below:{d}] {};
@@ -3761,8 +3943,8 @@
 					\centering
 					\begin{tikzpicture}
 						\node (1) [solidNode, label=above:{1}] {};
-						\node (2) [solidNode, below of = 1, xshift = -1cm, label=below:{2(cover)}] {};
-						\node (3) [solidNode, below of = 1, xshift = 1cm, label=below:{3(cover)}] {};
+						\node (2) [solidNode, below of = 1, xshift = -1 cm, label=below:{2(cover)}] {};
+						\node (3) [solidNode, below of = 1, xshift = 1 cm, label=below:{3(cover)}] {};
 						\draw [matchedLink] (2) -- (3);
 						\draw [link] (1) -- (2);
 						\draw [link] (1) -- (3);
@@ -4002,7 +4184,7 @@
 				\notice{This method can be really bad. Here is another example that could take $O(2^n)$ to solve.}
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 1cm]
+					\begin{tikzpicture}[node distance = 1 cm]
 						\node (0) [circleNode] {$v_0$};
 						\node (1) [circleNode, right of = 0] {$v_1$};
 						\node (2) [circleNode, right of = 1] {$v_2$};
@@ -4095,11 +4277,11 @@
 
 				\begin{figure}
 					\centering
-					\begin{tikzpicture}[node distance = 1cm]
+					\begin{tikzpicture}[node distance = 1 cm]
 						\node (2) [circleNode] {2};
-						\node (1) [circleNode, below of=2, xshift = -1cm] {1};
+						\node (1) [circleNode, below of=2, xshift = -1 cm] {1};
 						\node (3) [circleNode, below of=2] {3};
-						\node (4) [circleNode, below of=2, xshift = 1cm] {4};
+						\node (4) [circleNode, below of=2, xshift = 1 cm] {4};
 						\node (5) [circleNode, below of=3] {5};
 						\draw (1) -- node [above] {1} (2);
 						\draw (1) -- node [above] {2} (3);
@@ -4144,12 +4326,12 @@
 
 				\begin{figure}
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (2) [circleNode] {2};
-						\node (1) [circleNode, below of=2, xshift = -2cm] {1};
-						\node (3) [circleNode, below of=2, xshift = 2cm] {3};
-						\node (4) [circleNode, below of=3, xshift = -1cm] {4};
-						\node (5) [circleNode, below of=1, xshift = 1cm] {5};
+						\node (1) [circleNode, below of=2, xshift = -2 cm] {1};
+						\node (3) [circleNode, below of=2, xshift = 2 cm] {3};
+						\node (4) [circleNode, below of=3, xshift = -1 cm] {4};
+						\node (5) [circleNode, below of=1, xshift = 1 cm] {5};
 						\draw [arrow] (1) -- node [above] {-4} (5);
 						\draw [arrow] (1) -- node [above] {3} (2);
 						\draw [arrow] (1) -- node [above] {8} (3);
@@ -4313,13 +4495,13 @@
 					For the following graph:\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance = 1cm]
+						\begin{tikzpicture}[node distance = 1 cm]
 							\node (1) [circleNode] {1};
 							\node (3) [circleNode, right of=1] {3};
-							\node (s) [circleNode, below of=1, xshift = -1cm] {s};
-							\node (2) [circleNode, below of=s, xshift = 1cm] {2};
-							\node (t) [circleNode, below of=3, xshift = 1cm] {t};
-							\node (4) [circleNode, below of=t, xshift = -1cm] {4};
+							\node (s) [circleNode, below of=1, xshift = -1 cm] {s};
+							\node (2) [circleNode, below of=s, xshift = 1 cm] {2};
+							\node (t) [circleNode, below of=3, xshift = 1 cm] {t};
+							\node (4) [circleNode, below of=t, xshift = -1 cm] {4};
 							\draw [arrow] (s) -- node [above] {6} (1);
 							\draw [arrow] (s) -- node [above] {3} (2);
 							\draw [arrow] (1) -- node [right] {2} (2);
@@ -4344,13 +4526,13 @@
 				\begin{example}
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance = 1cm]
+						\begin{tikzpicture}[node distance = 1 cm]
 							\node (1) [circleNode] {1};
 							\node (3) [circleNode, right of=1] {3};
-							\node (s) [circleNode, below of=1, xshift = -1cm] {s};
-							\node (2) [circleNode, below of=s, xshift = 1cm] {2};
-							\node (t) [circleNode, below of=3, xshift = 1cm] {t};
-							\node (4) [circleNode, below of=t, xshift = -1cm] {4};
+							\node (s) [circleNode, below of=1, xshift = -1 cm] {s};
+							\node (2) [circleNode, below of=s, xshift = 1 cm] {2};
+							\node (t) [circleNode, below of=3, xshift = 1 cm] {t};
+							\node (4) [circleNode, below of=t, xshift = -1 cm] {4};
 							\draw [arrow] (s) -- node [above] {5} (1);
 							\draw [arrow] (s) -- node [above] {4} (2);
 							\draw [arrow] (1) -- node [left] {2} (2);
@@ -4554,11 +4736,11 @@
 				Labeling algorithm can be exponential, the following is an example
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 1cm]
+					\begin{tikzpicture}[node distance = 1 cm]
 						\node (1) [circleNode] {1};
-						\node (s) [circleNode, below of=1, xshift = -1cm] {s};
-						\node (2) [circleNode, below of=s, xshift = 1cm] {2};
-						\node (t) [circleNode, below of=1, xshift = 1cm] {t};
+						\node (s) [circleNode, below of=1, xshift = -1 cm] {s};
+						\node (2) [circleNode, below of=s, xshift = 1 cm] {2};
+						\node (t) [circleNode, below of=1, xshift = 1 cm] {t};
 						\draw [arrow] (s) -- node [left] {M} (1);
 						\draw [arrow] (s) -- node [left] {M} (2);
 						\draw [arrow] (1) -- node [left] {1} (2);
@@ -4587,11 +4769,11 @@
 					For the following graph
 					\begin{figure}
 						\centering
-						\begin{tikzpicture}[node distance = 1cm]
+						\begin{tikzpicture}[node distance = 1 cm]
 							\node (1) [circleNode] {1};
-							\node (s) [circleNode, below of=1, xshift = -1cm] {s};
-							\node (2) [circleNode, below of=s, xshift = 1cm] {2};
-							\node (t) [circleNode, below of=1, xshift = 1cm] {t};
+							\node (s) [circleNode, below of=1, xshift = -1 cm] {s};
+							\node (2) [circleNode, below of=s, xshift = 1 cm] {2};
+							\node (t) [circleNode, below of=1, xshift = 1 cm] {t};
 							\draw [arrow] (s) -- node [left] {M} (1);
 							\draw [arrow] (s) -- node [left] {M} (2);
 							\draw [arrow] (1) -- node [left] {1} (2);
@@ -4755,10 +4937,10 @@
 					The following is an example of cycling\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance=2.5cm]
+						\begin{tikzpicture}[node distance=2.5 cm]
 							\node (1) [circleNode, label=above:{$b = 0$}] {1};
-							\node (2) [circleNode, below of=1, xshift=-1.5cm, label=left:{$b = 0$}] {2};
-							\node (3) [circleNode, below of=1, xshift=1.5cm, label=right:{$b = 0$}] {3};
+							\node (2) [circleNode, below of=1, xshift=-1.5 cm, label=left:{$b = 0$}] {2};
+							\node (3) [circleNode, below of=1, xshift=1.5 cm, label=right:{$b = 0$}] {3};
 							\draw [arrow] (1) to [out = 230, in = 70] node [right] {1, a} (2);
 							\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b} (2);
 							\draw [arrow] (1) to [out = 180, in = 110] node [left] {3, c} (2);
@@ -4789,10 +4971,10 @@
 						\centering
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow] (1) to [out = 230, in = 70] node [left] {1, a} (2);
 								\draw [arrow] (3) to [out = -165, in = -15] node [above] {3, i (out)} (2);
 								\draw [arrow, dashed] (3) to [out = -135, in = -45] node [below] {-3, j (in)} (2);
@@ -4801,10 +4983,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow] (1) to [out = 230, in = 70] node [left] {1, a (out)} (2);
 								\draw [arrow] (3) to [out = -135, in = -45] node [below] {-3, j} (2);
 								\draw [arrow, dashed] (1) to [out = 0, in = 70] node [right] {3, h (in)} (3);
@@ -4813,10 +4995,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow, dashed] (1) to [out = 205, in = 90] node [above] {-1, b (in)} (2);
 								\draw [arrow] (1) to [out = 0, in = 70] node [right] {3, h} (3);
 								\draw [arrow] (3) to [out = -135, in = -45] node [below] {-3, j (out)} (2);
@@ -4825,10 +5007,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b} (2);
 								\draw [arrow] (1) to [out = 0, in = 70] node [right] {3, h (out)} (3);
 								\draw [arrow, dashed] (2) to [out = 15, in = 165] node [below] {3, d (in)} (3);
@@ -4837,10 +5019,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b (out)} (2);
 								\draw [arrow, dashed] (1) to [out = -50, in = 110] node [right] {1, f (in)} (3);
 								\draw [arrow] (2) to [out = 15, in = 165] node [below] {3, d} (3);
@@ -4849,10 +5031,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow] (1) to [out = -50, in = 110] node [right] {1, f} (3);
 								\draw [arrow] (2) to [out = 15, in = 165] node [below] {3, d (out)} (3);
 								\draw [arrow, dashed] (2) to [out = 45, in = 135] node [above] {-3, e (in)} (3);
@@ -4861,10 +5043,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow, dashed] (1) to [out = 180, in = 110] node [left] {3, c (in)} (2);
 								\draw [arrow] (1) to [out = -50, in = 110] node [right] {1, f (out)} (3);
 								\draw [arrow] (2) to [out = 45, in = 135] node [above] {-3, e} (3);
@@ -4873,10 +5055,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow, dashed] (1) to [out = -25, in = 90] node [right] {-1, g (in)} (3);
 								\draw [arrow] (1) to [out = 180, in = 110] node [left] {3, c} (2);
 								\draw [arrow] (2) to [out = 45, in = 135] node [above] {-3, e (out)} (3);
@@ -4885,10 +5067,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow] (1) to [out = -25, in = 90] node [right] {-1, g} (3);
 								\draw [arrow] (1) to [out = 180, in = 110] node [left] {3, c (out)} (2);
 								\draw [arrow, dashed] (3) to [out = -165, in = -15] node [above] {3, i (in)} (2);
@@ -4897,10 +5079,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow, dashed] (1) to [out = 230, in = 70] node [left] {1, a (in)} (2);
 								\draw [arrow] (1) to [out = -25, in = 90] node [right] {-1, g (out)} (3);
 								\draw [arrow] (3) to [out = -165, in = -15] node [above] {3, i} (2);
@@ -4909,10 +5091,10 @@
 						\qquad
 						\begin{subfigure}[c]{0.24\textwidth}
 							\centering
-							\begin{tikzpicture}[node distance=1.5cm]
+							\begin{tikzpicture}[node distance=1.5 cm]
 								\node (1) [solidNode] {};
-								\node (2) [solidNode, below of = 1, xshift=-0.9cm] {};
-								\node (3) [solidNode, below of = 1, xshift=0.9cm] {};
+								\node (2) [solidNode, below of = 1, xshift=-0.9 cm] {};
+								\node (3) [solidNode, below of = 1, xshift=0.9 cm] {};
 								\draw [arrow] (1) to [out = 230, in = 70] node [left] {1, a} (2);
 								\draw [arrow] (3) to [out = -165, in = -15] node [above] {3, i (out)} (2);
 								\draw [arrow, dashed] (3) to [out = -135, in = -45] node [below] {-3, j (in)} (2);
@@ -4940,10 +5122,10 @@
 					The first few (four) steps are the same as previous example, starting from\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance=2.5cm]
+						\begin{tikzpicture}[node distance=2.5 cm]
 							\node (1) [circleNode] {1};
-							\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
-							\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+							\node (2) [circleNode, below of = 1, xshift=-1.5 cm] {2};
+							\node (3) [circleNode, below of = 1, xshift=1.5 cm] {3};
 							\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b (can leave)} (2);
 							\draw [arrow, dashed] (1) to [out = -50, in = 110] node [left] {1, f (in)} (3);
 							\draw [arrow] (2) to [out = 15, in = 165] node [above] {3, d (can leave)} (3);
@@ -4952,10 +5134,10 @@
 					$w(T,f) = w_f - w_d - w_b = 1 - 3 + 1 = -1$. $f$ is entering basis, both $b$ and $d$ can leave the basis, according to the modified pivot rule, we choose the ``first'' arc encountered in traversing $C(T, e)$, which is $d$ to leave the basis, instead of $b$.\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance=2.5cm]
+						\begin{tikzpicture}[node distance=2.5 cm]
 							\node (1) [circleNode] {1};
-							\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
-							\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+							\node (2) [circleNode, below of = 1, xshift=-1.5 cm] {2};
+							\node (3) [circleNode, below of = 1, xshift=1.5 cm] {3};
 							\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b} (2);
 							\draw [arrow] (1) to [out = -50, in = 110] node [left] {1, f (out)} (3);
 							\draw [arrow, dashed] (2) to [out = 45, in = 135] node [above] {-3, e (in)} (3);
@@ -4964,10 +5146,10 @@
 					$w(T, e) = w_e - w_f + w_b = -5$, $e$ is entering basis, $f$ is leaving basis. Now the only arc to enter basis and maintain negative $w$ is $j$.\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance=2.5cm]
+						\begin{tikzpicture}[node distance=2.5 cm]
 							\node (1) [circleNode] {1};
-							\node (2) [circleNode, below of = 1, xshift=-1.5cm] {2};
-							\node (3) [circleNode, below of = 1, xshift=1.5cm] {3};
+							\node (2) [circleNode, below of = 1, xshift=-1.5 cm] {2};
+							\node (3) [circleNode, below of = 1, xshift=1.5 cm] {3};
 							\draw [arrow] (1) to [out = 205, in = 90] node [above] {-1, b} (2);
 							\draw [arrow] (2) to [out = 45, in = 135] node [above] {-3, e} (3);
 							\draw [arrow, dashed] (3) to [out = -135, in = -45] node [below] {-3, j (in)} (2);
@@ -4982,14 +5164,14 @@
 					Here is an example after adding artificial arcs:\\
 					\begin{figure}[!ht]
 						\centering
-						\begin{tikzpicture}[node distance = 1.5cm]
+						\begin{tikzpicture}[node distance = 1.5 cm]
 							\node (1) [circleNode, label=above:{$b_1 \ge 0$}] {$v_1$};
 							\node (2) [circleNode, label=above:{$b_2 < 0$}, right of = 1] {$v_2$};
 							\node (3) [circleNode, label=above:{$b_3 \ge 0$}, right of = 2] {$v_3$};
 							\node (4) [circleNode, label=above:{$b_4 \ge 0$}, right of = 3] {$v_4$};
 							\node (5) [circleNode, label=above:{$b_5 < 0$}, right of = 4] {$v_5$};
 							\node (6) [circleNode, label=above:{$b_6 \ge 0$}, right of = 5] {$v_6$};
-							\node (0) [circleNode, label=below:{$b_0$}, below of= 3, yshift=-1cm] {$r$};
+							\node (0) [circleNode, label=below:{$b_0$}, below of= 3, yshift=-1 cm] {$r$};
 							\draw [arrow] (0) -- node [left] {$e_1$} (1);
 							\draw [arrow] (2) -- node [left] {$e_2$} (0);
 							\draw [arrow] (0) -- node [left] {$e_3$} (3);
@@ -5088,14 +5270,14 @@
 
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (2) [circleNode, label=above:{-2}] {2};
 						\node (1) [circleNode, below of=2, label=above:{-1}] {1};
 						\node (3) [circleNode, right of=2, label=above:{2}] {3};
 						\node (4) [circleNode, below of=3, label=above:{1}] {4};
 						\draw (2) [arrow] -- node [above] {5} (3);
-						\draw (2) [arrow] -- node [below, xshift=-0.5cm] {11} (4);
-						\draw (1) [arrow] -- node [below, xshift=0.5cm] {7} (3);
+						\draw (2) [arrow] -- node [below, xshift=-0.5 cm] {11} (4);
+						\draw (1) [arrow] -- node [below, xshift=0.5 cm] {7} (3);
 						\draw (1) [arrow] -- node [above] {12} (4);
 					\end{tikzpicture}
 				\end{figure}
@@ -5104,7 +5286,7 @@
 
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (2) [circleNode] {2};
 						\node (1) [circleNode, below of=2] {1};
 						\node (3) [circleNode, right of=2] {3};
@@ -5112,8 +5294,8 @@
 						\node (s) [circleNode, below of=1] {s};
 						\node (t) [circleNode, below of=4] {t};
 						\draw (2) [arrow] -- node [above] {0, 3, 5} (3);
-						\draw (2) [arrow] -- node [below, yshift=0.5cm, xshift=-1cm] {0, 3, 11} (4);
-						\draw (1) [arrow] -- node [below, yshift=0.5cm, xshift=1cm] {0, 3, 7} (3);
+						\draw (2) [arrow] -- node [below, yshift=0.5 cm, xshift=-1 cm] {0, 3, 11} (4);
+						\draw (1) [arrow] -- node [below, yshift=0.5 cm, xshift=1 cm] {0, 3, 7} (3);
 						\draw (1) [arrow] -- node [above] {0, 3, 12} (4);
 						\draw (s) [arrow] to [out = 180, in = 180] node [right] {0, 1, 0} (1);
 						\draw (s) [arrow] to [out = 180, in = 180] node [left] {0, 2, 0} (2);
@@ -5129,7 +5311,7 @@
 
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (u) [circleNode] {$u$};
 						\node (v) [circleNode, right of=u] {$v$};
 						\draw (u) [arrow] -- node [above] {0, $u_e$, $w_e$} (v);
@@ -5140,7 +5322,7 @@
 
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (u) [circleNode, label=above:{0}] {$u$};
 						\node (x) [circleNode, label=above:{$u_e$}, right of=u] {$x$};
 						\node (v) [circleNode, label=above:{$u_e$}, right of=x] {$v$};
@@ -5153,7 +5335,7 @@
 
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (u) [circleNode] {$u$};
 						\node (v) [circleNode, right of=u] {$v$};
 						\draw (u) [arrow] -- node [above] {$l_e$, $u_e$, $w_e$} (v);
@@ -5164,7 +5346,7 @@
 
 				\begin{figure}[!ht]
 					\centering
-					\begin{tikzpicture}[node distance = 2cm]
+					\begin{tikzpicture}[node distance = 2 cm]
 						\node (u) [circleNode, label=above:{0}] {$u$};
 						\node (x) [circleNode, label=above:{$u_e - l_e$}, right of=u] {$x$};
 						\node (v) [circleNode, label=above:{$u_e$}, right of=x] {$v$};
@@ -5235,7 +5417,7 @@
 					\begin{tikzpicture}
 						\draw [arrow] (0, 0) -- (0, 3);
 						\draw [arrow] (0, 0) -- (3, 0);
-						\draw [link, line width=0.6mm] (1, -1) -- (1, 1) -- (2, 1) -- (2, 3);
+						\draw [link, line width=0.6 mm] (1, -1) -- (1, 1) -- (2, 1) -- (2, 3);
 						\draw node at (0, 3) [above] {$y_{h(e)} - y_{t(e)}$};
 						\draw node at (3, 0) [above] {$x_e$};
 						\draw node at (1, -0.5) [left] {$l_e$};
@@ -5254,14 +5436,14 @@
 					\begin{tikzpicture}
 						\draw [arrow] (0, 0) -- (0, 4);
 						\draw [arrow] (0, 0) -- (4, 0);
-						\draw [link, line width=0.6mm] (0, -1) -- (0, 2) -- (3, 2) -- (3, 4);
+						\draw [link, line width=0.6 mm] (0, -1) -- (0, 2) -- (3, 2) -- (3, 4);
 						\draw node at (0, 4) [above] {$y_{h(e)} - y_{t(e)}$};
 						\draw node at (4, 0) [above] {$x_e$};
 						\draw node at (0, -0.5) [left] {0};
 						\draw node at (3, 0) [above] {3};
 						\draw node at (0, 2) [left] {2};
-						\fill (2, 3) circle [radius=2pt];
-						\draw node at (2, 3) [above, xshift=-0.6cm] {$(x_e, y_{h(e)} - y_{t(e)})$};
+						\fill (2, 3) circle [radius=2 pt];
+						\draw node at (2, 3) [above, xshift=-0.6 cm] {$(x_e, y_{h(e)} - y_{t(e)})$};
 						\draw node at (2, 3) [below] {(2, 3)};
 						\draw [link, dashed] (2, 3) -- (3, 3);
 					\end{tikzpicture}
@@ -5353,48 +5535,55 @@
 
 		\chapter{Social Network Analysis}
 
-	\part{Heuristic Optimization}
+	\part{Heuristic Optimization}\label{Heur}
 		\chapter{}
 
-	\part*{Special Topic: Vehicle Routing Problem}
+	\part*{Special Topic: Vehicle Routing Problem}\label{VRP}
 		\addcontentsline{toc}{part}{Special Topic: Vehicle Routing Problem}
-		\chapter{Traveling Salesman Problem}
+		\chapter{The Traveling Salesman Problem}
 			\section{Formulation}
-				Consider a Graph $G=\{A, N\}$\\
-				Denote:\\
+				Let $G = (V, A)$ be a graph where $V$ is a set of $n$ vertices, and $A$ is a set of arcs (or edges). Let $C = c_{ij}$ be a cost (distance) matrix associated with $A$. The TSP consists of determining a minimum cost (distance) Hamiltonian circle (or cycle) that visits each vertex once and only once. If for all $i, j \in V, c_{ij} = c_{ji}$, then the TSP is symmetrical, otherwise is asymmetrical.
+
+				Define the decision variable $x_{ij}$ as the following
 				\begin{equation}
 					x_{ij} = \begin{cases}1, &\text{if goes from } i \text{ to } j\\ 0, & \text{otherwise}\end{cases}
 				\end{equation}
-				\textbf{Dantzig-Fulkerson-Johnson Formulation:}
+				There are two famous formulations for TSP, the Dantzig-Fulkerson-Johnson (DFJ) formulation and the Miller-Tucker-Zemlin (MTZ) formulation. The DFJ formulation is
 				\begin{align}
-					\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-					& \sum_{j \in N, (i,j)\in A} x_{ij} = 1 \\
-					& \sum_{i \in N, (i,j)\in A} x_{ij} = 1 \\
-					& \sum_{j\notin S, i\in S, (i,j)\in A} x_{ij} = 1 \text{ or } \sum_{i, j \in S, (i, j) \in A} x_{ij} \le |S| - 1 \\
-					& \forall S \subset N, S\ne \emptyset, 2\le |S| \le n-1 
-				\end{align}
-				\textbf{Miller-Tucker-Zemlin Formulation:}
-				\begin{align}
-					\min &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-					& \sum_{j \in N, (i,j)\in A} x_ij = 1 \\
-					& \sum_{i \in N, (i,j)\in A} x_ij = 1 \\
-					& u_i - u_j +nx_{ij}\le n-1 \quad i, j\in{2, ... , n}, (i, j)\in A \\
-					& u_1 = 1 \\
-					& 2 \le u_i \le n, i\in N, i>1 
+					\min \quad &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
+					& \sum_{j \in V, (i,j)\in A} x_{ij} = 1, \quad \forall i \in V \label{TSP:formulation:con:degree1}\\
+					& \sum_{i \in V, (i,j)\in A} x_{ij} = 1, \quad \forall j \in V \label{TSP:formulation:con:degree2}\\
+					& \sum_{j\notin S, i\in S, (i,j)\in A} x_{ij} \ge 1 \text{ or } \sum_{i, j \in S, (i, j) \in A} x_{ij} \le |S| - 1 \nonumber \\
+					& \quad \forall S \subset V, 2\le |S| \le n-1 \label{TSP:formulation:con:DFJSubtour}\\
+					& x_{ij} \in \{0, 1\}, \forall (i, j) \in A 
 				\end{align}
 
+				In the formulation, constraints (\ref{TSP:formulation:con:degree1}) and constraints (\ref{TSP:formulation:con:degree2}) are degree constraints, which specify that every vertex is entered exactly once. Constraints (\ref{TSP:formulation:con:DFJSubtour}) is the sub-tour constraints, they prohibit the formation of sub-tours. $S$ is a non-empty subset of $V$, and has at least 2 vertices. 
+
+				In the MTZ formulation, the sub-tour constraints (\ref{TSP:formulation:con:DFJSubtour}) are replaced by the following:
+				\begin{align}
+					&u_i - u_j + (n - 1) x_{ij} \le n - 2, \quad i, j = 2, \cdots, n \in V, (i, j) \in A\\
+					&1 \le u_i \le n - 1, i \in 2, \cdots, n \in V
+				\end{align}
+
+				\notice{The MTZ formulation is weaker than the DFJ formulation in spite of its relative compactness.}
+
 			\section{Sub-tour Searching Algorithm}
-				In the graph $G=(N, A)$, let $\bar{G}=(N, \bar{A})$ be the connected components of graph, where
-				\begin{equation}\bar{G}=(G, \bar{A}), \bar{A}=\{(i, j) \in A | \bar{x_{ij}}=1\} \end{equation}
+				Notice that the number of sub-tour constraints increase exponentially as the number of vertices increase, therefore it is impractical to list all sub-tour constraints when we are solving the TSP. An alternative method is to use Lazy cuts to speed up the solving process, i.e., if there are sub-tours detected in the solution, add corresponded cuts to eliminate those sub-tours. Finding sub-tours is essentially finding components in a graph. In the graph $G=(V, A)$, let $\bar{G}=(V, \bar{A})$ be the connected components of graph, where
+				\begin{equation}
+					\bar{G}=(G, \bar{A}), \bar{A}=\{(i, j) \in A | \bar{x_{ij}}=1\}
+				\end{equation}
 				denote
-				\begin{equation}\bar{FS}(i) = \{(i,j)\in \bar{A}\} \end{equation}
+				\begin{equation}
+					\bar{FS}(i) = \{(i,j)\in \bar{A}\}
+				\end{equation}
 				Then the algorithm to find all sub-tour is the following:
 				\begin{algorithm}[!ht]
 					\caption{Sub-tour Searching Algorithm}
 					\begin{algorithmic}[1]
 						\State $K = \emptyset$
-						\State $d_i = 0, \forall i \in N$
-						\For {$i\in N$}
+						\State $d_i = 0, \forall i \in V$
+						\For {$i\in V$}
 							\State $C = \emptyset$
 							\State $Q = \emptyset$
 							\If {$d_i == 0$}
@@ -5417,223 +5606,30 @@
 					\end{algorithmic}
 				\end{algorithm}
 
-			\section{Up and Lower Bounds}
+			\section{Polynomially Solvable Special Cases of TSP}
 
-		\chapter{Vehicle Routing Problem}
-			The Vehicle Routing Problem (VRP) is defined on a graph $G=(V, E)$ where $V = \{0, \dots, n\}$, is a vertex set. $E = \{(i, j) | i, j \in V\}$ represents an edge set. Usually, vertex $0$ is a depot while the remaining vertices are customers, for simplicity, researchers sometimes add a dummy vertex $N^\prime$ as a replicate of depot, so that vehicles leave depot from vertex $0$ and return to depot at vertex $N^\prime$, the distance or cost between vertex $0$ and vertex $N^\prime$ is 0. 
+			\section{Lower Bounds of TSP}
+				\subsection{The Assignment Lower Bound}
 
-		\chapter{Important Variants}
-			\section{VRPTW}
 
-			\section{VRPPD}
+				\subsection{The Shortest Spanning Tree (Arborescence) Bound}
 
-			\section{VRPSD}
+		\chapter{The Vehicle Routing Problem}
 
-			\section{DVRP}
+		\chapter{The Capacitate Vehicle Routing Problem}
+			\section{Exact Algorithms for VRP}
 
-		\chapter{Exact Algorithms}
-			\section{}
+			\section{Heuristics for VRP}
 
-			\section{Valid Cuts}
+		\chapter{The Vehicle Routing Problem with Time Windows}
 
-		\chapter{Heuristic Algorithms}
-			\section{Clarke and Wright Saving Algorithm}
+		\chapter{The Vehicle Routing Problem with Pickup-and-Delivery}
 
-			\section{Sweep Algorithm}
+		\chapter{Stochastic Vehicle Routing Problem}
 
-			\section{Mole and Jameson Insertion Algorithm}
+		\chapter{Dynamic Vehicle Routing Problem}
 
-			\section{Christofides Insertion Algorithm}
-
-			\section{Petal Algorithms}
-
-			\section{Cluster-first, Route-second Algorithm}
-
-			\section{Lin's \texorpdfstring{$\lambda$}{Lg}-opt Local Improvement}
-
-		\chapter{Metaheuristic}
-
-		\chapter{Hybridizations}
-
-	\part{Nonlinear Programming}
-		\chapter{Convex Analysis}
-			\section{Convex Sets}
-				\begin{definition}
-					A set $S\in \mathbb{R}^n$ is said to be convex if $\forall x_1, x_2 \in S, \lambda \in (0, 1) \Rightarrow \lambda x_1 + (1-\lambda)x_2 \in S$
-				\end{definition}
-
-				The following are some familes of convex sets.
-
-				\begin{example}
-					Empty set is by convention considered as convex.
-				\end{example}
-
-				\begin{example}
-					Polyhedrons are convex sets.
-				\end{example}
-
-				\begin{example}
-					Let $P = \{\mathbf{x}\in \mathbb{R}^n | \mathbf{x}^\top \mathbf{Ax} \le \mathbf{b}\}$ where $\mathbf{A} \in \mathbb{S}_+^{n\times n}$ and $\mathbf{b} \in \mathbb{R}_+$. The set $P$ is a convex subset of $\mathbb{R}^n$.
-				\end{example}
-
-				\begin{example}
-					Let $\|.\|$ be any norm in $\mathbb{R}^n$. Then, the unit ball $B = \{\mathbf{x} \in \mathbb{R}^n | \|\mathbf{x}\| \le b, b > 0\}$ is convex.
-				\end{example}
-
-				Let	$S_1, S_2$ be convex set, then:
-				\begin{itemize}
-					\item $S_1 \cap S_2$ is convex set
-					\item $S_1 \oplus S_2$ (Minkowski addition) is convex set, where
-						\begin{equation}
-							S_1 \oplus S_2 = \{\mathbf{x} \in \mathbb{R}^n| \mathbf{x} = \mathbf{x_1} + \mathbf{x_2}, \mathbf{x_1} \in S_1, \mathbf{x_2} \in S_2\}
-						\end{equation}
-					\item $S_1 \ominus S_2$ is convex set, where
-						\begin{equation}
-							S_1 \oplus S_2 = \{\mathbf{x} \in \mathbb{R}^n| \mathbf{x} = \mathbf{x_1} - \mathbf{x_2}, \mathbf{x_1} \in S_1, \mathbf{x_2} \in S_2\}
-						\end{equation}
-					\item $f(S_1)$ is convex iff $f(\mathbf{x}) = \mathbf{Ax} + \mathbf{b}, \mathbf{A} \in \mathbb{R}^{m\times n}, \mathbf{b} \in \mathbb{R}^m$
-				\end{itemize}
-
-				\begin{theorem}[Carath\'{e}odory's Theorem]
-					Let $S \subseteq \mathbb{R}^n$. Then $\forall \mathbf{x} \in conv(S)$, there exists $\mathbf{x}^1, \mathbf{x}^2, ..., \mathbf{x}^p \in S$, where $p\le n+1$ such that $\mathbf{x} \in conv\{\mathbf{x}^1, \mathbf{x}^2, ... \mathbf{x}^p\}$.
-				\end{theorem}
-
-				\notice{This theorem means, any point $\mathbf{x} \in \mathbb{R}^n$ in a convex hull of $S$, i.e., $conv(S)$, can be included in a convex subset $S^\prime \subseteq conv(S)$ that has $n+1$ extreme points.}
-
-				\begin{theorem}
-					Let $S$ be a convex set with nonempty interior. Let $\mathbf{x}_1 \in cl(S)$ and $\mathbf{x}_2 \in int(S)$, then $\mathbf{y} = \lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2 \in int(S), \forall \lambda \in (0, 1)$
-				\end{theorem}
-
-			\section{Convex Functions}
-				\begin{definition}
-					Let $C \in \mathbb{R}^n$ be a convex set. A function $f: C \rightarrow \mathbf{R}$ is (resp. strictly) convex if
-					\begin{align}
-						f(\lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2) &\le \lambda f(\mathbf{x}_1) + (1 - \lambda) f(\mathbf{x}_2) \\ \forall \mathbf{x}_1, \mathbf{x}_2 &\in C, \forall \lambda \in (0, 1)
-					\end{align}
-					(resp.)
-					\begin{align}
-						f(\lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2) &< \lambda f(\mathbf{x}_1) + (1 - \lambda) f(\mathbf{x}_2) \\ \forall \mathbf{x_1} \neq \mathbf{x}_2 &\in C, \forall \lambda \in (0, 1)
-					\end{align}
-				\end{definition}
-
-				\notice{When calling a function convex, we imply that its domain is convex.}
-
-				\begin{example}
-					Given any norm $\|.\|$ on $\mathbb{R}^n$, the function $f(x) = \|x\|$ is convex over $\mathbb{R}^n$.
-				\end{example}
-
-				\begin{definition}
-					Let $S$ be a nonempty convex subset of $\mathbb{R}^n$, $f: S \rightarrow \mathbb{R}$ is (resp. strictly) \textbf{concave} if $-f(x)$ is (resp. strictly) convex.
-				\end{definition}
-
-				\notice{A function may be neither convex nor concave.}
-
-				\begin{theorem}
-					Consider $f: \mathbb{R}^n\rightarrow \mathbb{R}$. $\forall \bar{\mathbf{x}} \in \mathbb{R}^n$ and a nonzero direction $\mathbf{d} \in \mathbb{R}^n$. Define $F_{\bar{\mathbf{x}}, d}(\lambda) = f(\bar{\mathbf{x}} + \lambda \mathbf{d}$. Then $f$ is (resp. strictly) convex iff $F_{\bar{\mathbf{x}}, d}(\lambda)$ is (resp. strictly) convex for all $\bar{\mathbf{x}} \in \mathbb{R}^n, \forall \mathbf{d} \in \mathbb{R}^n \setminus \{0\}$.
-				\end{theorem}
-
-				\begin{definition}[Level-set]
-					Given a function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ and a scalar $\alpha \in \mathbb{R}$, we refer to the set $S_\alpha = \{\mathbf{x} \in S|f(\mathbf{x}) \le \alpha\} \subseteq \mathbb{R}^n$ as the \textbf{$\alpha$-level-set} of $f$.
-				\end{definition}
-
-				\begin{lemma}
-					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}^n$ be a convex function, then the \textbf{$\alpha$-level-set} of $f$ is a convex set for each value of $\alpha \in \mathbb{R}$.
-				\end{lemma}
-
-				\notice{The converse is not necessarily true.}
-
-				\begin{definition}[Epigraphs, Hypographs]
-					Let $S \in \mathbb{R}^n$ be such that $S \neq \emptyset$. The \textbf{epigraph} of $f$, denoted by $epi(f)$ is
-					\begin{equation}
-						epi(f) = \{(\mathbf{x}, y) \in S|\mathbf{x} \in S, y \in \mathbb{R}, y \ge f(x)\} \in \mathbb{R}^{n+1}
-					\end{equation}
-					The \textbf{hypograph} of $f$, denoted by $hypo(f)$ is
-					\begin{equation}
-						hypo(f) = \{(\mathbf{x}, y) \in S|\mathbf{x} \in S, y \in \mathbb{R}, y \le f(x)\} \in \mathbb{R}^{n+1}
-					\end{equation}
-				\end{definition}
-
-				\begin{theorem}
-					Let $S$ be a nonempty convex subset in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$. Then $f$ is convex iff $epi(f)$ is convex.
-				\end{theorem}
-
-				\begin{theorem}
-					Let $S$ be a nonempty convex subset in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function on $S$. Then $f$ is continuous in $int(S)$.
-				\end{theorem}
-
-			\section{Subgradients and Subdifferentials}
-				\begin{definition}[Subgradient]
-					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function, then $\xi$ is a \textbf{subgradient} of $f$ at $\bar{\mathbf{x}}$ if
-					\begin{equation}
-						f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
-					\end{equation}
-				\end{definition}
-
-				\begin{definition}[Subdifferential]
-					The set of all subgradients of $f$ at $\bar{\mathbf{x}}$ is called \textbf{subdifferential} of $f$ at $\bar{\mathbf{x}}$, denoted as $\partial f(\bar{\mathbf{x}})$
-				\end{definition}
-
-				\begin{theorem}
-					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function. Then for $\bar{\mathbf{x}} \in int(S)$, there exists a vector $\xi$ such that
-					\begin{equation}
-						f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
-					\end{equation}
-					In particular, the hyperplane
-					\begin{equation}
-						\mathcal{H} = \{(\mathbf{x}, y)|y = f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}})\}
-					\end{equation}
-					is a supporting plane of $epi(f)$ at $(\bar{\mathbf{x}}, f(\bar{\mathbf{x}}))$
-				\end{theorem}
-
-				\begin{theorem}
-					Let $S$ be a nonempty convex set in $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be a convex function. Suppose that for each $\bar{\mathbf{x}} \in S$, there exists $\xi$ such that
-					\begin{equation}
-					 	f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \xi^\top(\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
-					\end{equation} 
-					Then $f$ is convex on $int(S)$
-				\end{theorem}
-
-				\notice{Not all convex functions are continuous, it has to be continuous in its interior, but it may not be continuous at the boundary.}
-
-			\section{Differentiable Functions}
-				\begin{definition}[Differentiable Functions]
-				 	Let $S$ be a nonempty subset of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$.Then $f$ is said to be \textbf{differentiable} at $\bar{\mathbf{x}} \in int(S)$ if there exists a vector $\nabla f(\bar{\mathbf{x}})$ and a function $\alpha: \mathbb{R}^n \rightarrow \mathbb{R}$ such that
-				 	\begin{equation}
-				 		f(\mathbf{x}) = f(\bar{\mathbf{x}}) + \nabla f(\bar{\mathbf{x}})^\top (\mathbf{x} - \bar{\mathbf{x}}) + \alpha(\bar{\mathbf{x}}, \mathbf{x} - \bar{\mathbf{x}})\|\mathbf{x} - \bar{\mathbf{x}}\|
-				 	\end{equation}
-				 	for all $\mathbf{x} \in S$ where $\lim_{\mathbf{x} - \bar{\mathbf{x}}}\alpha (\bar{\mathbf{x}}, \mathbf{x} - \bar{\mathbf{x}}) = 0$
-				\end{definition}
-
-				\begin{remark}
-				 	If function $f$ is differentiable, then $\nabla f(\bar{\mathbf{x}}) = (\frac{\partial f(\bar{\mathbf{x}})}{\partial \mathbf{x}_1}, \frac{\partial f(\bar{\mathbf{x}})}{\partial \mathbf{x}_2}, \cdots, \frac{\partial f(\bar{\mathbf{x}})}{\partial \mathbf{x}_n})$, and the gradient is unique.
-				\end{remark}
-
-				\begin{lemma}
-					Let $S\neq \emptyset$ be a convex set of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be convex. If $f$ is differentiable at $\bar{\mathbf{x}} \in int(S)$, then the subdifferential of $f$ at $\bar{\mathbf{x}}$ is the singleton, $\{\nabla f(\bar{\mathbf{x}})\}$
-				\end{lemma}
-
-				\begin{theorem}
-					Let $S$ be a nonempty subset of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be differentiable on $S$. Then $f$ is (resp. strictly) convex on $S$ iff $\forall \bar{\mathbf{x}} \in S$
-					\begin{equation}
-						f(\mathbf{x}) \ge f(\bar{\mathbf{x}}) + \nabla f(\bar{\mathbf{x}}) (\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x} \in S
-					\end{equation}
-					(resp.)
-					\begin{equation}
-						f(\mathbf{x}) > f(\bar{\mathbf{x}}) + \nabla f(\bar{\mathbf{x}}) (\mathbf{x} - \bar{\mathbf{x}}), \forall \mathbf{x}\neq \bar{\mathbf{x}} \in S
-					\end{equation}
-				\end{theorem}
-
-				\begin{theorem}[Mean-value Theorem]
-					Let $S$ be a nonempty subset of $\mathbb{R}^n$. Let $f: S\rightarrow \mathbb{R}$ be differentiable on $S$. Then for all $\mathbf{x}_1, \mathbf{x}_2 \in S$, there exists $\lambda \in (0, 1)$ such that
-					\begin{equation}
-						f(\mathbf{x}_2) = f(\mathbf{x}_2) + \nabla f(\hat{\mathbf{x}})(\mathbf{x}_2 - \mathbf{x}_1)
-					\end{equation}
-					where
-					\begin{equation}
-						\hat{\mathbf{x}} = \lambda \mathbf{x}_1 + (1 - \lambda) \mathbf{x}_2
-					\end{equation}
-				\end{theorem}
-
+	\part{Nonlinear Programming}\label{Nonlinear}
 		\chapter{Optimality Conditions and Duality}
 			\section{The Fritz John Optimality Conditions}
 
@@ -5649,7 +5645,7 @@
 
 		\chapter{Penalty and Barrier Functions}
 
-	\part{Algorithms}
+	\part{Algorithms}\label{Algo}
 		\chapter{Computational Complexity}
 			\section{Asymptotic Notation}
 				\subsection{Asymptotic Analysis}
@@ -5835,7 +5831,7 @@
 
 					If we can prove the following, we can claim the greedy algorithm. First, it need to prove that for ``current moment'', the strategy is safe, i.e., there is always an optimum solution that agrees with the decision made according to the strategy, this is usually difficult. Then, it need to show that the remaining task after applying the strategy is to solve a/many smaller instance(s) of the same problem.
 
-					Although greedy algorithm is intuitive and usually leads to satisfactory complexity, however, for most of the problems there is \textbf{no} natural greedy algortihm that works.
+					Although greedy algorithm is intuitive and usually leads to satisfactory complexity, however, for most of the problems there is \textbf{no} natural greedy algorithm that works.
 				\subsection{Examples}
 					\subsubsection{Interval Scheduling}
 						For $n$ jobs, job $i$ starts at time $s_i$, and finishes at time $f_i$. $i$ and $j$ are compatible if $[s_i, f_i)$ and $[s_j, f_j)$ are disjoint. Find the maximum-size of mutually compatible jobs.
@@ -6657,10 +6653,9 @@
 					Direct result from Cook's theorem.
 				\end{proof}
 
-
 			\section{NP-Complete Problems}
 
-	\part*{Special Topic: Computational Geometry}
+	\part*{Special Topic: Computational Geometry}\label{CG}
 		\addcontentsline{toc}{part}{Special Topic: Computational Geometry}
 		\chapter{Convex Hull}
 			\section{Computing Slope Statistics}
@@ -6761,15 +6756,20 @@
 
 		\chapter{Visibility Graphs}
 
-	\part{Stochastic Methods}
+	\part{Stochastic Methods}\label{Stochastic}
 		\chapter{Markov Chain}
 
 		\chapter{Queueing Theory}
 
-		\chapter{Inventory Theory}
+	\part{Inventory Theory}\label{Inventory}
 
-	\part{Game Theory}
+	\part{Game Theory}\label{Game}
 
-	\part{Simulation}
+	\part{Simulation}\label{Sim}
+		\chapter{Random Numbers}
+
+		\chapter{Monte Carlo Simulation}
+
+		\chapter{Discrete Event Simulation}
 
 \end{document}
