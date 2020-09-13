@@ -1120,6 +1120,352 @@
 					\end{tabular}
 				\end{align}
 
+		\chapter{Basic Concepts of Computation Theory}
+			\section{Finite Automata and Regular Languages}
+
+			\section{Pushdown Automata and Context-Free Languages}
+
+			\section{Turing Machines and the Church-Turing Thesis}
+
+			\section{Computational Complexity}
+				\subsection{Asymptotic Notation}
+					\begin{definition}[asymptotically positive function]
+						$f: \mathbb{N} \rightarrow \mathbb{R}$ is an asymptotically positive function if $\exists n_0 > 0$ such that $\forall n > n_0$ we have $f(n) > 0$
+					\end{definition}
+
+					\begin{definition}[$O$-Notation]
+						For a function $g(n)$, 
+						\begin{equation*}
+							O(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \le cg(n), \forall n\ge n_0\}
+						\end{equation*}
+						$O$-Notation also known as asymptotic upper bound. 
+					\end{definition}				
+
+					\begin{definition}[$\Omega$-Notation]
+						For a function $g(n)$, 
+						\begin{equation*}
+							\Omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \ge cg(n), \forall n\ge n_0\}
+						\end{equation*}
+						$\Omega$-Notation also known as asymptotic lower bound.
+					\end{definition}
+					
+					\begin{definition}[$\Theta$-Notation]
+						For a function $g(n)$, 
+						\begin{equation*}
+							\Theta(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that }  c_1g(n) \le f(n) \le c_2g(n), \forall n\ge n_0\}
+						\end{equation*}
+						$\Omega$-Notation and $\Theta$-Notation are not used very often when we talk about running times.
+					\end{definition}
+					
+					\begin{definition}[$o$-Notation]
+						For a function $g(n)$, 
+						\begin{equation*}
+							o(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) < cg(n), \forall n\ge n_0\}
+						\end{equation*}					
+					\end{definition}
+
+					\begin{definition}[$\omega$-Notation]
+						For a function $g(n)$, 
+						\begin{equation*}
+							\omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) > cg(n), \forall n\ge n_0\}
+						\end{equation*}					
+					\end{definition}
+
+					\notice{$O(g)$, $\Omega(g)$ and $\Theta(g)$ are sets, we use ``$=$'' to represent ``$\in$''. In here ``$=$'' is asymmetric. Equality such as $O(n^3) = n^3 + n$ is incorrect.}
+
+					\begin{example}
+						The following are some examples
+						\begin{align}
+							\centering
+							\begin{tabular}{|c|c||c|c|c|}
+								\hline
+								$f(n)$ & $g(n)$ & $O$ & $\Omega$ & $\Theta$\\
+								\hline
+								$4n^2 + 3n$ & $n^3 - 2n + 3$ & Yes & No & No \\
+								\hline
+								$\lg^{10} n$ & $n^{0.1}$ & Yes & No & No \\
+								\hline
+								$\log_{10} n$ & $\lg(n^3)$ & Yes & Yes & Yes \\
+								\hline
+								$\lceil \sqrt{10n + 100} \rceil$ & $n$ & Yes & No & No \\
+								\hline
+								$n^3 -100n$ & $10n^2\lg n$ & No & Yes & No\\
+								\hline
+								$2^n$ & $2^{\frac n2}$ & No & Yes & No \\
+								\hline
+								$\sqrt{n}$ & $n^{\sin n}$ & No & No & No\\
+								\hline
+							\end{tabular}
+						\end{align}
+					\end{example}
+
+					\begin{theorem}
+						Let $f$ and $g$ be two functions that
+						\begin{equation*}
+							\lim_{n\rightarrow \infty} \frac{f(n)}{g(n)} = c > 0
+						\end{equation*}
+						Then $f(n) = \Theta(g(n))$
+					\end{theorem}
+
+					\begin{proof}
+						Since $\lim_{n\rightarrow \infty} \frac{f(n)}{g(n)}$ exists and positive, there is some $n_0$ beyond which the ratio is always between $\frac12 c$ and 2c. Thus,
+						\begin{align}
+							& \forall n > n_0, f(n) \le 2cg(n) \Rightarrow f(n) = O(g(n)) \\
+							& \forall n > n_0, f(n) \ge \frac12cg(n) \Rightarrow f(n) = \Omega(g(n))
+						\end{align}
+					\end{proof}
+
+					A set of properties:
+					\begin{align}
+						& f(n) = O(g(n)) \iff g(n) = \Omega(f(n))\\
+						& f(n) = \Theta(g(n)) \iff f(n) = O(g(n)) \text{ and } g(n) = O(f(n))
+					\end{align}
+
+					Another set of properties:
+					\begin{align}
+						& f = O(g), g = O(h) \Rightarrow f=O(h) \\
+						& f = \Omega(g), g = \Omega(h) \Rightarrow f=\Omega(h) \\
+						& f = \Theta(g), g = \Theta(h) \Rightarrow f=\Theta(h)
+					\end{align}
+
+					\begin{theorem}
+						If $f_i = O(h)$, for finite number of $i \in K$, then $\sum_{i\in K} f_i = O(h)$
+					\end{theorem}
+
+					Proof is trivia.
+
+					\notice{Function $f$ and $g$ not necessarily have relation $f=O(g)$ or $g=O(f)$. E.g., for $f = \sqrt{n}$ and $g = n^{\sin n}$, $f \notin O(g)$ and $g \notin O(f)$ }
+
+				\subsection{Common Running Times}
+					The following are examples of common running times.
+					\begin{align*}
+						\centering
+						\begin{tabular}{|c|p{10cm}|}
+							\hline
+							Running Time & Examples\\
+							\hline
+							$O(n)$ & Scan through a list to find a element matching with input\\
+							\hline
+							$O(\lg n)$ & Binary search\\
+							\hline
+							$O(n^2)$ & Scan through every pair of elements, $\binom{n}{2}$\\
+							\hline
+							$O(n^3)$ & Matrix multiplication by definition\\
+							\hline
+							$O(n\lg n)$ & Many divide and conquer algorithm which in each step iteratively divide the problem into two part and solve the subproblem, for example mergesort.\\
+							\hline
+							$O(n!)$ & Enumerate all permutation, for example Hamiltonian Cycle Problem\\
+							\hline
+							$O(c^n)$ & Enumerate all elements in power set. ($O(2^n)$)\\
+							\hline
+							$O(n^n)$ & Enumerate all combinations. (Can't find good example yet)\\
+							\hline
+						\end{tabular}
+					\end{align*}
+					Here is a comparison between running times: $\lg n < \sqrt{n} < n < n\lg n < n^2 < n^{\sqrt{n}} < 2^n < e^n < n! < n^n$
+
+			\section{NP and Computational Intractability}
+				\subsection{P, NP and Co-NP}
+					\begin{definition}[Decision Problem]
+						A problem $X$ is a \textbf{decision problem} if the output is either 0 or 1 (yes/no). Further, a 
+					\end{definition}
+
+					The input of a problem can always be encoded into a binary string. The size of an input is the length of the encoded string $s$ for the input.
+
+					\notice{For optimization problem $X$, we can always define a decision version $X^\prime$, by giving a threshold and ask if the objective function can satisfy that threshold or not. If that decision version $X^\prime$ can be solved in polynomial time, we can solve the original problem $X$ in polynomial time.}
+
+					\begin{definition}[Polynomial running time]
+						An algorithm $A$ has a \textbf{polynomial running time} if there is a polynomial function $p(\cdot)$ such that $\forall s$, the algorithm $A$ terminates on $s$ in at most $p(|\cdot|)$ steps.
+					\end{definition}
+
+					\begin{definition}[P]
+						The complexity class $P$ is the set of decision problems $X$ that can be solved in polynomial time.
+					\end{definition}
+
+					\begin{example}
+						Shortest path, minimum spanning tree, determine if an integer is prime number, those are in P.
+					\end{example}
+
+					\begin{definition}[Certificate, Certifier]
+						In order to check the an algorithm $A$, for a binary string $s$, such that $s \in A$, there is another separated algorithm $B$ uses $s$ and $t$, a separated string that contains the evidence that $s$ is a ``yes'' instance of $X$, as input string and output (another) ``yes''. Then this string $t$ is called \textbf{certificate}, this separated algorithm $B(s, t)$ is called \textbf{certifier}. 
+					\end{definition}
+
+					\notice{Certificate is like a solution, and certifier is the algorithm to prove solution is correct. But both with fancy terminology}
+
+					\begin{example}
+						For Independent set problem. The input ($s$) is a graph, the certificate ($t$) will be a set of size $k$, and the certifier will be an algorithm to check the given set is an independent set.
+					\end{example}
+
+					\begin{example}
+						For 3-SAT problem. The input $s$ will be the 3-CNF (conjunctive normal form), the certificate $t$ will be the assignment of true values for each terms in the 3-CNF. The certifier will be the algorithm calculates the true value of the clause given the true values in $t$.
+					\end{example}
+
+					\begin{definition}[Efficient Certifier]
+						$B$ is an efficient certifier for problem $X$ if
+						\begin{itemize}
+							\item $B$ runs in polynomial time with input $s$ and $t$. ($s$ is the input of origin algorithm and $t$ is the certificate)
+							\item There is a polynomial function $p(|\cdot|)$ such that for every string $s$, we have $s \in X$ ($s$ is a ``yes'' solution for $X$) and $B(s, t) = yes$ (the certifier returns ``yes'')
+						\end{itemize}
+					\end{definition}
+
+					\begin{definition}[NP]
+						The complexity class $NP$ is the set of all problems for which there exists an efficient certifier.
+					\end{definition}
+
+					From the definition of NP we can immediately know that $P \subseteq NP$. Because all the problems in P can satisfy the definition of NP. But is there a problem that $X \in NP$ and $X \notin P$? Solve that problem and you will win 100 million dollars and the chance to be remember forever.
+
+					\notice{NP stands for \textbf{Non-deterministic Polynomial} time}
+
+					To prove if a problem is NP, we need to have a certifier that can output ``yes'' given the certificate in polynomial time. Otherwise it is not in NP
+
+					\begin{example}
+						Given a graph $G = (V, E)$ and an integer $t > 0$, whether the minimum vertex cover of $G$ has size at least t. This problem is \textbf{unlikely} in NP. Reason is, the ``yes'' instance is ``all minimum vertex cover has size at least $t$'', that is not \textbf{likely to be} solvable in polynomial time for it need to find all minimum vertex covers.
+					\end{example}
+
+					\begin{definition}[Co-NP]
+						For a problem $X$, the problem $\bar{X}$ is the problem such that $s \in \bar{X} \iff s \notin X$. Then \textbf{Co-NP} is the set of decision problems $X$ such that $\bar{X} \in NP$.
+					\end{definition}
+
+					\begin{example}[Tautology Problem]
+						Given a boolean formula, determine wither the formula is always evaluates to 1. This is a problem in Co-NP. Because we can have a polynomial time certifier to confirm that an instance is not a tautology.
+					\end{example}
+
+					\begin{example}
+						Given two boolean formulas, to determine whether or not they are equivalent. This is a problem in Co-NP. Because if we have one instance such that the output is ``no'', then we can easily prove there are counter examples in origin algorithm.
+					\end{example}
+
+					\notice{If the instance is ``easy'' to prove to be true, then it is in NP, if the counter instance is ``easy'' to prove to be the algorithm it be false, then it is in Co-NP}
+
+					Relation between $P$, $NP$ and $Co-NP$ is as following
+					\begin{itemize}
+						\item $P \subseteq NP$
+						\item $P \subseteq Co-NP$
+						\item $P = NP?$ is not known
+						\item $P = Co-NP?$ is not known
+						\item $NP = Co-NP?$ is not known
+						\item If $P = NP$ then $P = Co-NP$
+					\end{itemize}
+
+				\subsection{Polynomial-Time Reductions}
+					\begin{definition}[Polynomial-time reducible]
+						Given an algorithm $A$ that solves problem $Y$, if any instance of problem $X$ can be solved using a polynomial number of standard computational steps, plus a polynomial number of calls to algorithm $A$, then we say $X$ is \textbf{polynomial-time reducible} to $Y$, denoted as 
+						\begin{equation}
+							X \le_P Y
+						\end{equation}
+					\end{definition}
+
+					In a more intuitive way, $X \le_P Y$ means $X$ can't be more difficult than $Y$. Solving $X$ can be ``transforming'' $X$ into an equivalent $Y$ in polynomial number of steps and then solve it by calling $Y$ polynomial number of times, usually one time. Thus, if $X \le_P Y$,
+					\begin{itemize}
+						\item If $Y$ can be efficiently solved, $X$ can be efficiently solved.
+						\item If $X$ cannot be efficiently solve, $Y$ cannot be efficiently solved.
+					\end{itemize}
+
+					\notice{To prove $X \le_P Y$, usually we already have an algorithm for $Y$, could be polynomial or not.}
+
+					\begin{lemma}
+						Hamiltonian-Path $\le_P$ Hamiltonian-Cycle
+					\end{lemma}
+					\begin{proof}
+						For graph $G = (V, E)$, $s$ and $t$ are two vertices that in $V$, define a new graph $G^\prime = (V \cup \{v\}, E \cup \{(u, s)\} \cup \{(t, u)\}$. To solve the Hamilton-Path from $s$ to $t$ in graph $G$, say $p_{st}$, is equivalent to solving Hamilton-Cycle problem in $G^\prime$, i.e., find $sp_{st}te_{tu}ue_{us}$.
+					\end{proof}
+
+					\begin{lemma}
+						Hamiltonian-Cycle $\le_P$ Hamiltonian-Path
+					\end{lemma}
+
+					\begin{proof}
+						For vertex $s$, make a copy and denote it as $s^\prime$, $s^\prime$ is connected to all the vertices that $s$ connected. Solving the Hamiltonian-Cycle problem is equivalent to solving the Hamiltonian-Path problem from $s$ to $s^\prime$
+					\end{proof}
+
+					\begin{lemma}
+						Hamiltonian-Path $\le_P$ degree-3 spanning tree
+					\end{lemma}
+
+					\begin{proof}
+						In graph $G$, for vertex $s$ and $t$, add vertices $s^\prime$, $s^{\prime\prime}$, $t^\prime$, $t^{\prime\prime}$ and edges $(s, s^\prime)$, $(s, s^{\prime\prime})$, $(t, t^\prime)$, $(t, t^{\prime\prime})$. For all the other vertex $u \in V\setminus \{s\} \setminus \{t\}$, add vertices $u^\prime$ and edge $(u, u^\prime)$ to the graph. Then solving Hamiltonian-Path problem is equivalent to solve the degree spanning tree problem in this new $G$.
+					\end{proof}
+
+					\begin{lemma}
+						Vertex Cover $\le_P$ Set Cover
+					\end{lemma}
+
+					\begin{proof}
+						
+					\end{proof}
+
+					\begin{lemma}
+						Set Cover $\le_P$ Vertex Cover
+					\end{lemma}
+
+					\begin{proof}
+						
+					\end{proof}
+
+					\begin{lemma}
+						Clique $\le_P$ Independent Set
+					\end{lemma}
+
+					\begin{proof}
+						$S$ is a clique in $G = (V, E)$ iff $S$ is an independent set in $\bar{G} = (V, \bar{E})$
+					\end{proof}
+
+					\begin{lemma}
+						Independent Set $\le_P$ Clique
+					\end{lemma}
+
+					\begin{proof}
+						$S$ is an independent set in $G = (V, E)$ iff $S$ is a clique in $\bar{G} = (V, \bar{E})$
+					\end{proof}
+
+					\begin{lemma}
+						Vertex-Cover $\le_P$ Independent Set
+					\end{lemma}
+
+					\begin{proof}
+						$S$ is a vertex-cover of $G = (V, E)$ iff $V \setminus S$ is an independent set of $G$
+					\end{proof}
+
+					\begin{lemma}
+						3-Coloring $\le_P$ 4-Coloring
+					\end{lemma}
+
+					\begin{proof}
+						For a graph $G = (V, E)$, define a new graph $G^\prime = (V \cup \{u\}, E \cup \{(u, v) | \forall ~ v \in V\})$. Solving the 3-Coloring problem is equivalent to solving the 4-Coloring problem in $G^\prime$
+					\end{proof}
+
+					\begin{lemma}
+						Independent Set $\le_P$ Set Packing
+					\end{lemma}
+
+				\subsection{NP-Completeness}
+					\begin{definition}[NP-Completeness]
+						A problem $X$ is called \textbf{NP-Complete} if
+						\begin{itemize}
+							\item $X \in NP$, and
+							\item $Y \le_P X, \forall ~ Y \in NP$
+						\end{itemize}
+					\end{definition}
+
+					An intuitive explanation will be, we can regard problems that is NP-Complete to be the most difficult problems in NP. If any of those can be solved in polynomial time, then all problems in NP can be solved in polynomial time.
+
+					\begin{theorem}[Cook's Theorem]
+						Circuit Satisfiability is NP-Complete.
+					\end{theorem}
+
+					\begin{proof}
+						
+					\end{proof}
+
+					\begin{theorem}
+						If $X$ is NP-Complete and $X \in P$, then $P = NP$
+					\end{theorem}
+
+					\begin{proof}
+						Direct result from Cook's theorem.
+					\end{proof}
+
+				\subsection{NP-Complete Problems}
+
 	\part{Linear Programming}\label{LP}
 		\chapter{The Simplex Method - Basic}
 			\section{Basic Feasible Solutions and Extreme Points}
@@ -2619,8 +2965,6 @@
 					is a unimodular matrix.
 
 		\chapter{Duality and Relaxation}
-
-
 			\section{Relaxation}
 				\subsection{Why Rounding Can be Bad - IP Example}
 					Rounding can be bad because the optimal of IP can be far away from optimal of LP. For example,
@@ -5611,8 +5955,9 @@
 			\section{Lower Bounds of TSP}
 				\subsection{The Assignment Lower Bound}
 
+				\subsection{The Minimum Spanning Tree (Arborescence) Bound}
 
-				\subsection{The Shortest Spanning Tree (Arborescence) Bound}
+				\subsection{The 2-match Problem}
 
 		\chapter{The Vehicle Routing Problem}
 
@@ -5646,145 +5991,6 @@
 		\chapter{Penalty and Barrier Functions}
 
 	\part{Algorithms}\label{Algo}
-		\chapter{Computational Complexity}
-			\section{Asymptotic Notation}
-				\subsection{Asymptotic Analysis}
-					\begin{definition}[asymptotically positive function]
-						$f: \mathbb{N} \rightarrow \mathbb{R}$ is an asymptotically positive function if $\exists n_0 > 0$ such that $\forall n > n_0$ we have $f(n) > 0$
-					\end{definition}
-
-				\subsection{\texorpdfstring{$O$}{O}-Notation, \texorpdfstring{$\Omega$}{Omega}-Notation and \texorpdfstring{$\Theta$}{Theta}-Notation}
-					\begin{definition}[$O$-Notation]
-						For a function $g(n)$, 
-						\begin{equation*}
-							O(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \le cg(n), \forall n\ge n_0\}
-						\end{equation*}
-						$O$-Notation also known as asymptotic upper bound. 
-					\end{definition}				
-
-					\begin{definition}[$\Omega$-Notation]
-						For a function $g(n)$, 
-						\begin{equation*}
-							\Omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) \ge cg(n), \forall n\ge n_0\}
-						\end{equation*}
-						$\Omega$-Notation also known as asymptotic lower bound.
-					\end{definition}
-					
-					\begin{definition}[$\Theta$-Notation]
-						For a function $g(n)$, 
-						\begin{equation*}
-							\Theta(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that }  c_1g(n) \le f(n) \le c_2g(n), \forall n\ge n_0\}
-						\end{equation*}
-						$\Omega$-Notation and $\Theta$-Notation are not used very often when we talk about running times.
-					\end{definition}
-					
-					\begin{definition}[$o$-Notation]
-						For a function $g(n)$, 
-						\begin{equation*}
-							o(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) < cg(n), \forall n\ge n_0\}
-						\end{equation*}					
-					\end{definition}
-
-					\begin{definition}[$\omega$-Notation]
-						For a function $g(n)$, 
-						\begin{equation*}
-							\omega(g(n)) = \{f: \exists c > 0, n_0 > 0 \text{ such that } f(n) > cg(n), \forall n\ge n_0\}
-						\end{equation*}					
-					\end{definition}
-
-					\notice{$O(g)$, $\Omega(g)$ and $\Theta(g)$ are sets, we use ``$=$'' to represent ``$\in$''. In here ``$=$'' is asymmetric. Equality such as $O(n^3) = n^3 + n$ is incorrect.}
-
-					\begin{example}
-						The following are some examples
-						\begin{align}
-							\centering
-							\begin{tabular}{|c|c||c|c|c|}
-								\hline
-								$f(n)$ & $g(n)$ & $O$ & $\Omega$ & $\Theta$\\
-								\hline
-								$4n^2 + 3n$ & $n^3 - 2n + 3$ & Yes & No & No \\
-								\hline
-								$\lg^{10} n$ & $n^{0.1}$ & Yes & No & No \\
-								\hline
-								$\log_{10} n$ & $\lg(n^3)$ & Yes & Yes & Yes \\
-								\hline
-								$\lceil \sqrt{10n + 100} \rceil$ & $n$ & Yes & No & No \\
-								\hline
-								$n^3 -100n$ & $10n^2\lg n$ & No & Yes & No\\
-								\hline
-								$2^n$ & $2^{\frac n2}$ & No & Yes & No \\
-								\hline
-								$\sqrt{n}$ & $n^{\sin n}$ & No & No & No\\
-								\hline
-							\end{tabular}
-						\end{align}
-					\end{example}
-
-					\begin{theorem}
-						Let $f$ and $g$ be two functions that
-						\begin{equation*}
-							\lim_{n\rightarrow \infty} \frac{f(n)}{g(n)} = c > 0
-						\end{equation*}
-						Then $f(n) = \Theta(g(n))$
-					\end{theorem}
-
-					\begin{proof}
-						Since $\lim_{n\rightarrow \infty} \frac{f(n)}{g(n)}$ exists and positive, there is some $n_0$ beyond which the ratio is always between $\frac12 c$ and 2c. Thus,
-						\begin{align}
-							& \forall n > n_0, f(n) \le 2cg(n) \Rightarrow f(n) = O(g(n)) \\
-							& \forall n > n_0, f(n) \ge \frac12cg(n) \Rightarrow f(n) = \Omega(g(n))
-						\end{align}
-					\end{proof}
-
-					A set of properties:
-					\begin{align}
-						& f(n) = O(g(n)) \iff g(n) = \Omega(f(n))\\
-						& f(n) = \Theta(g(n)) \iff f(n) = O(g(n)) \text{ and } g(n) = O(f(n))
-					\end{align}
-
-					Another set of properties:
-					\begin{align}
-						& f = O(g), g = O(h) \Rightarrow f=O(h) \\
-						& f = \Omega(g), g = \Omega(h) \Rightarrow f=\Omega(h) \\
-						& f = \Theta(g), g = \Theta(h) \Rightarrow f=\Theta(h)
-					\end{align}
-
-					\begin{theorem}
-						If $f_i = O(h)$, for finite number of $i \in K$, then $\sum_{i\in K} f_i = O(h)$
-					\end{theorem}
-
-					Proof is trivia.
-
-					\notice{Function $f$ and $g$ not necessarily have relation $f=O(g)$ or $g=O(f)$. E.g., for $f = \sqrt{n}$ and $g = n^{\sin n}$, $f \notin O(g)$ and $g \notin O(f)$ }
-
-			\section{Common Running Times}
-				The following are examples of common running times.
-				\begin{align*}
-					\centering
-					\begin{tabular}{|c|p{10cm}|}
-						\hline
-						Running Time & Examples\\
-						\hline
-						$O(n)$ & Scan through a list to find a element matching with input\\
-						\hline
-						$O(\lg n)$ & Binary search\\
-						\hline
-						$O(n^2)$ & Scan through every pair of elements, $\binom{n}{2}$\\
-						\hline
-						$O(n^3)$ & Matrix multiplication by definition\\
-						\hline
-						$O(n\lg n)$ & Many divide and conquer algorithm which in each step iteratively divide the problem into two part and solve the subproblem, for example mergesort.\\
-						\hline
-						$O(n!)$ & Enumerate all permutation, for example Hamiltonian Cycle Problem\\
-						\hline
-						$O(c^n)$ & Enumerate all elements in power set. ($O(2^n)$)\\
-						\hline
-						$O(n^n)$ & Enumerate all combinations. (Can't find good example yet)\\
-						\hline
-					\end{tabular}
-				\end{align*}
-				Here is a comparison between running times: $\lg n < \sqrt{n} < n < n\lg n < n^2 < n^{\sqrt{n}} < 2^n < e^n < n! < n^n$
-
 		\chapter{General Paradigms}
 			This chapter we are going to discussion three types of strategies for algorithm design, greedy algorithm, divide-and-conquer, and dynamic programming.
 			\begin{itemize}
@@ -6452,208 +6658,6 @@
 			\section{Fibonacci Heaps}
 
 			\section{van Emde Boas Trees}
-
-		\chapter{NP and Computational Intractability}
-			\section{P, NP and Co-NP}
-				\begin{definition}[Decision Problem]
-					A problem $X$ is a \textbf{decision problem} if the output is either 0 or 1 (yes/no). Further, a 
-				\end{definition}
-
-				The input of a problem can always be encoded into a binary string. The size of an input is the length of the encoded string $s$ for the input.
-
-				\notice{For optimization problem $X$, we can always define a decision version $X^\prime$, by giving a threshold and ask if the objective function can satisfy that threshold or not. If that decision version $X^\prime$ can be solved in polynomial time, we can solve the original problem $X$ in polynomial time.}
-
-				\begin{definition}[Polynomial running time]
-					An algorithm $A$ has a \textbf{polynomial running time} if there is a polynomial function $p(\cdot)$ such that $\forall s$, the algorithm $A$ terminates on $s$ in at most $p(|\cdot|)$ steps.
-				\end{definition}
-
-				\begin{definition}[P]
-					The complexity class $P$ is the set of decision problems $X$ that can be solved in polynomial time.
-				\end{definition}
-
-				\begin{example}
-					Shortest path, minimum spanning tree, determine if an integer is prime number, those are in P.
-				\end{example}
-
-				\begin{definition}[Certificate, Certifier]
-					In order to check the an algorithm $A$, for a binary string $s$, such that $s \in A$, there is another separated algorithm $B$ uses $s$ and $t$, a separated string that contains the evidence that $s$ is a ``yes'' instance of $X$, as input string and output (another) ``yes''. Then this string $t$ is called \textbf{certificate}, this separated algorithm $B(s, t)$ is called \textbf{certifier}. 
-				\end{definition}
-
-				\notice{Certificate is like a solution, and certifier is the algorithm to prove solution is correct. But both with fancy terminology}
-
-				\begin{example}
-					For Independent set problem. The input ($s$) is a graph, the certificate ($t$) will be a set of size $k$, and the certifier will be an algorithm to check the given set is an independent set.
-				\end{example}
-
-				\begin{example}
-					For 3-SAT problem. The input $s$ will be the 3-CNF (conjunctive normal form), the certificate $t$ will be the assignment of true values for each terms in the 3-CNF. The certifier will be the algorithm calculates the true value of the clause given the true values in $t$.
-				\end{example}
-
-				\begin{definition}[Efficient Certifier]
-					$B$ is an efficient certifier for problem $X$ if
-					\begin{itemize}
-						\item $B$ runs in polynomial time with input $s$ and $t$. ($s$ is the input of origin algorithm and $t$ is the certificate)
-						\item There is a polynomial function $p(|\cdot|)$ such that for every string $s$, we have $s \in X$ ($s$ is a ``yes'' solution for $X$) and $B(s, t) = yes$ (the certifier returns ``yes'')
-					\end{itemize}
-				\end{definition}
-
-				\begin{definition}[NP]
-					The complexity class $NP$ is the set of all problems for which there exists an efficient certifier.
-				\end{definition}
-
-				From the definition of NP we can immediately know that $P \subseteq NP$. Because all the problems in P can satisfy the definition of NP. But is there a problem that $X \in NP$ and $X \notin P$? Solve that problem and you will win 100 million dollars and the chance to be remember forever.
-
-				\notice{NP stands for \textbf{Non-deterministic Polynomial} time}
-
-				To prove if a problem is NP, we need to have a certifier that can output ``yes'' given the certificate in polynomial time. Otherwise it is not in NP
-
-				\begin{example}
-					Given a graph $G = (V, E)$ and an integer $t > 0$, whether the minimum vertex cover of $G$ has size at least t. This problem is \textbf{unlikely} in NP. Reason is, the ``yes'' instance is ``all minimum vertex cover has size at least $t$'', that is not \textbf{likely to be} solvable in polynomial time for it need to find all minimum vertex covers.
-				\end{example}
-
-				\begin{definition}[Co-NP]
-					For a problem $X$, the problem $\bar{X}$ is the problem such that $s \in \bar{X} \iff s \notin X$. Then \textbf{Co-NP} is the set of decision problems $X$ such that $\bar{X} \in NP$.
-				\end{definition}
-
-				\begin{example}[Tautology Problem]
-					Given a boolean formula, determine wither the formula is always evaluates to 1. This is a problem in Co-NP. Because we can have a polynomial time certifier to confirm that an instance is not a tautology.
-				\end{example}
-
-				\begin{example}
-					Given two boolean formulas, to determine whether or not they are equivalent. This is a problem in Co-NP. Because if we have one instance such that the output is ``no'', then we can easily prove there are counter examples in origin algorithm.
-				\end{example}
-
-				\notice{If the instance is ``easy'' to prove to be true, then it is in NP, if the counter instance is ``easy'' to prove to be the algorithm it be false, then it is in Co-NP}
-
-				Relation between $P$, $NP$ and $Co-NP$ is as following
-				\begin{itemize}
-					\item $P \subseteq NP$
-					\item $P \subseteq Co-NP$
-					\item $P = NP?$ is not known
-					\item $P = Co-NP?$ is not known
-					\item $NP = Co-NP?$ is not known
-					\item If $P = NP$ then $P = Co-NP$
-				\end{itemize}
-
-			\section{Polynomial-Time Reductions}
-				\begin{definition}[Polynomial-time reducible]
-					Given an algorithm $A$ that solves problem $Y$, if any instance of problem $X$ can be solved using a polynomial number of standard computational steps, plus a polynomial number of calls to algorithm $A$, then we say $X$ is \textbf{polynomial-time reducible} to $Y$, denoted as 
-					\begin{equation}
-						X \le_P Y
-					\end{equation}
-				\end{definition}
-
-				In a more intuitive way, $X \le_P Y$ means $X$ can't be more difficult than $Y$. Solving $X$ can be ``transforming'' $X$ into an equivalent $Y$ in polynomial number of steps and then solve it by calling $Y$ polynomial number of times, usually one time. Thus, if $X \le_P Y$,
-				\begin{itemize}
-					\item If $Y$ can be efficiently solved, $X$ can be efficiently solved.
-					\item If $X$ cannot be efficiently solve, $Y$ cannot be efficiently solved.
-				\end{itemize}
-
-				\notice{To prove $X \le_P Y$, usually we already have an algorithm for $Y$, could be polynomial or not.}
-
-				\begin{lemma}
-					Hamiltonian-Path $\le_P$ Hamiltonian-Cycle
-				\end{lemma}
-				\begin{proof}
-					For graph $G = (V, E)$, $s$ and $t$ are two vertices that in $V$, define a new graph $G^\prime = (V \cup \{v\}, E \cup \{(u, s)\} \cup \{(t, u)\}$. To solve the Hamilton-Path from $s$ to $t$ in graph $G$, say $p_{st}$, is equivalent to solving Hamilton-Cycle problem in $G^\prime$, i.e., find $sp_{st}te_{tu}ue_{us}$.
-				\end{proof}
-
-				\begin{lemma}
-					Hamiltonian-Cycle $\le_P$ Hamiltonian-Path
-				\end{lemma}
-
-				\begin{proof}
-					For vertex $s$, make a copy and denote it as $s^\prime$, $s^\prime$ is connected to all the vertices that $s$ connected. Solving the Hamiltonian-Cycle problem is equivalent to solving the Hamiltonian-Path problem from $s$ to $s^\prime$
-				\end{proof}
-
-				\begin{lemma}
-					Hamiltonian-Path $\le_P$ degree-3 spanning tree
-				\end{lemma}
-
-				\begin{proof}
-					In graph $G$, for vertex $s$ and $t$, add vertices $s^\prime$, $s^{\prime\prime}$, $t^\prime$, $t^{\prime\prime}$ and edges $(s, s^\prime)$, $(s, s^{\prime\prime})$, $(t, t^\prime)$, $(t, t^{\prime\prime})$. For all the other vertex $u \in V\setminus \{s\} \setminus \{t\}$, add vertices $u^\prime$ and edge $(u, u^\prime)$ to the graph. Then solving Hamiltonian-Path problem is equivalent to solve the degree spanning tree problem in this new $G$.
-				\end{proof}
-
-				\begin{lemma}
-					Vertex Cover $\le_P$ Set Cover
-				\end{lemma}
-
-				\begin{proof}
-					
-				\end{proof}
-
-				\begin{lemma}
-					Set Cover $\le_P$ Vertex Cover
-				\end{lemma}
-
-				\begin{proof}
-					
-				\end{proof}
-
-				\begin{lemma}
-					Clique $\le_P$ Independent Set
-				\end{lemma}
-
-				\begin{proof}
-					$S$ is a clique in $G = (V, E)$ iff $S$ is an independent set in $\bar{G} = (V, \bar{E})$
-				\end{proof}
-
-				\begin{lemma}
-					Independent Set $\le_P$ Clique
-				\end{lemma}
-
-				\begin{proof}
-					$S$ is an independent set in $G = (V, E)$ iff $S$ is a clique in $\bar{G} = (V, \bar{E})$
-				\end{proof}
-
-				\begin{lemma}
-					Vertex-Cover $\le_P$ Independent Set
-				\end{lemma}
-
-				\begin{proof}
-					$S$ is a vertex-cover of $G = (V, E)$ iff $V \setminus S$ is an independent set of $G$
-				\end{proof}
-
-				\begin{lemma}
-					3-Coloring $\le_P$ 4-Coloring
-				\end{lemma}
-
-				\begin{proof}
-					For a graph $G = (V, E)$, define a new graph $G^\prime = (V \cup \{u\}, E \cup \{(u, v) | \forall ~ v \in V\})$. Solving the 3-Coloring problem is equivalent to solving the 4-Coloring problem in $G^\prime$
-				\end{proof}
-
-				\begin{lemma}
-					Independent Set $\le_P$ Set Packing
-				\end{lemma}
-
-			\section{NP-Completeness}
-				\begin{definition}[NP-Completeness]
-					A problem $X$ is called \textbf{NP-Complete} if
-					\begin{itemize}
-						\item $X \in NP$, and
-						\item $Y \le_P X, \forall ~ Y \in NP$
-					\end{itemize}
-				\end{definition}
-
-				An intuitive explanation will be, we can regard problems that is NP-Complete to be the most difficult problems in NP. If any of those can be solved in polynomial time, then all problems in NP can be solved in polynomial time.
-
-				\begin{theorem}[Cook's Theorem]
-					Circuit Satisfiability is NP-Complete.
-				\end{theorem}
-
-				\begin{proof}
-					
-				\end{proof}
-
-				\begin{theorem}
-					If $X$ is NP-Complete and $X \in P$, then $P = NP$
-				\end{theorem}
-
-				\begin{proof}
-					Direct result from Cook's theorem.
-				\end{proof}
-
-			\section{NP-Complete Problems}
 
 	\part*{Special Topic: Computational Geometry}\label{CG}
 		\addcontentsline{toc}{part}{Special Topic: Computational Geometry}
