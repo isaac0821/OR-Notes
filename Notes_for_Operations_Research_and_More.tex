@@ -9,6 +9,12 @@
 
 	\tableofcontents
 
+	% Levels of Contents 
+	% \part{[Course]}
+	% 	\chapter{[Topic worth for a few weeks lessons]}
+	% 		\section{[Topic that discussing it could be one 30 pages article]}
+	% 			\subsection{[One algorithm, one realization, one theory, a set of related definitions]}
+
 	\part{Preliminary Topics}\label{PT}
 		\chapter{Introduction to Optimization}
 			\section{Optimization Model}
@@ -1126,6 +1132,9 @@
 			\section{Pushdown Automata and Context-Free Languages}
 
 			\section{Turing Machines and the Church-Turing Thesis}
+				\subsection{Turing Machine}
+
+				\subsection{}
 
 			\section{Computational Complexity}
 				\subsection{Asymptotic Notation}
@@ -1267,7 +1276,7 @@
 			\section{NP and Computational Intractability}
 				\subsection{P, NP and Co-NP}
 					\begin{definition}[Decision Problem]
-						A problem $X$ is a \textbf{decision problem} if the output is either 0 or 1 (yes/no). Further, a 
+						A problem $X$ is a \textbf{decision problem} if the output is either 0 or 1 (yes/no). 
 					\end{definition}
 
 					The input of a problem can always be encoded into a binary string. The size of an input is the length of the encoded string $s$ for the input.
@@ -1283,7 +1292,7 @@
 					\end{definition}
 
 					\begin{example}
-						Shortest path, minimum spanning tree, determine if an integer is prime number, those are in P.
+						Shortest path, minimum spanning tree, determine if an integer is prime number, those are in $P$.
 					\end{example}
 
 					\begin{definition}[Certificate, Certifier]
@@ -1316,7 +1325,7 @@
 
 					\notice{NP stands for \textbf{Non-deterministic Polynomial} time}
 
-					To prove if a problem is NP, we need to have a certifier that can output ``yes'' given the certificate in polynomial time. Otherwise it is not in NP
+					To prove if a problem is NP, we need to have a certifier that can output ``yes'' given the certificate in polynomial time. Otherwise it is not in NP.
 
 					\begin{example}
 						Given a graph $G = (V, E)$ and an integer $t > 0$, whether the minimum vertex cover of $G$ has size at least t. This problem is \textbf{unlikely} in NP. Reason is, the ``yes'' instance is ``all minimum vertex cover has size at least $t$'', that is not \textbf{likely to be} solvable in polynomial time for it need to find all minimum vertex covers.
@@ -1327,14 +1336,14 @@
 					\end{definition}
 
 					\begin{example}[Tautology Problem]
-						Given a boolean formula, determine wither the formula is always evaluates to 1. This is a problem in Co-NP. Because we can have a polynomial time certifier to confirm that an instance is not a tautology.
+						Given a boolean formula, determine whether the formula is always evaluates to 1. This is a problem in Co-NP. Because we can have a polynomial time certifier to confirm that an instance is not a tautology.
 					\end{example}
 
 					\begin{example}
 						Given two boolean formulas, to determine whether or not they are equivalent. This is a problem in Co-NP. Because if we have one instance such that the output is ``no'', then we can easily prove there are counter examples in origin algorithm.
 					\end{example}
 
-					\notice{If the instance is ``easy'' to prove to be true, then it is in NP, if the counter instance is ``easy'' to prove to be the algorithm it be false, then it is in Co-NP}
+					\notice{If the instance is ``easy'' to prove to be true, then it is in NP, if the counter instance is ``easy'' to prove to be false, then it is in Co-NP}
 
 					Relation between $P$, $NP$ and $Co-NP$ is as following
 					\begin{itemize}
@@ -1449,11 +1458,66 @@
 					An intuitive explanation will be, we can regard problems that is NP-Complete to be the most difficult problems in NP. If any of those can be solved in polynomial time, then all problems in NP can be solved in polynomial time.
 
 					\begin{theorem}[Cook's Theorem]
-						Circuit Satisfiability is NP-Complete.
+						3-SAT is in NP-Complete.
 					\end{theorem}
 
 					\begin{proof}
 						
+					\end{proof}
+
+					\begin{theorem}
+						2-SAT is in P
+					\end{theorem}
+
+					\begin{proof}
+						The following process $Clear(S, x)$ can be executed within $O(n)$, in which $S$ is a CNF with at least one clause being singleton $x$ (or $\neg x$), where $n$ is the length of CNF $S$, if it returns $S^\prime$, $S^\prime$ will be a CNF without $x$ (or $\neg x$) in any of clause in $S$. Otherwise, if it returns null, then $S$ is not satisfiable.
+						\begin{algorithm}
+							\caption{Clear(S, x)}
+							\begin{algorithmic}[1]
+								\State Initialize $S^\prime \gets S$
+								\For {Each clause $c$ in $S^\prime$}
+									\If {$c$ is a singleton $x$}
+										\State Remove singleton clause $x$ in $S^\prime$
+									\ElsIf {$c$ is a singleton $\neg x$}
+										\State \Return null
+									\ElsIf {$c$ is a 2-clause with $x$}
+										\State Remove singleton clause $c$ in $S^\prime$
+									\ElsIf {$c$ is a 2-clause with $\neg x$}
+										\State Remove $\neg x$ in clause $c$ in $S^\prime$
+									\EndIf
+								\EndFor
+								\State \Return $S^\prime$
+							\end{algorithmic}
+						\end{algorithm}
+
+						To determine a 2-SAT CNF satisfiability, the following process $2-SAT(S)$ can be executed within $O(n)$, where $n$ is the length of CNF $S$. It returns True if $S$ is satisfiable, False otherwise.
+						\begin{algorithm}
+							\caption{2-SAT(S)}
+							\begin{algorithmic}[1]
+								\While {Length of $S$ is greater than 0}
+									\If {$S$ has a singleton $x$ (or $\neg x$)}
+										\State $S \gets$ Clear($S, x$) (or $S \gets$ Clear($S, \neg x$))
+										\If {$S == null$}
+											\State \Return False
+										\EndIf
+									\Else
+										\State Denote $S = (x_1 \wedge x_2) \vee S_r$
+										\State $S_1 \gets x_1 \vee S_r$
+										\State $S_2 \gets x_2 \vee S_r$
+										\If {2-SAT($S_1$)}
+											\State \Return True
+										\ElsIf{2-SAT($S_2$)}
+											\State \Return True
+										\Else
+											\State \Return False
+										\EndIf
+									\EndIf
+								\EndWhile
+								\State \Return True
+							\end{algorithmic}
+						\end{algorithm}
+
+						General idea is, if there are singletons in CNF $S$, if there are conflicts between singletons, the CNF is not satisfiable, otherwise, those singletons can be assigned True values, or False values, one singleton at a time. For the rest of clauses, either it becomes a singleton, or it remains a 2-clause. When we cannot find any singleton in CNF, we generate two sub-CNF, by separating the first 2-clause and keep the remaining of CNF. Then both two sub-CNF will have at least one singleton, we can perform the previous process to those two sub-CNF. If at least one of those sub-CNF is satisfiable, the original CNF is satisfiable, otherwise, if both sub-CNF are not satisfiable, the original CNF is not satisfiable. Therefore 2-SAT CNF Satisfiability is a problem in P.
 					\end{proof}
 
 					\begin{theorem}
@@ -5880,75 +5944,39 @@
 		\chapter{Social Network Analysis}
 
 	\part{Heuristic Optimization}\label{Heur}
-		\chapter{}
 
 	\part*{Special Topic: Vehicle Routing Problem}\label{VRP}
 		\addcontentsline{toc}{part}{Special Topic: Vehicle Routing Problem}
 		\chapter{The Traveling Salesman Problem}
-			\section{Formulation}
+			\section{Formulations}
 				Let $G = (V, A)$ be a graph where $V$ is a set of $n$ vertices, and $A$ is a set of arcs (or edges). Let $C = c_{ij}$ be a cost (distance) matrix associated with $A$. The TSP consists of determining a minimum cost (distance) Hamiltonian circle (or cycle) that visits each vertex once and only once. If for all $i, j \in V, c_{ij} = c_{ji}$, then the TSP is symmetrical, otherwise is asymmetrical.
 
 				Define the decision variable $x_{ij}$ as the following
 				\begin{equation}
 					x_{ij} = \begin{cases}1, &\text{if goes from } i \text{ to } j\\ 0, & \text{otherwise}\end{cases}
 				\end{equation}
-				There are two famous formulations for TSP, the Dantzig-Fulkerson-Johnson (DFJ) formulation and the Miller-Tucker-Zemlin (MTZ) formulation. The DFJ formulation is
-				\begin{align}
-					\min \quad &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-					& \sum_{j \in V, (i,j)\in A} x_{ij} = 1, \quad \forall i \in V \label{TSP:formulation:con:degree1}\\
-					& \sum_{i \in V, (i,j)\in A} x_{ij} = 1, \quad \forall j \in V \label{TSP:formulation:con:degree2}\\
-					& \sum_{j\notin S, i\in S, (i,j)\in A} x_{ij} \ge 1 \text{ or } \sum_{i, j \in S, (i, j) \in A} x_{ij} \le |S| - 1 \nonumber \\
-					& \quad \forall S \subset V, 2\le |S| \le n-1 \label{TSP:formulation:con:DFJSubtour}\\
-					& x_{ij} \in \{0, 1\}, \forall (i, j) \in A 
-				\end{align}
 
-				In the formulation, constraints (\ref{TSP:formulation:con:degree1}) and constraints (\ref{TSP:formulation:con:degree2}) are degree constraints, which specify that every vertex is entered exactly once. Constraints (\ref{TSP:formulation:con:DFJSubtour}) is the sub-tour constraints, they prohibit the formation of sub-tours. $S$ is a non-empty subset of $V$, and has at least 2 vertices. 
+				\subsection{Dantzig-Fulkerson-Johnson (DFJ) Formulation}
+					There are two famous formulations for TSP, the Dantzig-Fulkerson-Johnson (DFJ) formulation and the Miller-Tucker-Zemlin (MTZ) formulation. The DFJ formulation is
+					\begin{align}
+						\min \quad &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
+						& \sum_{j \in V, (i,j)\in A} x_{ij} = 1, \quad \forall i \in V \label{TSP:formulation:con:degree1}\\
+						& \sum_{i \in V, (i,j)\in A} x_{ij} = 1, \quad \forall j \in V \label{TSP:formulation:con:degree2}\\
+						& \sum_{j\notin S, i\in S, (i,j)\in A} x_{ij} \ge 1 \text{ or } \sum_{i, j \in S, (i, j) \in A} x_{ij} \le |S| - 1 \nonumber \\
+						& \quad \forall S \subset V, 2\le |S| \le n-1 \label{TSP:formulation:con:DFJSubtour}\\
+						& x_{ij} \in \{0, 1\}, \forall (i, j) \in A 
+					\end{align}
 
-				In the MTZ formulation, the sub-tour constraints (\ref{TSP:formulation:con:DFJSubtour}) are replaced by the following:
-				\begin{align}
-					&u_i - u_j + (n - 1) x_{ij} \le n - 2, \quad i, j = 2, \cdots, n \in V, (i, j) \in A\\
-					&1 \le u_i \le n - 1, i \in 2, \cdots, n \in V
-				\end{align}
+					In the formulation, constraints (\ref{TSP:formulation:con:degree1}) and constraints (\ref{TSP:formulation:con:degree2}) are degree constraints, which specify that every vertex is entered exactly once. Constraints (\ref{TSP:formulation:con:DFJSubtour}) is the sub-tour constraints, they prohibit the formation of sub-tours. $S$ is a non-empty subset of $V$, and has at least 2 vertices. 
+
+				\subsection{Miller-Tucker-Zemlin (MTZ) Formulation}
+					In the MTZ formulation, the sub-tour constraints (\ref{TSP:formulation:con:DFJSubtour}) are replaced by the following:
+					\begin{align}
+						&u_i - u_j + (n - 1) x_{ij} \le n - 2, \quad i, j = 2, \cdots, n \in V, (i, j) \in A\\
+						&1 \le u_i \le n - 1, i \in 2, \cdots, n \in V
+					\end{align}
 
 				\notice{The MTZ formulation is weaker than the DFJ formulation in spite of its relative compactness.}
-
-			\section{Sub-tour Searching Algorithm}
-				Notice that the number of sub-tour constraints increase exponentially as the number of vertices increase, therefore it is impractical to list all sub-tour constraints when we are solving the TSP. An alternative method is to use Lazy cuts to speed up the solving process, i.e., if there are sub-tours detected in the solution, add corresponded cuts to eliminate those sub-tours. Finding sub-tours is essentially finding components in a graph. In the graph $G=(V, A)$, let $\bar{G}=(V, \bar{A})$ be the connected components of graph, where
-				\begin{equation}
-					\bar{G}=(G, \bar{A}), \bar{A}=\{(i, j) \in A | \bar{x_{ij}}=1\}
-				\end{equation}
-				denote
-				\begin{equation}
-					\bar{FS}(i) = \{(i,j)\in \bar{A}\}
-				\end{equation}
-				Then the algorithm to find all sub-tour is the following:
-				\begin{algorithm}[!ht]
-					\caption{Sub-tour Searching Algorithm}
-					\begin{algorithmic}[1]
-						\State $K = \emptyset$
-						\State $d_i = 0, \forall i \in V$
-						\For {$i\in V$}
-							\State $C = \emptyset$
-							\State $Q = \emptyset$
-							\If {$d_i == 0$}
-								\State $d_i = 1$
-								\State $C = C\cup \{i\}$
-								\State Q.append(i)
-								\While {$Q\ne \emptyset$}
-									\State v = Q.pop()
-									\For {$u \in \bar{FS}(v)$}
-										\If {$d_u == 0$}
-											\State $d_u = 1$
-											\State $C = C \cup \{u\}$
-											\State Q.append(u)
-										\EndIf
-									\EndFor
-								\EndWhile
-							\EndIf
-							\State $K=K\cup C$
-						\EndFor
-					\end{algorithmic}
-				\end{algorithm}
 
 			\section{Polynomially Solvable Special Cases of TSP}
 
@@ -5958,6 +5986,8 @@
 				\subsection{The Minimum Spanning Tree (Arborescence) Bound}
 
 				\subsection{The 2-match Problem}
+
+			\section{Heuristic}				
 
 		\chapter{The Vehicle Routing Problem}
 
