@@ -10,10 +10,10 @@
 	\tableofcontents
 
 	% Levels of Contents 
-	% \part{[Course]}
+	% \part{[Topic enough for one semester]}
 	% 	\chapter{[Topic worth for a few weeks lessons]}
 	% 		\section{[Topic that discussing it could be one 30 pages article]}
-	% 			\subsection{[One algorithm, one realization, one theory, a set of related definitions]}
+	% 			\subsection{[One algorithm, one theory, one theorem with proof, or a set of related definitions]}
 
 	\part{Preliminary Topics}\label{PT}
 		\chapter{Introduction to Optimization}
@@ -5943,11 +5943,11 @@
 
 		\chapter{Social Network Analysis}
 
-	\part{Heuristic Optimization}\label{Heur}
+	\part{Heuristic and Metaheuristic Optimization}\label{Heur}
 
 	\part*{Special Topic: Vehicle Routing Problem}\label{VRP}
 		\addcontentsline{toc}{part}{Special Topic: Vehicle Routing Problem}
-		\chapter{The Traveling Salesman Problem}
+		\chapter{The Traveling Salesman Problem}\label{chp:TSP}
 			\section{Formulations}
 				Let $G = (V, A)$ be a graph where $V$ is a set of $n$ vertices, and $A$ is a set of arcs (or edges). Let $C = c_{ij}$ be a cost (distance) matrix associated with $A$. The TSP consists of determining a minimum cost (distance) Hamiltonian circle (or cycle) that visits each vertex once and only once. If for all $i, j \in V, c_{ij} = c_{ji}$, then the TSP is symmetrical, otherwise is asymmetrical.
 
@@ -5960,17 +5960,17 @@
 					There are two famous formulations for TSP, the Dantzig-Fulkerson-Johnson (DFJ) formulation and the Miller-Tucker-Zemlin (MTZ) formulation. The DFJ formulation is
 					\begin{align}
 						\min \quad &\sum_{(i, j)\in A} c_{ij}x_{ij} \\
-						& \sum_{j \in V, (i,j)\in A} x_{ij} = 1, \quad \forall i \in V \label{TSP:formulation:con:degree1}\\
-						& \sum_{i \in V, (i,j)\in A} x_{ij} = 1, \quad \forall j \in V \label{TSP:formulation:con:degree2}\\
+						& \sum_{j \in V, (i,j)\in A} x_{ij} = 1, \quad \forall i \in V \label{TSP:con:degree1}\\
+						& \sum_{i \in V, (i,j)\in A} x_{ij} = 1, \quad \forall j \in V \label{TSP:con:degree2}\\
 						& \sum_{j\notin S, i\in S, (i,j)\in A} x_{ij} \ge 1 \text{ or } \sum_{i, j \in S, (i, j) \in A} x_{ij} \le |S| - 1 \nonumber \\
-						& \quad \forall S \subset V, 2\le |S| \le n-1 \label{TSP:formulation:con:DFJSubtour}\\
+						& \quad \forall S \subset V, 2\le |S| \le n-1 \label{TSP:con:DFJSubtour}\\
 						& x_{ij} \in \{0, 1\}, \forall (i, j) \in A 
 					\end{align}
 
-					In the formulation, constraints (\ref{TSP:formulation:con:degree1}) and constraints (\ref{TSP:formulation:con:degree2}) are degree constraints, which specify that every vertex is entered exactly once. Constraints (\ref{TSP:formulation:con:DFJSubtour}) is the sub-tour constraints, they prohibit the formation of sub-tours. $S$ is a non-empty subset of $V$, and has at least 2 vertices. 
+					In the formulation, constraints (\ref{TSP:con:degree1}) and constraints (\ref{TSP:con:degree2}) are degree constraints, which specify that every vertex is entered exactly once. Constraints (\ref{TSP:con:DFJSubtour}) is the sub-tour constraints, they prohibit the formation of sub-tours. $S$ is a non-empty subset of $V$, and has at least 2 vertices. 
 
 				\subsection{Miller-Tucker-Zemlin (MTZ) Formulation}
-					In the MTZ formulation, the sub-tour constraints (\ref{TSP:formulation:con:DFJSubtour}) are replaced by the following:
+					In the MTZ formulation, the sub-tour constraints (\ref{TSP:con:DFJSubtour}) are replaced by the following:
 					\begin{align}
 						&u_i - u_j + (n - 1) x_{ij} \le n - 2, \quad i, j = 2, \cdots, n \in V, (i, j) \in A\\
 						&1 \le u_i \le n - 1, i \in 2, \cdots, n \in V
@@ -5978,7 +5978,10 @@
 
 				\notice{The MTZ formulation is weaker than the DFJ formulation in spite of its relative compactness.}
 
-			\section{Polynomially Solvable Special Cases of TSP}
+			\section{NP Completeness of TSP}
+				\subsection{Proof of TSP $\in$ NPC}
+
+				\subsection{Polynomially Solvable Special Cases of TSP}
 
 			\section{Lower Bounds of TSP}
 				\subsection{The Assignment Lower Bound}
@@ -5987,18 +5990,128 @@
 
 				\subsection{The 2-match Problem}
 
-			\section{Heuristic}				
+			\section{Exact Algorithm}
+
+			\section{Constructive Heuristic}
+				\subsection{Nearest Neighborhood Algorithm}
+
+				\subsection{Insertion Algorithm}
+
+				\subsection{Sweep Algorithm}
+
+				\subsection{Christofides Algorithm}
+
+			\section{Local Search Heuristic}
+				\subsection{Lin-Kernighan Algorithm}
+					The general idea of Lin-Kernighan Algorithm is based on a substantial generalization of the interchange transformation.
+
+			\section{Metaheuristic}
+				\subsection{Genetic Algorithm for TSP}
+
 
 		\chapter{The Vehicle Routing Problem}
 
 		\chapter{The Capacitate Vehicle Routing Problem}
-			\section{Exact Algorithms for VRP}
-
-			\section{Heuristics for VRP}
 
 		\chapter{The Vehicle Routing Problem with Time Windows}
 
-		\chapter{The Vehicle Routing Problem with Pickup-and-Delivery}
+		\chapter{Pickup-and-Delivery Problem}\label{chp:PDP}
+			\section{Problem Formulation}
+				Let $N$ be the set of transportation requests. For each transportation request $i \in N$, a load of size $\bar{q_i} \in \mathbb{N}$ has to be transported from a set of origins $N_i^+$ to a set of destinations $N_i^-$. Each load is subdivided as follows
+				\begin{equation}
+					\bar{q_i} = \sum_{j \in N_i^+} q_j = -\sum_{j \in N_i^-} q_j
+				\end{equation}
+				Define $N^+ = \cup_{i \in N} N_i^+$ as the set of all origins and $N^- = \cup_{i \in N}N_i^-$ as the set of all destinations. Let $V = N^+ \cup N^-$. Furthermore, the $M$ be the set of vehicles. Each vehicle $k \in M$ has a capacity $Q_k \in \mathbb{N}$, a start location $k^+$, and an end location $k^-$. Define $M^+ = \{k^+|k\in M\}$ as the set of start locations and $M^- = \{k^-|k\in M\}$ as the set of end locations. Let $W = M^+ \cup M^-$.
+
+				For all $i, j \in V\cup W$ let $d_{ij}$ denote the travel distance, $t_{ij}$ denote the travel time, and $c_{ij}$ denote the travel cost. Note that the dwell time at origins and destinations can be easily incorporated in the travel time and therefore will not be considered explicitly.
+
+				\begin{definition}
+					A pickup and delivery route $R_k$ for vehicle $k$ is a directed route through a subset $V_k \in V$ such that:
+					\begin{itemize}
+						\item $R_k$ starts in $k^+$
+						\item $\forall i \in N, (N_i^+ \cup N_i^-) \cap V_k = \emptyset \text{ or } N_i^+ \cup N_i^-$
+						\item If $N_i^+ \cup N_i^- \subseteq V_k$, then all locations in $N_i^+$ are visited before locations in $N_i^-$
+						\item Vehicle $k$ visits each location in $V_k$ exactly once
+						\item The vehicle load never exceeds $Q_k$
+						\item $R_k$ ends in $k^-$
+					\end{itemize}
+				\end{definition}
+
+				\begin{definition}
+					A pickup and delivery plan is a set of routes $\mathcal{R} = \{R_k |k \in M\}$ such that:
+					\begin{itemize}
+						\item $R_k$ is the pickup and delivery route for vehicle $k$, for each $k \in M$
+						\item $\{V_k |k \in M\}$ is a partition of $V$,
+					\end{itemize}
+				\end{definition}
+
+				Here are the special cases of the General Pickup and Delivery Problem
+				\begin{example}
+					\textbf{The pickup and delivery problem}, where $|W| = 1$, $|N_i^+| = |N_i^-| = 1, \forall i \in N$. In this case we define $i^+$ as the unique element of $|N_i^+|$ and $i^-$ as the unique element of $|N_i^-|$.
+				\end{example}
+
+				\begin{example}
+					\textbf{The dial-a-ride problem}, where $|W| = 1$ and $|N_i^+| = |N_i^-| = 1, \bar{q_i} = 1, \forall i \in N$
+				\end{example}
+
+				\begin{example}
+					\textbf{The vehicle routing problem}, where $|W| = 1$, $|N_i^+| = |N_i^-| = 1 \forall i \in N$ and $N^+ = W$ or $N^- = W$.
+				\end{example}
+
+				\notice{Generally speaking, we usually have problem with $|N_i^+| = |N_i^-| = 1$. In the cases where $|N_i^+| > 1$ or $|N_i^-| > 1$, the transportation requests can be decomposed into several independent requests with $|N_i^+| = |N_i^-| = 1$, unless it has to be served by the same vehicle.}
+
+				\notice{We are not aware of any real-life applications where both $|N_i^+| > 1$ and $|N_i^-| > 1$ at the same time yet.}
+
+				The following is the formulation for General Pickup and Delivery Problem.
+
+				\begin{table}[!htp]
+					\centering
+					\caption{Decision variable notation}
+					\begin{tabular}{l p{5in}}
+						\hline
+						$z_i^k$ & For $i \in N, k \in M$ Equals to 1 if transportation request $i$ is assigned to vehicle $k$ and 0 otherwise. \\
+						$x_{ij}^k$ & For $(i, j) \in (V \times V) \cup \{(k^+, j)| j \in V\} \cup \{(j, k^-)|j \in V\}, k \in $ Equals to 1 if vehicle $k$ travels from location $i$ to location $j$ and 0 otherwise.\\
+						$D_i$ & For $i \in V\cup W$, specifying the departure time at vertex $i$.\\
+						$y_i$ & For $i \in V\cup W$, specifying the load of vehicle arriving at vertex $i$. Define $q_{k^+} = 0, \forall k \in M$.\\
+						\hline	
+					\end{tabular}
+				\end{table}
+
+				\begin{align}
+					\min \quad & f(x) &\\
+					\text{s.t.} \quad & \sum_{k \in M} z_i^k = 1 \quad & \forall i \in N \label{PDP:con:vehAss}\\
+					& \sum_{j\in V\cup W} x_{lj}^k = z_i^k \quad & \forall i \in N, l\in N_i^+ \cup N_i^-, k \in M \label{PDP:con:routeAss1}\\
+					& \sum_{j\in V\cup W} x_{jl}^k = z_i^k \quad & \forall i \in N, l\in N_i^+ \cup N_i^-, k \in M \label{PDP:con:routeAss2}\\
+					& \sum_{j \in V \cup \{k^-\}}x_{k^+j}^k = 1 \quad & \forall k \in M \label{PDP:con:leaveDepot}\\
+					& \sum_{j \in V \cup \{k^+\}}x_{ik^-}^k = 1 \quad & \forall k \in M \label{PDP:con:arriveDepot}\\
+					& D_{k^+} = 0 \quad & \forall k \in M \label{PDP:con:initTime}\\
+					& D_p \le D_q \quad & \forall i \in N, p \in N_i^+, q \in N_i^- \label{PDP:con:pdOrder}\\
+					& D_i + t_{ij} \le D_j + M(1 - x_{ij}^k) \quad & \forall i, j \in V\cup W, k \in M \label{PDP:con:travelDist} \\
+					& y_{k^+} = 0 \quad & \forall k \in M \label{PDP:con:initLoad}\\
+					& y_l \le \sum_{k \in M} Q_k z_i^k \quad & \forall i \in N, l \in N_i^+\cup N_i^- \label{PDP:con:maxLoad} \\
+					& y_j \ge y_l + q_i x_{lj}^k - M(1 - x_{lj}^x) \quad & \forall i \in N, l\in N_i^+, j \in V\cup \{k^+\}, l \neq j \label{PDP:con:loadChange1}\\
+					& y_j \le y_l + q_i x_{lj}^k + M(1 - x_{lj}^x) \quad & \forall i \in N, l\in N_i^+, j \in V\cup \{k^+\}, l \neq j \label{PDP:con:loadChange2}\\
+					& y_j \ge y_l - q_i x_{lj}^k - M(1 - x_{lj}^x) \quad & \forall i \in N, l\in N_i^-, j \in V\cup \{k^-\}, l \neq j \label{PDP:con:loadChange3}\\
+					& y_j \le y_l - q_i x_{lj}^k + M(1 - x_{lj}^x) \quad & \forall i \in N, l\in N_i^-, j \in V\cup \{k^-\}, l \neq j \label{PDP:con:loadChange4}\\
+					& x_{ij}^k \in \{0, 1\} \quad & \forall i, j \in V \cup W, k\in M \label{PDP:con:binary1}\\
+					& z_i^k \in \{0, 1\} \quad & \forall i \in N, k \in M \label{PDP:con:binary2}\\
+					& D_i \ge 0 \quad & \forall i \in V\cup W \label{PDP:con:nonneg1}\\
+					& y_i \ge 0 \quad & \forall i \in V\cup W \label{PDP:con:nonneg2}
+				\end{align}
+
+				\begin{itemize}
+					\item Constraint (\ref{PDP:con:vehAss}) - Each transportation request is assigned to exactly one vehicle.
+					\item Constraint (\ref{PDP:con:routeAss1}), (\ref{PDP:con:routeAss2}) - A vehicle only enters or leaves a location $l$ if it is an origin or a destination of a transportation request assigned to that vehicle.
+					\item Constraint (\ref{PDP:con:leaveDepot}), (\ref{PDP:con:arriveDepot}) - Make sure the vehicle is leaving from /arriving at the correct place.
+					\item Constraint (\ref{PDP:con:initTime}) - Initial starting time for all vehicles is 0.
+					\item Constraint (\ref{PDP:con:pdOrder}) - For each item to be delivered, it should be picked up before delivery
+					\item Constraint (\ref{PDP:con:travelDist}) - Traveling distance from location $i$ to $j$
+					\item Constraint (\ref{PDP:con:initLoad}) - All vehicles leaving the initial location with no loading.
+					\item Constraint (\ref{PDP:con:maxLoad}) - Load capacity limit for vehicles.
+					\item Constraint (\ref{PDP:con:loadChange1}), (\ref{PDP:con:loadChange2}), (\ref{PDP:con:loadChange3}), (\ref{PDP:con:loadChange4}) - Load / unload item when arriving pickup / delivery location
+					\item Constraint (\ref{PDP:con:binary1}), (\ref{PDP:con:binary2}), (\ref{PDP:con:nonneg1}), (\ref{PDP:con:nonneg2}) - Binary variable definition and non-negativity constraints.
+				\end{itemize}
+
 
 		\chapter{Stochastic Vehicle Routing Problem}
 
