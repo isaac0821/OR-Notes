@@ -1,0 +1,68 @@
+\include{templete}
+\title{Notes for Classic IP \& CO Paper List}
+\begin{document}
+	\maketitle
+	\today
+
+	\clearpage
+	\thispagestyle{plain}
+	\par\vspace*{.35\textheight}{\centering \textit{To My Beloved Motherland China}\par}
+
+	\tableofcontents
+
+	% Levels of Contents 
+	% \part*{[A paper]}
+	% 	\chapter{[Main section]}
+	% 		\section{[Main theorem and proof]}
+
+	\chapter[The Traveling-Salesman Problem and Minimum Spanning Tree]
+		{The Traveling-Salesman Problem and Minimum Spanning Tree \\[\bigskipamount]
+		\Large Michael Held and Richard M. Karp \\[\bigskipamount]
+		\large \textit{Operations Research}, 1969}
+
+		\section{The Traveling-Salesman Problem and a Related Spanning-Tree Problem}
+			\begin{definition}[1-tree]
+				In graph $G = (V, E)$, where $V = \{1, 2, \cdots, n\}$, a 1-tree consists of a tree on the vertex set $\{2, 3, \cdots, n\}$, together with two distinct edges at vertex 1.
+			\end{definition}
+
+			Thus, a 1-tree has a single cycle, this cycle contains vertex 1 and vertex 1 always has degree 2. A minimal weighted 1-tree can be found by constructing a minimum spanning tree on the vertex set $\{2, 3, \cdots, n\}$, and then adjoining two edges of lowest weight at vertex 1.
+
+			Also notice that every tour is a 1-tree, and a 1-tree is a tour iff each of its vertices has degree 2. If a minimum-weight 1-tree is a tour, it is the solution of the TSP.
+
+			\begin{example} An example of 1-tree can be found in figure \ref{HKBound:1_tree}, solid arcs are minimum spanning tree of $\{2, 3, \cdots, n\}$ and two dashed arcs links the MST to vertex 1 with minimal cost.
+				\begin{figure}[!ht]
+					\centering
+					\begin{tikzpicture}[node distance=1.5cm]
+						\node [circleNode] (3) {3};
+						\node [circleNode, left of=3] (6) {6};
+						\node [circleNode, below of=3, xshift=-1cm] (4) {4};
+						\node [circleNode, below of=3, xshift=2cm] (2) {2};
+						\node [circleNode, below of=4] (1) {1};
+						\node [circleNode, right of=1] (5) {5};
+						\node [circleNode, right of=2] (7) {7};
+						\draw [link] (3) -- (6);
+						\draw [link] (3) -- (4);
+						\draw [link] (3) -- (2);
+						\draw [link] (2) -- (7);
+						\draw [link] (2) -- (5);
+						\draw [link, dashed] (1) -- (4);
+						\draw [link, dashed] (1) -- (5);
+					\end{tikzpicture}
+					\caption{1-tree}
+					\label{HKBound:1_tree}
+				\end{figure}
+			\end{example}
+
+			\begin{lemma}
+				Let $\mathbf{\pi} = (\pi_1, \pi_2, \cdots, \pi_n)$ be a real $n$-vector. If $C^*$ is a minimum-weight tour with respect to the edge weights $c_{ij}$, then it is also a minimum-weight tour $C^\prime$ with respect to the edge weight $c_{ij} + \pi_i + \pi_j$.
+			\end{lemma}
+
+			\begin{proof}
+				For tour $C$, the weight is $C = \sum_{(i, j) \in C} c_{ij}$. Therefore $C^\prime - C^* = 2 \sum_{i = 1}^n \pi_i$, which is a constant.
+			\end{proof}
+
+			Change the costs from $c_{ij}$ to $c_{ij} + \pi_i + \pi_j$ only changes its minimum spanning 1-tree. Introduce a gap function $f(\pi)$, which is the cost of a minimum-weight tour minus the cost of a minimum-weighted 1-tree both with respect to the weights $c_{ij} + \pi_i + \pi_j$. Notice that if $f(\pi) = 0$ then we found optimal tour for TSP, thus, we consider the problem of finding $\min_\pi f(\pi)$, where
+			\begin{equation}
+				f(\pi) = 
+			\end{equation}
+\end{document}

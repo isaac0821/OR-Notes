@@ -1,4 +1,5 @@
 \include{templete}
+\usepackage[colorlinks,citecolor=red,urlcolor=blue,bookmarks=false,hypertexnames=true]{hyperref} 
 \begin{document}
 	\part*{Special Topic: Vehicle Routing Problem}\label{VRP}
 		\addcontentsline{toc}{part}{Special Topic: Vehicle Routing Problem}
@@ -128,8 +129,8 @@
 						\sum_{i \in V} y_{1i}^k &= 1, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMInitIn}\\
 						\sum_{i \in V} y_{i1}^k &= 0, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMInitOut}\\
 						\sum_{i \in V} y_{ik}^k &= 1, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMElseOut}\\
-						\sum_{j \in V} y_{jk}^k &= 0, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMElseIn}\\
-						\sum_{i \in V} y_{ij}^k - \sum_{i \in V} y_{ji}^k &= 0, \quad \forall j, k \in V \setminus \{1\}, (i, j) \in A \label{TSP:con:MCMBalance}
+						\sum_{j \in V} y_{kj}^k &= 0, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMElseIn}\\
+						\sum_{i \in V} y_{ij}^k - \sum_{i \in V} y_{ji}^k &= 0, \quad \forall j, k \in V \setminus \{1\}, j \neq k \label{TSP:con:MCMBalance}
 					\end{align}
 					Constraints (\ref{TSP:con:MCMFlowExist}) only allow flow in an arc which is present. Constraints (\ref{TSP:con:MCMInitIn}) forces exactly one unit of each type of commodity to flow in at node 1. Constraints (\ref{TSP:con:MCMInitOut}) prevent any commodity flow out at node 1.Constraints (\ref{TSP:con:MCMElseOut}), and Constraints (\ref{TSP:con:MCMElseIn}), forces exactly one unit of type $k$ commodity to flow out, and in, at every node except node 1. Constraints (\ref{TSP:con:MCMBalance}) forces balance of all types of commodities at every node except node 1.
 
@@ -157,7 +158,7 @@
 					\begin{align}
 						\sum_{j \in V \setminus \{1\}} x_{1j}^1 &= 1 \label{TSP:con:SPFStart}\\
 						\sum_{j \in V \setminus \{1, i\}} x_{ij}^2 - x_{1i}^1 &= 0, \quad \forall i \in V \setminus \{1\} \label{TSP:con:SPFFirstLayer}\\
-						\sum_{j \in V \setminus \{1, i\}} x_{ij}^t - \sum_{j \in V \setminus \{1, i\}} x_{ji}^{t - 1} &= 0, \quad \forall i \in V \setminus \{i\}, t \in \{2, \dots, n - 1\} \label{TSP:con:SPFTthLayer}\\
+						\sum_{j \in V \setminus \{1, i\}} x_{ij}^t - \sum_{j \in V \setminus \{1, i\}} x_{ji}^{t - 1} &= 0, \quad \forall i \in V \setminus \{1\}, t \in \{2, \dots, n - 1\} \label{TSP:con:SPFTthLayer}\\
 						x_{i1}^n - \sum_{j \in V \setminus \{1, i\}} x_{ji}^{n - 1} &= 0, \quad \forall i \in V \setminus \{1\} \label{TSP:con:SPFLastLayer}\\
 						\sum_{i \in V \setminus \{1\}} x_{i1}^n &= 1 \label{TSP:con:SPFEnd}\\
 						\sum_{t = 2}^{n - 1}\sum_{j \in V \setminus \{1, i\}} x_{ij}^t + x_{i1}^n & \le 1, \quad \forall i \in V \setminus \{1\} \label{TSP:con:SPFSameType1}
@@ -180,7 +181,14 @@
 
 				\subsection{The 2-match Problem}
 
-			\section{Exact Algorithm}
+				\subsection{Held \& Karp Bound (Lagrangian Relaxation)}
+					In this section, we will solve the Dantzig-Fulkerson-Johnson formulation using Lagrangian Relaxation. The bound found by this method is also known as Held \& Karp Bound. In the Held \& Karp relaxation, the degree constraints are relaxed, as a result, we require our solution to be connected and to contain $n$ edges, but it might not have exactly two edges incident to each vertex.
+
+					The feasible solution to the Lagrangian relaxation is called \textbf{1-tree}, which
+					\begin{itemize}
+						\item Have a spanning tree on nodes $\{2, 3, \cdots, n\}$
+						\item Two edges incident to node 1
+					\end{itemize}
 
 			\section{Constructive Heuristic}
 				\subsection{Nearest Neighborhood Algorithm}
@@ -196,7 +204,9 @@
 					The general idea of Lin-Kernighan Algorithm is based on a substantial generalization of the interchange transformation.
 
 			\section{Metaheuristic}
-				\subsection{Genetic Algorithm for TSP}
+				\subsection{Simulated Annealing}
+
+				\subsection{Genetic Algorithm}
 
 
 		\chapter{The Vehicle Routing Problem}
