@@ -15,10 +15,85 @@
 	% 	\chapter{[Main section]}
 	% 		\section{[Main theorem and proof]}
 
+	\chapter[Partitioning Procedures for Solving Mixed-Variables Programming Problems]
+		{Partitioning Procedures for Solving Mixed-Variables Programming Problems \\[\bigskipamount]
+		\Large J. F. Benders \\[\bigskipamount]
+		\large \textit{Numerische Mathematik}, 1962}\label{chp:Benders-Decom}
+
+		\section{Introduction \& Preliminaries}
+			The mixed-variables programming problems considered is the following
+			\begin{align*}
+				(P) \quad \max \quad & \mathbf{c}^\top \mathbf{x} + f(\mathbf{y})\\
+				\text{s.t.} \quad & \mathbf{Ax} + F(\mathbf{y}) \le \mathbf{b}\\
+				& \mathbf{x} \in \mathbb{R}^p \\
+				& \mathbf{y} \in S
+			\end{align*}
+
+			in which
+			\begin{itemize}
+				\item $S$ - is an arbitrary subset of $\mathbb{R}^q$
+				\item $\mathbf{A}$ - is an $m \times p$ matrix
+				\item $f(\mathbf{y})$ - is a scalar function defined on $S$
+				\item $F(\mathbf{y})$ - is an $m$-component vector function defined on $S$
+				\item $\mathbf{b}$ - RHS, $\mathbf{b} \in \mathbb{R}^m$
+				\item $\mathbf{c}$ - Cost coefficient, $\mathbf{c} \in \mathbb{R}^p$
+			\end{itemize}
+
+			\begin{example}
+				MIP, LP
+			\end{example}
+
+			The basic idea is to partition a given problem into two sub problems, a programming problem ($F(\mathbf{y})$) and a LP ($\mathbf{Ax}$). This happens when the problem indicates a natural partition of the variables.
+
+			Denote $\mathbf{u}, \mathbf{v}, \mathbf{z}$ as vectors in $\mathbb{R}^m$, and $u_0$, $x_0$, and $z_0$ as scalars.
+
+			For $\mathbf{A}$ and $\mathbf{c}$ defined previously, we define
+			\begin{itemize}
+				\item the convex polyhedral cone $C$ in $\mathbb{R}^{m + 1}$ by
+				\begin{equation}
+					C = \{\begin{pmatrix}u_0 \\ \mathbf{u}\end{pmatrix} | \mathbf{A}^\top \mathbf{u} - \mathbf{c} u_0 \ge \mathbf{0}, \ \mathbf{u} \ge \mathbf{0}, \ u_0 \ge 0\}
+				\end{equation}
+				\item the convex polyhedral cone $C_0$ in $\mathbb{R}^m$ by
+				\begin{equation}
+					C_0 = \{\mathbf{u} | \mathbf{A}^\top \mathbf{u} \ge \mathbf{0}, \ \mathbf{u} \ge \mathbf{0}\}
+				\end{equation}
+				\item the convex polyhedral $P$ in $\mathbb{R}^m$ by
+				\begin{equation}
+					P = \{\mathbf{u} | \mathbf{A}^\top \mathbf{u} \ge \mathbf{c}, \ \mathbf{u} \ge \mathbf{0}\}
+				\end{equation}
+			\end{itemize}
+
+		\section{A partitioning theorem}
+			Rewrite (P) into an equivalent form as following
+			\begin{align*}
+				(P^\prime) \quad \max \quad & x_0\\
+				\text{s.t.} \quad & x_0 - \mathbf{c}^\top \mathbf{x} - f(\mathbf{y}) \le 0\\
+				& \mathbf{Ax} + F(\mathbf{y}) \le \mathbf{b}\\
+				& \mathbf{x} \ge \mathbf{0} \\
+				& \mathbf{y} \in S
+			\end{align*}
+
+			Clearly, $(x_0^*, \mathbf{x}^*, \mathbf{y}^*)$ is optimal for $(P^\prime)$ iff $x_0^* = \mathbf{c}^\top \mathbf{x}^* + f(\mathbf{y}^*)$ and $(\mathbf{x}^*, \mathbf{y}^*)$ is optimal for $(P)$.
+
+			For one of the subproblem of $(P)$, the LP, we have
+			\begin{align*}
+				(subLP) \quad \max \quad & \mathbf{c}^\top \mathbf{x}\\
+				\text{s.t.} \quad & \mathbf{Ax} \le \mathbf{b^\prime}\\
+								  & \mathbf{x} \ge \mathbf{0} \\
+								  & \mathbf{x} \in \mathbb{R}^p
+			\end{align*}
+			take the dual of $(subLP)$, we have
+			\begin{align*}
+				(dualLP) \quad \min \quad & \mathbf{u^\top b^\prime}\\
+				\text{s.t.} \quad & \mathbf{u}^\top \mathbf{A} \ge \mathbf{c}\\
+								  & \mathbf{u} \ge \mathbf{0}\\
+								  & \mathbf{u} \in \mathbb{R}^m
+			\end{align*}
+
 	\chapter[The Traveling-Salesman Problem and Minimum Spanning Tree]
 		{The Traveling-Salesman Problem and Minimum Spanning Tree \\[\bigskipamount]
 		\Large Michael Held and Richard M. Karp \\[\bigskipamount]
-		\large \textit{Operations Research}, 1969}
+		\large \textit{Operations Research}, 1969}\label{chp:TSP-LR}
 
 		\section{The Traveling-Salesman Problem and a Related Spanning-Tree Problem}
 			\begin{definition}[1-tree]
@@ -62,7 +137,62 @@
 			\end{proof}
 
 			Change the costs from $c_{ij}$ to $c_{ij} + \pi_i + \pi_j$ only changes its minimum spanning 1-tree. Introduce a gap function $f(\pi)$, which is the cost of a minimum-weight tour minus the cost of a minimum-weighted 1-tree both with respect to the weights $c_{ij} + \pi_i + \pi_j$. Notice that if $f(\pi) = 0$ then we found optimal tour for TSP, thus, we consider the problem of finding $\min_\pi f(\pi)$, where
-			\begin{equation}
-				f(\pi) = 
-			\end{equation}
+			\begin{align*}
+				f(\pi) &= W + 2 \sum_{i = 1}^n \pi_i - \min_k (c_k + \sum_{i = 1}^n \pi_i d_{ik})\\
+					   &= W - \min_k [c_k + \sum_{i = 1}^n (d_{ik} - 2)]
+			\end{align*}
+			in which
+			\begin{itemize}
+				\item $W$ - is the weight of a minimum tour with respect to the weights $c_{ij}$
+				\item $c_k$ - is the weight of the $k$th 1-tree with respect to the weight $c_{ij}$. Notice that the 1-trees of the graph are indexed by $1, 2, \dots, q$ with $k$ as a generic index.
+				\item $d_{ik}$ - is the degree of vertex $i$ in the $k$th 1-tree.
+			\end{itemize}
+
+			The goal is to minimize $f(\pi)$ over $\pi$, which is equivalent to
+			\begin{align*}
+				\max \quad & w\\
+				\text{s.t.} \quad & w \le c_k + \sum_{i = 1}^n (d_{ik} - 2) \quad \forall k
+			\end{align*}
+			Dualizing, we obtain
+			\begin{align*}
+				\min \quad & \sum_{k} c_k y_k\\
+				\text{s.t.} \quad & \sum_k y_k = 1\\
+				& y_k \ge 0 \quad \forall k\\
+				& \sum_k (2 - d_{ik}) y_k = 0 \quad i = 2, 3, \ldots, n-1
+			\end{align*}
+
+			Notice that this LP model seeks a minimum-weight ``convex combination of 1-trees'' such that each vertex has, on average, degree two.
+
+		\section{Relation to a Linear Program}
+			The following is DFJ formulation for TSP
+			\begin{align*}
+				\min \quad & \sum_{1 \le i < j \le n}c_{ij} x_{ij}\\
+				\text{s.t.} \quad & \sum_{i < j} x_{ij} + \sum_{i > j} x_{ji} = 2, \quad i \in \{1, 2, \cdots, n\}\\
+								  & \sum_{\substack{i \in S \\ j \notin S \\ i < j}} x_{ij} \le |S| - 1, \quad S \subset \{2, 3, \cdots, n\}\\
+								  & x_{ij} \in \{0, 1\}
+			\end{align*}
+
+			Equivalently, we can transform it into
+			\begin{align}
+				\min \quad & \sum_{1 \le i < j \le n}c_{ij} x_{ij}\\
+				\text{s.t.} \quad & \sum_{i < j} x_{ij} + \sum_{i > j} x_{ji} = 2, \quad i \in \{2, 3, \cdots, n - 1\} \label{con:TSP-LR:v2toNminus1}\\				
+								  & \sum_j x_{1j} = 2 \label{con:TSP-LR:v1}\\
+								  & \sum_{1 \le i < j \le n} x_{ij} = n \label{con:TSP-LR:sumAllEdge}\\
+								  & \sum_{\substack{i \in S \\ j \notin S \\ i < j}} x_{ij} \le |S| - 1, \quad S \subset \{2, 3, \cdots, n\}\label{con:TSP-LR:subtour}\\
+								  & x_{ij} \le 1 \label{con:TSP-LR:upperX}\\
+								  & x_{ij} \ge 0\\
+								  & x_{ij} \in \{0, 1\}
+			\end{align}
+
+			Denote constraints (\ref{con:TSP-LR:v2toNminus1}) by $\mathbf{Ax} = \mathbf{b}$, and the constraints (\ref{con:TSP-LR:v1}), (\ref{con:TSP-LR:sumAllEdge}), (\ref{con:TSP-LR:subtour}) and (\ref{con:TSP-LR:upperX}) by $\mathbf{A}^\prime \mathbf{x} = \mathbf{b}^\prime$.
+
+		\section{A Column-Generation Technique}
+
+		\section{An Ascent Method}
+
+		\section{A Branch-and-Bound Method}
+
+		\section{Minimal 1-Trees and Matroids}
+
+		\section{Other Applications}
 \end{document}

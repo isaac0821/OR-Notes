@@ -2237,8 +2237,6 @@
 					\end{itemize}
 				\end{itemize}			
 
-		\chapter{Column Generation}
-
 		\chapter{Ellipsoid Methods}
 
 		\chapter{Karmarkar's Algorithm}
@@ -2253,6 +2251,13 @@
 			\section{Kianfar's methods}
 
 			\section{Lift-and-project}
+
+		\chapter{Decompositions}
+			\section{Dantzig-Wolfe Decomposition}
+
+			\section{Benders Decomposition}
+
+			\section{Lagrangian Relaxation}
 
 		\chapter{Lagrangian Relaxation}
 			\section{Basic Constructions}
@@ -2282,9 +2287,6 @@
 				\end{align*}
 
 				Notice that we have assumed the 
-
-
-		\chapter{Benders Decomposition}
 
 		\chapter{Total Unimodularity}
 
@@ -3377,13 +3379,13 @@
 			\section{Graphs on other surfaces}
 
 		\chapter{Matchings}
-			\section{Maximum Matching}
-				\begin{definition}[Matching]
-					Let $G = (V, E)$ be a graph, a \textbf{matching} is a subset of edges $M \subseteq E$ such that no two elements of $M$ are adjacent. The two ends of an edge in $M$ are said to be \textbf{matched under} $M$. A matching $M$ saturates a vertex $v$, and $v$ is said to be \textbf{M-saturated} or \textbf{M-covered}, if some edge of $M$ is incident with $v$. Otherwise, $v$ is \textbf{M-unsaturated} or \textbf{M-exposed}.
+			\section{Matching}
+				\begin{definition}[matching, M-saturated, M-unsaturated]
+					Let $G = (V, E)$ be a graph, a \textbf{matching} is a subset of edges $M \subseteq E$ such that no two elements of $M$ are adjacent. The two ends of an edge in $M$ are said to be \textbf{matched} under $M$. A matching $M$ saturates a vertex $v$, and $v$ is said to be \textbf{M-saturated}, if some edge of $M$ is incident with $v$. Otherwise, $v$ is \textbf{M-unsaturated}.
 				\end{definition}
 
-				\begin{definition}[Perfect matching, Maximum matching]
-					If every vertex of $G$ is M-saturated, then the matching is said to be \textbf{perfect matching}. $M$ is a \textbf{maximum matching} if $G$ has no matching $M^\prime$ with $|M^\prime| > |M|$. Every perfect matching is maximum. The maximum matching does not necessarily to be perfect. Perfect matching and maximum matching may not be unique.
+				\begin{definition}[perfect matching, maximum matching]
+					If every vertex of $G$ is M-saturated, then the matching is said to be \textbf{perfect matching}, for perfect matching, we have $|M| = \frac{|V(G)|}{2}$. $M$ is a \textbf{maximum matching} if $G$ has no matching $M^\prime$ with $|M^\prime| > |M|$. Every perfect matching is maximum. The maximum matching does not necessarily to be perfect. Perfect matching and maximum matching may not be unique.
 				\end{definition}
 
 				\begin{definition}[M-alternating]
@@ -5254,8 +5256,8 @@
 						\sum_{i \in V} y_{1i}^k &= 1, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMInitIn}\\
 						\sum_{i \in V} y_{i1}^k &= 0, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMInitOut}\\
 						\sum_{i \in V} y_{ik}^k &= 1, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMElseOut}\\
-						\sum_{j \in V} y_{jk}^k &= 0, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMElseIn}\\
-						\sum_{i \in V} y_{ij}^k - \sum_{i \in V} y_{ji}^k &= 0, \quad \forall j, k \in V \setminus \{1\}, (i, j) \in A \label{TSP:con:MCMBalance}
+						\sum_{j \in V} y_{kj}^k &= 0, \quad \forall k \in V \setminus \{1\} \label{TSP:con:MCMElseIn}\\
+						\sum_{i \in V} y_{ij}^k - \sum_{i \in V} y_{ji}^k &= 0, \quad \forall j, k \in V \setminus \{1\}, j \neq k \label{TSP:con:MCMBalance}
 					\end{align}
 					Constraints (\ref{TSP:con:MCMFlowExist}) only allow flow in an arc which is present. Constraints (\ref{TSP:con:MCMInitIn}) forces exactly one unit of each type of commodity to flow in at node 1. Constraints (\ref{TSP:con:MCMInitOut}) prevent any commodity flow out at node 1.Constraints (\ref{TSP:con:MCMElseOut}), and Constraints (\ref{TSP:con:MCMElseIn}), forces exactly one unit of type $k$ commodity to flow out, and in, at every node except node 1. Constraints (\ref{TSP:con:MCMBalance}) forces balance of all types of commodities at every node except node 1.
 
@@ -5283,7 +5285,7 @@
 					\begin{align}
 						\sum_{j \in V \setminus \{1\}} x_{1j}^1 &= 1 \label{TSP:con:SPFStart}\\
 						\sum_{j \in V \setminus \{1, i\}} x_{ij}^2 - x_{1i}^1 &= 0, \quad \forall i \in V \setminus \{1\} \label{TSP:con:SPFFirstLayer}\\
-						\sum_{j \in V \setminus \{1, i\}} x_{ij}^t - \sum_{j \in V \setminus \{1, i\}} x_{ji}^{t - 1} &= 0, \quad \forall i \in V \setminus \{i\}, t \in \{2, \dots, n - 1\} \label{TSP:con:SPFTthLayer}\\
+						\sum_{j \in V \setminus \{1, i\}} x_{ij}^t - \sum_{j \in V \setminus \{1, i\}} x_{ji}^{t - 1} &= 0, \quad \forall i \in V \setminus \{1\}, t \in \{2, \dots, n - 1\} \label{TSP:con:SPFTthLayer}\\
 						x_{i1}^n - \sum_{j \in V \setminus \{1, i\}} x_{ji}^{n - 1} &= 0, \quad \forall i \in V \setminus \{1\} \label{TSP:con:SPFLastLayer}\\
 						\sum_{i \in V \setminus \{1\}} x_{i1}^n &= 1 \label{TSP:con:SPFEnd}\\
 						\sum_{t = 2}^{n - 1}\sum_{j \in V \setminus \{1, i\}} x_{ij}^t + x_{i1}^n & \le 1, \quad \forall i \in V \setminus \{1\} \label{TSP:con:SPFSameType1}
@@ -5306,7 +5308,14 @@
 
 				\subsection{The 2-match Problem}
 
-			\section{Exact Algorithm}
+				\subsection{Held \& Karp Bound (Lagrangian Relaxation)}
+					In this section, we will solve the Dantzig-Fulkerson-Johnson formulation using Lagrangian Relaxation. The bound found by this method is also known as Held \& Karp Bound. In the Held \& Karp relaxation, the degree constraints are relaxed, as a result, we require our solution to be connected and to contain $n$ edges, but it might not have exactly two edges incident to each vertex.
+
+					The feasible solution to the Lagrangian relaxation is called \textbf{1-tree}, which
+					\begin{itemize}
+						\item Have a spanning tree on nodes $\{2, 3, \cdots, n\}$
+						\item Two edges incident to node 1
+					\end{itemize}
 
 			\section{Constructive Heuristic}
 				\subsection{Nearest Neighborhood Algorithm}
@@ -5322,12 +5331,51 @@
 					The general idea of Lin-Kernighan Algorithm is based on a substantial generalization of the interchange transformation.
 
 			\section{Metaheuristic}
-				\subsection{Genetic Algorithm for TSP}
+				\subsection{Simulated Annealing}
 
+				\subsection{Genetic Algorithm}
 
 		\chapter{The Vehicle Routing Problem}
+			\section{The Family of VRP}
+
+
+			\section{Heuristic for VRP}
+				\subsection{CW Saving}
 
 		\chapter{The Capacitate Vehicle Routing Problem}
+			\section{Formulations}
+				In this section, we present four important formulations for the CVRP, the problem statement is as follows. The transportation requests consist of the distribution of goods from a single depot, denote as node 0, to a given set of $n$ other locations, or customers, $N = \{1, 2, \cdots, n\}$. The amount that has to be delivered to customer $i \in N$ is called demand, which is given by a scalar $q_i \ge 0$. A fleet of vehicle $K = \{1, 2, \cdots, |K|\}$ is assumed to be homogeneous with the same capacity as $Q > 0$ and identical operation cost. A vehicle that service a subset $S\subseteq N$ starts at the depot, move once to each of the customers in $S$, and finally returns to the depot. A vehicle moving from $i$ to $j$ incurs the travel cost $c_{ij}$. 
+				Let $V = \{0\} \cup N$ be the set of nodes, for convenience, we usually define node 0 as depot and an additional node $|N|+1$ as a copy of depot for the returning of vehicle. Set $E$ is the set of all available links between nodes. The CVRP is then defined on graph $G = (V, E)$. We further denote $\delta^+(i) \in V \setminus \{i\}$ as the set of nodes that can be visited from node $i$, and denote $\delta^-(i) \in V\setminus \{i\}$ as the set of nodes that can visit node $i$.
+
+
+				\subsection{Golden et al. 1977}
+					Golden et al. 1997 proposed a 3-indexed formulation for solving CVRP. The resulting formulation involves $O(n^2T)$ variables and requires an exponential number of subtour elimination constraints. 
+
+					Decision variables are
+					\begin{equation*}
+						x_{ij}^k = \begin{cases}
+										1, \quad \text{If vehicle } k \text{ travels through arc } (i, j) \\
+										0, \quad \text{Otherwise}
+									\end{cases} \quad (i, j) \in E, k \in \{1, 2, \cdots, T\}
+					\end{equation*}
+					where $T$ is the maximum number of vehicle.
+
+					The objective function is
+					\begin{equation*}
+						\min \sum_{k = 1}^T \sum_{(i, j) \in E} c_{ij} x_{ij}^k
+					\end{equation*}
+
+					The constraints are as following
+					\begin{align}
+						\sum_{k = 1}^T \sum_{j \in \delta^+(i)} x_{ij}^k &= 1, \quad i \in V \setminus \{0\} \label{VRP:con:GoldenArcAssign}\\
+						\sum_{j \in \delta^+(i)} x_{ij}^k &= \sum_{j \in \delta^-(i)} x_{ji}^k, \quad \forall i \in V \setminus \{0\}, k = \{1, 2, \cdots, T\} \label{VRP:con:GoldenBalance} \\
+						\sum_{i \in \delta^+(0)} x_{0i}^k &\le 1, \quad k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenLeaveDepot} \\
+						\sum_{i \in \delta^-(0)} x_{i0}^k &\le 1, \quad k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenReturnDepot} \\
+						\sum_{i \in V} d_i \sum_{j \in \delta^+(i)} x_{ij}^k &\le Q, \quad k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenCap}\\
+						\sum_{(i, j)\in E(S)} x_{ij}^k &\le |S| - 1, \quad \forall S\subset V\setminus \{0\}, k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenSubtour}
+					\end{align}
+
+				\subsection{Two-index Flow Formulation, }
 
 		\chapter{The Vehicle Routing Problem with Time Windows}
 
@@ -6236,5 +6284,7 @@
 		\chapter{Monte Carlo Simulation}
 
 		\chapter{Discrete Event Simulation}
+
+	\bibliography{bib}
 
 \end{document}

@@ -1,5 +1,5 @@
 \include{templete}
-\usepackage[colorlinks,citecolor=red,urlcolor=blue,bookmarks=false,hypertexnames=true]{hyperref} 
+
 \begin{document}
 	\part*{Special Topic: Vehicle Routing Problem}\label{VRP}
 		\addcontentsline{toc}{part}{Special Topic: Vehicle Routing Problem}
@@ -83,7 +83,6 @@
 					\end{align}
 
 					We can prove that this is very very bad.
-
 
 				\subsection{Flow Based Formulations}
 					In this section, flow based formulations are discussed, which includes \textbf{Single Commodity Flow}, \textbf{Two Commodity Flow} and \textbf{Multi-Commodity Flow}. In these formulations, continuous variables are introduced to represent the flow on the arcs.
@@ -208,10 +207,46 @@
 
 				\subsection{Genetic Algorithm}
 
-
 		\chapter{The Vehicle Routing Problem}
+			\section{The Family of VRP}
+
+
+			\section{Heuristic for VRP}
+				\subsection{CW Saving}
 
 		\chapter{The Capacitate Vehicle Routing Problem}
+			\section{Formulations}
+				In this section, we present four important formulations for the CVRP, the problem statement is as follows. The transportation requests consist of the distribution of goods from a single depot, denote as node 0, to a given set of $n$ other locations, or customers, $N = \{1, 2, \cdots, n\}$. The amount that has to be delivered to customer $i \in N$ is called demand, which is given by a scalar $q_i \ge 0$. A fleet of vehicle $K = \{1, 2, \cdots, |K|\}$ is assumed to be homogeneous with the same capacity as $Q > 0$ and identical operation cost. A vehicle that service a subset $S\subseteq N$ starts at the depot, move once to each of the customers in $S$, and finally returns to the depot. A vehicle moving from $i$ to $j$ incurs the travel cost $c_{ij}$. 
+				Let $V = \{0\} \cup N$ be the set of nodes, for convenience, we usually define node 0 as depot and an additional node $|N|+1$ as a copy of depot for the returning of vehicle. Set $E$ is the set of all available links between nodes. The CVRP is then defined on graph $G = (V, E)$. We further denote $\delta^+(i) \in V \setminus \{i\}$ as the set of nodes that can be visited from node $i$, and denote $\delta^-(i) \in V\setminus \{i\}$ as the set of nodes that can visit node $i$.
+
+				\subsection{Golden et al. 1977}
+					Golden et al. 1997 proposed a 3-indexed formulation for solving CVRP. The resulting formulation involves $O(n^2T)$ variables and requires an exponential number of subtour elimination constraints. 
+
+					Decision variables are
+					\begin{equation*}
+						x_{ij}^k = \begin{cases}
+										1, \quad \text{If vehicle } k \text{ travels through arc } (i, j) \\
+										0, \quad \text{Otherwise}
+									\end{cases} \quad (i, j) \in E, k \in \{1, 2, \cdots, T\}
+					\end{equation*}
+					where $T$ is the maximum number of vehicle.
+
+					The objective function is
+					\begin{equation*}
+						\min \sum_{k = 1}^T \sum_{(i, j) \in E} c_{ij} x_{ij}^k
+					\end{equation*}
+
+					The constraints are as following
+					\begin{align}
+						\sum_{k = 1}^T \sum_{j \in \delta^+(i)} x_{ij}^k &= 1, \quad i \in V \setminus \{0\} \label{VRP:con:GoldenArcAssign}\\
+						\sum_{j \in \delta^+(i)} x_{ij}^k &= \sum_{j \in \delta^-(i)} x_{ji}^k, \quad \forall i \in V \setminus \{0\}, k = \{1, 2, \cdots, T\} \label{VRP:con:GoldenBalance} \\
+						\sum_{i \in \delta^+(0)} x_{0i}^k &\le 1, \quad k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenLeaveDepot} \\
+						\sum_{i \in \delta^-(0)} x_{i0}^k &\le 1, \quad k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenReturnDepot} \\
+						\sum_{i \in V} d_i \sum_{j \in \delta^+(i)} x_{ij}^k &\le Q, \quad k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenCap}\\
+						\sum_{(i, j)\in E(S)} x_{ij}^k &\le |S| - 1, \quad \forall S\subset V\setminus \{0\}, k \in \{1, 2, \ldots, T\} \label{VRP:con:GoldenSubtour}
+					\end{align}
+
+				\subsection{Two-index Flow Formulation, }
 
 		\chapter{The Vehicle Routing Problem with Time Windows}
 
@@ -221,6 +256,7 @@
 				\begin{equation}
 					\bar{q_i} = \sum_{j \in N_i^+} q_j = -\sum_{j \in N_i^-} q_j
 				\end{equation}
+
 				Define $N^+ = \cup_{i \in N} N_i^+$ as the set of all origins and $N^- = \cup_{i \in N}N_i^-$ as the set of all destinations. Let $V = N^+ \cup N^-$. Furthermore, the $M$ be the set of vehicles. Each vehicle $k \in M$ has a capacity $Q_k \in \mathbb{N}$, a start location $k^+$, and an end location $k^-$. Define $M^+ = \{k^+|k\in M\}$ as the set of start locations and $M^- = \{k^-|k\in M\}$ as the set of end locations. Let $W = M^+ \cup M^-$.
 
 				For all $i, j \in V\cup W$ let $d_{ij}$ denote the travel distance, $t_{ij}$ denote the travel time, and $c_{ij}$ denote the travel cost. Note that the dwell time at origins and destinations can be easily incorporated in the travel time and therefore will not be considered explicitly.
@@ -314,8 +350,11 @@
 				\end{itemize}
 
 			\section{Heuristic Method}
+				\citep{Renaud2002}
 
 		\chapter{Stochastic Vehicle Routing Problem}
 
 		\chapter{Dynamic Vehicle Routing Problem}
+
+	\bibliography{bib}
 \end{document}
